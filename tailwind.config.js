@@ -1,0 +1,73 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: {
+    files: [
+      './src/assets/css/**/*.css',
+      './src/components/**/*.vue',
+      './src/layouts/**/*.vue',
+      './src/pages/**/*.vue',
+    ],
+  },
+  theme: {
+    extend: {
+      colors: {
+        'golden-yellow': {
+          100: '#FFF3D9',
+          200: '#FFE5A1',
+          300: '#FFD676',
+          400: '#FFC04A',
+          500: '#F7B500',
+          600: '#D99500',
+          700: '#B37700',
+          800: '#8C5C00',
+          900: '#664200',
+        },
+        'deep-blue': {
+          100: '#E1F5FF',
+          200: '#B3E1F7',
+          300: '#80CCE7',
+          400: '#4DAFCE',
+          500: '#005F73',
+          600: '#004A5A',
+          700: '#00363F',
+          800: '#002127',
+          900: '#000C10',
+        },
+        'dark-gray': {
+          100: '#F3F3F3',
+          200: '#E1E1E1',
+          300: '#CFCFCF',
+          400: '#B3B3B3',
+          500: '#1E1E1E',
+          600: '#181818',
+          700: '#131313',
+          800: '#0F0F0F',
+          900: '#0A0A0A',
+        },
+        'light-gray': {
+          100: '#FCFCFC',
+          200: '#F8F8F8',
+          300: '#F3F3F3',
+          400: '#ECECEC',
+          500: '#D9D9D9',
+          600: '#C0C0C0',
+          700: '#A8A8A8',
+          800: '#909090',
+          900: '#787878',
+        },
+        'warm-white': {
+          100: '#FFFFFF',
+          200: '#FBFBFB',
+          300: '#F5F5F5',
+          400: '#EFEFEF',
+          500: '#F5F5F5',
+        },
+        'background-dark': '#121212',
+        'card-dark': '#1E1E1E',
+        'text-dark': '#E0E0E0',
+        'border-dark': '#292929',
+      },
+    },
+  },
+  plugins: [],
+};
