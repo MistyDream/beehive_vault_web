@@ -25,6 +25,9 @@ import {
   LucideLayoutDashboard,
   LucideSettings,
   LucideWallet,
+  LucideBarChart,
+  LucideTrendingUp,
+  LucideBriefcaseBusiness,
 } from '#components';
 import type { NavigationLink } from '~/types/navigation-link';
 
@@ -33,6 +36,23 @@ const navigation: NavigationLink[] = [
     text: 'Dashboard',
     to: '/',
     icon: LucideLayoutDashboard,
+  },
+  {
+    text: 'Actions',
+    icon: LucideBriefcaseBusiness,
+    isExpandable: true,
+    children: [
+      {
+        text: "Vue d'ensemble",
+        to: '/shares',
+        icon: LucideBarChart,
+      },
+      {
+        text: 'Classifications',
+        to: '/shares/classifications',
+        icon: LucideTrendingUp,
+      },
+    ],
   },
   {
     text: 'Comptes bancaires',

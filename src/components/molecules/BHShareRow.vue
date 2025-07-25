@@ -1,0 +1,131 @@
+<template>
+  <tr class="bh-share-row">
+    <!-- Nom et logo -->
+    <td class="bh-share-row--name">
+      <div class="share-info">
+        <div
+          v-if="share.logo"
+          class="share-logo"
+          :style="{ backgroundImage: `url(${share.logo})` }"
+        />
+        <div
+          v-else
+          class="share-logo-placeholder"
+          :style="{ backgroundColor: share.logoColor || '#6B7280' }"
+        >
+          {{ share.name.charAt(0).toUpperCase()
+          }}{{ share.name.charAt(1)?.toUpperCase() || '' }}
+        </div>
+        <div class="share-details">
+          <div class="share-name">{{ share.name }}</div>
+          <div class="share-company">{{ share.company }}</div>
+        </div>
+      </div>
+    </td>
+
+    <!-- Note globale -->
+    <td class="bh-share-row--score">
+      <BHScoreBadge :score="share.globalScore" :is-global-score="true" />
+    </td>
+
+    <!-- Valorisation -->
+    <td class="bh-share-row--rating">
+      <BHScoreBadge :score="share.ratings.valorisation" />
+    </td>
+
+    <!-- Croissance -->
+    <td class="bh-share-row--rating">
+      <BHScoreBadge :score="share.ratings.croissance" />
+    </td>
+
+    <!-- Profitabilité -->
+    <td class="bh-share-row--rating">
+      <BHScoreBadge :score="share.ratings.profitabilite" />
+    </td>
+
+    <!-- Santé Financière -->
+    <td class="bh-share-row--rating">
+      <BHScoreBadge :score="share.ratings.santeFInanciere" />
+    </td>
+
+    <!-- Retour aux investisseurs -->
+    <td class="bh-share-row--rating">
+      <BHScoreBadge :score="share.ratings.retourInvestisseurs" />
+    </td>
+
+    <!-- Actions -->
+    <td class="bh-share-row--actions">
+      <BHButton class="bh-share-row--menu">
+        <LucideMoreVertical :size="16" />
+      </BHButton>
+    </td>
+  </tr>
+</template>
+
+<script setup lang="ts">
+import type { Share } from '~/types/share';
+import { LucideMoreVertical } from '#components';
+
+interface Props {
+  share: Share;
+}
+
+defineProps<Props>();
+</script>
+
+<style lang="css" scoped>
+.bh-share-row {
+  @apply border-b border-dark-gray-450 hover:bg-dark-gray-700/50;
+  @apply transition-colors duration-200;
+}
+
+.bh-share-row--name {
+  @apply px-6 py-4;
+}
+
+.share-info {
+  @apply flex items-center gap-3;
+}
+
+.share-logo {
+  @apply w-10 h-10 rounded-full bg-cover bg-center;
+  @apply border border-border-dark;
+}
+
+.share-logo-placeholder {
+  @apply w-10 h-10 rounded-full;
+  @apply border border-border-dark;
+  @apply flex items-center justify-center;
+  @apply text-sm font-bold text-warm-white-500;
+}
+
+.share-details {
+  @apply flex flex-col;
+}
+
+.share-name {
+  @apply font-semibold text-golden-yellow-500;
+}
+
+.share-company {
+  @apply text-sm text-gray-400;
+}
+
+.bh-share-row--score {
+  @apply px-6 py-4 text-center;
+}
+
+.bh-share-row--rating {
+  @apply px-6 py-4 text-center;
+}
+
+.bh-share-row--actions {
+  @apply flex justify-center items-center;
+  @apply h-20 px-6 py-4;
+}
+
+.bh-share-row--menu {
+  @apply p-2 hover:bg-dark-gray-600;
+  @apply rounded-lg;
+}
+</style>

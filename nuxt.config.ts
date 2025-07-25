@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     '@nuxt/fonts',
     '@nuxt/image',
     '@nuxtjs/tailwindcss',
+    '@pinia/nuxt',
     '@vueuse/nuxt',
     'nuxt-echarts',
     'nuxt-lucide-icons',

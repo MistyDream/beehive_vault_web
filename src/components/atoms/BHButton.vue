@@ -17,7 +17,7 @@ export interface Props {
   to?: string;
   href?: string;
   disabled?: boolean;
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'ghost';
   type?: 'button' | 'submit' | 'reset';
   activeClass?: string;
   exactActiveClass?: string;
@@ -62,6 +62,7 @@ const componentAttrs = computed(() => {
 const buttonClasses = computed(() => ({
   primary: props.variant === 'primary',
   secondary: props.variant === 'secondary',
+  ghost: props.variant === 'ghost',
 }));
 
 function handleClick(event: MouseEvent) {
@@ -77,7 +78,7 @@ function handleClick(event: MouseEvent) {
 .bh-button {
   @apply flex gap-3 items-center;
   @apply px-2 py-1;
-  @apply rounded drop-shadow-md;
+  @apply rounded-md drop-shadow-md;
   @apply hover:bg-border-dark;
   @apply transition-colors duration-200;
 }
@@ -88,7 +89,12 @@ function handleClick(event: MouseEvent) {
 }
 
 .secondary {
-  @apply border bg-deep-blue-500 border-deep-blue-700 text-warm-white-500;
-  @apply hover:bg-deep-blue-400 hover:border-deep-blue-600;
+  @apply border bg-deep-blue-600 border-deep-blue-600 text-deep-blue-400;
+  @apply hover:border-deep-blue-400;
+}
+
+.ghost {
+  @apply px-0 py-0 border-none bg-transparent;
+  @apply hover:bg-transparent;
 }
 </style>

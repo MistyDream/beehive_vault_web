@@ -8,4 +8,6 @@ export interface NavigationLink {
   variant?: 'primary' | 'secondary';
   type?: 'button' | 'submit' | 'reset';
   icon?: Component;
+  children?: NavigationLink[]; // Ajout pour les menus expendables
+  isExpandable?: boolean; // Indicateur pour les menus expendables
 }

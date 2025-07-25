@@ -1,3 +1,16 @@
 <template>
-  <div>Dashboard</div>
+  <div />
 </template>
+
+<script setup lang="ts">
+import { useUpdateHeader } from '~/composables/updateHeader';
+
+const { updateHeader } = useUpdateHeader();
+
+onMounted(() => {
+  updateHeader({
+    title: 'Dashboard',
+    subtitle: '',
+  });
+});
+</script>
