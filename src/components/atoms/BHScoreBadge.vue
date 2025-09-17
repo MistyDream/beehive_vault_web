@@ -37,11 +37,11 @@ const scoreClass = computed(() => {
 }
 
 .bh-score-badge--global {
-  @apply w-12 h-12 text-base;
+  @apply w-12 h-12 text-lg font-poppins font-semibold;
 }
 
 .bh-score-badge--category {
-  @apply text-sm;
+  @apply text-sm font-poppins font-semibold;
   @apply px-4 py-1;
 }
 

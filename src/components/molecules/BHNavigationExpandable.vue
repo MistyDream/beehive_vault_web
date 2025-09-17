@@ -5,8 +5,10 @@
       :class="{ 'is-expanded': isExpanded }"
       @click="toggleExpansion"
     >
-      <slot name="icon" :item="item" />
-      {{ item.text }}
+      <div class="bh-navigation-expandable--trigger-content">
+        <slot name="icon" :item="item" />
+        {{ item.text }}
+      </div>
       <LucideChevronDown
         :size="16"
         class="bh-navigation-expandable--icon"
@@ -73,6 +75,10 @@ onMounted(() => {
   @apply w-full py-2 px-4;
   @apply font-semibold;
   @apply justify-between;
+}
+
+.bh-navigation-expandable--trigger-content {
+  @apply flex items-center gap-2;
 }
 
 .bh-navigation-expandable--icon {

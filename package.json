@@ -16,13 +16,14 @@
     "@nuxt/eslint": "1.2.0",
     "@nuxt/fonts": "^0.11.0",
     "@nuxt/image": "^1.10.0",
+    "@nuxtjs/i18n": "10.0.6",
     "@nuxtjs/tailwindcss": "6.13.2",
     "@pinia/nuxt": "0.11.2",
     "@vueuse/nuxt": "13.0.0",
     "animate.css": "^4.1.1",
     "echarts": "^5.5.1",
     "eslint": "^9.0.0",
-    "nuxt": "^3.15.4",
+    "nuxt": "^3.19.0",
     "nuxt-echarts": "0.2.6",
     "nuxt-lucide-icons": "1.0.5",
     "pinia": "^3.0.3",
@@ -33,6 +34,7 @@
   "devDependencies": {
     "@nuxt/kit": "^3.16.0",
     "@nuxt/schema": "^3.16.0",
+    "@types/node": "^24.3.0",
     "prettier": "^3.5.3",
     "typescript": "^5.8.2"
   }

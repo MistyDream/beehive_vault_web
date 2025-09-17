@@ -52,7 +52,7 @@ const changeClass = computed(() => ({
 }
 
 .bh-stats-card--label {
-  @apply text-xs text-golden-yellow-500;
+  @apply text-xs text-warm-white-500;
   @apply font-medium;
 }
 

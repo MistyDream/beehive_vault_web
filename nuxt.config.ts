@@ -4,10 +4,17 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   srcDir: 'src/',
 
+  runtimeConfig: {
+    public: {
+      apiBase: process.env.API_BASE_URL,
+    },
+  },
+
   modules: [
     '@nuxt/eslint',
     '@nuxt/fonts',
     '@nuxt/image',
+    '@nuxtjs/i18n',
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
     '@vueuse/nuxt',
@@ -42,6 +49,15 @@ export default defineNuxtConfig({
         provider: 'google',
         weights: [400, 700],
       },
+    ],
+  },
+
+  // I18n config
+  i18n: {
+    defaultLocale: 'fr',
+    locales: [
+      { code: 'fr', name: 'Français', file: 'fr-FR.json' },
+      { code: 'en', name: 'English', file: 'en-US.json' },
     ],
   },
 

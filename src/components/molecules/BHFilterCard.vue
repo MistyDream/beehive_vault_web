@@ -94,7 +94,7 @@ const removeFilter = (filterType: string) => {
 }
 
 .bh-filter-card--header-title {
-  @apply text-xl font-semibold text-golden-yellow-500;
+  @apply text-xl font-semibold text-warm-white-500;
 }
 
 .bh-filter-card--header-actions {

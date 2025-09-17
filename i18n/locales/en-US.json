@@ -1,0 +1,14 @@
+{
+  "dashboard": "Dashboard",
+  "actions": "Actions",
+  "shares": "Shares",
+  "classifications": "Classifications",
+  "bank-account": "Bank account",
+  "settings": "Settings",
+  "shares-overview": "Overview",
+  "shares-classifications": "Classifications",
+  "shares-classifications-subtitle": "Detailed analysis of your shares according to different performance criteria",
+  "shares-create": "Create a share",
+  "bank-account-overview": "Overview",
+  "bank-account-classifications": "Classifications"
+}

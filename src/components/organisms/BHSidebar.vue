@@ -33,34 +33,34 @@ import type { NavigationLink } from '~/types/navigation-link';
 
 const navigation: NavigationLink[] = [
   {
-    text: 'Dashboard',
+    text: $t('dashboard'),
     to: '/',
     icon: LucideLayoutDashboard,
   },
   {
-    text: 'Actions',
+    text: $t('actions'),
     icon: LucideBriefcaseBusiness,
     isExpandable: true,
     children: [
       {
-        text: "Vue d'ensemble",
+        text: $t('shares-overview'),
         to: '/shares',
         icon: LucideBarChart,
       },
       {
-        text: 'Classifications',
+        text: $t('shares-classifications'),
         to: '/shares/classifications',
         icon: LucideTrendingUp,
       },
     ],
   },
   {
-    text: 'Comptes bancaires',
+    text: $t('bank-account'),
     to: '/bank-account',
     icon: LucideWallet,
   },
   {
-    text: 'Paramètres',
+    text: $t('settings'),
     to: '/settings',
     icon: LucideSettings,
   },

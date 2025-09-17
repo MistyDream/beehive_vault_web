@@ -1,7 +1,7 @@
 <template>
   <section id="shares-overview">
     <div class="shares-overview--stats">
-      <BHCard>
+      <BHCardBase>
         <template #title>Statistiques du portefeuille</template>
         <div class="stats-grid">
           <div class="stat-item">
@@ -17,11 +17,11 @@
             <p class="stat-value text-green-500">+12.5%</p>
           </div>
         </div>
-      </BHCard>
+      </BHCardBase>
     </div>
 
     <div class="shares-overview--actions">
-      <BHCard>
+      <BHCardBase>
         <template #title>Actions rapides</template>
         <div class="actions-grid">
           <BHButton variant="primary" to="/shares/classifications">
@@ -29,7 +29,7 @@
           </BHButton>
           <BHButton variant="secondary"> Ajouter une action </BHButton>
         </div>
-      </BHCard>
+      </BHCardBase>
     </div>
   </section>
 </template>

@@ -1,0 +1,14 @@
+{
+  "dashboard": "Tableau de bord",
+  "actions": "Actions",
+  "shares": "Partages",
+  "classifications": "Classifications",
+  "bank-account": "Compte bancaire",
+  "settings": "Paramètres",
+  "shares-overview": "Vue d'ensemble",
+  "shares-classifications": "Classifications",
+  "shares-classifications-subtitle": "Analyse détaillée de vos actions selon différents critères de performance",
+  "shares-create": "Créer une action",
+  "bank-account-overview": "Vue d'ensemble",
+  "bank-account-classifications": "Classifications"
+}
