@@ -11,63 +11,67 @@
         <div
           v-else
           class="share-logo-placeholder"
-          :style="{ backgroundColor: share.logoColor || '#6B7280' }"
+          :style="{ backgroundColor: '#6B7280' }"
         >
           {{ share.name.charAt(0).toUpperCase()
           }}{{ share.name.charAt(1)?.toUpperCase() || '' }}
         </div>
         <div class="share-details">
+          <div class="share-symbol">{{ share.symbol }}</div>
           <div class="share-name">{{ share.name }}</div>
-          <div class="share-company">{{ share.company }}</div>
         </div>
       </div>
     </td>
 
     <!-- Note globale -->
     <td class="bh-share-row--score">
-      <BHScoreBadge :score="share.globalScore" :is-global-score="true" />
+      <BHScoreBadge :score="share.score.total" :is-global-score="true" />
     </td>
 
     <!-- Valorisation -->
     <td class="bh-share-row--rating">
-      <BHScoreBadge :score="share.ratings.valorisation" />
+      <BHScoreBadge :score="share.score.valuation" />
     </td>
 
     <!-- Croissance -->
     <td class="bh-share-row--rating">
-      <BHScoreBadge :score="share.ratings.croissance" />
+      <BHScoreBadge :score="share.score.growth" />
     </td>
 
     <!-- Profitabilité -->
     <td class="bh-share-row--rating">
-      <BHScoreBadge :score="share.ratings.profitabilite" />
+      <BHScoreBadge :score="share.score.profitability" />
     </td>
 
     <!-- Santé Financière -->
     <td class="bh-share-row--rating">
-      <BHScoreBadge :score="share.ratings.santeFInanciere" />
+      <BHScoreBadge :score="share.score.solidity" />
     </td>
 
     <!-- Retour aux investisseurs -->
     <td class="bh-share-row--rating">
-      <BHScoreBadge :score="share.ratings.retourInvestisseurs" />
+      <BHScoreBadge :score="share.score.shareholderReturn" />
     </td>
 
     <!-- Actions -->
     <td class="bh-share-row--actions">
-      <BHButton class="bh-share-row--menu">
-        <LucideMoreVertical :size="16" />
-      </BHButton>
+      <BHDropdown>
+        <template #trigger>
+          <BHButton class="bh-share-row--menu">
+            <LucideMoreVertical :size="16" />
+          </BHButton>
+        </template>
+      </BHDropdown>
     </td>
   </tr>
 </template>
 
 <script setup lang="ts">
-import type { Share } from '~/types/share';
+import type { Stock } from '~/types/stock';
 import { LucideMoreVertical } from '#components';
 
 interface Props {
-  share: Share;
+  share: Stock;
 }
 
 defineProps<Props>();
@@ -103,11 +107,11 @@ defineProps<Props>();
   @apply flex flex-col;
 }
 
-.share-name {
-  @apply font-semibold text-golden-yellow-500;
+.share-symbol {
+  @apply font-semibold text-warm-white-500;
 }
 
-.share-company {
+.share-name {
   @apply text-sm text-gray-400;
 }
 

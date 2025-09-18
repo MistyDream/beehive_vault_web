@@ -2,6 +2,7 @@
   <div
     class="flex flex-col min-h-screen bg-background-dark text-warm-white-500"
   >
+    <BHDrawer />
     <BHHeader />
     <BHSidebar />
     <main>

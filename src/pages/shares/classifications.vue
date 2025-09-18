@@ -14,9 +14,13 @@
         :is-positive="true"
         :icon="LucideTrendingUp"
       />
-      <BHStatsCard label="Total Tracked" :value="`${shares.length} Stocks`">
+      <BHStatsCard label="Total Tracked" :value="`${stocks.length} Stocks`">
         <template #actions>
-          <BHButton variant="secondary" class="add-stock-button">
+          <BHButton
+            variant="secondary"
+            class="add-stock-button"
+            @click="openDrawer"
+          >
             <LucidePlus :size="16" />
             Add Stock
           </BHButton>
@@ -30,7 +34,7 @@
     <!-- Section Stock Analysis -->
     <div class="analysis-section">
       <BHTable
-        :data="shares"
+        :data="stocks"
         :columns="tableColumns"
         :items-per-page="10"
         sort-by="globalScore"
@@ -52,8 +56,14 @@
 
 <script setup lang="ts">
 import { useUpdateHeader } from '~/composables/updateHeader';
-import type { Share } from '~/types/share';
-import { LucideBarChart, LucideTrendingUp, LucidePlus } from '#components';
+import BHEditStockForm from '~/components/organisms/BHEditStockForm.vue';
+import type { Stock } from '~/types/stock';
+import {
+  LucideBarChart,
+  LucideBuilding2,
+  LucidePlus,
+  LucideTrendingUp,
+} from '#components';
 
 const { updateHeader } = useUpdateHeader();
 
@@ -100,77 +110,32 @@ const tableColumns = [
 ];
 
 // Données de test avec scores numériques
-const shares: Share[] = [
-  {
-    id: '1',
-    name: 'NVDA',
-    company: 'NVIDIA Corp',
-    logoColor: '#10B981',
-    globalScore: 92,
-    ratings: {
-      valorisation: 75,
-      croissance: 98,
-      profitabilite: 95,
-      santeFInanciere: 90,
-      retourInvestisseurs: 85,
-    },
-  },
-  {
-    id: '2',
-    name: 'AAPL',
-    company: 'Apple Inc',
-    logoColor: '#3B82F6',
-    globalScore: 88,
-    ratings: {
-      valorisation: 70,
-      croissance: 78,
-      profitabilite: 92,
-      santeFInanciere: 95,
-      retourInvestisseurs: 85,
-    },
-  },
-  {
-    id: '3',
-    name: 'MSFT',
-    company: 'Microsoft Corp',
-    logoColor: '#8B5CF6',
-    globalScore: 88,
-    ratings: {
-      valorisation: 72,
-      croissance: 90,
-      profitabilite: 95,
-      santeFInanciere: 88,
-      retourInvestisseurs: 82,
-    },
-  },
-  {
-    id: '4',
-    name: 'TSLA',
-    company: 'Tesla Inc',
-    logoColor: '#EF4444',
-    globalScore: 65,
-    ratings: {
-      valorisation: 45,
-      croissance: 85,
-      profitabilite: 68,
-      santeFInanciere: 72,
-      retourInvestisseurs: 65,
-    },
-  },
-];
+const { list } = useStockApi();
+
+const { data } = await list(1, 10);
+
+const stocks = ref<Stock[]>(data.value || []);
 
 // Computed properties pour les statistiques
 const averageScore = computed(() => {
-  const total = shares.reduce((sum, share) => sum + share.globalScore, 0);
-  return Math.round((total / shares.length) * 10) / 10;
+  // const total = shares.reduce((sum, share) => sum + share.globalScore, 0);
+  // return Math.round((total / shares.length) * 10) / 10;
+  return 0;
 });
 
 const excellentStocksPercentage = computed(() => {
-  const excellentCount = shares.filter(
-    (share) => share.globalScore >= 90,
-  ).length;
-  return Math.round((excellentCount / shares.length) * 100);
+  // const excellentCount = shares.filter(
+  //   (share) => share.globalScore >= 90,
+  // ).length;
+  // return Math.round((excellentCount / shares.length) * 100);
+  return 0;
 });
+
+const { open } = useDrawer();
+
+function openDrawer() {
+  open($t('shares-create'), LucideBuilding2, BHEditStockForm);
+}
 
 // Handlers pour les événements du tableau
 const handlePageChange = (page: number) => {
@@ -183,9 +148,8 @@ const handleSortChange = (sortBy: string, direction: 'asc' | 'desc') => {
 
 onMounted(() => {
   updateHeader({
-    title: 'Classifications',
-    subtitle:
-      'Analyse détaillée de vos actions selon différents critères de performance',
+    title: $t('classifications'),
+    subtitle: $t('shares-classifications-subtitle'),
   });
 });
 </script>
