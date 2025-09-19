@@ -17,6 +17,7 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
+    '@vee-validate/nuxt',
     '@vueuse/nuxt',
     'nuxt-echarts',
     'nuxt-lucide-icons',
@@ -59,6 +60,11 @@ export default defineNuxtConfig({
       { code: 'fr', name: 'Français', file: 'fr-FR.json' },
       { code: 'en', name: 'English', file: 'en-US.json' },
     ],
+  },
+
+  // Vee Validate
+  veeValidate: {
+    autoImports: true,
   },
 
   // Echart config

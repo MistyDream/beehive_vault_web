@@ -10,5 +10,148 @@
   "shares-classifications-subtitle": "Detailed analysis of your shares according to different performance criteria",
   "shares-create": "Create a share",
   "bank-account-overview": "Overview",
-  "bank-account-classifications": "Classifications"
+  "bank-account-classifications": "Classifications",
+  "stock": {
+    "form": {
+      "imageAlt": "Stock image",
+      "name": {
+        "label": "Company name",
+        "placeholder": "Apple Inc."
+      },
+      "symbol": {
+        "label": "Ticker",
+        "placeholder": "AAPL"
+      },
+      "isin": {
+        "label": "ISIN",
+        "placeholder": "US5949181045"
+      },
+      "country": {
+        "label": "Country",
+        "placeholder": "Select a country"
+      },
+      "market": {
+        "label": "Market",
+        "placeholder": "Select a market"
+      },
+      "sector": {
+        "label": "Sector",
+        "placeholder": "Select a sector"
+      },
+      "industry": {
+        "label": "Industry",
+        "placeholder": "Select an industry"
+      },
+      "badges": {
+        "label": "Badges",
+        "placeholder": "Select badges",
+        "options": {
+          "DEEP_VALUE": "Deep Value",
+          "RECOVERY": "Recovery",
+          "HYPERGROWTH": "Hypergrowth",
+          "PROFITABLE_GROWTH": "Profitable Growth",
+          "COMPOUNDER": "Compounder",
+          "CAPITAL_LIGHT_MOAT": "Capital Light Moat",
+          "DIVIDEND_ARISTO": "Dividend Aristo",
+          "HIGH_YIELD_DEFENSIVE": "High Yield Defensive",
+          "HIGH_MOMENTUM": "High Momentum",
+          "MEAN_REVERT": "Mean Revert",
+          "STABLE_CASHFLOW": "Stable Cashflow",
+          "BOND_PROXY": "Bond Proxy"
+        }
+      },
+      "errors": {
+        "required": "This field is required"
+      },
+      "sectors": {
+        "COMMUNICATION_SERVICES": "Communication Services",
+        "CONSUMER_DISCRETIONARY": "Consumer Discretionary",
+        "CONSUMER_STAPLES": "Consumer Staples",
+        "ENERGY": "Energy",
+        "FINANCIALS": "Financials",
+        "HEALTH_CARE": "Health Care",
+        "INDUSTRIALS": "Industrials",
+        "INFORMATION_TECHNOLOGY": "Information Technology",
+        "MATERIALS": "Materials",
+        "REAL_ESTATE": "Real Estate",
+        "UTILITIES": "Utilities"
+      },
+      "industries": {
+        "DIVERSIFIED_TELECOMMUNICATION_SERVICES": "Diversified Telecommunication Services",
+        "WIRELESS_TELECOMMUNICATION_SERVICES": "Wireless Telecommunication Services",
+        "MEDIA": "Media",
+        "ENTERTAINMENT": "Entertainment",
+        "INTERACTIVE_MEDIA_SERVICES": "Interactive Media & Services",
+        "AUTOMOBILE_COMPONENTS": "Automobile Components",
+        "AUTOMOBILES": "Automobiles",
+        "HOUSEHOLD_DURABLES": "Household Durables",
+        "LEISURE_PRODUCTS": "Leisure Products",
+        "TEXTILES_APPAREL_LUXURY_GOODS": "Textiles, Apparel & Luxury Goods",
+        "HOTELS_RESTAURANTS_LEISURE": "Hotels, Restaurants & Leisure",
+        "DIVERSIFIED_CONSUMER_SERVICES": "Diversified Consumer Services",
+        "DISTRIBUTORS": "Distributors",
+        "BROADLINE_RETAIL": "Broadline Retail",
+        "SPECIALTY_RETAIL": "Specialty Retail",
+        "CONSUMER_STAPLES_DISTRIBUTION_RETAIL": "Consumer Staples Distribution & Retail",
+        "BEVERAGES": "Beverages",
+        "FOOD_PRODUCTS": "Food Products",
+        "TOBACCO": "Tobacco",
+        "HOUSEHOLD_PRODUCTS": "Household Products",
+        "PERSONAL_CARE_PRODUCTS": "Personal Care Products",
+        "ENERGY_EQUIPMENT_SERVICES": "Energy Equipment & Services",
+        "OIL_GAS_CONSUMABLE_FUELS": "Oil, Gas & Consumable Fuels",
+        "BANKS": "Banks",
+        "FINANCIAL_SERVICES": "Financial Services",
+        "CONSUMER_FINANCE": "Consumer Finance",
+        "CAPITAL_MARKETS": "Capital Markets",
+        "REITS": "REITs",
+        "INSURANCE": "Insurance",
+        "HEALTH_CARE_EQUIPMENT_SUPPLIES": "Health Care Equipment & Supplies",
+        "HEALTH_CARE_PROVIDERS_SERVICES": "Health Care Providers & Services",
+        "HEALTH_CARE_TECHNOLOGY": "Health Care Technology",
+        "BIOTECHNOLOGY": "Biotechnology",
+        "PHARMACEUTICALS": "Pharmaceuticals",
+        "LIFE_SCIENCES_TOOLS_AND_SERVICES": "Life Sciences Tools & Services",
+        "AEROSPACE_DEFENSE": "Aerospace & Defense",
+        "BUILDING_PRODUCTS": "Building Products",
+        "CONSTRUCTION_ENGINEERING": "Construction & Engineering",
+        "ELECTRICAL_EQUIPMENT": "Electrical Equipment",
+        "INDUSTRIAL_CONGLOMERATES": "Industrial Conglomerates",
+        "MACHINERY": "Machinery",
+        "TRADING_COMPANIES_DISTRIBUTORS": "Trading Companies & Distributors",
+        "COMMERCIAL_SERVICES_SUPPLIES": "Commercial Services & Supplies",
+        "PROFESSIONAL_SERVICES": "Professional Services",
+        "AIR_FREIGHT_LOGISTICS": "Air Freight & Logistics",
+        "PASSENGER_AIRLINES": "Passenger Airlines",
+        "MARINES_TRANSPORTATION": "Marine Transportation",
+        "GROUND_TRANSPORTATION": "Ground Transportation",
+        "TRANSPORTATION_INFRASTRUCTURE": "Transportation Infrastructure",
+        "IT_SERVICES": "IT Services",
+        "SOFTWARE": "Software",
+        "COMMINUCATIONS_EQUIPMENT": "Communications Equipment",
+        "TECHNOLOGY_HARDWARE_STORAGE_PERIPHERALS": "Technology Hardware, Storage & Peripherals",
+        "ELECTRONIC_EQUIPMENT,INSTRUMENTS_COMPONENTS": "Electronic Equipment, Instruments & Components",
+        "SEMICONDUCTORS_AND_SEMICONDUCTOR_EQUIPMENT": "Semiconductors & Semiconductor Equipment",
+        "CHEMICALS": "Chemicals",
+        "CONSTRUCTION_MATERIALS": "Construction Materials",
+        "CONTAINERS_PACKAGING": "Containers & Packaging",
+        "METALS_MINING": "Metals & Mining",
+        "PAPER_FOREST_PRODUCTS": "Paper & Forest Products",
+        "DEVERSIFIED_REITS": "Diversified REITs",
+        "INDUSTRIAL_REITS": "Industrial REITs",
+        "HOTEL_RESORT_REITS": "Hotel & Resort REITs",
+        "OFFICE_REITS": "Office REITs",
+        "RESIDENTIAL_REITS": "Residential REITs",
+        "RETAIL_REITS": "Retail REITs",
+        "SPECIALIZED_REITS": "Specialized REITs",
+        "REAL_ESTATE_MANAGEMENT_DEVELOPMENT": "Real Estate Management & Development",
+        "ELECTRIC_UTILITIES": "Electric Utilities",
+        "GAS_UTILITIES": "Gas Utilities",
+        "MULTI_UTILITIES": "Multi-Utilities",
+        "WATER_UTILITIES": "Water Utilities",
+        "INDEPENDENT_POWER_RENEWABLE_ELECTRICITY": "Independent Power & Renewable Electricity"
+      },
+      "submit": "Save stock"
+    }
+  }
 }

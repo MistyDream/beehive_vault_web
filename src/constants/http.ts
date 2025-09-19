@@ -21,6 +21,7 @@ export const HTTP_STATUS = {
 export const API_ENDPOINTS = {
   STOCKS: {
     LIST: '/stocks/list',
+    CREATE: '/stocks',
   },
 } as const;
 

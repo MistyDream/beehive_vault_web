@@ -10,8 +10,12 @@
       :value="modelValue"
       :disabled="disabled"
       class="bh-input__input"
+      :class="{ 'bh-input__input--error': !!error }"
       @input="handleInput"
     />
+    <p v-if="error" class="bh-input__error">
+      {{ error }}
+    </p>
   </div>
 </template>
 
@@ -23,6 +27,7 @@ interface Props {
   placeholder?: string;
   modelValue?: string;
   disabled?: boolean;
+  error?: string;
 }
 
 withDefaults(defineProps<Props>(), {
@@ -32,6 +37,7 @@ withDefaults(defineProps<Props>(), {
   placeholder: '',
   modelValue: '',
   disabled: false,
+  error: '',
 });
 
 const emit = defineEmits<{
@@ -58,5 +64,13 @@ const handleInput = (event: Event) => {
   @apply bg-dark-gray-600;
   @apply border border-dark-gray-450;
   @apply text-sm text-warm-white-500 font-medium placeholder:text-dark-gray-400;
+}
+
+.bh-input__input--error {
+  @apply border-red-500;
+}
+
+.bh-input__error {
+  @apply text-red-400 text-xs mt-1;
 }
 </style>

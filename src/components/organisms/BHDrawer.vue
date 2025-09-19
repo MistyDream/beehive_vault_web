@@ -58,7 +58,7 @@ const {
 /* Le drawer lui-même */
 .bh-drawer {
   @apply absolute top-0 right-0;
-  @apply w-fit h-screen p-4;
+  @apply w-1/2 h-screen p-4;
   @apply bg-dark-gray-500;
   @apply shadow-2xl;
 }

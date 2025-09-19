@@ -19,6 +19,20 @@ export interface Stock {
   industry: string;
   country: string;
   badges: string[];
-  score: InvestmentScore;
+  score: InvestmentScore | null;
   updatedAt: string;
+}
+
+export interface CreateStockPayload {
+  name: string;
+  symbol: string;
+  isin: string;
+  currency: string;
+  market: string;
+  sector: string;
+  industry: string;
+  country: string;
+  badges: string[];
+  logo?: string;
+  score?: Partial<InvestmentScore>;
 }

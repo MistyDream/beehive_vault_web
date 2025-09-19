@@ -25,32 +25,51 @@
 
     <!-- Note globale -->
     <td class="bh-share-row--score">
-      <BHScoreBadge :score="share.score.total" :is-global-score="true" />
+      <BHScoreBadge
+        :score="share.score?.total ?? 0"
+        :is-global-score="true"
+        :disabled="!share.score"
+      />
     </td>
 
     <!-- Valorisation -->
     <td class="bh-share-row--rating">
-      <BHScoreBadge :score="share.score.valuation" />
+      <BHScoreBadge
+        :score="share.score?.valuation ?? 0"
+        :disabled="!share.score"
+      />
     </td>
 
     <!-- Croissance -->
     <td class="bh-share-row--rating">
-      <BHScoreBadge :score="share.score.growth" />
+      <BHScoreBadge
+        :score="share.score?.growth ?? 0"
+        :disabled="!share.score"
+      />
     </td>
 
     <!-- Profitabilité -->
     <td class="bh-share-row--rating">
-      <BHScoreBadge :score="share.score.profitability" />
+      <BHScoreBadge
+        :score="share.score?.profitability ?? 0"
+        :disabled="!share.score"
+      />
     </td>
 
     <!-- Santé Financière -->
     <td class="bh-share-row--rating">
-      <BHScoreBadge :score="share.score.solidity" />
+      <BHScoreBadge
+        :score="share.score?.solidity ?? 0"
+        :disabled="!share.score"
+      />
     </td>
 
     <!-- Retour aux investisseurs -->
     <td class="bh-share-row--rating">
-      <BHScoreBadge :score="share.score.shareholderReturn" />
+      <BHScoreBadge
+        :score="share.score?.shareholderReturn ?? 0"
+        :disabled="!share.score"
+      />
     </td>
 
     <!-- Actions -->

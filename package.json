@@ -19,6 +19,7 @@
     "@nuxtjs/i18n": "10.0.6",
     "@nuxtjs/tailwindcss": "6.13.2",
     "@pinia/nuxt": "0.11.2",
+    "@vee-validate/nuxt": "^4.15.1",
     "@vueuse/nuxt": "13.0.0",
     "animate.css": "^4.1.1",
     "echarts": "^5.5.1",
@@ -28,7 +29,8 @@
     "nuxt-lucide-icons": "1.0.5",
     "pinia": "^3.0.3",
     "vue": "^3.5.13",
-    "vue-router": "^4.5.0"
+    "vue-router": "^4.5.0",
+    "yup": "^1.7.0"
   },
   "packageManager": "yarn@4.7.0+sha512.5a0afa1d4c1d844b3447ee3319633797bcd6385d9a44be07993ae52ff4facabccafb4af5dcd1c2f9a94ac113e5e9ff56f6130431905884414229e284e37bb7c9",
   "devDependencies": {

@@ -1,8 +1,11 @@
 <template>
   <nav class="bh-sidebar">
     <div class="bh-sidebar--head">
-      <div class="flex items-center text-2xl">Logo</div>
-      <!-- <div class="bh-sidebar--app-name">BeeHive Vault</div> -->
+      <BHImage
+        src="/img/beehive_vault_logo.png"
+        class="bh-sidebar--head__logo"
+      />
+      <div class="bh-sidebar--head__app-name">BeeHive Vault</div>
       <div class="bh-sidebar--head__button">
         <BHButton>
           <LucidePanelLeft />
@@ -79,13 +82,18 @@ const navigation: NavigationLink[] = [
   @apply h-fit w-full px-4;
 }
 
+.bh-sidebar--head__logo {
+  @apply fixed h-16 w-16;
+}
+
 .bh-sidebar--content {
   @apply flex;
   @apply w-full mt-5 px-4;
 }
 
-.bh-sidebar--app-name {
-  @apply font-poppins text-sm;
+.bh-sidebar--head__app-name {
+  @apply fixed left-20;
+  @apply font-poppins text-base;
 }
 
 .bh-sidebar--head__button {

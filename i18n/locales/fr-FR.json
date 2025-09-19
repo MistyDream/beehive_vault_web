@@ -10,5 +10,148 @@
   "shares-classifications-subtitle": "Analyse détaillée de vos actions selon différents critères de performance",
   "shares-create": "Créer une action",
   "bank-account-overview": "Vue d'ensemble",
-  "bank-account-classifications": "Classifications"
+  "bank-account-classifications": "Classifications",
+  "stock": {
+    "form": {
+      "imageAlt": "Image de l'action",
+      "name": {
+        "label": "Nom de l'entreprise",
+        "placeholder": "Apple Inc."
+      },
+      "symbol": {
+        "label": "Symbole boursier",
+        "placeholder": "AAPL"
+      },
+      "isin": {
+        "label": "ISIN",
+        "placeholder": "US5949181045"
+      },
+      "country": {
+        "label": "Pays",
+        "placeholder": "Sélectionnez un pays"
+      },
+      "market": {
+        "label": "Marché",
+        "placeholder": "Sélectionnez un marché"
+      },
+      "sector": {
+        "label": "Secteur",
+        "placeholder": "Sélectionnez un secteur"
+      },
+      "industry": {
+        "label": "Industrie",
+        "placeholder": "Sélectionnez une industrie"
+      },
+      "badges": {
+        "label": "Badges",
+        "placeholder": "Sélectionnez des badges",
+        "options": {
+          "DEEP_VALUE": "Deep Values",
+          "RECOVERY": "Recovery",
+          "HYPERGROWTH": "Hypergrowth",
+          "PROFITABLE_GROWTH": "Profitable Growth",
+          "COMPOUNDER": "Compounder",
+          "CAPITAL_LIGHT_MOAT": "Capital Light Moat",
+          "DIVIDEND_ARISTO": "Dividend Aristocrate",
+          "HIGH_YIELD_DEFENSIVE": "High Yield Defensive",
+          "HIGH_MOMENTUM": "High Momentum",
+          "MEAN_REVERT": "Mean Revert",
+          "STABLE_CASHFLOW": "Stable Cashflow",
+          "BOND_PROXY": "Bond Proxy"
+        }
+      },
+      "errors": {
+        "required": "Ce champ est requis"
+      },
+      "sectors": {
+        "COMMUNICATION_SERVICES": "Services de communication",
+        "CONSUMER_DISCRETIONARY": "Consommation discrétionnaire",
+        "CONSUMER_STAPLES": "Biens de consommation courante",
+        "ENERGY": "Énergie",
+        "FINANCIALS": "Services financiers",
+        "HEALTH_CARE": "Santé",
+        "INDUSTRIALS": "Industrie",
+        "INFORMATION_TECHNOLOGY": "Technologies de l'information",
+        "MATERIALS": "Matériaux",
+        "REAL_ESTATE": "Immobilier",
+        "UTILITIES": "Services aux collectivités"
+      },
+      "industries": {
+        "DIVERSIFIED_TELECOMMUNICATION_SERVICES": "Services de télécommunication diversifiés",
+        "WIRELESS_TELECOMMUNICATION_SERVICES": "Services de télécommunication sans fil",
+        "MEDIA": "Médias",
+        "ENTERTAINMENT": "Divertissement",
+        "INTERACTIVE_MEDIA_SERVICES": "Médias et services interactifs",
+        "AUTOMOBILE_COMPONENTS": "Composants automobiles",
+        "AUTOMOBILES": "Automobiles",
+        "HOUSEHOLD_DURABLES": "Biens durables ménagers",
+        "LEISURE_PRODUCTS": "Produits de loisirs",
+        "TEXTILES_APPAREL_LUXURY_GOODS": "Textiles, habillement et produits de luxe",
+        "HOTELS_RESTAURANTS_LEISURE": "Hôtels, restaurants et loisirs",
+        "DIVERSIFIED_CONSUMER_SERVICES": "Services aux consommateurs diversifiés",
+        "DISTRIBUTORS": "Distributeurs",
+        "BROADLINE_RETAIL": "Distribution généraliste",
+        "SPECIALTY_RETAIL": "Distribution spécialisée",
+        "CONSUMER_STAPLES_DISTRIBUTION_RETAIL": "Distribution et commerce de produits de base",
+        "BEVERAGES": "Boissons",
+        "FOOD_PRODUCTS": "Produits alimentaires",
+        "TOBACCO": "Tabac",
+        "HOUSEHOLD_PRODUCTS": "Produits ménagers",
+        "PERSONAL_CARE_PRODUCTS": "Produits de soins personnels",
+        "ENERGY_EQUIPMENT_SERVICES": "Équipements et services énergétiques",
+        "OIL_GAS_CONSUMABLE_FUELS": "Pétrole, gaz et combustibles consommables",
+        "BANKS": "Banques",
+        "FINANCIAL_SERVICES": "Services financiers",
+        "CONSUMER_FINANCE": "Financement aux particuliers",
+        "CAPITAL_MARKETS": "Marchés des capitaux",
+        "REITS": "FPI (REIT)",
+        "INSURANCE": "Assurances",
+        "HEALTH_CARE_EQUIPMENT_SUPPLIES": "Équipements et fournitures de santé",
+        "HEALTH_CARE_PROVIDERS_SERVICES": "Fournisseurs et services de santé",
+        "HEALTH_CARE_TECHNOLOGY": "Technologie de santé",
+        "BIOTECHNOLOGY": "Biotechnologie",
+        "PHARMACEUTICALS": "Pharmaceutique",
+        "LIFE_SCIENCES_TOOLS_AND_SERVICES": "Outils et services en sciences de la vie",
+        "AEROSPACE_DEFENSE": "Aéronautique et défense",
+        "BUILDING_PRODUCTS": "Produits de construction",
+        "CONSTRUCTION_ENGINEERING": "Construction et ingénierie",
+        "ELECTRICAL_EQUIPMENT": "Équipements électriques",
+        "INDUSTRIAL_CONGLOMERATES": "Conglomérats industriels",
+        "MACHINERY": "Machines",
+        "TRADING_COMPANIES_DISTRIBUTORS": "Sociétés commerciales et distributeurs",
+        "COMMERCIAL_SERVICES_SUPPLIES": "Services et fournitures commerciales",
+        "PROFESSIONAL_SERVICES": "Services professionnels",
+        "AIR_FREIGHT_LOGISTICS": "Fret aérien et logistique",
+        "PASSENGER_AIRLINES": "Compagnies aériennes",
+        "MARINES_TRANSPORTATION": "Transport maritime",
+        "GROUND_TRANSPORTATION": "Transport terrestre",
+        "TRANSPORTATION_INFRASTRUCTURE": "Infrastructures de transport",
+        "IT_SERVICES": "Services TI",
+        "SOFTWARE": "Logiciels",
+        "COMMINUCATIONS_EQUIPMENT": "Équipements de communication",
+        "TECHNOLOGY_HARDWARE_STORAGE_PERIPHERALS": "Matériel technologique, stockage et périphériques",
+        "ELECTRONIC_EQUIPMENT,INSTRUMENTS_COMPONENTS": "Équipements électroniques, instruments et composants",
+        "SEMICONDUCTORS_AND_SEMICONDUCTOR_EQUIPMENT": "Semi-conducteurs et équipements associés",
+        "CHEMICALS": "Produits chimiques",
+        "CONSTRUCTION_MATERIALS": "Matériaux de construction",
+        "CONTAINERS_PACKAGING": "Emballages et conteneurs",
+        "METALS_MINING": "Métaux et mines",
+        "PAPER_FOREST_PRODUCTS": "Produits forestiers et papier",
+        "DEVERSIFIED_REITS": "FPI diversifiés (REIT)",
+        "INDUSTRIAL_REITS": "FPI industriels (REIT)",
+        "HOTEL_RESORT_REITS": "FPI hôteliers et de villégiature (REIT)",
+        "OFFICE_REITS": "FPI de bureaux (REIT)",
+        "RESIDENTIAL_REITS": "FPI résidentiels (REIT)",
+        "RETAIL_REITS": "FPI commerciaux (REIT)",
+        "SPECIALIZED_REITS": "FPI spécialisés (REIT)",
+        "REAL_ESTATE_MANAGEMENT_DEVELOPMENT": "Gestion et promotion immobilières",
+        "ELECTRIC_UTILITIES": "Services d'électricité",
+        "GAS_UTILITIES": "Services de gaz",
+        "MULTI_UTILITIES": "Services multi-utilities",
+        "WATER_UTILITIES": "Services d'eau",
+        "INDEPENDENT_POWER_RENEWABLE_ELECTRICITY": "Producteurs d'électricité indépendante et renouvelable"
+      },
+      "submit": "Enregistrer l'action"
+    }
+  }
 }
