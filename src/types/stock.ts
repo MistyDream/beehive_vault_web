@@ -23,6 +23,17 @@ export interface Stock {
   updatedAt: string;
 }
 
+type sortOrder = 'ASC' | 'DESC';
+
+export type StockFilters = {
+  stock?: {
+    name: sortOrder;
+  };
+  score?: {
+    total: sortOrder;
+  };
+};
+
 export interface CreateStockPayload {
   name: string;
   symbol: string;
@@ -35,4 +46,14 @@ export interface CreateStockPayload {
   badges: string[];
   logo?: string;
   score?: Partial<InvestmentScore>;
+}
+
+export interface UpdateStockPayload {
+  name?: string;
+  currency?: string;
+  market?: string;
+  sector?: string;
+  industry?: string;
+  country?: string;
+  badges?: string[];
 }

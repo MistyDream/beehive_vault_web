@@ -9,6 +9,21 @@
   "shares-classifications": "Classifications",
   "shares-classifications-subtitle": "Detailed analysis of your shares according to different performance criteria",
   "shares-create": "Create a share",
+  "shares-detail": "Details",
+  "shares-edit": "Edit a share",
+  "add-stock": "Add Stock",
+  "back": "Back",
+  "table": {
+    "labels": {
+      "stock": "Stock",
+      "globalScore": "Global Score",
+      "valuation": "Valuation",
+      "growth": "Growth",
+      "profitability": "Profitability",
+      "financialHealth": "Financial Health",
+      "investorReturns": "Investor Returns"
+    }
+  },
   "bank-account-overview": "Overview",
   "bank-account-classifications": "Classifications",
   "stock": {
@@ -41,6 +56,15 @@
       "industry": {
         "label": "Industry",
         "placeholder": "Select an industry"
+      },
+      "countries": {
+        "US": "United States",
+        "FR": "France",
+        "UK": "United Kingdom",
+        "DE": "Germany",
+        "NL": "Netherlands",
+        "DK": "Denmark",
+        "CAN": "Canada"
       },
       "badges": {
         "label": "Badges",

@@ -14,6 +14,6 @@
 
 <style lang="css" scoped>
 main {
-  @apply ml-72 p-4;
+  @apply ml-72 py-4;
 }
 </style>

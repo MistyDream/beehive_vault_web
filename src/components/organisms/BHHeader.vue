@@ -1,5 +1,5 @@
 <template>
-  <header class="bh-header">
+  <header v-show="title" class="bh-header">
     <h1 class="bh-header__title">{{ title }}</h1>
     <p class="bh-header__subtitle">
       {{ subtitle }}

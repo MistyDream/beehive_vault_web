@@ -54,7 +54,37 @@
         role="menu"
         tabindex="-1"
       >
-        <slot name="content" :close="close" :is-open="isOpen" :toggle="toggle">
+        <template v-if="hasItems">
+          <div class="bh-dropdown__items">
+            <BHButton
+              v-for="(item, index) in items"
+              :key="index"
+              :to="item.to"
+              :href="item.href"
+              :disabled="item.disabled"
+              role="menuitem"
+              :tabindex="item.disabled ? -1 : 0"
+              @click="handleItemSelect(item)"
+              @keydown.enter.prevent="handleItemSelect(item)"
+              @keydown.space.prevent="handleItemSelect(item)"
+            >
+              <component
+                :is="item.icon"
+                v-if="item.icon"
+                :size="16"
+                class="bh-dropdown__item-icon"
+              />
+              <span>{{ item.text }}</span>
+            </BHButton>
+          </div>
+        </template>
+        <slot
+          v-else
+          name="content"
+          :close="close"
+          :is-open="isOpen"
+          :toggle="toggle"
+        >
           <div class="bh-dropdown__default-content">
             <div class="bh-dropdown__item" role="menuitem" tabindex="-1">
               Option 1
@@ -73,6 +103,8 @@
 </template>
 
 <script setup lang="ts">
+import type { NavigationLink } from '~/types/navigation-link';
+
 interface Props {
   modelValue?: boolean;
   disabled?: boolean;
@@ -86,6 +118,7 @@ interface Props {
   offset?: number;
   autoClose?: boolean;
   animationType?: 'fade' | 'slide' | 'zoom' | 'bounce';
+  items?: NavigationLink[];
 }
 
 interface Emits {
@@ -101,6 +134,7 @@ const props = withDefaults(defineProps<Props>(), {
   offset: 8,
   autoClose: true,
   animationType: 'fade',
+  items: () => [],
 });
 
 const emit = defineEmits<Emits>();
@@ -113,9 +147,11 @@ const floatingRef = ref<HTMLElement>();
 const [isOpen, toggle] = useToggle(props.modelValue);
 const showMenu = ref(false);
 const isAnimating = ref(false);
+const items = computed(() => props.items);
+const hasItems = computed(() => items.value.length > 0);
 
 // Synchronisation avec v-model
-syncRef(toRef(props, 'modelValue'), isOpen, { direction: 'both' });
+// syncRef(toRef(props, 'modelValue'), isOpen, { direction: 'both' });
 
 // Classes d'animation selon le type et la direction
 const getAnimationClasses = (entering: boolean) => {
@@ -164,6 +200,18 @@ const close = () => {
     showMenu.value = false;
     isAnimating.value = false;
   }, 300); // Durée par défaut d'animate.css
+};
+
+const handleItemSelect = (item: NavigationLink) => {
+  if (item.disabled) {
+    return;
+  }
+
+  item.onClick?.();
+
+  if (props.autoClose) {
+    close();
+  }
 };
 
 const handleToggle = () => {
@@ -304,10 +352,7 @@ onMounted(() => {
 
 .bh-dropdown__trigger {
   @apply cursor-pointer;
-}
-
-.bh-dropdown__trigger:focus {
-  @apply outline-none;
+  @apply focus:outline-none;
 }
 
 .bh-dropdown__default-trigger {
@@ -331,7 +376,7 @@ onMounted(() => {
 }
 
 .bh-dropdown__menu {
-  @apply bg-dark-gray-500 rounded-2xl;
+  @apply bg-dark-gray-600 rounded-2xl;
   @apply border border-light-gray-700;
   @apply shadow-xl;
   @apply min-w-[200px];
@@ -344,26 +389,24 @@ onMounted(() => {
   @apply flex flex-col;
 }
 
+.bh-dropdown__items {
+  @apply flex flex-col;
+}
+
 .bh-dropdown__item {
+  @apply flex items-center gap-2;
   @apply px-4 py-2;
-  @apply text-warm-white-500;
-  @apply hover:bg-dark-gray-400;
+  @apply text-left text-sm text-warm-white-500;
+  @apply hover:text-golden-yellow-500 focus:text-golden-yellow-500;
   @apply cursor-pointer;
   @apply transition-colors;
-  @apply focus:outline-none focus:bg-dark-gray-400;
+  @apply focus:outline-none;
 }
 
-.bh-dropdown__item:hover,
-.bh-dropdown__item:focus {
-  @apply text-golden-yellow-500;
-}
-
-.bh-dropdown__item:first-child {
-  @apply rounded-t-xl;
-}
-
-.bh-dropdown__item:last-child {
-  @apply rounded-b-xl;
+.bh-dropdown__item--disabled {
+  @apply cursor-not-allowed opacity-60;
+  @apply hover:bg-transparent hover:text-warm-white-400;
+  @apply focus:bg-transparent;
 }
 
 /* Personnalisation de la vitesse d'animate.css */

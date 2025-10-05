@@ -7,6 +7,7 @@ export interface DrawerState {
   icon: Component | null;
   content: Component | null;
   props: Record<string, unknown> | null;
+  onClose: (() => void) | null;
 }
 
 export const useDrawerStore = defineStore('drawer', {
@@ -17,6 +18,7 @@ export const useDrawerStore = defineStore('drawer', {
     icon: null,
     content: null,
     props: null,
+    onClose: null,
   }),
   actions: {
     toggleWrapper() {
@@ -27,11 +29,13 @@ export const useDrawerStore = defineStore('drawer', {
       icon: Component,
       content: Component,
       props?: Record<string, unknown> | null,
+      onClose?: (() => void) | null,
     ) {
       this.title = title;
       this.icon = icon;
       this.content = content;
       this.props = props || null;
+      this.onClose = onClose || null;
       this.showWrapper = true;
       nextTick(() => {
         this.showDrawer = true;
@@ -43,6 +47,11 @@ export const useDrawerStore = defineStore('drawer', {
       this.content = null;
       this.props = null;
       this.showDrawer = false;
+      // Execute onClose callback if provided
+      if (this.onClose) {
+        this.onClose();
+        this.onClose = null;
+      }
     },
   },
 });

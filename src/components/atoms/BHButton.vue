@@ -80,6 +80,7 @@ function handleClick(event: MouseEvent) {
   @apply px-2 py-1;
   @apply rounded-md drop-shadow-md;
   @apply hover:bg-border-dark;
+  @apply text-warm-white-500;
   @apply transition-colors duration-200;
 }
 

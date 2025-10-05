@@ -101,6 +101,19 @@
         />
       </div>
     </div>
+    <div class="bh-edit-stock-form__import">
+      <div class="bh-edit-stock-form__field bh-edit-stock-form__field--full">
+        <BHJsonInput
+          id="guruFocusImport"
+          v-model="guruFocusImport"
+          label="import Gurufocus"
+          placeholder="{ }"
+          :rows="10"
+          @json-valid="handleGuruFocusValidity"
+          @json-parsed="handleGuruFocusParsed"
+        />
+      </div>
+    </div>
     <div class="bh-edit-stock-form__actions">
       <BHButton
         type="submit"
@@ -115,11 +128,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useForm } from 'vee-validate';
 import { useI18n } from '#imports';
-import { useStockApi } from '~/composables/useStockApi';
-import type { CreateStockPayload, Stock } from '~/types/stock';
+import type {
+  CreateStockPayload,
+  Stock,
+  UpdateStockPayload,
+} from '~/types/stock';
 
 interface Props {
   stock?: Stock;
@@ -151,7 +167,32 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const { t } = useI18n();
-const { create } = useStockApi();
+const { close } = useDrawer();
+const { create, update } = useStockApi();
+const { gfScore } = useScoringApi();
+const isEditMode = computed(() =>
+  Boolean(props.stock?.isin && props.stock.isin.trim().length),
+);
+
+type GuruFocusPayload =
+  | string
+  | number
+  | boolean
+  | null
+  | GuruFocusPayload[]
+  | { [key: string]: GuruFocusPayload };
+
+const guruFocusImport = ref('');
+const isGuruFocusJsonValid = ref(false);
+const guruFocusParsed = ref<GuruFocusPayload | undefined>();
+
+const handleGuruFocusValidity = (value: boolean) => {
+  isGuruFocusJsonValid.value = value;
+};
+
+const handleGuruFocusParsed = (value: GuruFocusPayload | undefined) => {
+  guruFocusParsed.value = value;
+};
 
 const validationSchema = {
   name: (value: string) =>
@@ -195,6 +236,7 @@ const {
   defineField,
   errors,
   isSubmitting,
+  setValues,
 } = useForm<CreateStockPayload>({
   validationSchema,
   initialValues: {
@@ -223,6 +265,28 @@ const [logo] = defineField('logo');
 
 const submitForm = submitWithValidation(async (formValues) => {
   try {
+    if (isEditMode.value && props.stock.isin) {
+      const updatePayload: UpdateStockPayload = {
+        name: formValues.name,
+        currency: formValues.currency,
+        market: formValues.market,
+        sector: formValues.sector,
+        industry: formValues.industry,
+        country: formValues.country,
+        badges: formValues.badges ?? [],
+      };
+
+      const { error } = await update(props.stock.isin, updatePayload);
+
+      if (error.value) {
+        console.error('Failed to update stock', error.value);
+        return;
+      }
+
+      console.info('Stock updated successfully');
+      return;
+    }
+
     const { error } = await create({
       ...formValues,
       badges: formValues.badges ?? [],
@@ -236,9 +300,14 @@ const submitForm = submitWithValidation(async (formValues) => {
 
     console.info('Stock created successfully');
   } catch (err) {
-    console.error('Unexpected error while creating stock', err);
+    const context = isEditMode.value ? 'updating' : 'creating';
+    console.error(`Unexpected error while ${context} stock`, err);
   }
 });
+
+const submitImport = async () => {
+  await gfScore(guruFocusImport.value);
+};
 
 const handleSubmit = async () => {
   if (isSubmitting.value) {
@@ -251,7 +320,34 @@ const handleSubmit = async () => {
   }
 
   await submitForm();
+
+  await submitImport();
+
+  close();
 };
+
+watch(
+  () => props.stock,
+  (newStock) => {
+    if (!newStock) {
+      return;
+    }
+
+    setValues({
+      name: newStock.name,
+      symbol: newStock.symbol,
+      isin: newStock.isin,
+      currency: newStock.currency || 'USD',
+      market: newStock.market,
+      sector: newStock.sector,
+      industry: newStock.industry,
+      country: newStock.country,
+      badges: [...(newStock.badges || [])],
+      logo: newStock.logo,
+    });
+  },
+  { deep: true, immediate: true },
+);
 
 const marketsByCountry: Record<string, { label: string; value: string }[]> = {
   US: [
@@ -268,6 +364,9 @@ const marketsByCountry: Record<string, { label: string; value: string }[]> = {
     { label: 'Xetra', value: 'XETRA' },
     { label: 'Frankfurt Stock Exchange', value: 'FRA' },
   ],
+  NL: [{ label: 'Euronext Amsterdam', value: 'XAMS' }],
+  DK: [{ label: 'OMX Copenhagen', value: 'OMX' }],
+  CAN: [{ label: 'Toronto Stock Exchange', value: 'TSX' }],
 };
 
 const marketOptions = computed(() => marketsByCountry[country.value] || []);
@@ -287,12 +386,14 @@ watch(
   { immediate: true },
 );
 
-const countryOptions = [
-  { label: 'United States', value: 'US' },
-  { label: 'France', value: 'FR' },
-  { label: 'United Kingdom', value: 'UK' },
-  { label: 'Germany', value: 'DE' },
-];
+const COUNTRY_CODES = ['US', 'FR', 'UK', 'DE', 'NL', 'DK', 'CAN'] as const;
+
+const countryOptions = computed(() =>
+  COUNTRY_CODES.map((code) => ({
+    label: t(`stock.form.countries.${code}`),
+    value: code,
+  })),
+);
 
 const SECTOR_KEYS = [
   'COMMUNICATION_SERVICES',
@@ -490,6 +591,7 @@ const badgeOptions = computed(() =>
 .bh-edit-stock-form__geography,
 .bh-edit-stock-form__classification,
 .bh-edit-stock-form__badges,
+.bh-edit-stock-form__import,
 .bh-edit-stock-form__actions {
   @apply flex flex-row gap-4;
 }

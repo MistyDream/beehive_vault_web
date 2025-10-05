@@ -9,6 +9,21 @@
   "shares-classifications": "Classifications",
   "shares-classifications-subtitle": "Analyse détaillée de vos actions selon différents critères de performance",
   "shares-create": "Créer une action",
+  "shares-detail": "Détails",
+  "shares-edit": "Modifier une action",
+  "add-stock": "Ajouter une action",
+  "back": "Retour",
+  "table": {
+    "labels": {
+      "stock": "Action",
+      "globalScore": "Score Global",
+      "valuation": "Valorisation",
+      "growth": "Croissance",
+      "profitability": "Rentabilité",
+      "financialHealth": "Santé Financière",
+      "investorReturns": "Retours Investisseurs"
+    }
+  },
   "bank-account-overview": "Vue d'ensemble",
   "bank-account-classifications": "Classifications",
   "stock": {
@@ -41,6 +56,15 @@
       "industry": {
         "label": "Industrie",
         "placeholder": "Sélectionnez une industrie"
+      },
+      "countries": {
+        "US": "États-Unis",
+        "FR": "France",
+        "UK": "Royaume-Uni",
+        "DE": "Allemagne",
+        "NL": "Pays-Bas",
+        "DK": "Danemark",
+        "CAN": "Canada"
       },
       "badges": {
         "label": "Badges",

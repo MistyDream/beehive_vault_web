@@ -30,14 +30,10 @@
         </thead>
 
         <tbody>
-          <slot
-            name="rows"
-            :sorted-data="paginatedData"
-            :total-items="totalItems"
-          >
+          <slot name="rows" :sorted-data="data" :total-items="total">
             <!-- Fallback content si le slot n'est pas fourni -->
             <tr
-              v-for="(item, index) in paginatedData"
+              v-for="(item, index) in data"
               :key="String(item.id) || index"
               class="table-row"
             >
@@ -57,8 +53,7 @@
     <!-- Pagination -->
     <div class="pagination">
       <span class="pagination-info">
-        Showing {{ startIndex + 1 }} to {{ endIndex }} of
-        {{ totalItems }} results
+        Showing {{ startIndex + 1 }} to {{ endIndex }} of {{ total }} results
       </span>
       <div class="pagination-controls">
         <BHButton class="pagination-button" :disabled="!hasPrev" @click="prev">
@@ -100,7 +95,9 @@ interface Column {
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any[];
+  total: number;
   columns: Column[];
+  page?: number;
   itemsPerPage?: number;
   sortBy?: string;
   sortDirection?: 'asc' | 'desc';
@@ -112,6 +109,7 @@ interface Emits {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  page: 1,
   itemsPerPage: 10,
   sortBy: '',
   sortDirection: 'desc',
@@ -124,48 +122,46 @@ const currentSortBy = ref(props.sortBy);
 const currentSortDirection = ref<'asc' | 'desc'>(props.sortDirection);
 
 // État de pagination réactif
-const currentPage = ref(1);
+const currentPage = ref(props.page);
 
 // Données triées
-const sortedData = computed(() => {
-  const sorted = [...props.data];
+// const sortedData = computed(() => {
+//   const sorted = [...props.data];
 
-  if (currentSortBy.value) {
-    sorted.sort((a, b) => {
-      const aValue = getValueFromPath(a, currentSortBy.value);
-      const bValue = getValueFromPath(b, currentSortBy.value);
+//   if (currentSortBy.value) {
+//     sorted.sort((a, b) => {
+//       const aValue = getValueFromPath(a, currentSortBy.value);
+//       const bValue = getValueFromPath(b, currentSortBy.value);
 
-      if (typeof aValue === 'number' && typeof bValue === 'number') {
-        return currentSortDirection.value === 'desc'
-          ? bValue - aValue
-          : aValue - bValue;
-      }
+//       if (typeof aValue === 'number' && typeof bValue === 'number') {
+//         return currentSortDirection.value === 'desc'
+//           ? bValue - aValue
+//           : aValue - bValue;
+//       }
 
-      const aStr = String(aValue).toLowerCase();
-      const bStr = String(bValue).toLowerCase();
+//       const aStr = String(aValue).toLowerCase();
+//       const bStr = String(bValue).toLowerCase();
 
-      const result = aStr.localeCompare(bStr);
-      return currentSortDirection.value === 'desc' ? -result : result;
-    });
-  }
+//       const result = aStr.localeCompare(bStr);
+//       return currentSortDirection.value === 'desc' ? -result : result;
+//     });
+//   }
 
-  return sorted;
-});
+//   return sorted;
+// });
 
 // Computed pour la pagination
-const totalItems = computed(() => sortedData.value.length);
-const totalPages = computed(() =>
-  Math.ceil(totalItems.value / props.itemsPerPage),
-);
+// const totalItems = computed(() => props.total);
+const totalPages = computed(() => Math.ceil(props.total / props.itemsPerPage));
 const startIndex = computed(() => (currentPage.value - 1) * props.itemsPerPage);
 const endIndex = computed(() =>
-  Math.min(startIndex.value + props.itemsPerPage, totalItems.value),
+  Math.min(startIndex.value + props.itemsPerPage, props.total),
 );
 
 // Données paginées
-const paginatedData = computed(() => {
-  return sortedData.value.slice(startIndex.value, endIndex.value);
-});
+// const paginatedData = computed(() => {
+//   return sortedData.value.slice(startIndex.value, endIndex.value);
+// });
 
 // Navigation avec computed
 const hasNext = computed(() => currentPage.value < totalPages.value);
@@ -242,15 +238,6 @@ const getValueFromPath = (obj: any, path: string): any => {
     return current?.[key];
   }, obj);
 };
-
-// Watcher pour les changements de données
-watch(
-  () => props.data,
-  () => {
-    setCurrent(1);
-  },
-  { deep: true },
-);
 
 // Watchers pour synchroniser avec les props
 watch(

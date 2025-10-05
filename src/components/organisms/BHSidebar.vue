@@ -3,6 +3,7 @@
     <div class="bh-sidebar--head">
       <BHImage
         src="/img/beehive_vault_logo.png"
+        alt="logo"
         class="bh-sidebar--head__logo"
       />
       <div class="bh-sidebar--head__app-name">BeeHive Vault</div>

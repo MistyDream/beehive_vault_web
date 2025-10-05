@@ -22,6 +22,10 @@ export const API_ENDPOINTS = {
   STOCKS: {
     LIST: '/stocks/list',
     CREATE: '/stocks',
+    DETAIL: (isin: string) => `/stocks/${isin}`,
+  },
+  SCORING: {
+    GURUFOCUS: '/scores/gf',
   },
 } as const;
 

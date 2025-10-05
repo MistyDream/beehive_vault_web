@@ -12,8 +12,9 @@ const useDrawer = () => {
     icon: Component,
     content: Component,
     props?: Record<string, unknown> | null,
+    onClose?: (() => void) | null,
   ) => {
-    drawerStore.open(title, icon, content, props);
+    drawerStore.open(title, icon, content, props, onClose);
   };
 
   const close = () => {

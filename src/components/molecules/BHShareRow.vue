@@ -7,7 +7,11 @@
           v-if="share.logo"
           class="share-logo"
           :style="{ backgroundImage: `url(${share.logo})` }"
-        />
+        >
+          <BHBadge v-if="isDataOutdated" class="share-badge" type="warning">
+            <LucideTriangleAlert :size="14" />
+          </BHBadge>
+        </div>
         <div
           v-else
           class="share-logo-placeholder"
@@ -15,6 +19,9 @@
         >
           {{ share.name.charAt(0).toUpperCase()
           }}{{ share.name.charAt(1)?.toUpperCase() || '' }}
+          <BHBadge v-if="isDataOutdated" class="share-badge" type="warning">
+            <LucideTriangleAlert :size="14" />
+          </BHBadge>
         </div>
         <div class="share-details">
           <div class="share-symbol">{{ share.symbol }}</div>
@@ -74,7 +81,7 @@
 
     <!-- Actions -->
     <td class="bh-share-row--actions">
-      <BHDropdown>
+      <BHDropdown :items="dropdownItems">
         <template #trigger>
           <BHButton class="bh-share-row--menu">
             <LucideMoreVertical :size="16" />
@@ -87,13 +94,62 @@
 
 <script setup lang="ts">
 import type { Stock } from '~/types/stock';
-import { LucideMoreVertical } from '#components';
+import BHEditStockForm from '~/components/organisms/BHEditStockForm.vue';
+import useDrawer from '~/composables/useDrawer';
+import { useI18n } from '#imports';
+import {
+  LucideBuilding2,
+  LucideEye,
+  LucideMoreVertical,
+  LucidePencil,
+} from '#components';
+import { computed } from 'vue';
+import type { NavigationLink } from '~/types/navigation-link';
 
 interface Props {
   share: Stock;
+  onDrawerClose?: () => void;
 }
+const props = defineProps<Props>();
 
-defineProps<Props>();
+const { t } = useI18n();
+const { open } = useDrawer();
+
+// Check if the stock data is older than 1 month
+const isDataOutdated = computed(() => {
+  if (!props.share.updatedAt) return false;
+
+  const updatedDate = new Date(props.share.updatedAt);
+  const oneMonthAgo = new Date();
+  oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+
+  return updatedDate < oneMonthAgo;
+});
+
+const handleEditShare = () => {
+  open(
+    t('shares-edit'),
+    LucideBuilding2,
+    BHEditStockForm,
+    {
+      stock: props.share,
+    },
+    props.onDrawerClose,
+  );
+};
+
+const dropdownItems = computed<NavigationLink[]>(() => [
+  {
+    text: t('shares-detail'),
+    icon: LucideEye,
+    to: `/shares/${props.share.isin}`,
+  },
+  {
+    text: t('shares-edit'),
+    icon: LucidePencil,
+    onClick: handleEditShare,
+  },
+]);
 </script>
 
 <style lang="css" scoped>
@@ -106,19 +162,25 @@ defineProps<Props>();
   @apply px-6 py-4;
 }
 
+.share-badge {
+  @apply -bottom-2 left-6;
+}
+
 .share-info {
   @apply flex items-center gap-3;
 }
 
 .share-logo {
+  @apply relative;
   @apply w-10 h-10 rounded-full bg-cover bg-center;
   @apply border border-border-dark;
 }
 
 .share-logo-placeholder {
+  @apply relative;
   @apply w-10 h-10 rounded-full;
   @apply border border-border-dark;
-  @apply flex items-center justify-center;
+  @apply flex flex-shrink-0 items-center justify-center;
   @apply text-sm font-bold text-warm-white-500;
 }
 
