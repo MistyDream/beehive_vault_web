@@ -13,6 +13,15 @@
   "shares-edit": "Edit a share",
   "add-stock": "Add Stock",
   "back": "Back",
+  "detailed-analysis-title": "Detailed Analysis by Category",
+  "detailed-analysis-description": "Discover the detailed composition of the global score through 5 key dimensions of financial analysis",
+  "global-score": "Global Score",
+  "valuation": "Valuation",
+  "growth": "Growth",
+  "profitability": "Profitability",
+  "financial-health": "Financial Health",
+  "investor-returns": "Investor Returns",
+  "detailed-indicators-analysis": "Detailed Indicators Analysis",
   "table": {
     "labels": {
       "stock": "Stock",
@@ -176,6 +185,34 @@
         "INDEPENDENT_POWER_RENEWABLE_ELECTRICITY": "Independent Power & Renewable Electricity"
       },
       "submit": "Save stock"
+    },
+    "metric": {
+      "perScore": "P/E Ratio",
+      "evEbitdaScore": "EV/EBITDA Ratio",
+      "pfcfScore": "PFCF Ratio",
+      "pegScore": "PEG Ratio",
+      "psScore": "P/S Ratio",
+      "pbScore": "P/B Ratio",
+      "revenueScore": "Revenue Growth",
+      "ebitdaScore": "EBITDA Growth",
+      "epsScore": "EPS Growth",
+      "fcfScore": "FCF Growth",
+      "bookValueScore": "Book Value Growth",
+      "roicScore": "ROIC",
+      "opMarginScore": "Operating Margin",
+      "fcfMarginScore": "FCF Margin",
+      "roaScore": "ROA",
+      "netMarginScore": "Net Margin",
+      "interestCoverageScore": "Interest Coverage",
+      "debtToEbitdaScore": "Debt/EBITDA",
+      "quickRatioScore": "Quick Ratio",
+      "cashToDebtScore": "Cash to Debt",
+      "equityToAssetScore": "Equity to Assets",
+      "dividendYieldScore": "Dividend Yield",
+      "buybackYieldScore": "Buyback Yield",
+      "dividendGrowthScore": "Dividend Growth",
+      "payoutRatioScore": "Payout Ratio",
+      "netShareholderYieldScore": "Net Shareholder Yield"
     }
   }
 }

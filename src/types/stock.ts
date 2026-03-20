@@ -1,12 +1,4 @@
-export interface InvestmentScore {
-  valuation: number;
-  profitability: number;
-  growth: number;
-  solidity: number;
-  shareholderReturn: number;
-  total: number;
-  createdAt: string;
-}
+import type { InvestmentScore } from './score';
 
 export interface Stock {
   name: string;

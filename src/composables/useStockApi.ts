@@ -28,6 +28,10 @@ export const useStockApi = () => {
   const detail = (isin: string) => {
     return useFetch<Stock>(API_ENDPOINTS.STOCKS.DETAIL(isin), {
       method: 'GET',
+      params: {
+        'groups[0]': 'detail',
+        'groups[1]': 'sub_detail',
+      },
       $fetch: $api,
     });
   };

@@ -13,6 +13,15 @@
   "shares-edit": "Modifier une action",
   "add-stock": "Ajouter une action",
   "back": "Retour",
+  "detailed-analysis-title": "Analyse Détaillée par Catégorie",
+  "detailed-analysis-description": "Découvrez la composition détaillée du score global à travers 5 dimensions clés de l'analyse financière",
+  "global-score": "Score global",
+  "valuation": "Valorisation",
+  "growth": "Croissance",
+  "profitability": "Profitabilité",
+  "financial-health": "Santé financière",
+  "investor-returns": "Retours investisseur",
+  "detailed-indicators-analysis": "Analyse Détaillée des Indicateurs",
   "table": {
     "labels": {
       "stock": "Action",
@@ -176,6 +185,34 @@
         "INDEPENDENT_POWER_RENEWABLE_ELECTRICITY": "Producteurs d'électricité indépendante et renouvelable"
       },
       "submit": "Enregistrer l'action"
+    },
+    "metric": {
+      "perScore": "P/E Ratio",
+      "evEbitdaScore": "EV/EBITDA Ratio",
+      "pfcfScore": "PFCF Ratio",
+      "pegScore": "PEG Ratio",
+      "psScore": "P/S Ratio",
+      "pbScore": "P/B Ratio",
+      "revenueScore": "Croissance Bénéfices",
+      "ebitdaScore": "Croissance EBITDA",
+      "epsScore": "Croissance BPA",
+      "fcfScore": "Croissance Liquidités",
+      "bookValueScore": "Croissance Book Value",
+      "roicScore": "ROIC",
+      "opMarginScore": "Marge d'opération",
+      "fcfMarginScore": "Marge FCF",
+      "roaScore": "ROA",
+      "netMarginScore": "Marge Net",
+      "interestCoverageScore": "Couverture des intérêts",
+      "debtToEbitdaScore": "Debt/EBITDA",
+      "quickRatioScore": "Quick Ratio",
+      "cashToDebtScore": "Trésorerie sur dette",
+      "equityToAssetScore": "Capitaux propres/Actifs",
+      "dividendYieldScore": "Rendement de dividende",
+      "buybackYieldScore": "Rachat d'action",
+      "dividendGrowthScore": "Croissance du dividende",
+      "payoutRatioScore": "Ratio de distribution",
+      "netShareholderYieldScore": "Rendement net pour l'actionnaire"
     }
   }
 }
