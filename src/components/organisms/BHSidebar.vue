@@ -27,11 +27,7 @@
 <script setup lang="ts">
 import {
   LucideLayoutDashboard,
-  LucideSettings,
   LucideWallet,
-  LucideBarChart,
-  LucideTrendingUp,
-  LucideBriefcaseBusiness,
 } from '#components';
 import type { NavigationLink } from '~/types/navigation-link';
 
@@ -44,31 +40,9 @@ const navigation: NavigationLink[] = [
     icon: LucideLayoutDashboard,
   },
   {
-    text: t('actions'),
-    icon: LucideBriefcaseBusiness,
-    isExpandable: true,
-    children: [
-      {
-        text: t('shares-overview'),
-        to: '/shares',
-        icon: LucideBarChart,
-      },
-      {
-        text: t('shares-classifications'),
-        to: '/shares/classifications',
-        icon: LucideTrendingUp,
-      },
-    ],
-  },
-  {
     text: t('bank-account'),
     to: '/bank-account',
     icon: LucideWallet,
-  },
-  {
-    text: t('settings'),
-    to: '/settings',
-    icon: LucideSettings,
   },
 ];
 </script>

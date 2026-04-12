@@ -18,16 +18,7 @@ export const HTTP_STATUS = {
   SERVICE_UNAVAILABLE: 503,
 } as const;
 
-export const API_ENDPOINTS = {
-  STOCKS: {
-    LIST: '/stocks/list',
-    CREATE: '/stocks',
-    DETAIL: (isin: string) => `/stocks/${isin}`,
-  },
-  SCORING: {
-    GURUFOCUS: '/scores/gf',
-  },
-} as const;
+export const API_ENDPOINTS = {} as const;
 
 export const REQUEST_TIMEOUT = {
   DEFAULT: 10000, // 10 secondes
