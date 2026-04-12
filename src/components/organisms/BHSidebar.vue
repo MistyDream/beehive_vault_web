@@ -7,11 +7,11 @@
         class="bh-sidebar--head__logo"
       />
       <div class="bh-sidebar--head__app-name">BeeHive Vault</div>
-      <div class="bh-sidebar--head__button">
+      <!-- <div class="bh-sidebar--head__button">
         <BHButton>
           <LucidePanelLeft />
         </BHButton>
-      </div>
+      </div> -->
     </div>
     <BHSeparator />
     <div class="bh-sidebar--content">
@@ -35,36 +35,38 @@ import {
 } from '#components';
 import type { NavigationLink } from '~/types/navigation-link';
 
+const { t } = useI18n();
+
 const navigation: NavigationLink[] = [
   {
-    text: $t('dashboard'),
+    text: t('dashboard'),
     to: '/',
     icon: LucideLayoutDashboard,
   },
   {
-    text: $t('actions'),
+    text: t('actions'),
     icon: LucideBriefcaseBusiness,
     isExpandable: true,
     children: [
       {
-        text: $t('shares-overview'),
+        text: t('shares-overview'),
         to: '/shares',
         icon: LucideBarChart,
       },
       {
-        text: $t('shares-classifications'),
+        text: t('shares-classifications'),
         to: '/shares/classifications',
         icon: LucideTrendingUp,
       },
     ],
   },
   {
-    text: $t('bank-account'),
+    text: t('bank-account'),
     to: '/bank-account',
     icon: LucideWallet,
   },
   {
-    text: $t('settings'),
+    text: t('settings'),
     to: '/settings',
     icon: LucideSettings,
   },
@@ -84,7 +86,7 @@ const navigation: NavigationLink[] = [
 }
 
 .bh-sidebar--head__logo {
-  @apply fixed h-16 w-16;
+  @apply h-12 w-12;
 }
 
 .bh-sidebar--content {
@@ -93,7 +95,6 @@ const navigation: NavigationLink[] = [
 }
 
 .bh-sidebar--head__app-name {
-  @apply fixed left-20;
   @apply font-poppins text-base;
 }
 

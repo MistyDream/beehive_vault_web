@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="flex flex-col min-h-screen bg-background-dark text-warm-white-500"
-  >
+  <div class="flex flex-col min-h-screen bg-theme-bg-primary text-theme-text-primary">
     <BHDrawer />
     <BHHeader />
     <BHSidebar />
@@ -11,6 +9,7 @@
     <footer />
   </div>
 </template>
+
 
 <style lang="css" scoped>
 main {

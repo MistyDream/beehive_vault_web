@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: {
     files: [
       './src/assets/css/**/*.css',
@@ -11,6 +12,7 @@ export default {
   theme: {
     extend: {
       colors: {
+        // ─── Raw palettes (unchanged, usable directly) ───
         'golden-yellow': {
           100: '#FFF9E6',
           200: '#FFEDBF',
@@ -29,7 +31,6 @@ export default {
           400: '#87B4E7',
           500: '#4A8AA0',
           600: '#37414D',
-          // 600: '#3B7182',
           700: '#2D5865',
           800: '#1F3F48',
           900: '#11262B',
@@ -97,35 +98,62 @@ export default {
           800: '#991B1B',
           900: '#7F1D1D',
         },
-        // Couleurs utilitaires standardisées
+
+        // ─── Theme-aware semantic colors (switch via .dark class) ───
+        'theme-bg': {
+          primary: 'var(--color-bg-primary)',
+          secondary: 'var(--color-bg-secondary)',
+          card: 'var(--color-bg-card)',
+          elevated: 'var(--color-bg-elevated)',
+        },
+        'theme-text': {
+          primary: 'var(--color-text-primary)',
+          secondary: 'var(--color-text-secondary)',
+          muted: 'var(--color-text-muted)',
+        },
+        'theme-border': {
+          primary: 'var(--color-border-primary)',
+          secondary: 'var(--color-border-secondary)',
+        },
+        'theme-status': {
+          success: 'var(--color-status-success)',
+          warning: 'var(--color-status-warning)',
+          error: 'var(--color-status-error)',
+          info: 'var(--color-status-info)',
+        },
+        'theme-accent': {
+          primary: 'var(--color-accent-primary)',
+          secondary: 'var(--color-accent-secondary)',
+        },
+
+        // ─── Legacy aliases (migrate to theme-* over time) ───
         background: {
-          primary: '#1A1A1A',
-          secondary: '#161616',
-          card: '#212121',
-          dark: '#1A1A1A', // Rétrocompatibilité
+          primary: 'var(--color-bg-primary)',
+          secondary: 'var(--color-bg-secondary)',
+          card: 'var(--color-bg-card)',
+          dark: 'var(--color-bg-primary)',
         },
         text: {
-          primary: '#F5F5F5',
-          secondary: '#A0A0A0',
-          dark: '#0E0E0E', // Rétrocompatibilité
+          primary: 'var(--color-text-primary)',
+          secondary: 'var(--color-text-secondary)',
+          dark: 'var(--color-text-primary)',
         },
         border: {
-          primary: '#292929',
-          secondary: '#374151',
-          dark: '#292929', // Rétrocompatibilité
+          primary: 'var(--color-border-primary)',
+          secondary: 'var(--color-border-secondary)',
+          dark: 'var(--color-border-primary)',
         },
-        // Couleurs d'état sémantiques
         status: {
-          success: '#22C55E',
-          warning: '#F97316',
-          error: '#EF4444',
-          info: '#4A8AA0',
+          success: 'var(--color-status-success)',
+          warning: 'var(--color-status-warning)',
+          error: 'var(--color-status-error)',
+          info: 'var(--color-status-info)',
         },
       },
       fontFamily: {
         poppins: ['Poppins', 'sans-serif'],
         nunito: ['Nunito', 'sans-serif'],
-        space: ['Space Mono', 'sans-serif'],
+        space: ['Space Mono', 'monospace'],
       },
     },
   },
