@@ -186,22 +186,8 @@ const onOptionSelect = (option: Option) => {
   closeDropdown();
 };
 
-const handleClickOutside = (event: MouseEvent) => {
-  if (!selectRef.value) {
-    return;
-  }
-
-  if (!selectRef.value.contains(event.target as Node)) {
-    closeDropdown();
-  }
-};
-
-onMounted(() => {
-  document.addEventListener('click', handleClickOutside);
-});
-
-onBeforeUnmount(() => {
-  document.removeEventListener('click', handleClickOutside);
+onClickOutside(selectRef, () => {
+  closeDropdown();
 });
 </script>
 

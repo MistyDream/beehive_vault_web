@@ -30,6 +30,12 @@ const {
   toggleWrapper,
   close,
 } = useDrawer();
+
+const isScrollLocked = useScrollLock(document.body);
+
+watch(showDrawer, (open) => {
+  isScrollLocked.value = open;
+});
 </script>
 
 <style lang="css" scoped>

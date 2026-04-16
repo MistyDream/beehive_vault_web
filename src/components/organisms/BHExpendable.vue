@@ -15,18 +15,12 @@
 </template>
 
 <script setup lang="ts">
-const isOpen: Ref<boolean> = ref(false);
+const [isOpen, toggleMenu] = useToggle(false);
 const menuRef = useTemplateRef<HTMLElement>('menu-ref');
 
-function toggleMenu() {
-  isOpen.value = !isOpen.value;
-}
-
-onClickOutside(menuRef, handleClickOutside);
-
-function handleClickOutside() {
+onClickOutside(menuRef, () => {
   isOpen.value = false;
-}
+});
 </script>
 
 <style lang="css" scoped>

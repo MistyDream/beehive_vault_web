@@ -117,67 +117,31 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits<Emits>();
 
-// État de tri réactif
-const currentSortBy = ref(props.sortBy);
-const currentSortDirection = ref<'asc' | 'desc'>(props.sortDirection);
+// Pagination via VueUse
+const {
+  currentPage,
+  currentPageSize,
+  pageCount,
+  isFirstPage,
+  isLastPage,
+  prev,
+  next,
+} = useOffsetPagination({
+  total: () => props.total,
+  page: props.page,
+  pageSize: props.itemsPerPage,
+  onPageChange: ({ currentPage: page }) => {
+    debouncedPageChange(page);
+  },
+});
 
-// État de pagination réactif
-const currentPage = ref(props.page);
-
-// Données triées
-// const sortedData = computed(() => {
-//   const sorted = [...props.data];
-
-//   if (currentSortBy.value) {
-//     sorted.sort((a, b) => {
-//       const aValue = getValueFromPath(a, currentSortBy.value);
-//       const bValue = getValueFromPath(b, currentSortBy.value);
-
-//       if (typeof aValue === 'number' && typeof bValue === 'number') {
-//         return currentSortDirection.value === 'desc'
-//           ? bValue - aValue
-//           : aValue - bValue;
-//       }
-
-//       const aStr = String(aValue).toLowerCase();
-//       const bStr = String(bValue).toLowerCase();
-
-//       const result = aStr.localeCompare(bStr);
-//       return currentSortDirection.value === 'desc' ? -result : result;
-//     });
-//   }
-
-//   return sorted;
-// });
-
-// Computed pour la pagination
-// const totalItems = computed(() => props.total);
-const totalPages = computed(() => Math.ceil(props.total / props.itemsPerPage));
-const startIndex = computed(() => (currentPage.value - 1) * props.itemsPerPage);
+const current = currentPage;
+const startIndex = computed(() => (currentPage.value - 1) * currentPageSize.value);
 const endIndex = computed(() =>
-  Math.min(startIndex.value + props.itemsPerPage, props.total),
+  Math.min(startIndex.value + currentPageSize.value, props.total),
 );
-
-// Données paginées
-// const paginatedData = computed(() => {
-//   return sortedData.value.slice(startIndex.value, endIndex.value);
-// });
-
-// Navigation avec computed
-const hasNext = computed(() => currentPage.value < totalPages.value);
-const hasPrev = computed(() => currentPage.value > 1);
-
-const next = () => {
-  if (hasNext.value) {
-    setCurrent(currentPage.value + 1);
-  }
-};
-
-const prev = () => {
-  if (hasPrev.value) {
-    setCurrent(currentPage.value - 1);
-  }
-};
+const hasPrev = computed(() => !isFirstPage.value);
+const hasNext = computed(() => !isLastPage.value);
 
 // Pages visibles dans la pagination
 const visiblePages = computed(() => {
@@ -185,7 +149,7 @@ const visiblePages = computed(() => {
   const maxVisible = 5;
 
   let start = Math.max(1, currentPage.value - Math.floor(maxVisible / 2));
-  const end = Math.min(totalPages.value, start + maxVisible - 1);
+  const end = Math.min(pageCount.value, start + maxVisible - 1);
 
   if (end - start + 1 < maxVisible) {
     start = Math.max(1, end - maxVisible + 1);
@@ -198,7 +162,10 @@ const visiblePages = computed(() => {
   return pages;
 });
 
-// Fonction de tri avec VueUse debounce
+// Tri
+const currentSortBy = ref(props.sortBy);
+const currentSortDirection = ref<'asc' | 'desc'>(props.sortDirection);
+
 const debouncedSortChange = useDebounceFn(
   (sortBy: string, direction: 'asc' | 'desc') => {
     emit('sort-change', sortBy, direction);
@@ -218,15 +185,13 @@ const toggleSort = (columnKey: string) => {
   debouncedSortChange(currentSortBy.value, currentSortDirection.value);
 };
 
-// Fonction pour changer de page avec VueUse debounce
 const debouncedPageChange = useDebounceFn((page: number) => {
   emit('page-change', page);
 }, 100);
 
 const setCurrent = (page: number) => {
-  if (page >= 1 && page <= totalPages.value) {
+  if (page >= 1 && page <= pageCount.value) {
     currentPage.value = page;
-    debouncedPageChange(page);
   }
 };
 
@@ -255,9 +220,6 @@ watch(
     currentSortDirection.value = newValue;
   },
 );
-
-// Exposer les propriétés pour le template
-const current = currentPage;
 </script>
 
 <style lang="css" scoped>

@@ -47,11 +47,7 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const isExpanded = ref(false);
-
-function toggleExpansion() {
-  isExpanded.value = !isExpanded.value;
-}
+const [isExpanded, toggleExpansion] = useToggle(false);
 
 // Auto-expand si une des routes enfants est active
 const route = useRoute();
