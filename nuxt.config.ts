@@ -28,7 +28,7 @@ export default defineNuxtConfig({
     },
   ],
 
-  css: ['animate.css/animate.min.css', '~/assets/css/main.css'],
+  css: ['~/assets/css/main.css'],
 
   // Font config
   fonts: {

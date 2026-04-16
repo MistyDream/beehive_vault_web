@@ -48,8 +48,8 @@
       <div
         v-if="showMenu"
         ref="floatingRef"
-        class="bh-dropdown__menu animate__animated"
-        :class="animationClass"
+        class="bh-dropdown__menu"
+        :class="{ 'bh-dropdown__menu--entering': isAnimating && isOpen, 'bh-dropdown__menu--leaving': isAnimating && !isOpen }"
         :style="menuStyles"
         role="menu"
         tabindex="-1"
@@ -117,7 +117,6 @@ interface Props {
     | 'top';
   offset?: number;
   autoClose?: boolean;
-  animationType?: 'fade' | 'slide' | 'zoom' | 'bounce';
   items?: NavigationLink[];
 }
 
@@ -133,7 +132,6 @@ const props = withDefaults(defineProps<Props>(), {
   placement: 'bottom-start',
   offset: 8,
   autoClose: true,
-  animationType: 'fade',
   items: () => [],
 });
 
@@ -153,30 +151,6 @@ const hasItems = computed(() => items.value.length > 0);
 // Synchronisation avec v-model
 // syncRef(toRef(props, 'modelValue'), isOpen, { direction: 'both' });
 
-// Classes d'animation selon le type et la direction
-const getAnimationClasses = (entering: boolean) => {
-  const baseClasses = {
-    fade: entering ? 'animate__fadeIn' : 'animate__fadeOut',
-    slide: entering
-      ? props.placement.includes('top')
-        ? 'animate__fadeInUp'
-        : 'animate__fadeInDown'
-      : props.placement.includes('top')
-        ? 'animate__fadeOutUp'
-        : 'animate__fadeOutDown',
-    zoom: entering ? 'animate__zoomIn' : 'animate__zoomOut',
-    bounce: entering ? 'animate__bounceIn' : 'animate__bounceOut',
-  };
-
-  return baseClasses[props.animationType];
-};
-
-const animationClass = computed(() => {
-  if (isAnimating.value) {
-    return getAnimationClasses(isOpen.value);
-  }
-  return '';
-});
 
 // Fonctions de contrôle avec animation
 const open = () => {
@@ -382,7 +356,14 @@ onMounted(() => {
   @apply min-w-[200px];
   @apply py-2;
   @apply z-50;
-  /* Animation CSS personnalisée supprimée - utilise maintenant animate.css */
+}
+
+.bh-dropdown__menu--entering {
+  animation: bh-fadeIn 0.2s ease-out forwards;
+}
+
+.bh-dropdown__menu--leaving {
+  animation: bh-fadeOut 0.2s ease-in forwards;
 }
 
 .bh-dropdown__default-content {
@@ -409,8 +390,4 @@ onMounted(() => {
   @apply focus:bg-transparent;
 }
 
-/* Personnalisation de la vitesse d'animate.css */
-.bh-dropdown__menu.animate__animated {
-  --animate-duration: 0.3s;
-}
 </style>

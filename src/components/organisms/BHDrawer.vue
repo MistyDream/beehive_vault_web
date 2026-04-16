@@ -40,13 +40,11 @@ watch(showDrawer, (open) => {
 
 <style lang="css" scoped>
 .drawer-enter-active {
-  animation: slideInRight;
-  animation-duration: 0.3s;
+  animation: bh-slideInRight 0.3s ease-out;
 }
 
 .drawer-leave-active {
-  animation: slideOutRight;
-  animation-duration: 0.3s;
+  animation: bh-slideOutRight 0.3s ease-in;
 }
 
 /* Wrapper qui contient l'overlay et le drawer */

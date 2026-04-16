@@ -25,37 +25,12 @@ onClickOutside(menuRef, () => {
 
 <style lang="css" scoped>
 .fade-enter-active {
-  animation-name: slideInDown;
+  animation: bh-slideInDown 0.3s ease-out;
 }
 
 .fade-leave-active {
-  animation-name: slideOutUp;
+  animation: bh-slideOutUp 0.3s ease-in;
 }
-
-.fade-enter-active,
-.fade-leave-active {
-  animation-duration: 0.5s;
-}
-
-/* .fade-enter-from {
-  opacity: 0;
-  transform: translateY(-20px);
-}
-
-.fade-enter-to {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.fade-leave-from {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.fade-leave-to {
-  opacity: 0;
-  transform: translateY(-20px);
-} */
 
 .bh-expendable {
   @apply flex flex-col grow;

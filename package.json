@@ -20,7 +20,6 @@
     "@nuxtjs/tailwindcss": "6.13.2",
     "@pinia/nuxt": "0.11.2",
     "@vueuse/nuxt": "13.0.0",
-    "animate.css": "^4.1.1",
     "eslint": "^9.0.0",
     "nuxt": "^3.19.0",
     "nuxt-lucide-icons": "1.0.5",

@@ -1,5 +1,3 @@
-@import 'animate.css';
-
 /* ─── Theme variables ─── */
 
 :root {
@@ -59,4 +57,36 @@
 body {
   @apply font-nunito bg-theme-bg-primary text-theme-text-primary;
   transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* ─── Shared keyframes ─── */
+
+@keyframes bh-fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bh-fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(4px); }
+}
+
+@keyframes bh-slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes bh-slideOutRight {
+  from { transform: translateX(0); }
+  to { transform: translateX(100%); }
+}
+
+@keyframes bh-slideInDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bh-slideOutUp {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-12px); }
 }
