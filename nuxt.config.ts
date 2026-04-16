@@ -17,9 +17,7 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
-    '@vee-validate/nuxt',
     '@vueuse/nuxt',
-    'nuxt-echarts',
     'nuxt-lucide-icons',
   ],
 
@@ -59,23 +57,6 @@ export default defineNuxtConfig({
     locales: [
       { code: 'fr', name: 'Français', file: 'fr-FR.json' },
       { code: 'en', name: 'English', file: 'en-US.json' },
-    ],
-  },
-
-  // Vee Validate
-  veeValidate: {
-    autoImports: true,
-  },
-
-  // Echart config
-  echarts: {
-    charts: ['LineChart', 'LinesChart', 'PieChart'],
-    components: [
-      'AxisPointerComponent',
-      'GridComponent',
-      'LegendComponent',
-      'TitleComponent',
-      'TooltipComponent',
     ],
   },
 
