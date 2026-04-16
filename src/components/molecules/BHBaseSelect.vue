@@ -63,8 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
-import { LucideCheck, LucideChevronDown } from 'lucide-vue-next';
+import { LucideCheck, LucideChevronDown } from '#components';
 
 type PrimitiveValue = string | number;
 type SelectValue = PrimitiveValue | null | undefined;
@@ -213,7 +212,7 @@ onBeforeUnmount(() => {
 }
 
 .bh-select__label {
-  @apply text-sm text-warm-white-500 font-medium;
+  @apply text-sm text-theme-text-primary font-medium;
 }
 
 .bh-select__wrapper {
@@ -222,28 +221,28 @@ onBeforeUnmount(() => {
 
 .bh-select__control {
   @apply w-full px-4 py-2 rounded-lg;
-  @apply bg-dark-gray-600;
-  @apply border border-dark-gray-450;
-  @apply text-sm text-warm-white-500 font-medium;
+  @apply bg-theme-bg-card;
+  @apply border border-theme-border-primary;
+  @apply text-sm text-theme-text-primary font-medium;
   @apply flex items-center justify-between gap-2;
   @apply text-left;
   @apply transition-colors duration-150 ease-out;
 }
 
 .bh-select__control--disabled {
-  @apply cursor-not-allowed text-dark-gray-400;
+  @apply cursor-not-allowed text-theme-text-muted;
 }
 
 .bh-select__control--error {
-  @apply border-red-500;
+  @apply border-theme-status-error;
 }
 
 .bh-select__control--open {
-  @apply border-deep-blue-500;
+  @apply border-theme-accent-secondary;
 }
 
 .bh-select__icon {
-  @apply text-warm-white-500 pointer-events-none;
+  @apply text-theme-text-primary pointer-events-none;
   @apply transition-transform duration-150 ease-out;
 }
 
@@ -252,7 +251,7 @@ onBeforeUnmount(() => {
 }
 
 .bh-select__error {
-  @apply text-red-400 text-xs mt-1;
+  @apply text-theme-status-error text-xs mt-1;
 }
 
 .bh-select__value {
@@ -260,30 +259,30 @@ onBeforeUnmount(() => {
 }
 
 .bh-select__placeholder {
-  @apply text-dark-gray-400;
+  @apply text-theme-text-muted;
 }
 
 .bh-select__options {
   @apply absolute left-0 right-0 mt-2 z-10;
-  @apply bg-dark-gray-600 border border-dark-gray-450 rounded-lg shadow-lg;
+  @apply bg-theme-bg-card border border-theme-border-primary rounded-lg shadow-lg;
   @apply max-h-60 overflow-auto;
 }
 
 .bh-select__option {
   @apply flex items-center justify-between gap-2;
-  @apply px-4 py-2 text-sm text-warm-white-500 cursor-pointer;
+  @apply px-4 py-2 text-sm text-theme-text-primary cursor-pointer;
 }
 
 .bh-select__option:hover {
-  @apply bg-dark-gray-500;
+  @apply bg-theme-bg-elevated;
 }
 
 .bh-select__option--selected {
-  @apply bg-deep-blue-700 text-warm-white-500;
+  @apply bg-theme-accent-secondary text-theme-text-primary;
 }
 
 .bh-select__option--disabled {
-  @apply cursor-not-allowed text-dark-gray-400 bg-transparent;
+  @apply cursor-not-allowed text-theme-text-muted bg-transparent;
 }
 
 .bh-select-dropdown-enter-active,

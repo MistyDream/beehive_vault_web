@@ -26,7 +26,7 @@ const optionsClass = computed(() => {
 <style lang="css" scoped>
 .bh-card-base {
   @apply flex items-center justify-between gap-4;
-  @apply bg-dark-gray-500 rounded-2xl;
+  @apply bg-theme-bg-card rounded-2xl;
   @apply p-6;
 
   &.size-sm {
@@ -36,6 +36,6 @@ const optionsClass = computed(() => {
 }
 
 .bh-card-base-darker {
-  @apply bg-dark-gray-800;
+  @apply bg-theme-bg-elevated;
 }
 </style>

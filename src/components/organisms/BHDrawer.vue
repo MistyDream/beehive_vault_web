@@ -5,7 +5,7 @@
     <Transition name="drawer" @after-leave="toggleWrapper">
       <div v-if="showDrawer" class="bh-drawer">
         <div class="bh-drawer--header">
-          <BHButton class="absolute top-0 left-0 text-dark-gray-400">
+          <BHButton class="absolute top-0 left-0 text-theme-text-muted">
             <LucideChevronsRight :size="20" />
           </BHButton>
           <component :is="icon" :size="24" class="bh-drawer--header__icon" />
@@ -59,18 +59,18 @@ const {
 .bh-drawer {
   @apply absolute top-0 right-0;
   @apply w-1/2 h-screen p-4;
-  @apply bg-dark-gray-500;
+  @apply bg-theme-bg-card;
   @apply shadow-2xl;
 }
 
 .bh-drawer--header {
   @apply flex gap-2 items-center justify-start;
   @apply p-4;
-  @apply font-poppins text-xl font-bold text-warm-white-500;
+  @apply font-poppins text-xl font-bold text-theme-text-primary;
 }
 
 .bh-drawer--header__icon {
-  @apply text-warm-white-500;
+  @apply text-theme-text-primary;
 }
 
 .bh-drawer--content {

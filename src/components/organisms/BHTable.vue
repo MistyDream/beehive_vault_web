@@ -262,7 +262,7 @@ const current = currentPage;
 
 <style lang="css" scoped>
 .bh-table {
-  @apply bg-dark-gray-500;
+  @apply bg-theme-bg-card;
   @apply rounded-2xl;
 }
 
@@ -276,7 +276,7 @@ const current = currentPage;
 }
 
 .table-header {
-  @apply bg-dark-gray-800 border-b border-border-dark;
+  @apply bg-theme-bg-elevated border-b border-theme-border-primary;
 }
 
 .header-cell {
@@ -286,7 +286,7 @@ const current = currentPage;
 }
 
 .header-cell:hover {
-  @apply text-warm-white-500;
+  @apply text-theme-text-primary;
 }
 
 .header-cell--center {
@@ -298,7 +298,7 @@ const current = currentPage;
 }
 
 .sort-indicator {
-  @apply ml-2 text-warm-white-500;
+  @apply ml-2 text-theme-text-primary;
   @apply transition-all duration-300 ease-in-out;
   transform: rotate(0deg);
 }
@@ -308,14 +308,14 @@ const current = currentPage;
 }
 
 .table-row {
-  @apply border-b border-dark-gray-450;
-  @apply hover:bg-dark-gray-700/50;
+  @apply border-b border-theme-border-secondary;
+  @apply hover:bg-theme-bg-elevated/50;
   @apply transition-colors;
 }
 
 .table-cell {
   @apply px-6 py-4;
-  @apply text-sm text-warm-white-500;
+  @apply text-sm text-theme-text-primary;
 }
 
 .pagination {
@@ -333,19 +333,19 @@ const current = currentPage;
 
 .pagination-button {
   @apply w-8 h-8 flex items-center justify-center;
-  @apply bg-dark-gray-700 hover:bg-dark-gray-600;
-  @apply border border-border-dark rounded;
+  @apply bg-theme-bg-elevated hover:bg-theme-bg-card;
+  @apply border border-theme-border-primary rounded;
   @apply text-sm;
   @apply transition-colors;
 }
 
 .pagination-button--active {
-  @apply bg-deep-blue-500 border-deep-blue-500;
-  @apply text-warm-white-500;
+  @apply bg-theme-accent-secondary border-theme-accent-secondary;
+  @apply text-theme-text-primary;
 }
 
 .pagination-button:disabled {
   @apply opacity-50 cursor-not-allowed;
-  @apply hover:bg-dark-gray-700;
+  @apply hover:bg-theme-bg-elevated;
 }
 </style>

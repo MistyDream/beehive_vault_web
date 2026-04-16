@@ -51,7 +51,7 @@ const navigation: NavigationLink[] = [
 .bh-sidebar {
   @apply fixed flex flex-col gap-4 items-center;
   @apply h-screen w-72 pt-4;
-  @apply bg-dark-gray-800 drop-shadow-md;
+  @apply bg-theme-bg-secondary drop-shadow-md;
 }
 
 .bh-sidebar--head {

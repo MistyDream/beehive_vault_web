@@ -357,11 +357,11 @@ onMounted(() => {
 
 .bh-dropdown__default-trigger {
   @apply flex items-center justify-between gap-2;
-  @apply bg-dark-gray-500 text-warm-white-500;
+  @apply bg-theme-bg-card text-theme-text-primary;
   @apply px-4 py-2 rounded-lg;
-  @apply border border-light-gray-700;
-  @apply hover:bg-dark-gray-400 transition-colors;
-  @apply focus:outline-none focus:ring-2 focus:ring-golden-yellow-500;
+  @apply border border-theme-border-secondary;
+  @apply hover:bg-theme-bg-elevated transition-colors;
+  @apply focus:outline-none focus:ring-2 focus:ring-theme-accent-primary;
   @apply disabled:opacity-50 disabled:cursor-not-allowed;
   @apply min-w-[200px];
 }
@@ -376,8 +376,8 @@ onMounted(() => {
 }
 
 .bh-dropdown__menu {
-  @apply bg-dark-gray-600 rounded-2xl;
-  @apply border border-light-gray-700;
+  @apply bg-theme-bg-card rounded-2xl;
+  @apply border border-theme-border-secondary;
   @apply shadow-xl;
   @apply min-w-[200px];
   @apply py-2;
@@ -396,8 +396,8 @@ onMounted(() => {
 .bh-dropdown__item {
   @apply flex items-center gap-2;
   @apply px-4 py-2;
-  @apply text-left text-sm text-warm-white-500;
-  @apply hover:text-golden-yellow-500 focus:text-golden-yellow-500;
+  @apply text-left text-sm text-theme-text-primary;
+  @apply hover:text-theme-accent-primary focus:text-theme-accent-primary;
   @apply cursor-pointer;
   @apply transition-colors;
   @apply focus:outline-none;
@@ -405,7 +405,7 @@ onMounted(() => {
 
 .bh-dropdown__item--disabled {
   @apply cursor-not-allowed opacity-60;
-  @apply hover:bg-transparent hover:text-warm-white-400;
+  @apply hover:bg-transparent hover:text-theme-text-secondary;
   @apply focus:bg-transparent;
 }
 

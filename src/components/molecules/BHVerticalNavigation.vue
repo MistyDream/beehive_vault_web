@@ -53,6 +53,6 @@ const props = withDefaults(defineProps<Props>(), {});
 }
 
 .bh-vertical-navigation--items__button.exact-active-class {
-  @apply bg-golden-yellow-500 text-dark-gray-900;
+  @apply bg-theme-accent-primary text-gray-900;
 }
 </style>

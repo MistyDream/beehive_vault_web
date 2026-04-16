@@ -126,29 +126,6 @@ export default {
           secondary: 'var(--color-accent-secondary)',
         },
 
-        // ─── Legacy aliases (migrate to theme-* over time) ───
-        background: {
-          primary: 'var(--color-bg-primary)',
-          secondary: 'var(--color-bg-secondary)',
-          card: 'var(--color-bg-card)',
-          dark: 'var(--color-bg-primary)',
-        },
-        text: {
-          primary: 'var(--color-text-primary)',
-          secondary: 'var(--color-text-secondary)',
-          dark: 'var(--color-text-primary)',
-        },
-        border: {
-          primary: 'var(--color-border-primary)',
-          secondary: 'var(--color-border-secondary)',
-          dark: 'var(--color-border-primary)',
-        },
-        status: {
-          success: 'var(--color-status-success)',
-          warning: 'var(--color-status-warning)',
-          error: 'var(--color-status-error)',
-          info: 'var(--color-status-info)',
-        },
       },
       fontFamily: {
         poppins: ['Poppins', 'sans-serif'],

@@ -92,7 +92,7 @@ onMounted(() => {
 .bh-navigation-expandable--children {
   @apply flex flex-col;
   @apply ml-4 mt-1;
-  @apply border-l border-border-dark;
+  @apply border-l border-theme-border-primary;
 }
 
 .bh-navigation-expandable--child {
@@ -103,11 +103,11 @@ onMounted(() => {
 .bh-navigation-expandable--child-button {
   @apply w-full py-1.5 px-4;
   @apply text-sm;
-  @apply hover:bg-dark-gray-600;
+  @apply hover:bg-theme-bg-elevated;
 }
 
 .bh-navigation-expandable--child-button.exact-active-class {
-  @apply bg-golden-yellow-500 text-dark-gray-900;
+  @apply bg-theme-accent-primary text-gray-900;
 }
 
 /* Animation d'expansion */

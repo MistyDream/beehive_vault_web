@@ -65,7 +65,7 @@ function handleClickOutside() {
 
 .bh-expendable {
   @apply flex flex-col grow;
-  @apply bg-dark-gray-600 border rounded-lg border-border-dark;
+  @apply bg-theme-bg-card border rounded-lg border-theme-border-primary;
 }
 
 .bh-expendable--head {
@@ -81,6 +81,6 @@ function handleClickOutside() {
 .bh-expendable--list li {
   @apply flex items-center;
   @apply min-h-10 px-3 py-2;
-  @apply border-b border-b-border-dark last:border-none;
+  @apply border-b border-b-theme-border-primary last:border-none;
 }
 </style>
