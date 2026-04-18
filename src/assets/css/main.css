@@ -1,5 +1,92 @@
-@import 'animate.css';
+/* ─── Theme variables ─── */
+
+:root {
+  /* Background */
+  --color-bg-primary: #FFFFFF;
+  --color-bg-secondary: #F5F5F5;
+  --color-bg-card: #FFFFFF;
+  --color-bg-elevated: #FAFAFA;
+
+  /* Text */
+  --color-text-primary: #1A1A1A;
+  --color-text-secondary: #6B7280;
+  --color-text-muted: #9CA3AF;
+
+  /* Border */
+  --color-border-primary: #E5E7EB;
+  --color-border-secondary: #D1D5DB;
+
+  /* Status */
+  --color-status-success: #16A34A;
+  --color-status-warning: #EA580C;
+  --color-status-error: #DC2626;
+  --color-status-info: #3B7182;
+
+  /* Accent */
+  --color-accent-primary: #C8963D;
+  --color-accent-secondary: #3B7182;
+}
+
+.dark {
+  /* Background */
+  --color-bg-primary: #1A1A1A;
+  --color-bg-secondary: #161616;
+  --color-bg-card: #212121;
+  --color-bg-elevated: #292929;
+
+  /* Text */
+  --color-text-primary: #F5F5F5;
+  --color-text-secondary: #A0A0A0;
+  --color-text-muted: #787878;
+
+  /* Border */
+  --color-border-primary: #292929;
+  --color-border-secondary: #374151;
+
+  /* Status */
+  --color-status-success: #22C55E;
+  --color-status-warning: #F97316;
+  --color-status-error: #EF4444;
+  --color-status-info: #4A8AA0;
+
+  /* Accent */
+  --color-accent-primary: #EAB64E;
+  --color-accent-secondary: #4A8AA0;
+}
 
 body {
-  @apply font-nunito;
+  @apply font-nunito bg-theme-bg-primary text-theme-text-primary;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* ─── Shared keyframes ─── */
+
+@keyframes bh-fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bh-fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(4px); }
+}
+
+@keyframes bh-slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes bh-slideOutRight {
+  from { transform: translateX(0); }
+  to { transform: translateX(100%); }
+}
+
+@keyframes bh-slideInDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bh-slideOutUp {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-12px); }
 }

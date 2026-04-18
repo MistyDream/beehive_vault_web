@@ -1,0 +1,81 @@
+<template>
+  <div class="bh-input">
+    <label v-if="label" :for="inputId" class="bh-input__label">
+      {{ label }}
+    </label>
+    <input
+      :id="inputId"
+      :type="type"
+      :placeholder="placeholder"
+      :value="modelValue"
+      :disabled="disabled"
+      :aria-invalid="!!error || undefined"
+      :aria-describedby="error ? errorId : undefined"
+      class="bh-input__input"
+      :class="{ 'bh-input__input--error': !!error }"
+      @input="handleInput"
+    />
+    <p v-if="error" :id="errorId" role="alert" class="bh-input__error">
+      {{ error }}
+    </p>
+  </div>
+</template>
+
+<script setup lang="ts">
+interface Props {
+  label?: string;
+  id?: string;
+  type?: string;
+  placeholder?: string;
+  modelValue?: string;
+  disabled?: boolean;
+  error?: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  label: '',
+  id: '',
+  type: 'text',
+  placeholder: '',
+  modelValue: '',
+  disabled: false,
+  error: '',
+});
+
+const emit = defineEmits<{
+  (e: 'update:modelValue', value: string): void;
+}>();
+
+const inputId = computed(() => props.id || useId());
+const errorId = computed(() => `${inputId.value}-error`);
+
+const handleInput = (event: Event) => {
+  emit('update:modelValue', (event.target as HTMLInputElement).value);
+};
+</script>
+
+<style lang="css" scoped>
+.bh-input {
+  @apply flex flex-col gap-2;
+  @apply w-full;
+}
+
+.bh-input__label {
+  @apply text-sm text-theme-text-primary font-medium;
+}
+
+.bh-input__input {
+  @apply px-4 py-2 rounded-lg;
+  @apply bg-theme-bg-card;
+  @apply border border-theme-border-primary;
+  @apply text-sm text-theme-text-primary font-medium placeholder:text-theme-text-muted;
+}
+
+.bh-input__input--error {
+  @apply border-theme-status-error;
+}
+
+.bh-input__error {
+  @apply text-theme-status-error text-xs mt-1;
+}
+</style>

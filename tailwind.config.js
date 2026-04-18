@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: {
     files: [
       './src/assets/css/**/*.css',
@@ -11,6 +12,7 @@ export default {
   theme: {
     extend: {
       colors: {
+        // ─── Raw palettes (unchanged, usable directly) ───
         'golden-yellow': {
           100: '#FFF9E6',
           200: '#FFEDBF',
@@ -26,9 +28,9 @@ export default {
           100: '#E9F3F7',
           200: '#C6DFE8',
           300: '#A3CAD8',
-          400: '#81B5C9',
+          400: '#87B4E7',
           500: '#4A8AA0',
-          600: '#3B7182',
+          600: '#37414D',
           700: '#2D5865',
           800: '#1F3F48',
           900: '#11262B',
@@ -38,7 +40,8 @@ export default {
           200: '#D4D4D4',
           300: '#BEBEBE',
           400: '#A0A0A0',
-          500: '#1E1E1E',
+          450: '#374151',
+          500: '#212121',
           600: '#1A1A1A',
           700: '#161616',
           800: '#121212',
@@ -60,16 +63,74 @@ export default {
           200: '#FBFBFB',
           300: '#F5F5F5',
           400: '#EFEFEF',
-          500: '#F5F5F5',
+          500: '#E8E8E8',
         },
-        'background-dark': '#1E1E1E',
-        'text-dark': '#E0E0E0',
-        'border-dark': '#292929',
+        'mint-green': {
+          100: '#F0FDF4',
+          200: '#DCFCE7',
+          300: '#BBF7D0',
+          400: '#86EFAC',
+          500: '#22C55E',
+          600: '#16A34A',
+          700: '#15803D',
+          800: '#166534',
+          900: '#14532D',
+        },
+        'filter-orange': {
+          100: '#FFF7ED',
+          200: '#FFEDD5',
+          300: '#FED7AA',
+          400: '#FDBA74',
+          500: '#F97316',
+          600: '#EA580C',
+          700: '#C2410C',
+          800: '#9A3412',
+          900: '#7C2D12',
+        },
+        'filter-red': {
+          100: '#FEF2F2',
+          200: '#FECACA',
+          300: '#FCA5A5',
+          400: '#F87171',
+          500: '#EF4444',
+          600: '#DC2626',
+          700: '#B91C1C',
+          800: '#991B1B',
+          900: '#7F1D1D',
+        },
+
+        // ─── Theme-aware semantic colors (switch via .dark class) ───
+        'theme-bg': {
+          primary: 'var(--color-bg-primary)',
+          secondary: 'var(--color-bg-secondary)',
+          card: 'var(--color-bg-card)',
+          elevated: 'var(--color-bg-elevated)',
+        },
+        'theme-text': {
+          primary: 'var(--color-text-primary)',
+          secondary: 'var(--color-text-secondary)',
+          muted: 'var(--color-text-muted)',
+        },
+        'theme-border': {
+          primary: 'var(--color-border-primary)',
+          secondary: 'var(--color-border-secondary)',
+        },
+        'theme-status': {
+          success: 'var(--color-status-success)',
+          warning: 'var(--color-status-warning)',
+          error: 'var(--color-status-error)',
+          info: 'var(--color-status-info)',
+        },
+        'theme-accent': {
+          primary: 'var(--color-accent-primary)',
+          secondary: 'var(--color-accent-secondary)',
+        },
+
       },
       fontFamily: {
         poppins: ['Poppins', 'sans-serif'],
         nunito: ['Nunito', 'sans-serif'],
-        space: ['Space Mono', 'sans-serif'],
+        space: ['Space Mono', 'monospace'],
       },
     },
   },

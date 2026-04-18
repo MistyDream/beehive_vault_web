@@ -1,19 +1,28 @@
 <template>
   <ul class="bh-vertical-navigation">
-    <li
-      v-for="(item, key) in props.items"
-      :key="key"
-      class="bh-vertical-navigation--items"
-    >
-      <BHButton
-        class="bh-vertical-navigation--items__button"
-        :to="item.to"
-        :href="item.href"
+    <template v-for="(item, key) in props.items" :key="key">
+      <!-- Menu expendable -->
+      <BHNavigationExpandable
+        v-if="item.isExpandable && item.children"
+        :item="item"
       >
-        <slot name="icon" :item="item" />
-        {{ item.text }}
-      </BHButton>
-    </li>
+        <template #icon="{ item: childItem }">
+          <slot name="icon" :item="childItem" />
+        </template>
+      </BHNavigationExpandable>
+
+      <!-- Item de navigation simple -->
+      <li v-else class="bh-vertical-navigation--items">
+        <BHButton
+          class="bh-vertical-navigation--items__button"
+          :to="item.to"
+          :href="item.href"
+        >
+          <slot name="icon" :item="item" />
+          {{ item.text }}
+        </BHButton>
+      </li>
+    </template>
   </ul>
 </template>
 
@@ -44,6 +53,6 @@ const props = withDefaults(defineProps<Props>(), {});
 }
 
 .bh-vertical-navigation--items__button.exact-active-class {
-  @apply bg-golden-yellow-500 text-dark-gray-900;
+  @apply bg-theme-accent-primary text-gray-900;
 }
 </style>
