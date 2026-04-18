@@ -100,30 +100,32 @@ export default {
         },
 
         // ─── Theme-aware semantic colors (switch via .dark class) ───
+        // CSS variables hold RGB channels; rgb() + <alpha-value> enables
+        // opacity modifiers like bg-theme-accent-primary/25
         'theme-bg': {
-          primary: 'var(--color-bg-primary)',
-          secondary: 'var(--color-bg-secondary)',
-          card: 'var(--color-bg-card)',
-          elevated: 'var(--color-bg-elevated)',
+          primary: 'rgb(var(--color-bg-primary) / <alpha-value>)',
+          secondary: 'rgb(var(--color-bg-secondary) / <alpha-value>)',
+          card: 'rgb(var(--color-bg-card) / <alpha-value>)',
+          elevated: 'rgb(var(--color-bg-elevated) / <alpha-value>)',
         },
         'theme-text': {
-          primary: 'var(--color-text-primary)',
-          secondary: 'var(--color-text-secondary)',
-          muted: 'var(--color-text-muted)',
+          primary: 'rgb(var(--color-text-primary) / <alpha-value>)',
+          secondary: 'rgb(var(--color-text-secondary) / <alpha-value>)',
+          muted: 'rgb(var(--color-text-muted) / <alpha-value>)',
         },
         'theme-border': {
-          primary: 'var(--color-border-primary)',
-          secondary: 'var(--color-border-secondary)',
+          primary: 'rgb(var(--color-border-primary) / <alpha-value>)',
+          secondary: 'rgb(var(--color-border-secondary) / <alpha-value>)',
         },
         'theme-status': {
-          success: 'var(--color-status-success)',
-          warning: 'var(--color-status-warning)',
-          error: 'var(--color-status-error)',
-          info: 'var(--color-status-info)',
+          success: 'rgb(var(--color-status-success) / <alpha-value>)',
+          warning: 'rgb(var(--color-status-warning) / <alpha-value>)',
+          error: 'rgb(var(--color-status-error) / <alpha-value>)',
+          info: 'rgb(var(--color-status-info) / <alpha-value>)',
         },
         'theme-accent': {
-          primary: 'var(--color-accent-primary)',
-          secondary: 'var(--color-accent-secondary)',
+          primary: 'rgb(var(--color-accent-primary) / <alpha-value>)',
+          secondary: 'rgb(var(--color-accent-secondary) / <alpha-value>)',
         },
 
       },
