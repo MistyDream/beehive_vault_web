@@ -3,7 +3,7 @@
     <div class="bh-drawer-overlay" @click="close" />
 
     <Transition name="drawer" @after-leave="toggleWrapper">
-      <div v-if="showDrawer" class="bh-drawer">
+      <div v-if="showDrawer" ref="drawerRef" class="bh-drawer">
         <div class="bh-drawer--header">
           <BHButton class="absolute top-0 left-0 text-theme-text-muted">
             <LucideChevronsRight :size="20" />
@@ -20,6 +20,8 @@
 </template>
 
 <script setup lang="ts">
+import { useFocusTrap } from '@vueuse/integrations/useFocusTrap';
+
 const {
   showWrapper,
   showDrawer,
@@ -31,10 +33,19 @@ const {
   close,
 } = useDrawer();
 
+const drawerRef = ref<HTMLElement | null>(null);
 const isScrollLocked = useScrollLock(document.body);
+const { activate, deactivate } = useFocusTrap(drawerRef, {
+  allowOutsideClick: true,
+});
 
 watch(showDrawer, (open) => {
   isScrollLocked.value = open;
+  if (open) {
+    nextTick(() => activate());
+  } else {
+    deactivate();
+  }
 });
 </script>
 
