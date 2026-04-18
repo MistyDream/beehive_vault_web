@@ -1,30 +1,33 @@
 import { REQUEST_TIMEOUT } from '~/constants/http';
+import { ApiError, type ProblemDetail } from '~/types/api';
 
 export default defineNuxtPlugin((): { provide: { $api: typeof $fetch } } => {
   const { public: config } = useRuntimeConfig();
 
-  // Create a configured fetch instance
   const api = $fetch.create({
     baseURL: config.apiBase,
     timeout: REQUEST_TIMEOUT.DEFAULT,
     headers: {
-      'Content-Type': 'application/json',
       Accept: 'application/json',
     },
-    // Add response interceptor for error handling
-    onResponseError({ response }) {
-      console.error('API Error:', response.status, response.statusText);
-
-      // Global error handling
-      if (response.status === 401) {
-        console.warn('Unauthorized access');
-      }
-    },
-    // Add request interceptor for debugging
     onRequest({ request, options }) {
       if (import.meta.dev) {
         console.log(`[API] ${options.method || 'GET'} ${request}`);
       }
+    },
+    onResponseError({ response }) {
+      const body = response._data as unknown;
+
+      if (isProblemDetail(body)) {
+        throw new ApiError(body);
+      }
+
+      throw new ApiError({
+        type: 'about:blank',
+        title: response.statusText || 'Request failed',
+        status: response.status,
+        detail: typeof body === 'string' ? body : undefined,
+      });
     },
   });
 
@@ -34,3 +37,13 @@ export default defineNuxtPlugin((): { provide: { $api: typeof $fetch } } => {
     },
   };
 });
+
+function isProblemDetail(value: unknown): value is ProblemDetail {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    typeof (value as ProblemDetail).type === 'string' &&
+    typeof (value as ProblemDetail).title === 'string' &&
+    typeof (value as ProblemDetail).status === 'number'
+  );
+}
