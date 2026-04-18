@@ -34,18 +34,21 @@ const {
 } = useDrawer();
 
 const drawerRef = ref<HTMLElement | null>(null);
-const isScrollLocked = useScrollLock(document.body);
-const { activate, deactivate } = useFocusTrap(drawerRef, {
-  allowOutsideClick: true,
-});
 
-watch(showDrawer, (open) => {
-  isScrollLocked.value = open;
-  if (open) {
-    nextTick(() => activate());
-  } else {
-    deactivate();
-  }
+onMounted(() => {
+  const isScrollLocked = useScrollLock(document.body);
+  const { activate, deactivate } = useFocusTrap(drawerRef, {
+    allowOutsideClick: true,
+  });
+
+  watch(showDrawer, (open) => {
+    isScrollLocked.value = open;
+    if (open) {
+      nextTick(() => activate());
+    } else {
+      deactivate();
+    }
+  });
 });
 </script>
 
