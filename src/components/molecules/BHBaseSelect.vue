@@ -261,32 +261,16 @@ onClickOutside(selectRef, () => {
 }
 
 .bh-select__option:hover {
-  @apply bg-theme-bg-elevated text-theme-accent-primary;
+  @apply bg-theme-bg-elevated text-theme-accent-primary-strong;
 }
 
-/* Light mode: darker gold for hover text */
-:root:not(.dark) .bh-select__option:hover {
-  color: rgb(155 115 35);
-}
-
-.bh-select__option--selected {
-  @apply bg-theme-accent-secondary/15 text-theme-accent-secondary font-semibold;
+.bh-select__option--selected,
+.bh-select__option--selected:hover {
+  @apply bg-theme-accent-secondary/15 text-theme-accent-secondary-strong font-semibold;
 }
 
 .bh-select__option--selected:hover {
-  @apply bg-theme-accent-secondary/25 text-theme-accent-secondary;
-}
-
-/* Light: keep teal on selected hover (override generic :root:not(.dark) gold) */
-:root:not(.dark) .bh-select__option--selected,
-:root:not(.dark) .bh-select__option--selected:hover {
-  color: rgb(var(--color-accent-secondary));
-}
-
-/* Dark: lighter teal for better readability on translucent bg */
-:root.dark .bh-select__option--selected,
-:root.dark .bh-select__option--selected:hover {
-  color: rgb(120 180 200);
+  @apply bg-theme-accent-secondary/25;
 }
 
 .bh-select__option--disabled {

@@ -6,25 +6,40 @@
   --color-bg-secondary: 235 232 225;   /* sidebar, slightly darker */
   --color-bg-card: 238 235 228;        /* cards slightly darker than body, blends hex */
   --color-bg-elevated: 231 227 219;    /* hover */
+  --color-bg-elevated-strong: 225 220 209; /* deeper hover for card-on-body contrast */
 
   /* Text */
   --color-text-primary: 26 26 26;
   --color-text-secondary: 107 114 128;
   --color-text-muted: 156 163 175;
+  --color-text-on-accent-primary: 26 26 26;
+  --color-text-on-accent-secondary: 255 255 255;
+  --color-text-on-danger: 255 255 255;
 
   /* Border */
   --color-border-primary: 229 225 216;
   --color-border-secondary: 209 205 196;
 
-  /* Status */
+  /* Status (base fill) */
   --color-status-success: 22 163 74;
   --color-status-warning: 234 88 12;
   --color-status-error: 220 38 38;
   --color-status-info: 59 113 130;
 
+  /* Status (strong foreground, readable on translucent same-color bg) */
+  --color-status-success-strong: 22 163 74;
+  --color-status-warning-strong: 234 88 12;
+  --color-status-error-strong: 220 38 38;
+  --color-status-info-strong: 59 113 130;
+
   /* Accent */
-  --color-accent-primary: 205 155 55;   /* honey gold for light mode */
-  --color-accent-secondary: 55 105 122; /* teal for light mode */
+  --color-accent-primary: 205 155 55;        /* honey gold */
+  --color-accent-secondary: 55 105 122;      /* teal */
+  --color-accent-primary-strong: 155 115 35; /* darker gold for legibility on light bg */
+  --color-accent-secondary-strong: 55 105 122;
+
+  /* Overlay (modal scrim base — alpha applied at usage site) */
+  --color-overlay: 0 0 0;
 }
 
 .dark {
@@ -33,25 +48,40 @@
   --color-bg-secondary: 22 22 22;
   --color-bg-card: 33 33 33;
   --color-bg-elevated: 41 41 41;
+  --color-bg-elevated-strong: 52 52 52;
 
   /* Text */
   --color-text-primary: 245 245 245;
   --color-text-secondary: 160 160 160;
   --color-text-muted: 120 120 120;
+  --color-text-on-accent-primary: 26 26 26;
+  --color-text-on-accent-secondary: 255 255 255;
+  --color-text-on-danger: 255 255 255;
 
   /* Border */
   --color-border-primary: 41 41 41;
   --color-border-secondary: 55 65 81;
 
-  /* Status */
+  /* Status (base fill) */
   --color-status-success: 34 197 94;
   --color-status-warning: 249 115 22;
   --color-status-error: 239 68 68;
   --color-status-info: 74 138 160;
 
+  /* Status (strong foreground, lightened for translucent bg readability) */
+  --color-status-success-strong: 110 220 140;
+  --color-status-warning-strong: 255 160 90;
+  --color-status-error-strong: 255 120 120;
+  --color-status-info-strong: 120 180 200;
+
   /* Accent */
   --color-accent-primary: 234 182 78;
   --color-accent-secondary: 74 138 160;
+  --color-accent-primary-strong: 234 182 78;
+  --color-accent-secondary-strong: 120 180 200;
+
+  /* Overlay */
+  --color-overlay: 0 0 0;
 }
 
 body {

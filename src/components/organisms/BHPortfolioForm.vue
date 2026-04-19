@@ -2,35 +2,35 @@
   <form class="bh-portfolio-form" @submit.prevent="onSubmit">
     <BHBaseInput
       v-model="form.name"
-      :label="$t('portfolios.form.name_label')"
+      :label="t('portfolios.form.name_label')"
       :error="errors.name"
       required
     />
 
     <BHBaseSelect
       v-model="form.kind"
-      :label="$t('portfolios.form.kind_label')"
+      :label="t('portfolios.form.kind_label')"
       :options="kindOptions"
       :error="errors.kind"
     />
 
     <BHBaseInput
       v-model="form.currency"
-      :label="$t('portfolios.form.currency_label')"
+      :label="t('portfolios.form.currency_label')"
       placeholder="EUR"
       :error="errors.currency"
     />
 
     <BHTextarea
       v-model="form.description"
-      :label="$t('portfolios.form.description_label')"
+      :label="t('portfolios.form.description_label')"
       :max-length="500"
       :rows="3"
     />
 
     <div class="bh-portfolio-form__footer">
       <BHButton variant="ghost" type="button" @click="$emit('cancel')">
-        {{ $t('portfolios.form.cancel') }}
+        {{ t('portfolios.form.cancel') }}
       </BHButton>
       <BHButton
         variant="primary"
@@ -38,7 +38,7 @@
         :loading="loading"
         :disabled="!isValid"
       >
-        {{ $t('portfolios.form.save') }}
+        {{ t('portfolios.form.save') }}
       </BHButton>
     </div>
   </form>
@@ -89,16 +89,16 @@ function validate(): boolean {
 
   const trimmedName = form.name.trim();
   if (trimmedName.length < 1 || trimmedName.length > 120) {
-    errors.name = 'Le nom doit faire entre 1 et 120 caractères';
+    errors.name = t('portfolios.form.errors.name_length');
   }
 
   if (form.kind !== 'real' && form.kind !== 'virtual') {
-    errors.kind = 'Type invalide';
+    errors.kind = t('portfolios.form.errors.kind_invalid');
   }
 
   const trimmedCurrency = form.currency.trim();
   if (trimmedCurrency.length !== 3) {
-    errors.currency = 'La devise doit faire exactement 3 caractères';
+    errors.currency = t('portfolios.form.errors.currency_length');
   }
 
   return !errors.name && !errors.kind && !errors.currency;

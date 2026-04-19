@@ -23,7 +23,7 @@
           <button
             type="button"
             class="bh-modal__close"
-            aria-label="Fermer"
+            :aria-label="t('common.close')"
             @click="close"
           >
             <LucideX :size="20" />
@@ -67,6 +67,7 @@ const emit = defineEmits<{
   (e: 'update:modelValue', value: boolean): void;
 }>();
 
+const { t } = useI18n();
 const modalRef = ref<HTMLElement | null>(null);
 const titleId = computed(() => `bh-modal-title-${useId()}`);
 
@@ -113,7 +114,7 @@ onMounted(() => {
 <style lang="css" scoped>
 .bh-modal-overlay {
   @apply fixed inset-0 z-40;
-  @apply bg-black/60;
+  @apply bg-theme-overlay/60;
   @apply cursor-pointer;
 }
 
@@ -170,10 +171,11 @@ onMounted(() => {
 .bh-modal__close {
   @apply flex items-center justify-center;
   @apply w-11 h-11 md:w-10 md:h-10;
-  @apply rounded-md;
+  @apply rounded-lg;
   @apply text-theme-text-muted;
   @apply hover:bg-theme-bg-elevated hover:text-theme-text-primary;
   @apply transition-colors;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary;
 }
 
 .bh-modal__content {

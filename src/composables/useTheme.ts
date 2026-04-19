@@ -1,6 +1,8 @@
 export function useTheme() {
   const mode = useColorMode({
+    storageKey: 'bh-theme',
     initialValue: 'dark',
+    disableTransition: false,
     modes: {
       light: 'light',
       dark: 'dark',
@@ -9,13 +11,13 @@ export function useTheme() {
 
   const isDark = computed(() => mode.value === 'dark');
 
-  function toggleTheme() {
+  function toggle() {
     mode.value = isDark.value ? 'light' : 'dark';
   }
 
   return {
     theme: computed(() => mode.value),
     isDark,
-    toggleTheme,
+    toggle,
   };
 }

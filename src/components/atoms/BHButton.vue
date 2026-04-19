@@ -128,12 +128,12 @@ function handleClick(event: MouseEvent) {
 }
 
 .primary {
-  @apply border bg-theme-accent-primary border-theme-accent-primary text-gray-900;
+  @apply border bg-theme-accent-primary border-theme-accent-primary text-theme-text-on-accent-primary;
   @apply hover:bg-theme-accent-primary hover:brightness-125;
 }
 
 .secondary {
-  @apply border bg-theme-accent-secondary border-theme-accent-secondary text-white;
+  @apply border bg-theme-accent-secondary border-theme-accent-secondary text-theme-text-on-accent-secondary;
   @apply hover:bg-theme-accent-secondary hover:brightness-125;
 }
 
@@ -143,7 +143,7 @@ function handleClick(event: MouseEvent) {
 }
 
 .danger {
-  @apply border bg-theme-status-error border-theme-status-error text-white;
+  @apply border bg-theme-status-error border-theme-status-error text-theme-text-on-danger;
   @apply hover:bg-theme-status-error hover:brightness-125;
 }
 

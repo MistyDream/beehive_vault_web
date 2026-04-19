@@ -6,7 +6,7 @@
         <h3 class="bh-portfolio-card__name">{{ portfolio.name }}</h3>
         <div class="bh-portfolio-card__meta">
           <BHBadge
-            :variant="portfolio.kind === 'real' ? 'success' : 'info'"
+            :variant="portfolio.kind === 'real' ? 'accent-primary' : 'accent-secondary'"
             size="sm"
           >
             {{ kindLabel }}
@@ -85,13 +85,8 @@ const { data: summaryData, pending: summaryPending } = summary(
   @apply p-4 md:p-5;
   @apply bg-theme-bg-card rounded-2xl border border-theme-border-primary;
   @apply transition-colors duration-300 ease-out;
-  @apply hover:bg-theme-bg-elevated cursor-pointer;
-}
-
-/* Light mode: darker hover for better feedback on warm bg */
-:root:not(.dark) .bh-portfolio-card:hover {
-  background-color: rgb(225 220 209);
-  @apply no-underline;
+  @apply hover:bg-theme-bg-elevated-strong cursor-pointer no-underline;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary;
 }
 
 .bh-portfolio-card__pattern {

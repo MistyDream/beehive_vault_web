@@ -181,7 +181,7 @@ async function onCreate(payload: CreatePortfolioPayload) {
 }
 
 .portfolios-page__grid {
-  @apply grid grid-cols-1 md:grid-cols-2;
+  @apply grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3;
   @apply gap-4 md:gap-6;
 }
 

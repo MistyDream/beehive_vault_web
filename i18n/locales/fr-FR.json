@@ -2,6 +2,15 @@
   "dashboard": "Tableau de bord",
   "bank-account": "Compte bancaire",
   "settings": "Paramètres",
+  "common": {
+    "close": "Fermer"
+  },
+  "theme": {
+    "light_mode": "Mode clair",
+    "dark_mode": "Mode sombre",
+    "switch_to_light": "Passer en mode clair",
+    "switch_to_dark": "Passer en mode sombre"
+  },
   "portfolios": {
     "title": "Mes portefeuilles",
     "subtitle_count": "{count} portefeuille | {count} portefeuilles",
@@ -24,7 +33,12 @@
       "description_label": "Description",
       "cancel": "Annuler",
       "save": "Enregistrer",
-      "modal_title": "Nouveau portefeuille"
+      "modal_title": "Nouveau portefeuille",
+      "errors": {
+        "name_length": "Le nom doit faire entre 1 et 120 caractères",
+        "kind_invalid": "Type invalide",
+        "currency_length": "La devise doit faire exactement 3 caractères"
+      }
     },
     "card": {
       "invested_label": "Investi",

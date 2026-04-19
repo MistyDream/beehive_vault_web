@@ -2,6 +2,15 @@
   "dashboard": "Dashboard",
   "bank-account": "Bank account",
   "settings": "Settings",
+  "common": {
+    "close": "Close"
+  },
+  "theme": {
+    "light_mode": "Light mode",
+    "dark_mode": "Dark mode",
+    "switch_to_light": "Switch to light mode",
+    "switch_to_dark": "Switch to dark mode"
+  },
   "portfolios": {
     "title": "My portfolios",
     "subtitle_count": "{count} portfolio | {count} portfolios",
@@ -24,7 +33,12 @@
       "description_label": "Description",
       "cancel": "Cancel",
       "save": "Save",
-      "modal_title": "New portfolio"
+      "modal_title": "New portfolio",
+      "errors": {
+        "name_length": "Name must be between 1 and 120 characters",
+        "kind_invalid": "Invalid kind",
+        "currency_length": "Currency must be exactly 3 characters"
+      }
     },
     "card": {
       "invested_label": "Invested",

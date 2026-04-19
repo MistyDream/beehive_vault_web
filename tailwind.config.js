@@ -107,11 +107,15 @@ export default {
           secondary: 'rgb(var(--color-bg-secondary) / <alpha-value>)',
           card: 'rgb(var(--color-bg-card) / <alpha-value>)',
           elevated: 'rgb(var(--color-bg-elevated) / <alpha-value>)',
+          'elevated-strong': 'rgb(var(--color-bg-elevated-strong) / <alpha-value>)',
         },
         'theme-text': {
           primary: 'rgb(var(--color-text-primary) / <alpha-value>)',
           secondary: 'rgb(var(--color-text-secondary) / <alpha-value>)',
           muted: 'rgb(var(--color-text-muted) / <alpha-value>)',
+          'on-accent-primary': 'rgb(var(--color-text-on-accent-primary) / <alpha-value>)',
+          'on-accent-secondary': 'rgb(var(--color-text-on-accent-secondary) / <alpha-value>)',
+          'on-danger': 'rgb(var(--color-text-on-danger) / <alpha-value>)',
         },
         'theme-border': {
           primary: 'rgb(var(--color-border-primary) / <alpha-value>)',
@@ -119,14 +123,21 @@ export default {
         },
         'theme-status': {
           success: 'rgb(var(--color-status-success) / <alpha-value>)',
+          'success-strong': 'rgb(var(--color-status-success-strong) / <alpha-value>)',
           warning: 'rgb(var(--color-status-warning) / <alpha-value>)',
+          'warning-strong': 'rgb(var(--color-status-warning-strong) / <alpha-value>)',
           error: 'rgb(var(--color-status-error) / <alpha-value>)',
+          'error-strong': 'rgb(var(--color-status-error-strong) / <alpha-value>)',
           info: 'rgb(var(--color-status-info) / <alpha-value>)',
+          'info-strong': 'rgb(var(--color-status-info-strong) / <alpha-value>)',
         },
         'theme-accent': {
           primary: 'rgb(var(--color-accent-primary) / <alpha-value>)',
+          'primary-strong': 'rgb(var(--color-accent-primary-strong) / <alpha-value>)',
           secondary: 'rgb(var(--color-accent-secondary) / <alpha-value>)',
+          'secondary-strong': 'rgb(var(--color-accent-secondary-strong) / <alpha-value>)',
         },
+        'theme-overlay': 'rgb(var(--color-overlay) / <alpha-value>)',
 
       },
       fontFamily: {

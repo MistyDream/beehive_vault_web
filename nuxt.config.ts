@@ -11,11 +11,6 @@ export default defineNuxtConfig({
   },
 
   app: {
-    head: {
-      htmlAttrs: {
-        class: 'dark',
-      },
-    },
     pageTransition: { name: 'page', mode: 'out-in' },
   },
 

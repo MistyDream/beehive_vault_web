@@ -21,11 +21,11 @@
         <button
           type="button"
           class="bh-sidebar--theme-toggle"
-          :aria-label="isDark ? 'Passer en mode clair' : 'Passer en mode sombre'"
+          :aria-label="isDark ? t('theme.switch_to_light') : t('theme.switch_to_dark')"
           @click="toggle"
         >
           <component :is="isDark ? LucideSun : LucideMoon" :size="18" />
-          <span>{{ isDark ? 'Mode clair' : 'Mode sombre' }}</span>
+          <span>{{ isDark ? t('theme.light_mode') : t('theme.dark_mode') }}</span>
         </button>
       </ClientOnly>
     </div>
@@ -42,7 +42,7 @@ import {
 import type { NavigationLink } from '~/types/navigation-link';
 
 const { t } = useI18n();
-const { isDark, toggle } = useDarkMode();
+const { isDark, toggle } = useTheme();
 
 const navigation: NavigationLink[] = [
   {
