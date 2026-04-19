@@ -88,33 +88,31 @@ function onOverlayClick() {
   if (props.closeOnOverlayClick) close();
 }
 
-onMounted(() => {
-  const isScrollLocked = useScrollLock(document.body);
-  const { activate, deactivate } = useFocusTrap(modalRef, {
-    allowOutsideClick: true,
-    escapeDeactivates: false,
-  });
+const isScrollLocked = useScrollLock(
+  () => (import.meta.client ? document.body : null),
+);
+const { activate, deactivate } = useFocusTrap(modalRef, {
+  allowOutsideClick: true,
+  escapeDeactivates: false,
+});
 
-  watch(
-    () => props.modelValue,
-    (open) => {
-      isScrollLocked.value = open;
-      if (open) {
-        nextTick(() => activate());
-      } else {
-        deactivate();
-      }
-    },
-    { immediate: true },
-  );
-
-  useEventListener(document, 'keydown', (e: KeyboardEvent) => {
-    if (!props.modelValue) return;
-    if (e.key === 'Escape' && props.closeOnEscape) {
-      e.preventDefault();
-      close();
+watch(
+  () => props.modelValue,
+  (open) => {
+    isScrollLocked.value = open;
+    if (open) {
+      nextTick(() => activate());
+    } else {
+      deactivate();
     }
-  });
+  },
+  { immediate: true },
+);
+
+onKeyStroke('Escape', (e) => {
+  if (!props.modelValue || !props.closeOnEscape) return;
+  e.preventDefault();
+  close();
 });
 </script>
 

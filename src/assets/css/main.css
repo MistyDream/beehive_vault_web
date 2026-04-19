@@ -88,10 +88,12 @@ body {
   @apply font-nunito bg-theme-bg-primary text-theme-text-primary;
 }
 
-/* Smooth theme transitions for all elements that derive colors from CSS
-   variables. Specific transitions on components (e.g. hover on buttons)
-   override this via the transition shorthand. */
-* {
+/* Smooth theme transitions — only while the <html> toggles classes.
+   Scoped to a brief window via .theme-switching to avoid applying 250ms
+   transitions to unrelated hover/focus state changes on every element. */
+html.theme-switching *,
+html.theme-switching *::before,
+html.theme-switching *::after {
   transition-property: background-color, border-color, color, fill, stroke;
   transition-duration: 250ms;
   transition-timing-function: ease-out;

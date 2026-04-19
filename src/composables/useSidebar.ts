@@ -1,22 +1,7 @@
 export function useSidebar() {
   const isOpen = useState('bh-sidebar-open', () => false);
+  const toggle = useToggle(isOpen);
+  const close = () => { isOpen.value = false; };
 
-  function toggle() {
-    isOpen.value = !isOpen.value;
-  }
-
-  function open() {
-    isOpen.value = true;
-  }
-
-  function close() {
-    isOpen.value = false;
-  }
-
-  return {
-    isOpen: readonly(isOpen),
-    toggle,
-    open,
-    close,
-  };
+  return { isOpen, toggle, close };
 }

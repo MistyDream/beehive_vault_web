@@ -26,31 +26,7 @@
       aria-busy="true"
       :aria-label="t('portfolios.loading')"
     >
-      <div
-        v-for="n in 4"
-        :key="n"
-        class="portfolios-page__skeleton-card"
-      >
-        <div class="portfolios-page__skeleton-head">
-          <div class="portfolios-page__skeleton-name bh-skeleton" />
-          <div class="portfolios-page__skeleton-pill bh-skeleton" />
-        </div>
-        <div class="portfolios-page__skeleton-meta">
-          <div class="portfolios-page__skeleton-badge bh-skeleton" />
-          <div class="portfolios-page__skeleton-tag bh-skeleton" />
-        </div>
-        <div class="portfolios-page__skeleton-description bh-skeleton" />
-        <div class="portfolios-page__skeleton-kpis">
-          <div class="portfolios-page__skeleton-kpi">
-            <div class="portfolios-page__skeleton-kpi-label bh-skeleton" />
-            <div class="portfolios-page__skeleton-kpi-value bh-skeleton" />
-          </div>
-          <div class="portfolios-page__skeleton-kpi">
-            <div class="portfolios-page__skeleton-kpi-label bh-skeleton" />
-            <div class="portfolios-page__skeleton-kpi-value bh-skeleton" />
-          </div>
-        </div>
-      </div>
+      <BHPortfolioCard v-for="n in 4" :key="n" skeleton />
     </div>
 
     <div v-else-if="showError" class="portfolios-page__error" role="alert">
@@ -116,9 +92,9 @@ const { t } = useI18n();
 const portfolioApi = usePortfolioApi();
 const { data: portfolios, pending, error, refresh } = portfolioApi.list();
 
-// Dev-only: force a state via ?state=loading|error|empty|populated
 const route = useRoute();
 const forcedState = computed(() => {
+  if (!import.meta.dev) return null;
   const state = route.query.state;
   return typeof state === 'string' ? state : null;
 });
@@ -146,9 +122,9 @@ function openCreateModal() {
 async function onCreate(payload: CreatePortfolioPayload) {
   creating.value = true;
   try {
-    await portfolioApi.create(payload);
+    const created = await portfolioApi.create(payload);
+    portfolios.value = [...(portfolios.value ?? []), created];
     isModalOpen.value = false;
-    await refresh();
   } catch (err) {
     if (err instanceof ApiError) {
       console.error('Portfolio creation failed:', err.status, err.title, err.detail);
@@ -191,56 +167,6 @@ async function onCreate(payload: CreatePortfolioPayload) {
 .portfolios-page__grid {
   @apply grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3;
   @apply gap-4 md:gap-6;
-}
-
-.portfolios-page__skeleton-card {
-  @apply flex flex-col gap-3;
-  @apply p-4 md:p-5;
-  @apply bg-theme-bg-card rounded-2xl border border-theme-border-primary;
-}
-
-.portfolios-page__skeleton-head {
-  @apply flex items-start justify-between gap-3;
-}
-
-.portfolios-page__skeleton-name {
-  @apply h-5 w-40 rounded;
-}
-
-.portfolios-page__skeleton-pill {
-  @apply h-5 w-10 rounded-full;
-}
-
-.portfolios-page__skeleton-meta {
-  @apply flex items-center gap-2;
-}
-
-.portfolios-page__skeleton-badge {
-  @apply h-5 w-14 rounded-full;
-}
-
-.portfolios-page__skeleton-tag {
-  @apply h-5 w-10 rounded;
-}
-
-.portfolios-page__skeleton-description {
-  @apply h-3 w-3/4 rounded;
-}
-
-.portfolios-page__skeleton-kpis {
-  @apply grid grid-cols-2 gap-4 mt-1;
-}
-
-.portfolios-page__skeleton-kpi {
-  @apply flex flex-col gap-2;
-}
-
-.portfolios-page__skeleton-kpi-label {
-  @apply h-3 w-12 rounded;
-}
-
-.portfolios-page__skeleton-kpi-value {
-  @apply h-5 w-24 rounded;
 }
 
 .portfolios-page__error {

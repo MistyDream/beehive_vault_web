@@ -82,15 +82,14 @@ const navigation: NavigationLink[] = [
   },
 ];
 
-watch(() => route.fullPath, () => close());
+watch(() => route.fullPath, () => {
+  if (isOpen.value) close();
+});
 
-onMounted(() => {
-  useEventListener(document, 'keydown', (e: KeyboardEvent) => {
-    if (isOpen.value && e.key === 'Escape') {
-      e.preventDefault();
-      close();
-    }
-  });
+onKeyStroke('Escape', (e) => {
+  if (!isOpen.value) return;
+  e.preventDefault();
+  close();
 });
 </script>
 

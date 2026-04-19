@@ -45,7 +45,6 @@
       "modal_title": "Nouveau portefeuille",
       "errors": {
         "name_length": "Le nom doit faire entre 1 et 120 caractères",
-        "kind_invalid": "Type invalide",
         "currency_length": "La devise doit faire exactement 3 caractères"
       }
     },

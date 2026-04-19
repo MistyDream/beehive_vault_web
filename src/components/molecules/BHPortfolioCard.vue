@@ -1,22 +1,43 @@
 <template>
+  <div v-if="skeleton" class="bh-portfolio-card bh-portfolio-card--skeleton">
+    <div class="bh-portfolio-card__pattern bh-hex-pattern" aria-hidden="true" />
+    <div class="bh-portfolio-card__head-left">
+      <div class="bh-portfolio-card__skel-name bh-skeleton" />
+      <div class="bh-portfolio-card__meta">
+        <div class="bh-portfolio-card__skel-badge bh-skeleton" />
+        <div class="bh-portfolio-card__skel-tag bh-skeleton" />
+      </div>
+    </div>
+    <div class="bh-portfolio-card__skel-description bh-skeleton" />
+    <div class="bh-portfolio-card__kpis">
+      <div class="bh-portfolio-card__kpi">
+        <div class="bh-portfolio-card__skel-kpi-label bh-skeleton" />
+        <div class="bh-portfolio-card__skel-kpi-value bh-skeleton" />
+      </div>
+      <div class="bh-portfolio-card__kpi">
+        <div class="bh-portfolio-card__skel-kpi-label bh-skeleton" />
+        <div class="bh-portfolio-card__skel-kpi-value bh-skeleton" />
+      </div>
+    </div>
+  </div>
+
   <NuxtLink
+    v-else-if="portfolio"
     :to="`/portfolios/${portfolio.id}`"
     :aria-label="portfolio.name"
     class="bh-portfolio-card"
   >
     <div class="bh-portfolio-card__pattern bh-hex-pattern" aria-hidden="true" />
-    <div class="bh-portfolio-card__head">
-      <div class="bh-portfolio-card__head-left">
-        <h2 class="bh-portfolio-card__name">{{ portfolio.name }}</h2>
-        <div class="bh-portfolio-card__meta">
-          <BHBadge
-            :variant="portfolio.kind === 'real' ? 'accent-primary' : 'accent-secondary'"
-            size="sm"
-          >
-            {{ kindLabel }}
-          </BHBadge>
-          <BHTag color="neutral">{{ portfolio.currency }}</BHTag>
-        </div>
+    <div class="bh-portfolio-card__head-left">
+      <h2 class="bh-portfolio-card__name">{{ portfolio.name }}</h2>
+      <div class="bh-portfolio-card__meta">
+        <BHBadge
+          :variant="portfolio.kind === 'real' ? 'accent-primary' : 'accent-secondary'"
+          size="sm"
+        >
+          {{ kindLabel }}
+        </BHBadge>
+        <BHTag color="neutral">{{ portfolio.currency }}</BHTag>
       </div>
     </div>
 
@@ -30,7 +51,7 @@
           {{ t('portfolios.card.invested_label') }}
         </span>
         <span class="bh-portfolio-card__kpi-value">
-          <span v-if="summaryPending" class="bh-portfolio-card__skeleton bh-skeleton" />
+          <span v-if="summaryPending" class="bh-portfolio-card__skel-kpi-value bh-skeleton" />
           <BHCurrencyDisplay
             v-else-if="summaryData"
             :amount="summaryData.total_invested"
@@ -45,7 +66,7 @@
           {{ t('portfolios.card.cash_label') }}
         </span>
         <span class="bh-portfolio-card__kpi-value">
-          <span v-if="summaryPending" class="bh-portfolio-card__skeleton bh-skeleton" />
+          <span v-if="summaryPending" class="bh-portfolio-card__skel-kpi-value bh-skeleton" />
           <BHCurrencyDisplay
             v-else-if="summaryData"
             :amount="summaryData.cash.balance"
@@ -63,23 +84,29 @@
 import type { Portfolio } from '~/types/portfolio';
 
 interface Props {
-  portfolio: Portfolio;
+  portfolio?: Portfolio;
+  skeleton?: boolean;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  portfolio: undefined,
+  skeleton: false,
+});
 
 const { t } = useI18n();
 
 const kindLabel = computed(() =>
-  props.portfolio.kind === 'real'
+  props.portfolio?.kind === 'real'
     ? t('portfolios.form.kind_real')
     : t('portfolios.form.kind_virtual'),
 );
 
 const { summary } = usePortfolioApi();
-const { data: summaryData, pending: summaryPending } = summary(
-  () => props.portfolio.id,
-);
+const fetchResult = !props.skeleton && props.portfolio
+  ? summary(() => props.portfolio!.id)
+  : null;
+const summaryData = computed(() => fetchResult?.data.value ?? null);
+const summaryPending = computed(() => fetchResult?.pending.value ?? false);
 </script>
 
 <style lang="css" scoped>
@@ -93,6 +120,10 @@ const { data: summaryData, pending: summaryPending } = summary(
   @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary;
 }
 
+.bh-portfolio-card--skeleton {
+  @apply cursor-default hover:bg-theme-bg-card;
+}
+
 .bh-portfolio-card__pattern {
   @apply pointer-events-none absolute inset-0;
   @apply opacity-[0.05];
@@ -100,10 +131,6 @@ const { data: summaryData, pending: summaryPending } = summary(
 
 .bh-portfolio-card > *:not(.bh-portfolio-card__pattern) {
   @apply relative;
-}
-
-.bh-portfolio-card__head {
-  @apply flex items-start justify-between gap-3;
 }
 
 .bh-portfolio-card__head-left {
@@ -142,11 +169,31 @@ const { data: summaryData, pending: summaryPending } = summary(
   @apply min-h-[1.5rem];
 }
 
-.bh-portfolio-card__skeleton {
-  @apply block w-20 h-4 rounded;
-}
-
 .bh-portfolio-card__fallback {
   @apply text-theme-text-muted font-space;
+}
+
+.bh-portfolio-card__skel-name {
+  @apply h-5 w-40 rounded;
+}
+
+.bh-portfolio-card__skel-badge {
+  @apply h-5 w-14 rounded-full;
+}
+
+.bh-portfolio-card__skel-tag {
+  @apply h-5 w-10 rounded;
+}
+
+.bh-portfolio-card__skel-description {
+  @apply h-3 w-3/4 rounded;
+}
+
+.bh-portfolio-card__skel-kpi-label {
+  @apply h-3 w-12 rounded;
+}
+
+.bh-portfolio-card__skel-kpi-value {
+  @apply h-5 w-24 rounded;
 }
 </style>

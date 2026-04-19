@@ -11,7 +11,6 @@
       v-model="form.kind"
       :label="t('portfolios.form.kind_label')"
       :options="kindOptions"
-      :error="errors.kind"
     />
 
     <BHBaseInput
@@ -44,7 +43,12 @@
 </template>
 
 <script setup lang="ts">
-import type { CreatePortfolioPayload, Portfolio, PortfolioKind } from '~/types/portfolio';
+import {
+  PORTFOLIO_KINDS,
+  type CreatePortfolioPayload,
+  type Portfolio,
+  type PortfolioKind,
+} from '~/types/portfolio';
 
 interface Props {
   initialValue?: Portfolio;
@@ -63,10 +67,12 @@ const emit = defineEmits<{
 
 const { t } = useI18n();
 
-const kindOptions = computed(() => [
-  { value: 'real', label: t('portfolios.form.kind_real') },
-  { value: 'virtual', label: t('portfolios.form.kind_virtual') },
-]);
+const kindOptions = computed(() =>
+  PORTFOLIO_KINDS.map((kind) => ({
+    value: kind,
+    label: t(`portfolios.form.kind_${kind}`),
+  })),
+);
 
 const form = reactive({
   name: props.initialValue?.name ?? '',
@@ -77,13 +83,11 @@ const form = reactive({
 
 const errors = reactive({
   name: '',
-  kind: '',
   currency: '',
 });
 
 function validate(): boolean {
   errors.name = '';
-  errors.kind = '';
   errors.currency = '';
 
   const trimmedName = form.name.trim();
@@ -91,30 +95,24 @@ function validate(): boolean {
     errors.name = t('portfolios.form.errors.name_length');
   }
 
-  if (form.kind !== 'real' && form.kind !== 'virtual') {
-    errors.kind = t('portfolios.form.errors.kind_invalid');
-  }
-
   const trimmedCurrency = form.currency.trim();
   if (trimmedCurrency.length !== 3) {
     errors.currency = t('portfolios.form.errors.currency_length');
   }
 
-  return !errors.name && !errors.kind && !errors.currency;
+  return !errors.name && !errors.currency;
 }
 
 function onSubmit() {
   if (!validate()) return;
 
+  const description = form.description.trim();
   const payload: CreatePortfolioPayload = {
     name: form.name.trim(),
     kind: form.kind,
     currency: form.currency.trim().toUpperCase(),
+    ...(description && { description }),
   };
-
-  if (form.description.trim()) {
-    payload.description = form.description.trim();
-  }
 
   emit('submit', payload);
 }

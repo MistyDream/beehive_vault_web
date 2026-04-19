@@ -45,7 +45,6 @@
       "modal_title": "New portfolio",
       "errors": {
         "name_length": "Name must be between 1 and 120 characters",
-        "kind_invalid": "Invalid kind",
         "currency_length": "Currency must be exactly 3 characters"
       }
     },
