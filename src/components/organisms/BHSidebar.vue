@@ -7,11 +7,6 @@
         class="bh-sidebar--head__logo"
       />
       <div class="bh-sidebar--head__app-name">BeeHive Vault</div>
-      <!-- <div class="bh-sidebar--head__button">
-        <BHButton>
-          <LucidePanelLeft />
-        </BHButton>
-      </div> -->
     </div>
     <BHSeparator />
     <div class="bh-sidebar--content">
@@ -21,6 +16,19 @@
         </template>
       </BHVerticalNavigation>
     </div>
+    <div class="bh-sidebar--footer">
+      <ClientOnly>
+        <button
+          type="button"
+          class="bh-sidebar--theme-toggle"
+          :aria-label="isDark ? 'Passer en mode clair' : 'Passer en mode sombre'"
+          @click="toggle"
+        >
+          <component :is="isDark ? LucideSun : LucideMoon" :size="18" />
+          <span>{{ isDark ? 'Mode clair' : 'Mode sombre' }}</span>
+        </button>
+      </ClientOnly>
+    </div>
   </nav>
 </template>
 
@@ -28,10 +36,13 @@
 import {
   LucideLayoutDashboard,
   LucideWallet,
+  LucideSun,
+  LucideMoon,
 } from '#components';
 import type { NavigationLink } from '~/types/navigation-link';
 
 const { t } = useI18n();
+const { isDark, toggle } = useDarkMode();
 
 const navigation: NavigationLink[] = [
   {
@@ -49,7 +60,7 @@ const navigation: NavigationLink[] = [
 
 <style scoped>
 .bh-sidebar {
-  @apply fixed flex flex-col gap-4 items-center;
+  @apply hidden lg:flex fixed flex-col gap-4 items-center;
   @apply h-screen w-72 pt-4;
   @apply bg-theme-bg-secondary drop-shadow-md;
 }
@@ -72,7 +83,15 @@ const navigation: NavigationLink[] = [
   @apply font-poppins text-base;
 }
 
-.bh-sidebar--head__button {
-  @apply flex grow justify-end;
+.bh-sidebar--footer {
+  @apply flex mt-auto mb-4 w-full px-4;
+}
+
+.bh-sidebar--theme-toggle {
+  @apply flex items-center gap-3 w-full px-3 py-2;
+  @apply rounded-md text-sm font-medium;
+  @apply text-theme-text-secondary;
+  @apply hover:bg-theme-bg-elevated hover:text-theme-text-primary;
+  @apply transition-colors duration-200;
 }
 </style>

@@ -51,19 +51,36 @@ const sizeClass = computed(() => `bh-badge--${props.size}`);
 }
 
 .bh-badge--success {
-  @apply bg-theme-status-success/15 text-theme-status-success border-theme-status-success/25;
+  @apply bg-theme-status-success/20 text-theme-status-success border-theme-status-success/40;
 }
 
 .bh-badge--warning {
-  @apply bg-theme-status-warning/15 text-theme-status-warning border-theme-status-warning/25;
+  @apply bg-theme-status-warning/20 text-theme-status-warning border-theme-status-warning/40;
 }
 
 .bh-badge--error {
-  @apply bg-theme-status-error/15 text-theme-status-error border-theme-status-error/25;
+  @apply bg-theme-status-error/20 text-theme-status-error border-theme-status-error/40;
 }
 
 .bh-badge--info {
-  @apply bg-theme-status-info/15 text-theme-status-info border-theme-status-info/25;
+  @apply bg-theme-status-info/20 text-theme-status-info border-theme-status-info/40;
+}
+
+/* Dark mode: lighten badge text for better contrast on translucent bg */
+:root.dark .bh-badge--info {
+  color: rgb(120 180 200);
+}
+
+:root.dark .bh-badge--success {
+  color: rgb(110 220 140);
+}
+
+:root.dark .bh-badge--warning {
+  color: rgb(255 160 90);
+}
+
+:root.dark .bh-badge--error {
+  color: rgb(255 120 120);
 }
 
 .bh-badge--neutral {

@@ -22,7 +22,7 @@ const subtitle = computed(() => {
 <style lang="css" scoped>
 .bh-header {
   @apply flex flex-col;
-  @apply ml-72 p-4;
+  @apply ml-0 lg:ml-72 p-4;
 }
 
 .bh-header__title {

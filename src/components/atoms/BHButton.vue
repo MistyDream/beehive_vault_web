@@ -90,10 +90,29 @@ function handleClick(event: MouseEvent) {
 <style lang="css" scoped>
 .bh-button {
   @apply flex gap-3 items-center;
-  @apply rounded-md drop-shadow-md;
+  @apply rounded-lg;
   @apply hover:bg-theme-bg-elevated;
   @apply text-theme-text-primary;
-  @apply transition-colors duration-200;
+  filter: brightness(1);
+  transition:
+    background-color 200ms ease-out,
+    border-color 200ms ease-out,
+    color 200ms ease-out,
+    filter 200ms ease-out,
+    box-shadow 200ms ease-out,
+    opacity 200ms ease-out;
+}
+
+.primary,
+.secondary,
+.danger {
+  box-shadow: 0 1px 2px rgb(var(--color-text-primary) / 0.08);
+}
+
+.primary:hover,
+.secondary:hover,
+.danger:hover {
+  box-shadow: 0 2px 6px rgb(var(--color-text-primary) / 0.12);
 }
 
 .size-sm {
@@ -110,12 +129,12 @@ function handleClick(event: MouseEvent) {
 
 .primary {
   @apply border bg-theme-accent-primary border-theme-accent-primary text-gray-900;
-  @apply hover:brightness-110;
+  @apply hover:bg-theme-accent-primary hover:brightness-125;
 }
 
 .secondary {
-  @apply border bg-theme-accent-secondary border-theme-accent-secondary text-theme-text-primary;
-  @apply hover:brightness-110;
+  @apply border bg-theme-accent-secondary border-theme-accent-secondary text-white;
+  @apply hover:bg-theme-accent-secondary hover:brightness-125;
 }
 
 .ghost {
@@ -125,7 +144,7 @@ function handleClick(event: MouseEvent) {
 
 .danger {
   @apply border bg-theme-status-error border-theme-status-error text-white;
-  @apply hover:brightness-110;
+  @apply hover:bg-theme-status-error hover:brightness-125;
 }
 
 .is-loading {

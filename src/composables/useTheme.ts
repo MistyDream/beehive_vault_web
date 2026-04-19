@@ -1,6 +1,6 @@
 export function useTheme() {
   const mode = useColorMode({
-    emitAuto: true,
+    initialValue: 'dark',
     modes: {
       light: 'light',
       dark: 'dark',

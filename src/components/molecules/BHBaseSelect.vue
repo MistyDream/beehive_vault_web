@@ -208,7 +208,7 @@ onClickOutside(selectRef, () => {
 .bh-select__control {
   @apply w-full px-4 py-2 rounded-lg;
   @apply bg-theme-bg-card;
-  @apply border border-theme-border-primary;
+  @apply border border-theme-border-secondary;
   @apply text-sm text-theme-text-primary font-medium;
   @apply flex items-center justify-between gap-2;
   @apply text-left;
@@ -250,21 +250,43 @@ onClickOutside(selectRef, () => {
 
 .bh-select__options {
   @apply absolute left-0 right-0 mt-2 z-10;
-  @apply bg-theme-bg-card border border-theme-border-primary rounded-lg shadow-lg;
+  @apply bg-theme-bg-card border border-theme-border-secondary rounded-lg shadow-lg;
   @apply max-h-60 overflow-auto;
 }
 
 .bh-select__option {
   @apply flex items-center justify-between gap-2;
   @apply px-4 py-2 text-sm text-theme-text-primary cursor-pointer;
+  @apply transition-colors duration-100;
 }
 
 .bh-select__option:hover {
-  @apply bg-theme-bg-elevated;
+  @apply bg-theme-bg-elevated text-theme-accent-primary;
+}
+
+/* Light mode: darker gold for hover text */
+:root:not(.dark) .bh-select__option:hover {
+  color: rgb(155 115 35);
 }
 
 .bh-select__option--selected {
-  @apply bg-theme-accent-secondary text-theme-text-primary;
+  @apply bg-theme-accent-secondary/15 text-theme-accent-secondary font-semibold;
+}
+
+.bh-select__option--selected:hover {
+  @apply bg-theme-accent-secondary/25 text-theme-accent-secondary;
+}
+
+/* Light: keep teal on selected hover (override generic :root:not(.dark) gold) */
+:root:not(.dark) .bh-select__option--selected,
+:root:not(.dark) .bh-select__option--selected:hover {
+  color: rgb(var(--color-accent-secondary));
+}
+
+/* Dark: lighter teal for better readability on translucent bg */
+:root.dark .bh-select__option--selected,
+:root.dark .bh-select__option--selected:hover {
+  color: rgb(120 180 200);
 }
 
 .bh-select__option--disabled {
