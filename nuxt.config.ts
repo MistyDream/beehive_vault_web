@@ -12,6 +12,14 @@ export default defineNuxtConfig({
 
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
+    head: {
+      script: [
+        {
+          tagPosition: 'head',
+          children: `(function(){try{var t=localStorage.getItem('bh-theme');var d=t?t==='dark':true;var h=document.documentElement;h.classList.toggle('dark',d);h.classList.toggle('light',!d);}catch(e){document.documentElement.classList.add('dark');}})();`,
+        },
+      ],
+    },
   },
 
   modules: [

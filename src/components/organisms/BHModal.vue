@@ -4,6 +4,7 @@
       <div
         v-if="modelValue"
         class="bh-modal-overlay"
+        aria-hidden="true"
         @click="onOverlayClick"
       />
     </Transition>
@@ -18,7 +19,13 @@
         :aria-labelledby="titleId"
       >
         <header class="bh-modal__header">
-          <component v-if="icon" :is="icon" :size="20" class="bh-modal__icon" />
+          <component
+            :is="icon"
+            v-if="icon"
+            :size="20"
+            class="bh-modal__icon"
+            aria-hidden="true"
+          />
           <h2 :id="titleId" class="bh-modal__title">{{ title }}</h2>
           <button
             type="button"
@@ -26,7 +33,7 @@
             :aria-label="t('common.close')"
             @click="close"
           >
-            <LucideX :size="20" />
+            <LucideX :size="20" aria-hidden="true" />
           </button>
         </header>
 

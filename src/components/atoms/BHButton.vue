@@ -93,6 +93,7 @@ function handleClick(event: MouseEvent) {
   @apply rounded-lg;
   @apply hover:bg-theme-bg-elevated;
   @apply text-theme-text-primary;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-theme-bg-primary;
   filter: brightness(1);
   transition:
     background-color 200ms ease-out,
@@ -116,15 +117,15 @@ function handleClick(event: MouseEvent) {
 }
 
 .size-sm {
-  @apply text-xs px-2 py-0.5;
+  @apply text-xs px-3 py-1.5 min-h-[32px];
 }
 
 .size-md {
-  @apply text-sm px-2 py-1;
+  @apply text-sm px-4 py-2.5 min-h-[40px];
 }
 
 .size-lg {
-  @apply text-base px-4 py-2;
+  @apply text-base px-5 py-3 min-h-[44px];
 }
 
 .primary {

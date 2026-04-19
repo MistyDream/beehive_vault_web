@@ -1,9 +1,13 @@
 <template>
-  <NuxtLink :to="`/portfolios/${portfolio.id}`" class="bh-portfolio-card">
+  <NuxtLink
+    :to="`/portfolios/${portfolio.id}`"
+    :aria-label="portfolio.name"
+    class="bh-portfolio-card"
+  >
     <div class="bh-portfolio-card__pattern bh-hex-pattern" aria-hidden="true" />
     <div class="bh-portfolio-card__head">
       <div class="bh-portfolio-card__head-left">
-        <h3 class="bh-portfolio-card__name">{{ portfolio.name }}</h3>
+        <h2 class="bh-portfolio-card__name">{{ portfolio.name }}</h2>
         <div class="bh-portfolio-card__meta">
           <BHBadge
             :variant="portfolio.kind === 'real' ? 'accent-primary' : 'accent-secondary'"

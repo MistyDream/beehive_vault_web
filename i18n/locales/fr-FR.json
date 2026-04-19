@@ -5,6 +5,14 @@
   "common": {
     "close": "Fermer"
   },
+  "a11y": {
+    "skip_to_main": "Aller au contenu principal"
+  },
+  "nav": {
+    "main": "Navigation principale",
+    "open_menu": "Ouvrir le menu",
+    "close_menu": "Fermer le menu"
+  },
   "theme": {
     "light_mode": "Mode clair",
     "dark_mode": "Mode sombre",
@@ -14,6 +22,7 @@
   "portfolios": {
     "title": "Mes portefeuilles",
     "subtitle_count": "{count} portefeuille | {count} portefeuilles",
+    "loading": "Chargement des portefeuilles",
     "create_cta": "Créer un portefeuille",
     "empty": {
       "title": "Aucun portefeuille pour l'instant",

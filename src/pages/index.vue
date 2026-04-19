@@ -2,9 +2,9 @@
   <section class="portfolios-page">
     <header class="portfolios-page__header">
       <div class="portfolios-page__header-left">
-        <h1 class="portfolios-page__title">{{ $t('portfolios.title') }}</h1>
+        <h1 class="portfolios-page__title">{{ t('portfolios.title') }}</h1>
         <p v-if="portfolios && portfolios.length" class="portfolios-page__subtitle">
-          {{ $t('portfolios.subtitle_count', portfolios.length) }}
+          {{ t('portfolios.subtitle_count', portfolios.length) }}
         </p>
       </div>
       <BHButton
@@ -13,12 +13,19 @@
         class="portfolios-page__cta"
         @click="openCreateModal"
       >
-        <LucidePlus :size="16" />
-        {{ $t('portfolios.create_cta') }}
+        <LucidePlus :size="16" aria-hidden="true" />
+        {{ t('portfolios.create_cta') }}
       </BHButton>
     </header>
 
-    <div v-if="showLoading" class="portfolios-page__grid">
+    <div
+      v-if="showLoading"
+      class="portfolios-page__grid"
+      role="status"
+      aria-live="polite"
+      aria-busy="true"
+      :aria-label="t('portfolios.loading')"
+    >
       <div
         v-for="n in 4"
         :key="n"
@@ -46,15 +53,15 @@
       </div>
     </div>
 
-    <div v-else-if="showError" class="portfolios-page__error">
+    <div v-else-if="showError" class="portfolios-page__error" role="alert">
       <h2 class="portfolios-page__error-title">
-        {{ $t('portfolios.error.title') }}
+        {{ t('portfolios.error.title') }}
       </h2>
       <p class="portfolios-page__error-description">
-        {{ $t('portfolios.error.description') }}
+        {{ t('portfolios.error.description') }}
       </p>
       <BHButton variant="secondary" size="md" @click="refresh()">
-        {{ $t('portfolios.error.retry') }}
+        {{ t('portfolios.error.retry') }}
       </BHButton>
     </div>
 
@@ -64,16 +71,16 @@
     >
       <div class="portfolios-page__empty-pattern bh-hex-pattern" aria-hidden="true" />
       <div class="portfolios-page__empty-inner">
-        <LucideHexagon :size="64" class="portfolios-page__empty-icon" />
+        <LucideHexagon :size="64" class="portfolios-page__empty-icon" aria-hidden="true" />
         <h2 class="portfolios-page__empty-title">
-          {{ $t('portfolios.empty.title') }}
+          {{ t('portfolios.empty.title') }}
         </h2>
         <p class="portfolios-page__empty-description">
-          {{ $t('portfolios.empty.description') }}
+          {{ t('portfolios.empty.description') }}
         </p>
         <BHButton variant="primary" size="md" @click="openCreateModal">
-          <LucidePlus :size="16" />
-          {{ $t('portfolios.create_cta') }}
+          <LucidePlus :size="16" aria-hidden="true" />
+          {{ t('portfolios.create_cta') }}
         </BHButton>
       </div>
     </div>
@@ -88,7 +95,7 @@
 
     <BHModal
       v-model="isModalOpen"
-      :title="$t('portfolios.form.modal_title')"
+      :title="t('portfolios.form.modal_title')"
       size="md"
     >
       <BHPortfolioForm
@@ -105,6 +112,7 @@ import { LucidePlus, LucideHexagon } from '#components';
 import { ApiError } from '~/types/api';
 import type { CreatePortfolioPayload } from '~/types/portfolio';
 
+const { t } = useI18n();
 const portfolioApi = usePortfolioApi();
 const { data: portfolios, pending, error, refresh } = portfolioApi.list();
 

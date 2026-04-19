@@ -36,7 +36,6 @@
         variant="primary"
         type="submit"
         :loading="loading"
-        :disabled="!isValid"
       >
         {{ t('portfolios.form.save') }}
       </BHButton>
@@ -103,17 +102,6 @@ function validate(): boolean {
 
   return !errors.name && !errors.kind && !errors.currency;
 }
-
-const isValid = computed(() => {
-  const trimmedName = form.name.trim();
-  const trimmedCurrency = form.currency.trim();
-  return (
-    trimmedName.length >= 1 &&
-    trimmedName.length <= 120 &&
-    (form.kind === 'real' || form.kind === 'virtual') &&
-    trimmedCurrency.length === 3
-  );
-});
 
 function onSubmit() {
   if (!validate()) return;

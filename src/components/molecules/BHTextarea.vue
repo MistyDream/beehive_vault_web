@@ -8,6 +8,8 @@
       :value="modelValue"
       :placeholder="placeholder"
       :disabled="disabled"
+      :required="required || undefined"
+      :aria-required="required || undefined"
       :rows="rows"
       :maxlength="maxLength"
       :style="{ resize }"
@@ -35,6 +37,7 @@ interface Props {
   modelValue?: string;
   placeholder?: string;
   disabled?: boolean;
+  required?: boolean;
   error?: string;
   rows?: number;
   maxLength?: number;
@@ -47,6 +50,7 @@ const props = withDefaults(defineProps<Props>(), {
   modelValue: '',
   placeholder: '',
   disabled: false,
+  required: false,
   error: '',
   rows: 4,
   maxLength: undefined,

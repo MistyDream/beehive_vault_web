@@ -145,6 +145,9 @@ export default {
         nunito: ['Nunito', 'sans-serif'],
         space: ['Space Mono', 'monospace'],
       },
+      transitionDuration: {
+        250: '250ms',
+      },
     },
   },
   plugins: [],

@@ -9,6 +9,8 @@
       :placeholder="placeholder"
       :value="modelValue"
       :disabled="disabled"
+      :required="required || undefined"
+      :aria-required="required || undefined"
       :aria-invalid="!!error || undefined"
       :aria-describedby="error ? errorId : undefined"
       class="bh-input__input"
@@ -29,6 +31,7 @@ interface Props {
   placeholder?: string;
   modelValue?: string;
   disabled?: boolean;
+  required?: boolean;
   error?: string;
 }
 
@@ -39,6 +42,7 @@ const props = withDefaults(defineProps<Props>(), {
   placeholder: '',
   modelValue: '',
   disabled: false,
+  required: false,
   error: '',
 });
 

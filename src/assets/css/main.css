@@ -35,8 +35,8 @@
   /* Accent */
   --color-accent-primary: 205 155 55;        /* honey gold */
   --color-accent-secondary: 55 105 122;      /* teal */
-  --color-accent-primary-strong: 155 115 35; /* darker gold for legibility on light bg */
-  --color-accent-secondary-strong: 55 105 122;
+  --color-accent-primary-strong: 120 85 20;  /* dark gold — ≥4.5:1 on gold/20 bg */
+  --color-accent-secondary-strong: 40 80 95; /* darker teal — ≥4.5:1 on teal/20 bg */
 
   /* Overlay (modal scrim base — alpha applied at usage site) */
   --color-overlay: 0 0 0;
@@ -197,4 +197,17 @@ body {
 @keyframes bh-slideOutUp {
   from { opacity: 1; transform: translateY(0); }
   to { opacity: 0; transform: translateY(-12px); }
+}
+
+/* ─── Reduced motion ─── */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
