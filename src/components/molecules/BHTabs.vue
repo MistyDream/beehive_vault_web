@@ -5,33 +5,49 @@
     :aria-label="ariaLabel"
   >
     <template v-if="isNavMode">
-      <NuxtLink
-        v-for="tab in tabs"
-        :id="`tab-${tab.id}`"
-        :key="tab.id"
-        :to="tab.to ?? ''"
-        role="tab"
-        :aria-selected="isTabActive(tab)"
-        :aria-controls="`tabpanel-${tab.id}`"
-        :aria-disabled="tab.disabled || tab.muted || undefined"
-        :title="tab.tooltip || undefined"
-        active-class="bh-tabs__tab--active"
-        class="bh-tabs__tab"
-        :class="{
-          'bh-tabs__tab--muted': tab.muted,
-          'bh-tabs__tab--disabled': tab.disabled,
-        }"
-        @click="onNavClick($event, tab)"
-      >
-        <span>{{ tab.label }}</span>
-        <BHBadge
-          v-if="typeof tab.count === 'number'"
-          variant="neutral"
-          size="sm"
+      <template v-for="tab in tabs" :key="tab.id">
+        <span
+          v-if="tab.disabled"
+          :id="`tab-${tab.id}`"
+          role="tab"
+          :aria-selected="false"
+          aria-disabled="true"
+          :aria-controls="`tabpanel-${tab.id}`"
+          :title="tab.tooltip || undefined"
+          tabindex="-1"
+          class="bh-tabs__tab bh-tabs__tab--disabled"
         >
-          {{ tab.count }}
-        </BHBadge>
-      </NuxtLink>
+          <span>{{ tab.label }}</span>
+          <BHBadge
+            v-if="typeof tab.count === 'number'"
+            variant="neutral"
+            size="sm"
+          >
+            {{ tab.count }}
+          </BHBadge>
+        </span>
+        <NuxtLink
+          v-else
+          :id="`tab-${tab.id}`"
+          :to="tab.to ?? ''"
+          role="tab"
+          :aria-selected="isTabActive(tab)"
+          :aria-controls="`tabpanel-${tab.id}`"
+          :title="tab.tooltip || undefined"
+          active-class="bh-tabs__tab--active"
+          class="bh-tabs__tab"
+          :class="{ 'bh-tabs__tab--muted': tab.muted }"
+        >
+          <span>{{ tab.label }}</span>
+          <BHBadge
+            v-if="typeof tab.count === 'number'"
+            variant="neutral"
+            size="sm"
+          >
+            {{ tab.count }}
+          </BHBadge>
+        </NuxtLink>
+      </template>
     </template>
 
     <template v-else>
@@ -113,10 +129,6 @@ function registerTab(el: HTMLElement | null, index: number) {
 function select(tab: TabItem) {
   if (tab.disabled || tab.muted || tab.id === props.modelValue) return;
   emit('update:modelValue', tab.id);
-}
-
-function onNavClick(event: MouseEvent, tab: TabItem) {
-  if (tab.disabled || tab.muted) event.preventDefault();
 }
 
 function firstEnabledFrom(start: number, direction: 1 | -1): number {

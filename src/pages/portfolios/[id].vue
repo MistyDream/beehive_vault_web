@@ -78,8 +78,7 @@ const tabs = computed<TabItem[]>(() => [
   {
     id: 'scoring',
     label: t('portfolios.detail.tab_scoring'),
-    to: `/portfolios/${id.value}/scoring`,
-    muted: true,
+    disabled: true,
     tooltip: t('portfolios.detail.tab_scoring_tooltip'),
   },
 ]);
