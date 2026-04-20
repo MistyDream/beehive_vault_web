@@ -64,28 +64,24 @@ import {
   LucideTrendingUp,
   LucideLayers,
 } from '#components';
-import type { PerformanceReport, PortfolioSummary } from '~/types/portfolio';
 
 interface Props {
-  summary: PortfolioSummary | null;
-  performance: PerformanceReport | null;
-  summaryPending?: boolean;
-  performancePending?: boolean;
+  portfolioId: number;
   currency: string;
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  summaryPending: false,
-  performancePending: false,
-});
+const props = defineProps<Props>();
 
 const { t } = useI18n();
 
+const { summary, performance, summaryPending, performancePending } =
+  usePortfolioDetail(() => props.portfolioId);
+
 const netResultPercent = computed(() => {
-  if (!props.performance || !props.summary) return null;
-  const base = props.summary.total_invested;
+  if (!performance.value || !summary.value) return null;
+  const base = summary.value.total_invested;
   if (!base) return null;
-  return (props.performance.net_result / base) * 100;
+  return (performance.value.net_result / base) * 100;
 });
 </script>
 

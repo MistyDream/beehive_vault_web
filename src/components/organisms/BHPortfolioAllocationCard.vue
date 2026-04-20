@@ -64,8 +64,9 @@ const props = defineProps<Props>();
 const { t } = useI18n();
 const { formatPercent } = useLocaleFormatters();
 
-const { summary } = usePortfolioApi();
-const { data: summaryData, pending } = summary(() => props.portfolioId);
+const { summary: summaryData, summaryPending: pending } = usePortfolioDetail(
+  () => props.portfolioId,
+);
 
 const loading = computed(() => pending.value && !summaryData.value);
 const isHidden = computed(() => !loading.value && (summaryData.value?.positions.length ?? 0) === 0);

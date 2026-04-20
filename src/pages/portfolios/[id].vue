@@ -31,13 +31,7 @@
     <template v-else-if="portfolio">
       <BHPortfolioHeaderBand :portfolio="portfolio" />
 
-      <BHPortfolioKpiStrip
-        :summary="summaryData ?? null"
-        :performance="performanceData ?? null"
-        :summary-pending="summaryPending"
-        :performance-pending="performancePending"
-        :currency="portfolio.currency"
-      />
+      <BHPortfolioKpiStrip :portfolio-id="id" :currency="portfolio.currency" />
 
       <BHTabs :tabs="tabs" :aria-label="t('portfolios.detail.tabs_label')" />
 
@@ -54,10 +48,7 @@ const { t } = useI18n();
 const route = useRoute();
 const id = computed(() => Number(route.params.id));
 
-const { detail, summary, performance } = usePortfolioApi();
-const { data: portfolio, pending: detailPending, error: detailError, refresh } = detail(id);
-const { data: summaryData, pending: summaryPending } = summary(id);
-const { data: performanceData, pending: performancePending } = performance(id);
+const { portfolio, detailPending, detailError, refresh } = usePortfolioDetail(id);
 
 const tabs = computed<TabItem[]>(() => [
   {

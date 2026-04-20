@@ -70,9 +70,12 @@ const props = defineProps<Props>();
 const { t } = useI18n();
 const toast = useToast();
 
-const { summary, performance } = usePortfolioApi();
-const { data: summaryData, pending: summaryPending } = summary(() => props.portfolioId);
-const { data: performanceData, pending: performancePending } = performance(() => props.portfolioId);
+const {
+  summary: summaryData,
+  performance: performanceData,
+  summaryPending,
+  performancePending,
+} = usePortfolioDetail(() => props.portfolioId);
 
 const summaryLoading = computed(() => summaryPending.value && !summaryData.value);
 const performanceLoading = computed(() => performancePending.value && !performanceData.value);
