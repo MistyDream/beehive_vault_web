@@ -90,13 +90,16 @@ body {
 
 /* Smooth theme transitions — only while the <html> toggles classes.
    Scoped to a brief window via .theme-switching to avoid applying 250ms
-   transitions to unrelated hover/focus state changes on every element. */
+   transitions to unrelated hover/focus state changes on every element.
+   !important is required to beat Vue scoped styles (0,2,0) which would
+   otherwise keep their own transition-* shorthands during the switch. */
+html.theme-switching,
 html.theme-switching *,
 html.theme-switching *::before,
 html.theme-switching *::after {
-  transition-property: background-color, border-color, color, fill, stroke;
-  transition-duration: 250ms;
-  transition-timing-function: ease-out;
+  transition-property: background-color, border-color, color, fill, stroke !important;
+  transition-duration: 250ms !important;
+  transition-timing-function: ease-out !important;
 }
 
 /* ─── Page transitions ─── */

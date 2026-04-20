@@ -45,8 +45,8 @@
               {{ labelFor(tx) }}
             </span>
             <BHCurrencyDisplay
-              v-if="tx.amount !== null"
-              :amount="tx.amount"
+              v-if="displayAmount(tx) !== null"
+              :amount="displayAmount(tx) as number"
               :currency="tx.currency"
               size="sm"
             />
@@ -113,6 +113,17 @@ function iconFor(type: TransactionType) {
 function labelFor(tx: Transaction): string {
   if (tx.stock) return tx.stock.symbol;
   return t(`portfolios.detail.resume.tx_type.${tx.transaction_type}`);
+}
+
+/** Notional amount for display: uses `amount` when present
+ * (dividend/fee/deposit/withdrawal), falls back to `quantity × unit_price`
+ * for buy/sell. Returns null for splits and incomplete rows. */
+function displayAmount(tx: Transaction): number | null {
+  if (tx.amount !== null) return tx.amount;
+  if (tx.quantity !== null && tx.unit_price !== null) {
+    return tx.quantity * tx.unit_price;
+  }
+  return null;
 }
 
 function formatDate(iso: string): string {

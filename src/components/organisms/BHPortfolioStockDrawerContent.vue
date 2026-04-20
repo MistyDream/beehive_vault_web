@@ -38,8 +38,8 @@
               {{ t(`portfolios.detail.resume.tx_type.${tx.transaction_type}`) }}
             </span>
             <BHCurrencyDisplay
-              v-if="tx.amount !== null"
-              :amount="tx.amount"
+              v-if="displayAmount(tx) !== null"
+              :amount="displayAmount(tx) as number"
               :currency="tx.currency"
               size="sm"
             />
@@ -78,7 +78,7 @@ import {
   LucideTrendingDown,
   LucideTrendingUp,
 } from '#components';
-import type { TransactionType } from '~/types/portfolio';
+import type { Transaction, TransactionType } from '~/types/portfolio';
 
 interface Props {
   portfolioId: number;
@@ -105,6 +105,17 @@ const { data, pending, error } = list(() => props.portfolioId, query);
 const items = computed(() => data.value?.items ?? []);
 const total = computed(() => data.value?.total ?? 0);
 const loading = computed(() => pending.value && !data.value);
+
+/** Notional amount for display: uses `amount` when present
+ * (dividend/fee/deposit/withdrawal), falls back to `quantity × unit_price`
+ * for buy/sell. Returns null for splits and incomplete rows. */
+function displayAmount(tx: Transaction): number | null {
+  if (tx.amount !== null) return tx.amount;
+  if (tx.quantity !== null && tx.unit_price !== null) {
+    return tx.quantity * tx.unit_price;
+  }
+  return null;
+}
 
 function iconFor(type: TransactionType) {
   switch (type) {

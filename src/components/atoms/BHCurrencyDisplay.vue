@@ -22,6 +22,11 @@ const props = withDefaults(defineProps<Props>(), {
   size: 'md',
 });
 
+// Normalize signed zero so the formatter never renders "-0,00 €".
+const normalizedAmount = computed(() =>
+  props.amount === 0 ? 0 : props.amount,
+);
+
 const formattedAmount = computed(() => {
   const options: Intl.NumberFormatOptions = {
     style: 'currency',
@@ -30,10 +35,10 @@ const formattedAmount = computed(() => {
   };
 
   const formatted = new Intl.NumberFormat(props.locale, options).format(
-    props.amount,
+    normalizedAmount.value,
   );
 
-  if (props.showSign && props.amount > 0) {
+  if (props.showSign && normalizedAmount.value > 0) {
     return `+${formatted}`;
   }
 
@@ -44,8 +49,8 @@ const sizeClass = computed(() => `bh-currency-display--${props.size}`);
 
 const colorClass = computed(() => {
   if (!props.showSign) return '';
-  if (props.amount > 0) return 'bh-currency-display--positive';
-  if (props.amount < 0) return 'bh-currency-display--negative';
+  if (normalizedAmount.value > 0) return 'bh-currency-display--positive';
+  if (normalizedAmount.value < 0) return 'bh-currency-display--negative';
   return '';
 });
 </script>
