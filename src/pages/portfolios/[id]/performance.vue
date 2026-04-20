@@ -1,5 +1,11 @@
 <template>
-  <div class="portfolio-performance" role="tabpanel">
+  <div
+    id="tabpanel-performance"
+    class="portfolio-performance"
+    role="tabpanel"
+    aria-labelledby="tab-performance"
+    tabindex="0"
+  >
     <div class="portfolio-performance__stub">
       {{ t('portfolios.detail.coming_soon.performance') }}
     </div>

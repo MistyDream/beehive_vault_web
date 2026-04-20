@@ -1,5 +1,11 @@
 <template>
-  <div class="portfolio-resume" role="tabpanel">
+  <div
+    id="tabpanel-resume"
+    class="portfolio-resume"
+    role="tabpanel"
+    aria-labelledby="tab-resume"
+    tabindex="0"
+  >
     <div class="portfolio-resume__grid">
       <div class="portfolio-resume__main">
         <BHPortfolioPositionsCard

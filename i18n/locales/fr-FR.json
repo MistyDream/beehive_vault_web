@@ -91,6 +91,7 @@
           "count": "{count} position | {count} positions",
           "empty_title": "Aucune position",
           "empty_description": "Enregistrez un achat pour commencer à suivre vos positions.",
+          "view_row_action": "Voir les détails de {symbol}",
           "columns": {
             "symbol": "Symbole",
             "name": "Nom",

@@ -44,11 +44,7 @@
           :key="position.stock.id"
           class="bh-positions-card__row"
           :class="{ 'bh-positions-card__row--even': index % 2 === 1 }"
-          role="button"
-          tabindex="0"
           @click="emit('row-click', position)"
-          @keydown.enter.prevent="emit('row-click', position)"
-          @keydown.space.prevent="emit('row-click', position)"
         >
           <td class="bh-positions-card__cell">
             <div class="bh-positions-card__symbol">
@@ -83,16 +79,26 @@
               <span class="bh-positions-card__weight-value">
                 {{ formatPercent(position.weight) }}
               </span>
-              <div class="bh-positions-card__weight-bar">
+              <div
+                class="bh-positions-card__weight-bar"
+                aria-hidden="true"
+              >
                 <div
                   class="bh-positions-card__weight-fill"
-                  :style="{ width: `${position.weight * 100}%` }"
+                  :style="{ width: `${Math.min(position.weight * 100, 100)}%` }"
                 />
               </div>
             </div>
           </td>
           <td class="bh-positions-card__cell bh-positions-card__cell--chevron">
-            <LucideChevronRight :size="16" aria-hidden="true" />
+            <button
+              type="button"
+              class="bh-positions-card__row-action"
+              :aria-label="t('portfolios.detail.resume.positions.view_row_action', { symbol: position.stock.symbol })"
+              @click.stop="emit('row-click', position)"
+            >
+              <LucideChevronRight :size="16" aria-hidden="true" />
+            </button>
           </td>
         </tr>
       </template>
@@ -231,7 +237,15 @@ function formatPercent(value: number): string {
 .bh-positions-card__row {
   @apply cursor-pointer transition-colors duration-150;
   @apply hover:bg-theme-bg-elevated;
-  @apply focus-visible:outline-none focus-visible:bg-theme-bg-elevated;
+}
+
+.bh-positions-card__row-action {
+  @apply inline-flex items-center justify-center;
+  @apply w-8 h-8 rounded-md;
+  @apply text-theme-text-muted;
+  @apply hover:bg-theme-bg-elevated hover:text-theme-text-primary;
+  @apply transition-colors duration-150;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary;
 }
 
 .bh-positions-card__row--even {

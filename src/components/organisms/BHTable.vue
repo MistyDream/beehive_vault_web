@@ -117,7 +117,17 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits<Emits>();
 
-// Pagination via VueUse
+const currentPageRef = ref(props.page);
+
+watch(
+  () => props.page,
+  (newPage) => {
+    if (currentPageRef.value !== newPage) {
+      currentPageRef.value = newPage;
+    }
+  },
+);
+
 const {
   currentPage,
   currentPageSize,
@@ -128,10 +138,10 @@ const {
   next,
 } = useOffsetPagination({
   total: () => props.total,
-  page: props.page,
-  pageSize: props.itemsPerPage,
+  page: currentPageRef,
+  pageSize: () => props.itemsPerPage,
   onPageChange: ({ currentPage: page }) => {
-    debouncedPageChange(page);
+    emit('page-change', page);
   },
 });
 
@@ -184,10 +194,6 @@ const toggleSort = (columnKey: string) => {
 
   debouncedSortChange(currentSortBy.value, currentSortDirection.value);
 };
-
-const debouncedPageChange = useDebounceFn((page: number) => {
-  emit('page-change', page);
-}, 100);
 
 const setCurrent = (page: number) => {
   if (page >= 1 && page <= pageCount.value) {

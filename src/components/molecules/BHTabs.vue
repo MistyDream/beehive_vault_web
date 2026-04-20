@@ -4,13 +4,15 @@
     role="tablist"
     :aria-label="ariaLabel"
   >
-    <!-- Navigation mode : chaque tab est un NuxtLink, active-class gérée par Nuxt -->
     <template v-if="isNavMode">
       <NuxtLink
         v-for="tab in tabs"
+        :id="`tab-${tab.id}`"
         :key="tab.id"
-        :to="tab.to"
+        :to="tab.to ?? ''"
         role="tab"
+        :aria-selected="isTabActive(tab)"
+        :aria-controls="`tabpanel-${tab.id}`"
         :aria-disabled="tab.disabled || tab.muted || undefined"
         :title="tab.tooltip || undefined"
         active-class="bh-tabs__tab--active"
@@ -32,7 +34,6 @@
       </NuxtLink>
     </template>
 
-    <!-- Modèle piloté : v-model + roving tabindex + arrows navigation -->
     <template v-else>
       <button
         v-for="(tab, index) in tabs"
@@ -97,6 +98,11 @@ const emit = defineEmits<{
 }>();
 
 const isNavMode = computed(() => props.tabs.some((t) => typeof t.to === 'string'));
+
+const route = useRoute();
+function isTabActive(tab: TabItem): boolean {
+  return !!tab.to && route.path === tab.to;
+}
 
 const tabRefs = ref<Array<HTMLElement | null>>([]);
 
