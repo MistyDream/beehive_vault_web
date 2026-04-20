@@ -5,10 +5,10 @@
     </a>
     <BHDrawer />
     <BHHeader />
-    <BHSidebar />
     <main id="main-content" tabindex="-1">
       <slot />
     </main>
+    <BHSidebar />
     <footer />
   </div>
 </template>
