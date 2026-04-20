@@ -1,9 +1,5 @@
 <template>
-  <div
-    class="bh-kpi-tile"
-    :class="{ 'bh-kpi-tile--darker': variant === 'darker' }"
-    :aria-busy="loading || undefined"
-  >
+  <div class="bh-kpi-tile" :aria-busy="loading || undefined">
     <div class="bh-kpi-tile__header">
       <component
         :is="icon"
@@ -30,13 +26,11 @@ interface Props {
   label: string;
   loading?: boolean;
   icon?: Component;
-  variant?: 'base' | 'darker';
 }
 
 withDefaults(defineProps<Props>(), {
   loading: false,
   icon: undefined,
-  variant: 'base',
 });
 </script>
 
@@ -45,10 +39,6 @@ withDefaults(defineProps<Props>(), {
   @apply flex flex-col gap-2;
   @apply bg-theme-bg-card rounded-lg border border-theme-border-primary;
   @apply p-4;
-}
-
-.bh-kpi-tile--darker {
-  @apply bg-theme-bg-elevated;
 }
 
 .bh-kpi-tile__header {

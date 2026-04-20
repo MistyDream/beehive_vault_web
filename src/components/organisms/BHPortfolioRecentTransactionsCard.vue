@@ -131,7 +131,7 @@ function labelFor(tx: Transaction): string {
 
 .bh-recent-card__item {
   @apply flex items-center gap-3;
-  @apply py-1.5;
+  @apply py-2.5;
 }
 
 .bh-recent-card__icon {
@@ -176,10 +176,6 @@ function labelFor(tx: Transaction): string {
 
 .bh-recent-card__label {
   @apply text-sm font-medium text-theme-text-primary truncate;
-}
-
-.bh-recent-card__type {
-  @apply capitalize;
 }
 
 .bh-recent-card__date {

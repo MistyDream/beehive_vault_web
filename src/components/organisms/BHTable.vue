@@ -1,6 +1,5 @@
 <template>
   <div class="bh-table">
-    <!-- Table Container -->
     <div class="table-container">
       <table class="bh-table__table">
         <thead>
@@ -31,7 +30,6 @@
 
         <tbody>
           <slot name="rows" :sorted-data="data" :total-items="total">
-            <!-- Fallback content si le slot n'est pas fourni -->
             <tr
               v-for="(item, index) in data"
               :key="String(item.id) || index"
@@ -154,7 +152,6 @@ const endIndex = computed(() =>
 const hasPrev = computed(() => !isFirstPage.value);
 const hasNext = computed(() => !isLastPage.value);
 
-// Pages visibles dans la pagination
 const visiblePages = computed(() => {
   const pages = [];
   const maxVisible = 5;
@@ -173,7 +170,6 @@ const visiblePages = computed(() => {
   return pages;
 });
 
-// Tri
 const currentSortBy = ref(props.sortBy);
 const currentSortDirection = ref<'asc' | 'desc'>(props.sortDirection);
 
@@ -202,7 +198,6 @@ const setCurrent = (page: number) => {
   }
 };
 
-// Accès aux propriétés imbriquées
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getValueFromPath = (obj: any, path: string): any => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -211,7 +206,6 @@ const getValueFromPath = (obj: any, path: string): any => {
   }, obj);
 };
 
-// Watchers pour synchroniser avec les props
 watch(
   () => props.sortBy,
   (newValue) => {

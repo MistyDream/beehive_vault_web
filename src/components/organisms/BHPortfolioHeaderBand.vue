@@ -22,7 +22,9 @@
       </p>
 
       <p class="bh-portfolio-header__updated">
-        {{ t('portfolios.detail.updated_ago', { time: updatedAgo }) }}
+        <time :datetime="portfolio.updated_at">
+          {{ t('portfolios.detail.updated_ago', { time: updatedAgo }) }}
+        </time>
       </p>
     </div>
 

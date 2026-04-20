@@ -36,13 +36,13 @@ const initials = computed(() => props.symbol.slice(0, 2).toUpperCase());
 .bh-stock-avatar {
   @apply inline-flex items-center justify-center;
   @apply rounded-full;
-  @apply font-poppins font-semibold text-white;
+  @apply font-poppins font-semibold text-theme-text-on-accent-secondary;
   @apply select-none shrink-0;
   @apply tabular-nums;
 }
 
 .bh-stock-avatar--sm {
-  @apply w-6 h-6 text-[10px];
+  @apply w-6 h-6 text-2xs;
 }
 
 .bh-stock-avatar--md {

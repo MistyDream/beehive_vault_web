@@ -201,7 +201,7 @@ async function onViewFull() {
 }
 
 .bh-stock-drawer__type {
-  @apply text-sm font-medium text-theme-text-primary capitalize;
+  @apply text-sm font-medium text-theme-text-primary;
 }
 
 .bh-stock-drawer__date {

@@ -211,7 +211,7 @@ function onPageChange(newPage: number) {
 }
 
 .bh-positions-card__empty-icon {
-  @apply text-theme-accent-primary/40;
+  @apply text-theme-accent-primary/60;
 }
 
 .bh-positions-card__empty-title {
@@ -237,7 +237,7 @@ function onPageChange(newPage: number) {
 }
 
 .bh-positions-card__row--even {
-  @apply bg-theme-bg-card/60;
+  @apply bg-theme-bg-elevated/40;
 }
 
 .bh-positions-card__cell {
