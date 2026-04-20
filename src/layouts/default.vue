@@ -10,6 +10,7 @@
     </main>
     <BHSidebar />
     <footer />
+    <BHToaster />
   </div>
 </template>
 

@@ -5,6 +5,12 @@
   "common": {
     "close": "Fermer"
   },
+  "toast": {
+    "coming_soon": "Bientôt disponible",
+    "error": {
+      "generic": "Une erreur est survenue"
+    }
+  },
   "a11y": {
     "skip_to_main": "Aller au contenu principal"
   },
