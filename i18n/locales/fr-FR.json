@@ -85,6 +85,27 @@
         "performance": "Les graphiques de performance seront disponibles en phase 4.",
         "scoring": "Le scoring sera disponible quand la feature scoring de l'API sera mergée."
       },
+      "resume": {
+        "side_placeholder": "Trésorerie et dernières transactions viendront en phase 2c.",
+        "positions": {
+          "title": "Positions",
+          "count": "{count} position | {count} positions",
+          "empty_title": "Aucune position",
+          "empty_description": "Enregistrez un achat pour commencer à suivre vos positions.",
+          "columns": {
+            "symbol": "Symbole",
+            "name": "Nom",
+            "quantity": "Quantité",
+            "avg_cost": "Coût moyen",
+            "total_cost": "Coût total",
+            "weight": "Poids"
+          }
+        },
+        "allocation": {
+          "title": "Répartition",
+          "others": "Autres"
+        }
+      },
       "error": {
         "title": "Impossible de charger ce portefeuille",
         "description": "Une erreur est survenue. Réessayez dans un instant.",

@@ -85,6 +85,27 @@
         "performance": "Performance charts will land in phase 4.",
         "scoring": "Scoring will land once the API scoring feature is merged."
       },
+      "resume": {
+        "side_placeholder": "Cash and recent transactions coming in phase 2c.",
+        "positions": {
+          "title": "Positions",
+          "count": "{count} position | {count} positions",
+          "empty_title": "No position yet",
+          "empty_description": "Record a buy to start tracking your positions.",
+          "columns": {
+            "symbol": "Symbol",
+            "name": "Name",
+            "quantity": "Quantity",
+            "avg_cost": "Avg cost",
+            "total_cost": "Total cost",
+            "weight": "Weight"
+          }
+        },
+        "allocation": {
+          "title": "Allocation",
+          "others": "Others"
+        }
+      },
       "error": {
         "title": "Unable to load this portfolio",
         "description": "Something went wrong. Please try again.",
