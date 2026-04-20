@@ -1,6 +1,6 @@
 <template>
   <section class="portfolio-detail">
-    <NuxtLink to="/" class="portfolio-detail__back">
+    <NuxtLink :to="localePath('/')" class="portfolio-detail__back">
       <LucideArrowLeft :size="16" aria-hidden="true" />
       {{ t('portfolios.title') }}
     </NuxtLink>
@@ -45,6 +45,7 @@ import { LucideArrowLeft } from '#components';
 import type { TabItem } from '~/components/molecules/BHTabs.vue';
 
 const { t } = useI18n();
+const localePath = useLocalePath();
 const route = useRoute();
 const id = computed(() => Number(route.params.id));
 
@@ -54,17 +55,17 @@ const tabs = computed<TabItem[]>(() => [
   {
     id: 'resume',
     label: t('portfolios.detail.tab_resume'),
-    to: `/portfolios/${id.value}/resume`,
+    to: localePath(`/portfolios/${id.value}/resume`),
   },
   {
     id: 'transactions',
     label: t('portfolios.detail.tab_transactions'),
-    to: `/portfolios/${id.value}/transactions`,
+    to: localePath(`/portfolios/${id.value}/transactions`),
   },
   {
     id: 'performance',
     label: t('portfolios.detail.tab_performance'),
-    to: `/portfolios/${id.value}/performance`,
+    to: localePath(`/portfolios/${id.value}/performance`),
   },
   {
     id: 'scoring',

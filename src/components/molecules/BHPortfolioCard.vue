@@ -23,7 +23,7 @@
 
   <NuxtLink
     v-else-if="portfolio"
-    :to="`/portfolios/${portfolio.id}`"
+    :to="localePath(`/portfolios/${portfolio.id}`)"
     :aria-label="portfolio.name"
     class="bh-portfolio-card"
   >
@@ -94,6 +94,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const { t } = useI18n();
+const localePath = useLocalePath();
 
 const kindLabel = computed(() =>
   props.portfolio?.kind === 'real'

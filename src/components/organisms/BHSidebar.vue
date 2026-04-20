@@ -65,6 +65,7 @@ import {
 import type { NavigationLink } from '~/types/navigation-link';
 
 const { t } = useI18n();
+const localePath = useLocalePath();
 const { isDark, toggle } = useTheme();
 const { isOpen, close } = useSidebar();
 const route = useRoute();
@@ -72,12 +73,12 @@ const route = useRoute();
 const navigation: NavigationLink[] = [
   {
     text: t('dashboard'),
-    to: '/',
+    to: localePath('/'),
     icon: LucideLayoutDashboard,
   },
   {
     text: t('bank-account'),
-    to: '/bank-account',
+    to: localePath('/bank-account'),
     icon: LucideWallet,
   },
 ];

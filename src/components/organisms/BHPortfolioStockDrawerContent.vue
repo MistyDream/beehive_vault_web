@@ -86,6 +86,7 @@ const props = defineProps<Props>();
 const { t } = useI18n();
 const { formatQuantity, formatDate } = useLocaleFormatters();
 const router = useRouter();
+const localePath = useLocalePath();
 const drawer = useDrawer();
 
 const { list } = useTransactionApi();
@@ -108,7 +109,7 @@ const entries = computed(() =>
 
 async function onViewFull() {
   await router.push({
-    path: `/portfolios/${props.portfolioId}/transactions`,
+    path: localePath(`/portfolios/${props.portfolioId}/transactions`),
     query: { stock_id: String(props.stockId) },
   });
   drawer.close();

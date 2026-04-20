@@ -5,7 +5,7 @@
         {{ t('portfolios.detail.resume.recent.title') }}
       </h2>
       <NuxtLink
-        :to="`/portfolios/${portfolioId}/transactions`"
+        :to="localePath(`/portfolios/${portfolioId}/transactions`)"
         class="bh-recent-card__view-all"
       >
         {{ t('portfolios.detail.resume.recent.view_all') }}
@@ -77,6 +77,7 @@ interface Props {
 const props = defineProps<Props>();
 
 const { t } = useI18n();
+const localePath = useLocalePath();
 const { formatDate } = useLocaleFormatters();
 
 const { list } = useTransactionApi();
