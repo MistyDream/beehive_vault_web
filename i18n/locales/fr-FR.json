@@ -58,6 +58,37 @@
       "invested_label": "Investi",
       "cash_label": "Cash"
     },
-    "coming_soon": "Cette page sera bientôt disponible."
+    "coming_soon": "Cette page sera bientôt disponible.",
+    "detail": {
+      "tabs_label": "Sections du portefeuille",
+      "tab_resume": "Résumé",
+      "tab_transactions": "Transactions",
+      "tab_performance": "Performance",
+      "tab_scoring": "Scoring",
+      "updated_ago": "Mis à jour {time}",
+      "kpi": {
+        "invested": "Total investi",
+        "cash": "Solde cash",
+        "net_result": "Résultat net",
+        "positions_count": "Positions ouvertes"
+      },
+      "actions": {
+        "add_transaction": "Ajouter une transaction",
+        "menu": "Actions du portefeuille",
+        "edit": "Modifier",
+        "delete": "Supprimer"
+      },
+      "coming_soon": {
+        "resume": "Le résumé sera disponible en phase 2.",
+        "transactions": "La liste des transactions sera disponible en phase 3.",
+        "performance": "Les graphiques de performance seront disponibles en phase 4.",
+        "scoring": "Le scoring sera disponible quand la feature scoring de l'API sera mergée."
+      },
+      "error": {
+        "title": "Impossible de charger ce portefeuille",
+        "description": "Une erreur est survenue. Réessayez dans un instant.",
+        "retry": "Réessayer"
+      }
+    }
   }
 }

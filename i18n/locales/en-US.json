@@ -58,6 +58,37 @@
       "invested_label": "Invested",
       "cash_label": "Cash"
     },
-    "coming_soon": "This page will be available soon."
+    "coming_soon": "This page will be available soon.",
+    "detail": {
+      "tabs_label": "Portfolio sections",
+      "tab_resume": "Overview",
+      "tab_transactions": "Transactions",
+      "tab_performance": "Performance",
+      "tab_scoring": "Scoring",
+      "updated_ago": "Updated {time}",
+      "kpi": {
+        "invested": "Total invested",
+        "cash": "Cash balance",
+        "net_result": "Net result",
+        "positions_count": "Open positions"
+      },
+      "actions": {
+        "add_transaction": "Add transaction",
+        "menu": "Portfolio actions",
+        "edit": "Edit",
+        "delete": "Delete"
+      },
+      "coming_soon": {
+        "resume": "Overview will land in phase 2.",
+        "transactions": "Transactions list will land in phase 3.",
+        "performance": "Performance charts will land in phase 4.",
+        "scoring": "Scoring will land once the API scoring feature is merged."
+      },
+      "error": {
+        "title": "Unable to load this portfolio",
+        "description": "Something went wrong. Please try again.",
+        "retry": "Retry"
+      }
+    }
   }
 }
