@@ -9,25 +9,34 @@
         <BHPortfolioAllocationCard :portfolio-id="id" />
       </div>
       <div class="portfolio-resume__side">
-        <div class="portfolio-resume__placeholder">
-          {{ t('portfolios.detail.resume.side_placeholder') }}
-        </div>
+        <BHPortfolioCashCard :portfolio-id="id" />
+        <BHPortfolioRecentTransactionsCard :portfolio-id="id" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { LucideChartCandlestick } from '#components';
+import BHPortfolioStockDrawerContent from '~/components/organisms/BHPortfolioStockDrawerContent.vue';
 import type { Position } from '~/types/portfolio';
 
-const { t } = useI18n();
 const route = useRoute();
 const id = computed(() => Number(route.params.id));
 
-const toast = useToast();
+const drawer = useDrawer();
 
-function onPositionClick(_position: Position) {
-  toast.info(t('toast.coming_soon'));
+function onPositionClick(position: Position) {
+  drawer.open(
+    position.stock.symbol,
+    LucideChartCandlestick,
+    BHPortfolioStockDrawerContent,
+    {
+      portfolioId: id.value,
+      stockId: position.stock.id,
+      stockSymbol: position.stock.symbol,
+    },
+  );
 }
 </script>
 
@@ -42,11 +51,5 @@ function onPositionClick(_position: Position) {
 
 .portfolio-resume__side {
   @apply flex flex-col gap-4 lg:gap-6;
-}
-
-.portfolio-resume__placeholder {
-  @apply p-6 rounded-2xl;
-  @apply bg-theme-bg-card border border-theme-border-primary;
-  @apply text-sm text-theme-text-muted italic;
 }
 </style>

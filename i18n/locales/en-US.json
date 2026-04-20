@@ -86,7 +86,6 @@
         "scoring": "Scoring will land once the API scoring feature is merged."
       },
       "resume": {
-        "side_placeholder": "Cash and recent transactions coming in phase 2c.",
         "positions": {
           "title": "Positions",
           "count": "{count} position | {count} positions",
@@ -104,6 +103,31 @@
         "allocation": {
           "title": "Allocation",
           "others": "Others"
+        },
+        "cash": {
+          "title": "Cash",
+          "deposits": "Total deposits",
+          "withdrawals": "Total withdrawals",
+          "add_deposit": "Record a deposit"
+        },
+        "recent": {
+          "title": "Recent transactions",
+          "view_all": "View all",
+          "empty": "No transaction yet"
+        },
+        "drawer": {
+          "count": "{count} transaction | {count} transactions",
+          "empty": "No transaction for this stock",
+          "view_full": "View in full table"
+        },
+        "tx_type": {
+          "buy": "Buy",
+          "sell": "Sell",
+          "dividend": "Dividend",
+          "fee": "Fee",
+          "split": "Split",
+          "deposit": "Deposit",
+          "withdrawal": "Withdrawal"
         }
       },
       "error": {

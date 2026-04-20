@@ -86,7 +86,6 @@
         "scoring": "Le scoring sera disponible quand la feature scoring de l'API sera mergée."
       },
       "resume": {
-        "side_placeholder": "Trésorerie et dernières transactions viendront en phase 2c.",
         "positions": {
           "title": "Positions",
           "count": "{count} position | {count} positions",
@@ -104,6 +103,31 @@
         "allocation": {
           "title": "Répartition",
           "others": "Autres"
+        },
+        "cash": {
+          "title": "Trésorerie",
+          "deposits": "Dépôts cumulés",
+          "withdrawals": "Retraits cumulés",
+          "add_deposit": "Enregistrer un dépôt"
+        },
+        "recent": {
+          "title": "Dernières transactions",
+          "view_all": "Voir tout",
+          "empty": "Aucune transaction pour l'instant"
+        },
+        "drawer": {
+          "count": "{count} transaction | {count} transactions",
+          "empty": "Aucune transaction pour cette action",
+          "view_full": "Voir dans le tableau complet"
+        },
+        "tx_type": {
+          "buy": "Achat",
+          "sell": "Vente",
+          "dividend": "Dividende",
+          "fee": "Frais",
+          "split": "Split",
+          "deposit": "Dépôt",
+          "withdrawal": "Retrait"
         }
       },
       "error": {
