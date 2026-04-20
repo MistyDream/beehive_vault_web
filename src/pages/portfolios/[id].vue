@@ -39,26 +39,9 @@
         :currency="portfolio.currency"
       />
 
-      <BHTabs
-        v-model="activeTab"
-        :tabs="tabs"
-        :aria-label="t('portfolios.detail.tabs_label')"
-      />
+      <BHTabs :tabs="tabs" :aria-label="t('portfolios.detail.tabs_label')" />
 
-      <div class="portfolio-detail__tab-content" role="tabpanel">
-        <div v-if="activeTab === 'resume'" class="portfolio-detail__stub">
-          {{ t('portfolios.detail.coming_soon.resume') }}
-        </div>
-        <div v-else-if="activeTab === 'transactions'" class="portfolio-detail__stub">
-          {{ t('portfolios.detail.coming_soon.transactions') }}
-        </div>
-        <div v-else-if="activeTab === 'performance'" class="portfolio-detail__stub">
-          {{ t('portfolios.detail.coming_soon.performance') }}
-        </div>
-        <div v-else-if="activeTab === 'scoring'" class="portfolio-detail__stub portfolio-detail__stub--muted">
-          {{ t('portfolios.detail.coming_soon.scoring') }}
-        </div>
-      </div>
+      <NuxtPage />
     </template>
   </section>
 </template>
@@ -69,7 +52,6 @@ import type { TabItem } from '~/components/molecules/BHTabs.vue';
 
 const { t } = useI18n();
 const route = useRoute();
-const router = useRouter();
 const id = computed(() => Number(route.params.id));
 
 const { detail, summary, performance } = usePortfolioApi();
@@ -77,20 +59,26 @@ const { data: portfolio, pending: detailPending, error: detailError, refresh } =
 const { data: summaryData, pending: summaryPending } = summary(id);
 const { data: performanceData, pending: performancePending } = performance(id);
 
-const activeTab = computed<string>({
-  get: () => (typeof route.query.tab === 'string' ? route.query.tab : 'resume'),
-  set: (value) => {
-    router.replace({ query: { ...route.query, tab: value } });
-  },
-});
-
 const tabs = computed<TabItem[]>(() => [
-  { id: 'resume', label: t('portfolios.detail.tab_resume') },
-  { id: 'transactions', label: t('portfolios.detail.tab_transactions') },
-  { id: 'performance', label: t('portfolios.detail.tab_performance') },
+  {
+    id: 'resume',
+    label: t('portfolios.detail.tab_resume'),
+    to: `/portfolios/${id.value}/resume`,
+  },
+  {
+    id: 'transactions',
+    label: t('portfolios.detail.tab_transactions'),
+    to: `/portfolios/${id.value}/transactions`,
+  },
+  {
+    id: 'performance',
+    label: t('portfolios.detail.tab_performance'),
+    to: `/portfolios/${id.value}/performance`,
+  },
   {
     id: 'scoring',
     label: t('portfolios.detail.tab_scoring'),
+    to: `/portfolios/${id.value}/scoring`,
     muted: true,
     tooltip: t('portfolios.detail.tab_scoring_tooltip'),
   },
@@ -155,20 +143,5 @@ const showError = computed(() => !!detailError.value && !portfolio.value);
 
 .portfolio-detail__error-description {
   @apply text-sm text-theme-text-secondary;
-}
-
-.portfolio-detail__tab-content {
-  @apply mt-2;
-}
-
-.portfolio-detail__stub {
-  @apply p-6 rounded-2xl;
-  @apply bg-theme-bg-card border border-theme-border-primary;
-  @apply text-sm text-theme-text-secondary;
-}
-
-.portfolio-detail__stub--muted {
-  @apply text-theme-text-muted;
-  @apply italic;
 }
 </style>

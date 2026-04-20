@@ -1,8 +1,9 @@
 import { API_ENDPOINTS } from '~/constants/http';
 import type {
   CreateTransactionPayload,
+  Paginated,
   Transaction,
-  TransactionFilters,
+  TransactionsQuery,
   UpdateTransactionPayload,
 } from '~/types/portfolio';
 
@@ -11,13 +12,13 @@ export const useTransactionApi = () => {
 
   const list = (
     portfolioId: MaybeRefOrGetter<number>,
-    filters?: MaybeRefOrGetter<TransactionFilters | undefined>,
+    query?: MaybeRefOrGetter<TransactionsQuery | undefined>,
   ) =>
-    useFetch<Transaction[]>(
+    useFetch<Paginated<Transaction>>(
       () => API_ENDPOINTS.PORTFOLIOS.TRANSACTIONS(toValue(portfolioId)),
       {
         $fetch: $api,
-        query: computed(() => toValue(filters) ?? {}),
+        query: computed(() => toValue(query) ?? {}),
       },
     );
 

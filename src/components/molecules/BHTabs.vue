@@ -4,38 +4,69 @@
     role="tablist"
     :aria-label="ariaLabel"
   >
-    <button
-      v-for="(tab, index) in tabs"
-      :key="tab.id"
-      :ref="(el) => registerTab(el as HTMLElement | null, index)"
-      type="button"
-      role="tab"
-      :aria-selected="tab.id === modelValue"
-      :aria-disabled="tab.disabled || undefined"
-      :tabindex="tab.id === modelValue ? 0 : -1"
-      :disabled="tab.disabled"
-      :title="tab.tooltip || undefined"
-      class="bh-tabs__tab"
-      :class="{
-        'bh-tabs__tab--active': tab.id === modelValue,
-        'bh-tabs__tab--muted': tab.muted,
-        'bh-tabs__tab--disabled': tab.disabled,
-      }"
-      @click="select(tab)"
-      @keydown.left.prevent="move(-1)"
-      @keydown.right.prevent="move(1)"
-      @keydown.home.prevent="move('start')"
-      @keydown.end.prevent="move('end')"
-    >
-      <span>{{ tab.label }}</span>
-      <BHBadge
-        v-if="typeof tab.count === 'number'"
-        variant="neutral"
-        size="sm"
+    <!-- Navigation mode : chaque tab est un NuxtLink, active-class gérée par Nuxt -->
+    <template v-if="isNavMode">
+      <NuxtLink
+        v-for="tab in tabs"
+        :key="tab.id"
+        :to="tab.to"
+        role="tab"
+        :aria-disabled="tab.disabled || tab.muted || undefined"
+        :title="tab.tooltip || undefined"
+        active-class="bh-tabs__tab--active"
+        class="bh-tabs__tab"
+        :class="{
+          'bh-tabs__tab--muted': tab.muted,
+          'bh-tabs__tab--disabled': tab.disabled,
+        }"
+        @click="onNavClick($event, tab)"
       >
-        {{ tab.count }}
-      </BHBadge>
-    </button>
+        <span>{{ tab.label }}</span>
+        <BHBadge
+          v-if="typeof tab.count === 'number'"
+          variant="neutral"
+          size="sm"
+        >
+          {{ tab.count }}
+        </BHBadge>
+      </NuxtLink>
+    </template>
+
+    <!-- Modèle piloté : v-model + roving tabindex + arrows navigation -->
+    <template v-else>
+      <button
+        v-for="(tab, index) in tabs"
+        :key="tab.id"
+        :ref="(el) => registerTab(el as HTMLElement | null, index)"
+        type="button"
+        role="tab"
+        :aria-selected="tab.id === modelValue"
+        :aria-disabled="tab.disabled || undefined"
+        :tabindex="tab.id === modelValue ? 0 : -1"
+        :disabled="tab.disabled"
+        :title="tab.tooltip || undefined"
+        class="bh-tabs__tab"
+        :class="{
+          'bh-tabs__tab--active': tab.id === modelValue,
+          'bh-tabs__tab--muted': tab.muted,
+          'bh-tabs__tab--disabled': tab.disabled,
+        }"
+        @click="select(tab)"
+        @keydown.left.prevent="move(-1)"
+        @keydown.right.prevent="move(1)"
+        @keydown.home.prevent="move('start')"
+        @keydown.end.prevent="move('end')"
+      >
+        <span>{{ tab.label }}</span>
+        <BHBadge
+          v-if="typeof tab.count === 'number'"
+          variant="neutral"
+          size="sm"
+        >
+          {{ tab.count }}
+        </BHBadge>
+      </button>
+    </template>
   </div>
 </template>
 
@@ -47,19 +78,25 @@ export interface TabItem {
   disabled?: boolean;
   muted?: boolean;
   tooltip?: string;
+  to?: string;
 }
 
 interface Props {
-  modelValue: string;
+  modelValue?: string;
   tabs: TabItem[];
   ariaLabel?: string;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  modelValue: undefined,
+  ariaLabel: undefined,
+});
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void;
 }>();
+
+const isNavMode = computed(() => props.tabs.some((t) => typeof t.to === 'string'));
 
 const tabRefs = ref<Array<HTMLElement | null>>([]);
 
@@ -70,6 +107,10 @@ function registerTab(el: HTMLElement | null, index: number) {
 function select(tab: TabItem) {
   if (tab.disabled || tab.muted || tab.id === props.modelValue) return;
   emit('update:modelValue', tab.id);
+}
+
+function onNavClick(event: MouseEvent, tab: TabItem) {
+  if (tab.disabled || tab.muted) event.preventDefault();
 }
 
 function firstEnabledFrom(start: number, direction: 1 | -1): number {
@@ -121,6 +162,7 @@ function move(action: -1 | 1 | 'start' | 'end') {
   @apply border-b-2 border-transparent;
   @apply -mb-px;
   @apply transition-colors duration-150;
+  @apply no-underline;
   @apply hover:text-theme-text-primary;
   @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary focus-visible:rounded-md;
 }
