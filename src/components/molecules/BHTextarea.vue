@@ -8,6 +8,8 @@
       :value="modelValue"
       :placeholder="placeholder"
       :disabled="disabled"
+      :required="required || undefined"
+      :aria-required="required || undefined"
       :rows="rows"
       :maxlength="maxLength"
       :style="{ resize }"
@@ -35,6 +37,7 @@ interface Props {
   modelValue?: string;
   placeholder?: string;
   disabled?: boolean;
+  required?: boolean;
   error?: string;
   rows?: number;
   maxLength?: number;
@@ -47,6 +50,7 @@ const props = withDefaults(defineProps<Props>(), {
   modelValue: '',
   placeholder: '',
   disabled: false,
+  required: false,
   error: '',
   rows: 4,
   maxLength: undefined,
@@ -87,7 +91,7 @@ const handleInput = (event: Event) => {
 .bh-textarea__input {
   @apply px-4 py-2 rounded-lg;
   @apply bg-theme-bg-card;
-  @apply border border-theme-border-primary;
+  @apply border border-theme-border-secondary;
   @apply text-sm text-theme-text-primary font-medium placeholder:text-theme-text-muted;
 }
 

@@ -9,6 +9,8 @@
       :placeholder="placeholder"
       :value="modelValue"
       :disabled="disabled"
+      :required="required || undefined"
+      :aria-required="required || undefined"
       :aria-invalid="!!error || undefined"
       :aria-describedby="error ? errorId : undefined"
       class="bh-input__input"
@@ -29,6 +31,7 @@ interface Props {
   placeholder?: string;
   modelValue?: string;
   disabled?: boolean;
+  required?: boolean;
   error?: string;
 }
 
@@ -39,6 +42,7 @@ const props = withDefaults(defineProps<Props>(), {
   placeholder: '',
   modelValue: '',
   disabled: false,
+  required: false,
   error: '',
 });
 
@@ -67,7 +71,7 @@ const handleInput = (event: Event) => {
 .bh-input__input {
   @apply px-4 py-2 rounded-lg;
   @apply bg-theme-bg-card;
-  @apply border border-theme-border-primary;
+  @apply border border-theme-border-secondary;
   @apply text-sm text-theme-text-primary font-medium placeholder:text-theme-text-muted;
 }
 

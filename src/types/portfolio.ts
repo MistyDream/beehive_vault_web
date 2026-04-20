@@ -1,4 +1,5 @@
-export type PortfolioKind = 'real' | 'virtual';
+export const PORTFOLIO_KINDS = ['real', 'virtual'] as const;
+export type PortfolioKind = (typeof PORTFOLIO_KINDS)[number];
 
 export type TransactionType =
   | 'buy'

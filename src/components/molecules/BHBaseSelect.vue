@@ -1,12 +1,13 @@
 <template>
   <div class="bh-select">
-    <label v-if="label" :for="id" class="bh-select__label">
+    <label v-if="label" :for="triggerId" class="bh-select__label">
       {{ label }}
     </label>
     <div ref="selectRef" class="bh-select__wrapper">
       <button
-        :id="id"
+        :id="triggerId"
         type="button"
+        role="combobox"
         class="bh-select__control"
         :class="{
           'bh-select__control--disabled': disabled,
@@ -14,9 +15,23 @@
           'bh-select__control--error': !!error,
         }"
         :disabled="disabled"
+        :required="required || undefined"
+        :aria-required="required || undefined"
+        :aria-invalid="!!error || undefined"
+        :aria-describedby="error ? errorId : undefined"
+        :aria-haspopup="'listbox'"
+        :aria-expanded="isOpen"
+        :aria-controls="listboxId"
+        :aria-activedescendant="
+          isOpen && activeIndex >= 0 ? optionId(activeIndex) : undefined
+        "
         @click="toggleDropdown"
-        @keydown.enter.prevent="toggleDropdown"
-        @keydown.space.prevent="toggleDropdown"
+        @keydown.enter.prevent="onTriggerEnter"
+        @keydown.space.prevent="onTriggerEnter"
+        @keydown.down.prevent="onArrowDown"
+        @keydown.up.prevent="onArrowUp"
+        @keydown.home.prevent="onHome"
+        @keydown.end.prevent="onEnd"
         @keydown.escape.stop.prevent="closeDropdown"
       >
         <span
@@ -29,34 +44,40 @@
           class="bh-select__icon"
           :class="{ 'bh-select__icon--open': isOpen }"
           :size="16"
+          aria-hidden="true"
         />
       </button>
       <Transition name="bh-select-dropdown">
         <ul
           v-if="isOpen"
+          :id="listboxId"
           class="bh-select__options"
           role="listbox"
           :aria-multiselectable="multiple"
         >
           <li
-            v-for="option in options"
+            v-for="(option, index) in options"
+            :id="optionId(index)"
             :key="option.value"
             class="bh-select__option"
             :class="{
               'bh-select__option--selected': isSelected(option.value),
+              'bh-select__option--active': index === activeIndex,
               'bh-select__option--disabled': option.disabled,
             }"
             role="option"
             :aria-selected="isSelected(option.value)"
+            :aria-disabled="option.disabled || undefined"
             @click="onOptionSelect(option)"
+            @mouseenter="activeIndex = index"
           >
             <span>{{ option.label }}</span>
-            <LucideCheck v-if="isSelected(option.value)" :size="16" />
+            <LucideCheck v-if="isSelected(option.value)" :size="16" aria-hidden="true" />
           </li>
         </ul>
       </Transition>
     </div>
-    <p v-if="error" class="bh-select__error">
+    <p v-if="error" :id="errorId" role="alert" class="bh-select__error">
       {{ error }}
     </p>
   </div>
@@ -80,6 +101,7 @@ interface Props {
   placeholder?: string;
   modelValue?: SelectValue | PrimitiveValue[];
   disabled?: boolean;
+  required?: boolean;
   options?: Option[];
   multiple?: boolean;
   error?: string;
@@ -91,6 +113,7 @@ const props = withDefaults(defineProps<Props>(), {
   placeholder: '',
   modelValue: null,
   disabled: false,
+  required: false,
   options: () => [],
   multiple: false,
   error: '',
@@ -102,6 +125,77 @@ const emit = defineEmits<{
 
 const selectRef = ref<HTMLElement | null>(null);
 const isOpen = ref(false);
+const activeIndex = ref(-1);
+
+const autoId = useId();
+const triggerId = computed(() => props.id || autoId);
+const listboxId = computed(() => `${triggerId.value}-listbox`);
+const errorId = computed(() => `${triggerId.value}-error`);
+const optionId = (index: number) => `${triggerId.value}-option-${index}`;
+
+function firstEnabledIndex(from: number, direction: 1 | -1): number {
+  const len = props.options.length;
+  if (len === 0) return -1;
+  let i = from;
+  for (let step = 0; step < len; step++) {
+    if (i < 0) i = len - 1;
+    if (i >= len) i = 0;
+    if (!props.options[i]?.disabled) return i;
+    i += direction;
+  }
+  return -1;
+}
+
+function syncActiveIndexToSelection() {
+  const selectedIdx = props.options.findIndex((opt) =>
+    normalizedValues.value.includes(opt.value),
+  );
+  activeIndex.value = selectedIdx >= 0
+    ? selectedIdx
+    : firstEnabledIndex(0, 1);
+}
+
+function onTriggerEnter() {
+  if (props.disabled) return;
+  if (!isOpen.value) {
+    isOpen.value = true;
+    syncActiveIndexToSelection();
+    return;
+  }
+  if (activeIndex.value >= 0) {
+    onOptionSelect(props.options[activeIndex.value]);
+  }
+}
+
+function onArrowDown() {
+  if (props.disabled) return;
+  if (!isOpen.value) {
+    isOpen.value = true;
+    syncActiveIndexToSelection();
+    return;
+  }
+  activeIndex.value = firstEnabledIndex(activeIndex.value + 1, 1);
+}
+
+function onArrowUp() {
+  if (props.disabled) return;
+  if (!isOpen.value) {
+    isOpen.value = true;
+    syncActiveIndexToSelection();
+    return;
+  }
+  activeIndex.value = firstEnabledIndex(activeIndex.value - 1, -1);
+}
+
+function onHome() {
+  if (!isOpen.value) return;
+  activeIndex.value = firstEnabledIndex(0, 1);
+}
+
+function onEnd() {
+  if (!isOpen.value) return;
+  activeIndex.value = firstEnabledIndex(props.options.length - 1, -1);
+}
 
 const normalizedValue = computed<PrimitiveValue | null>(() => {
   if (props.multiple) {
@@ -208,7 +302,7 @@ onClickOutside(selectRef, () => {
 .bh-select__control {
   @apply w-full px-4 py-2 rounded-lg;
   @apply bg-theme-bg-card;
-  @apply border border-theme-border-primary;
+  @apply border border-theme-border-secondary;
   @apply text-sm text-theme-text-primary font-medium;
   @apply flex items-center justify-between gap-2;
   @apply text-left;
@@ -250,21 +344,28 @@ onClickOutside(selectRef, () => {
 
 .bh-select__options {
   @apply absolute left-0 right-0 mt-2 z-10;
-  @apply bg-theme-bg-card border border-theme-border-primary rounded-lg shadow-lg;
+  @apply bg-theme-bg-card border border-theme-border-secondary rounded-lg shadow-lg;
   @apply max-h-60 overflow-auto;
 }
 
 .bh-select__option {
   @apply flex items-center justify-between gap-2;
   @apply px-4 py-2 text-sm text-theme-text-primary cursor-pointer;
+  @apply transition-colors duration-100;
 }
 
-.bh-select__option:hover {
-  @apply bg-theme-bg-elevated;
+.bh-select__option:hover,
+.bh-select__option--active {
+  @apply bg-theme-bg-elevated text-theme-accent-primary-strong;
 }
 
-.bh-select__option--selected {
-  @apply bg-theme-accent-secondary text-theme-text-primary;
+.bh-select__option--selected,
+.bh-select__option--selected:hover {
+  @apply bg-theme-accent-secondary/15 text-theme-accent-secondary-strong font-semibold;
+}
+
+.bh-select__option--selected:hover {
+  @apply bg-theme-accent-secondary/25;
 }
 
 .bh-select__option--disabled {

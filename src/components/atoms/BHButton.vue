@@ -90,32 +90,52 @@ function handleClick(event: MouseEvent) {
 <style lang="css" scoped>
 .bh-button {
   @apply flex gap-3 items-center;
-  @apply rounded-md drop-shadow-md;
+  @apply rounded-lg;
   @apply hover:bg-theme-bg-elevated;
   @apply text-theme-text-primary;
-  @apply transition-colors duration-200;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-theme-bg-primary;
+  filter: brightness(1);
+  transition:
+    background-color 200ms ease-out,
+    border-color 200ms ease-out,
+    color 200ms ease-out,
+    filter 200ms ease-out,
+    box-shadow 200ms ease-out,
+    opacity 200ms ease-out;
+}
+
+.primary,
+.secondary,
+.danger {
+  box-shadow: 0 1px 2px rgb(var(--color-text-primary) / 0.08);
+}
+
+.primary:hover,
+.secondary:hover,
+.danger:hover {
+  box-shadow: 0 2px 6px rgb(var(--color-text-primary) / 0.12);
 }
 
 .size-sm {
-  @apply text-xs px-2 py-0.5;
+  @apply text-xs px-3 py-1.5 min-h-[32px];
 }
 
 .size-md {
-  @apply text-sm px-2 py-1;
+  @apply text-sm px-4 py-2.5 min-h-[40px];
 }
 
 .size-lg {
-  @apply text-base px-4 py-2;
+  @apply text-base px-5 py-3 min-h-[44px];
 }
 
 .primary {
-  @apply border bg-theme-accent-primary border-theme-accent-primary text-gray-900;
-  @apply hover:brightness-110;
+  @apply border bg-theme-accent-primary border-theme-accent-primary text-theme-text-on-accent-primary;
+  @apply hover:bg-theme-accent-primary hover:brightness-125;
 }
 
 .secondary {
-  @apply border bg-theme-accent-secondary border-theme-accent-secondary text-theme-text-primary;
-  @apply hover:brightness-110;
+  @apply border bg-theme-accent-secondary border-theme-accent-secondary text-theme-text-on-accent-secondary;
+  @apply hover:bg-theme-accent-secondary hover:brightness-125;
 }
 
 .ghost {
@@ -124,8 +144,8 @@ function handleClick(event: MouseEvent) {
 }
 
 .danger {
-  @apply border bg-theme-status-error border-theme-status-error text-white;
-  @apply hover:brightness-110;
+  @apply border bg-theme-status-error border-theme-status-error text-theme-text-on-danger;
+  @apply hover:bg-theme-status-error hover:brightness-125;
 }
 
 .is-loading {

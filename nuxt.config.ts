@@ -1,4 +1,7 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+import { THEME_DEFAULT, THEME_STORAGE_KEY } from './src/constants/theme';
+
+const antiFlashScript = `(function(){try{var k='${THEME_STORAGE_KEY}';var t=localStorage.getItem(k);var d=t?t==='dark':${THEME_DEFAULT === 'dark'};var h=document.documentElement;h.classList.toggle('dark',d);h.classList.toggle('light',!d);}catch(e){document.documentElement.classList.add('${THEME_DEFAULT}');}})();`;
+
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
@@ -7,6 +10,18 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiBase: process.env.API_BASE_URL,
+    },
+  },
+
+  app: {
+    pageTransition: { name: 'page', mode: 'out-in' },
+    head: {
+      script: [
+        {
+          tagPosition: 'head',
+          children: antiFlashScript,
+        },
+      ],
     },
   },
 
@@ -30,7 +45,6 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
-  // Font config
   fonts: {
     families: [
       {
@@ -51,7 +65,6 @@ export default defineNuxtConfig({
     ],
   },
 
-  // I18n config
   i18n: {
     defaultLocale: 'fr',
     locales: [
@@ -60,7 +73,6 @@ export default defineNuxtConfig({
     ],
   },
 
-  // Vite config
   vite: {
     server: {
       allowedHosts: ['beehive-vault.fr'],
