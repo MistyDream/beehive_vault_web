@@ -29,34 +29,34 @@
 
     <ul v-else class="bh-recent-card__list">
       <li
-        v-for="tx in items"
-        :key="tx.id"
+        v-for="entry in entries"
+        :key="entry.tx.id"
         class="bh-recent-card__item"
       >
         <span
           class="bh-recent-card__icon"
-          :class="`bh-recent-card__icon--${tx.transaction_type}`"
+          :class="`bh-recent-card__icon--${entry.tx.transaction_type}`"
         >
-          <component :is="iconFor(tx.transaction_type)" :size="16" aria-hidden="true" />
+          <component :is="iconForTransaction(entry.tx.transaction_type)" :size="16" aria-hidden="true" />
         </span>
         <div class="bh-recent-card__content">
           <div class="bh-recent-card__row">
             <span class="bh-recent-card__label">
-              {{ labelFor(tx) }}
+              {{ labelFor(entry.tx) }}
             </span>
             <BHCurrencyDisplay
-              v-if="displayAmount(tx) !== null"
-              :amount="displayAmount(tx) as number"
-              :currency="tx.currency"
+              v-if="entry.amount !== null"
+              :amount="entry.amount"
+              :currency="entry.tx.currency"
               size="sm"
             />
           </div>
           <div class="bh-recent-card__row bh-recent-card__row--meta">
             <span class="bh-recent-card__type">
-              {{ t(`portfolios.detail.resume.tx_type.${tx.transaction_type}`) }}
+              {{ t(`portfolios.detail.resume.tx_type.${entry.tx.transaction_type}`) }}
             </span>
             <span class="bh-recent-card__date">
-              {{ formatDate(tx.executed_at) }}
+              {{ formatDate(entry.tx.executed_at) }}
             </span>
           </div>
         </div>
@@ -66,17 +66,9 @@
 </template>
 
 <script setup lang="ts">
-import {
-  LucideArrowDownToLine,
-  LucideArrowRight,
-  LucideArrowUpFromLine,
-  LucideCircleDollarSign,
-  LucideReceipt,
-  LucideSplit,
-  LucideTrendingDown,
-  LucideTrendingUp,
-} from '#components';
-import type { Transaction, TransactionType } from '~/types/portfolio';
+import { LucideArrowRight } from '#components';
+import type { Transaction, TransactionsQuery } from '~/types/portfolio';
+import { displayAmount, iconForTransaction } from '~/utils/transaction';
 
 interface Props {
   portfolioId: number;
@@ -84,12 +76,13 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const { t, locale } = useI18n();
+const { t } = useI18n();
+const { formatDate } = useLocaleFormatters();
 
 const { list } = useTransactionApi();
-const query = computed(() => ({
-  sort_by: 'executed_at' as const,
-  sort_dir: 'desc' as const,
+const query = computed<TransactionsQuery>(() => ({
+  sort_by: 'executed_at',
+  sort_dir: 'desc',
   limit: 5,
   page: 1,
 }));
@@ -98,40 +91,13 @@ const { data, pending } = list(() => props.portfolioId, query);
 const items = computed(() => data.value?.items ?? []);
 const loading = computed(() => pending.value && !data.value);
 
-function iconFor(type: TransactionType) {
-  switch (type) {
-    case 'buy': return LucideTrendingUp;
-    case 'sell': return LucideTrendingDown;
-    case 'dividend': return LucideCircleDollarSign;
-    case 'fee': return LucideReceipt;
-    case 'split': return LucideSplit;
-    case 'deposit': return LucideArrowDownToLine;
-    case 'withdrawal': return LucideArrowUpFromLine;
-  }
-}
+const entries = computed(() =>
+  items.value.map((tx) => ({ tx, amount: displayAmount(tx) })),
+);
 
 function labelFor(tx: Transaction): string {
   if (tx.stock) return tx.stock.symbol;
   return t(`portfolios.detail.resume.tx_type.${tx.transaction_type}`);
-}
-
-/** Notional amount for display: uses `amount` when present
- * (dividend/fee/deposit/withdrawal), falls back to `quantity × unit_price`
- * for buy/sell. Returns null for splits and incomplete rows. */
-function displayAmount(tx: Transaction): number | null {
-  if (tx.amount !== null) return tx.amount;
-  if (tx.quantity !== null && tx.unit_price !== null) {
-    return tx.quantity * tx.unit_price;
-  }
-  return null;
-}
-
-function formatDate(iso: string): string {
-  return new Intl.DateTimeFormat(locale.value, {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-  }).format(new Date(iso));
 }
 </script>
 

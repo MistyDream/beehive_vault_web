@@ -125,7 +125,8 @@ const emit = defineEmits<{
   (e: 'row-click', position: Position): void;
 }>();
 
-const { t, locale } = useI18n();
+const { t } = useI18n();
+const { formatQuantity, formatPercent } = useLocaleFormatters();
 
 const sortBy = ref<PositionsSortBy>('weight');
 const sortDir = ref<SortDirection>('desc');
@@ -166,19 +167,6 @@ function onPageChange(newPage: number) {
   page.value = newPage;
 }
 
-function formatQuantity(value: number): string {
-  return new Intl.NumberFormat(locale.value, {
-    maximumFractionDigits: 4,
-  }).format(value);
-}
-
-function formatPercent(value: number): string {
-  return new Intl.NumberFormat(locale.value, {
-    style: 'percent',
-    minimumFractionDigits: 1,
-    maximumFractionDigits: 1,
-  }).format(value);
-}
 </script>
 
 <style lang="css" scoped>

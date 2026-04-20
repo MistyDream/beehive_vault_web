@@ -50,10 +50,9 @@
       </table>
     </div>
 
-    <!-- Pagination -->
     <div class="pagination">
       <span class="pagination-info">
-        Showing {{ startIndex + 1 }} to {{ endIndex }} of {{ total }} results
+        {{ t('table.pagination_info', { from: startIndex + 1, to: endIndex, total }) }}
       </span>
       <div class="pagination-controls">
         <BHButton class="pagination-button" :disabled="!hasPrev" @click="prev">
@@ -116,6 +115,8 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const emit = defineEmits<Emits>();
+
+const { t } = useI18n();
 
 const currentPageRef = ref(props.page);
 

@@ -11,8 +11,12 @@
       "generic": "Something went wrong"
     }
   },
+  "table": {
+    "pagination_info": "Showing {from} to {to} of {total} results"
+  },
   "a11y": {
-    "skip_to_main": "Skip to main content"
+    "skip_to_main": "Skip to main content",
+    "stock_avatar_label": "{symbol} avatar"
   },
   "nav": {
     "main": "Main navigation",

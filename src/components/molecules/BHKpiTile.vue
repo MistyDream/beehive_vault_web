@@ -1,5 +1,9 @@
 <template>
-  <div class="bh-kpi-tile" :class="{ 'bh-kpi-tile--darker': variant === 'darker' }">
+  <div
+    class="bh-kpi-tile"
+    :class="{ 'bh-kpi-tile--darker': variant === 'darker' }"
+    :aria-busy="loading || undefined"
+  >
     <div class="bh-kpi-tile__header">
       <component
         :is="icon"

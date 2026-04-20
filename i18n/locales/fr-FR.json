@@ -11,8 +11,12 @@
       "generic": "Une erreur est survenue"
     }
   },
+  "table": {
+    "pagination_info": "Affichage de {from} à {to} sur {total} résultats"
+  },
   "a11y": {
-    "skip_to_main": "Aller au contenu principal"
+    "skip_to_main": "Aller au contenu principal",
+    "stock_avatar_label": "Avatar {symbol}"
   },
   "nav": {
     "main": "Navigation principale",

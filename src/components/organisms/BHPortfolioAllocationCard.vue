@@ -61,7 +61,8 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const { t, locale } = useI18n();
+const { t } = useI18n();
+const { formatPercent } = useLocaleFormatters();
 
 const { summary } = usePortfolioApi();
 const { data: summaryData, pending } = summary(() => props.portfolioId);
@@ -116,13 +117,6 @@ const barAriaLabel = computed(() =>
     .join(', '),
 );
 
-function formatPercent(value: number): string {
-  return new Intl.NumberFormat(locale.value, {
-    style: 'percent',
-    minimumFractionDigits: 1,
-    maximumFractionDigits: 1,
-  }).format(value);
-}
 </script>
 
 <style lang="css" scoped>

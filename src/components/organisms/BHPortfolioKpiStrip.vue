@@ -1,5 +1,5 @@
 <template>
-  <div class="bh-kpi-strip">
+  <div class="bh-kpi-strip" aria-live="polite">
     <BHKpiTile
       :label="t('portfolios.detail.kpi.invested')"
       :icon="LucideBanknote"

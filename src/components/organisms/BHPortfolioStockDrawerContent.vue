@@ -25,36 +25,36 @@
     </div>
 
     <ul v-else class="bh-stock-drawer__list">
-      <li v-for="tx in items" :key="tx.id" class="bh-stock-drawer__item">
+      <li v-for="entry in entries" :key="entry.tx.id" class="bh-stock-drawer__item">
         <span
           class="bh-stock-drawer__icon"
-          :class="`bh-stock-drawer__icon--${tx.transaction_type}`"
+          :class="`bh-stock-drawer__icon--${entry.tx.transaction_type}`"
         >
-          <component :is="iconFor(tx.transaction_type)" :size="16" aria-hidden="true" />
+          <component :is="iconForTransaction(entry.tx.transaction_type)" :size="16" aria-hidden="true" />
         </span>
         <div class="bh-stock-drawer__content">
           <div class="bh-stock-drawer__row">
             <span class="bh-stock-drawer__type">
-              {{ t(`portfolios.detail.resume.tx_type.${tx.transaction_type}`) }}
+              {{ t(`portfolios.detail.resume.tx_type.${entry.tx.transaction_type}`) }}
             </span>
             <BHCurrencyDisplay
-              v-if="displayAmount(tx) !== null"
-              :amount="displayAmount(tx) as number"
-              :currency="tx.currency"
+              v-if="entry.amount !== null"
+              :amount="entry.amount"
+              :currency="entry.tx.currency"
               size="sm"
             />
           </div>
           <div class="bh-stock-drawer__row bh-stock-drawer__row--meta">
-            <span v-if="tx.quantity !== null && tx.unit_price !== null">
-              {{ formatQuantity(tx.quantity) }} ×
+            <span v-if="entry.tx.quantity !== null && entry.tx.unit_price !== null">
+              {{ formatQuantity(entry.tx.quantity) }} ×
               <BHCurrencyDisplay
-                :amount="tx.unit_price"
-                :currency="tx.currency"
+                :amount="entry.tx.unit_price"
+                :currency="entry.tx.currency"
                 size="sm"
               />
             </span>
             <span v-else />
-            <span class="bh-stock-drawer__date">{{ formatDate(tx.executed_at) }}</span>
+            <span class="bh-stock-drawer__date">{{ formatDate(entry.tx.executed_at) }}</span>
           </div>
         </div>
       </li>
@@ -69,16 +69,8 @@
 </template>
 
 <script setup lang="ts">
-import {
-  LucideArrowDownToLine,
-  LucideArrowUpFromLine,
-  LucideCircleDollarSign,
-  LucideReceipt,
-  LucideSplit,
-  LucideTrendingDown,
-  LucideTrendingUp,
-} from '#components';
-import type { Transaction, TransactionType } from '~/types/portfolio';
+import type { TransactionsQuery } from '~/types/portfolio';
+import { displayAmount, iconForTransaction } from '~/utils/transaction';
 
 interface Props {
   portfolioId: number;
@@ -88,15 +80,16 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const { t, locale } = useI18n();
+const { t } = useI18n();
+const { formatQuantity, formatDate } = useLocaleFormatters();
 const router = useRouter();
 const drawer = useDrawer();
 
 const { list } = useTransactionApi();
-const query = computed(() => ({
+const query = computed<TransactionsQuery>(() => ({
   stock_id: props.stockId,
-  sort_by: 'executed_at' as const,
-  sort_dir: 'desc' as const,
+  sort_by: 'executed_at',
+  sort_dir: 'desc',
   limit: 100,
   page: 1,
 }));
@@ -106,40 +99,9 @@ const items = computed(() => data.value?.items ?? []);
 const total = computed(() => data.value?.total ?? 0);
 const loading = computed(() => pending.value && !data.value);
 
-/** Notional amount for display: uses `amount` when present
- * (dividend/fee/deposit/withdrawal), falls back to `quantity × unit_price`
- * for buy/sell. Returns null for splits and incomplete rows. */
-function displayAmount(tx: Transaction): number | null {
-  if (tx.amount !== null) return tx.amount;
-  if (tx.quantity !== null && tx.unit_price !== null) {
-    return tx.quantity * tx.unit_price;
-  }
-  return null;
-}
-
-function iconFor(type: TransactionType) {
-  switch (type) {
-    case 'buy': return LucideTrendingUp;
-    case 'sell': return LucideTrendingDown;
-    case 'dividend': return LucideCircleDollarSign;
-    case 'fee': return LucideReceipt;
-    case 'split': return LucideSplit;
-    case 'deposit': return LucideArrowDownToLine;
-    case 'withdrawal': return LucideArrowUpFromLine;
-  }
-}
-
-function formatQuantity(value: number): string {
-  return new Intl.NumberFormat(locale.value, { maximumFractionDigits: 4 }).format(value);
-}
-
-function formatDate(iso: string): string {
-  return new Intl.DateTimeFormat(locale.value, {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-  }).format(new Date(iso));
-}
+const entries = computed(() =>
+  items.value.map((tx) => ({ tx, amount: displayAmount(tx) })),
+);
 
 async function onViewFull() {
   await router.push({

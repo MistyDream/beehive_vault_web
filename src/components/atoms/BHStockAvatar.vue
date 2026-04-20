@@ -5,7 +5,7 @@
     :style="{ backgroundColor: color }"
     :aria-hidden="ariaHidden || undefined"
     :role="ariaHidden ? undefined : 'img'"
-    :aria-label="ariaHidden ? undefined : symbol"
+    :aria-label="ariaHidden ? undefined : t('a11y.stock_avatar_label', { symbol })"
   >
     {{ initials }}
   </span>
@@ -24,6 +24,8 @@ const props = withDefaults(defineProps<Props>(), {
   size: 'md',
   ariaHidden: true,
 });
+
+const { t } = useI18n();
 
 const color = computed(() => colorFromSymbol(props.symbol));
 const sizeClass = computed(() => `bh-stock-avatar--${props.size}`);
