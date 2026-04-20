@@ -88,7 +88,7 @@ function onAddDeposit() {
 <style lang="css" scoped>
 .bh-cash-card {
   @apply flex flex-col gap-3;
-  @apply bg-theme-bg-elevated rounded-2xl border border-theme-border-primary;
+  @apply bg-theme-bg-card rounded-2xl border border-theme-border-primary;
   @apply p-4 md:p-5;
 }
 

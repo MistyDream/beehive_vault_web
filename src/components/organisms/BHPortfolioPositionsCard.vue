@@ -189,7 +189,7 @@ function onPageChange(newPage: number) {
 
 .bh-positions-card__loading {
   @apply flex flex-col gap-2;
-  @apply bg-theme-bg-card rounded-2xl p-4;
+  @apply bg-theme-bg-card rounded-2xl border border-theme-border-primary p-4;
 }
 
 .bh-positions-card__skel-row {

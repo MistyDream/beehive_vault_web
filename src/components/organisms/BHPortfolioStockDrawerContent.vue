@@ -17,7 +17,10 @@
     </div>
 
     <div v-else-if="error" class="bh-stock-drawer__error" role="alert">
-      {{ t('toast.error.generic') }}
+      <span>{{ t('toast.error.generic') }}</span>
+      <BHButton variant="ghost" size="sm" @click="refresh()">
+        {{ t('portfolios.detail.error.retry') }}
+      </BHButton>
     </div>
 
     <div v-else-if="items.length === 0" class="bh-stock-drawer__empty">
@@ -93,7 +96,7 @@ const query = computed<TransactionsQuery>(() => ({
   limit: 100,
   page: 1,
 }));
-const { data, pending, error } = list(() => props.portfolioId, query);
+const { data, pending, error, refresh } = list(() => props.portfolioId, query);
 
 const items = computed(() => data.value?.items ?? []);
 const total = computed(() => data.value?.total ?? 0);
@@ -147,7 +150,8 @@ async function onViewFull() {
 }
 
 .bh-stock-drawer__error {
-  @apply text-sm text-theme-status-error;
+  @apply flex items-center justify-between gap-3;
+  @apply text-sm text-theme-status-error-strong;
   @apply p-4 rounded-lg bg-theme-status-error/10 border border-theme-status-error/30;
 }
 

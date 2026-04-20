@@ -231,8 +231,7 @@ watch(
 
 <style lang="css" scoped>
 .bh-table {
-  @apply bg-theme-bg-card;
-  @apply rounded-2xl;
+  @apply bg-theme-bg-card rounded-2xl border border-theme-border-primary;
 }
 
 .table-container {
