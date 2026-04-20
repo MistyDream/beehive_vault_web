@@ -5,8 +5,12 @@
     <Transition name="drawer" @after-leave="toggleWrapper">
       <div v-if="showDrawer" ref="drawerRef" class="bh-drawer">
         <div class="bh-drawer--header">
-          <BHButton class="absolute top-0 left-0 text-theme-text-muted">
-            <LucideChevronsRight :size="20" />
+          <BHButton
+            class="absolute top-0 left-0 text-theme-text-muted"
+            :aria-label="t('common.close')"
+            @click="close"
+          >
+            <LucideChevronsRight :size="20" aria-hidden="true" />
           </BHButton>
           <component :is="icon" :size="24" class="bh-drawer--header__icon" />
           <h1>{{ title }}</h1>
@@ -22,6 +26,7 @@
 <script setup lang="ts">
 import { useFocusTrap } from '@vueuse/integrations/useFocusTrap';
 
+const { t } = useI18n();
 const {
   showWrapper,
   showDrawer,
@@ -39,14 +44,22 @@ onMounted(() => {
   const isScrollLocked = useScrollLock(document.body);
   const { activate, deactivate } = useFocusTrap(drawerRef, {
     allowOutsideClick: true,
+    returnFocusOnDeactivate: false,
   });
+
+  let previousFocus: HTMLElement | null = null;
 
   watch(showDrawer, (open) => {
     isScrollLocked.value = open;
     if (open) {
+      previousFocus = document.activeElement as HTMLElement | null;
       nextTick(() => activate());
     } else {
       deactivate();
+      if (previousFocus && document.body.contains(previousFocus)) {
+        previousFocus.focus({ preventScroll: true });
+      }
+      previousFocus = null;
     }
   });
 });

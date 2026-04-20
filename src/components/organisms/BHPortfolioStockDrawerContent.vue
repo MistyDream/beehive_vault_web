@@ -166,6 +166,10 @@ async function onViewFull() {
   @apply border-b border-theme-border-secondary/60;
 }
 
+.bh-stock-drawer__item:last-child {
+  @apply border-b-0;
+}
+
 .bh-stock-drawer__icon {
   @apply flex items-center justify-center;
   @apply w-8 h-8 rounded-lg shrink-0;
