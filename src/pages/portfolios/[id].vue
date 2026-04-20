@@ -69,6 +69,7 @@ import type { TabItem } from '~/components/molecules/BHTabs.vue';
 
 const { t } = useI18n();
 const route = useRoute();
+const router = useRouter();
 const id = computed(() => Number(route.params.id));
 
 const { detail, summary, performance } = usePortfolioApi();
@@ -76,13 +77,23 @@ const { data: portfolio, pending: detailPending, error: detailError, refresh } =
 const { data: summaryData, pending: summaryPending } = summary(id);
 const { data: performanceData, pending: performancePending } = performance(id);
 
-const activeTab = useRouteQuery<string>('tab', 'resume');
+const activeTab = computed<string>({
+  get: () => (typeof route.query.tab === 'string' ? route.query.tab : 'resume'),
+  set: (value) => {
+    router.replace({ query: { ...route.query, tab: value } });
+  },
+});
 
 const tabs = computed<TabItem[]>(() => [
   { id: 'resume', label: t('portfolios.detail.tab_resume') },
   { id: 'transactions', label: t('portfolios.detail.tab_transactions') },
   { id: 'performance', label: t('portfolios.detail.tab_performance') },
-  { id: 'scoring', label: t('portfolios.detail.tab_scoring'), muted: true },
+  {
+    id: 'scoring',
+    label: t('portfolios.detail.tab_scoring'),
+    muted: true,
+    tooltip: t('portfolios.detail.tab_scoring_tooltip'),
+  },
 ]);
 
 const showLoading = computed(() => detailPending.value && !portfolio.value);

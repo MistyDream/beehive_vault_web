@@ -14,6 +14,7 @@
       :aria-disabled="tab.disabled || undefined"
       :tabindex="tab.id === modelValue ? 0 : -1"
       :disabled="tab.disabled"
+      :title="tab.tooltip || undefined"
       class="bh-tabs__tab"
       :class="{
         'bh-tabs__tab--active': tab.id === modelValue,
@@ -45,6 +46,7 @@ export interface TabItem {
   count?: number;
   disabled?: boolean;
   muted?: boolean;
+  tooltip?: string;
 }
 
 interface Props {
@@ -108,7 +110,7 @@ function move(action: -1 | 1 | 'start' | 'end') {
 .bh-tabs {
   @apply flex items-stretch gap-1;
   @apply border-b border-theme-border-secondary;
-  @apply overflow-x-auto;
+  @apply overflow-x-auto overflow-y-hidden;
 }
 
 .bh-tabs__tab {

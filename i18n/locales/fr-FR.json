@@ -65,6 +65,7 @@
       "tab_transactions": "Transactions",
       "tab_performance": "Performance",
       "tab_scoring": "Scoring",
+      "tab_scoring_tooltip": "Bientôt disponible — chaque action du portefeuille sera notée sur ses fondamentaux",
       "updated_ago": "Mis à jour {time}",
       "kpi": {
         "invested": "Total investi",

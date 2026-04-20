@@ -65,6 +65,7 @@
       "tab_transactions": "Transactions",
       "tab_performance": "Performance",
       "tab_scoring": "Scoring",
+      "tab_scoring_tooltip": "Coming soon — each stock in the portfolio will be rated on its fundamentals",
       "updated_ago": "Updated {time}",
       "kpi": {
         "invested": "Total invested",
