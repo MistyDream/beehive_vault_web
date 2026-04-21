@@ -74,9 +74,25 @@ export default defineNuxtConfig({
     ],
   },
 
-  vite: {
-    server: {
-      allowedHosts: ['beehive-vault.fr'],
+  $development: {
+    vite: {
+      server: {
+        allowedHosts: ['beehive-vault.fr'],
+      },
+    },
+  },
+
+  routeRules: {
+    '/**': {
+      headers: {
+        'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
+        'X-Content-Type-Options': 'nosniff',
+        'X-Frame-Options': 'DENY',
+        'Referrer-Policy': 'strict-origin-when-cross-origin',
+        'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), interest-cohort=()',
+        'Cross-Origin-Opener-Policy': 'same-origin',
+        'Cross-Origin-Resource-Policy': 'same-origin',
+      },
     },
   },
 });
