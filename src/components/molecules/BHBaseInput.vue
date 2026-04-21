@@ -5,9 +5,9 @@
     </label>
     <input
       :id="inputId"
+      v-model="model"
       :type="type"
       :placeholder="placeholder"
-      :value="modelValue"
       :disabled="disabled"
       :required="required || undefined"
       :aria-required="required || undefined"
@@ -15,7 +15,6 @@
       :aria-describedby="error ? errorId : undefined"
       class="bh-input__input"
       :class="{ 'bh-input__input--error': !!error }"
-      @input="handleInput"
     />
     <p v-if="error" :id="errorId" role="alert" class="bh-input__error">
       {{ error }}
@@ -50,12 +49,8 @@ const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void;
 }>();
 
-const inputId = computed(() => props.id || useId());
-const errorId = computed(() => `${inputId.value}-error`);
-
-const handleInput = (event: Event) => {
-  emit('update:modelValue', (event.target as HTMLInputElement).value);
-};
+const model = useVModel(props, 'modelValue', emit, { passive: true });
+const { inputId, errorId } = useFieldIds(() => props.id);
 </script>
 
 <style lang="css" scoped>
@@ -73,6 +68,10 @@ const handleInput = (event: Event) => {
   @apply bg-theme-bg-card;
   @apply border border-theme-border-secondary;
   @apply text-sm text-theme-text-primary font-medium placeholder:text-theme-text-muted;
+  @apply transition-colors duration-150;
+  @apply hover:border-theme-border-primary;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary focus-visible:border-transparent;
+  @apply disabled:opacity-60 disabled:cursor-not-allowed;
 }
 
 .bh-input__input--error {

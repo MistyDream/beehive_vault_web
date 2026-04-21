@@ -5,7 +5,7 @@
     </label>
     <textarea
       :id="inputId"
-      :value="modelValue"
+      v-model="model"
       :placeholder="placeholder"
       :disabled="disabled"
       :required="required || undefined"
@@ -17,7 +17,6 @@
       :aria-describedby="error ? errorId : undefined"
       class="bh-textarea__input"
       :class="{ 'bh-textarea__input--error': !!error }"
-      @input="handleInput"
     />
     <div class="bh-textarea__footer">
       <p v-if="error" :id="errorId" role="alert" class="bh-textarea__error">
@@ -61,8 +60,8 @@ const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void;
 }>();
 
-const inputId = computed(() => props.id || useId());
-const errorId = computed(() => `${inputId.value}-error`);
+const model = useVModel(props, 'modelValue', emit, { passive: true });
+const { inputId, errorId } = useFieldIds(() => props.id);
 const currentLength = computed(() => props.modelValue?.length ?? 0);
 
 const counterClass = computed(() => {
@@ -72,10 +71,6 @@ const counterClass = computed(() => {
   if (ratio >= 0.9) return 'bh-textarea__counter--warning';
   return '';
 });
-
-const handleInput = (event: Event) => {
-  emit('update:modelValue', (event.target as HTMLTextAreaElement).value);
-};
 </script>
 
 <style lang="css" scoped>
@@ -93,6 +88,10 @@ const handleInput = (event: Event) => {
   @apply bg-theme-bg-card;
   @apply border border-theme-border-secondary;
   @apply text-sm text-theme-text-primary font-medium placeholder:text-theme-text-muted;
+  @apply transition-colors duration-150;
+  @apply hover:border-theme-border-primary;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary focus-visible:border-transparent;
+  @apply disabled:opacity-60 disabled:cursor-not-allowed;
 }
 
 .bh-textarea__input--error {

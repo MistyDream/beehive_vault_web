@@ -92,6 +92,8 @@ const { t } = useI18n();
 const portfolioApi = usePortfolioApi();
 const { data: portfolios, pending, error, refresh } = portfolioApi.list();
 
+useHead({ title: () => t('portfolios.title') });
+
 const route = useRoute();
 const forcedState = computed(() => {
   if (!import.meta.dev) return null;

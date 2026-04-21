@@ -3,7 +3,13 @@
   "bank-account": "Compte bancaire",
   "settings": "Paramètres",
   "common": {
-    "close": "Fermer"
+    "close": "Fermer",
+    "remove": "Supprimer",
+    "remove_value": "Supprimer {value}",
+    "select_placeholder": "Sélectionner",
+    "select_n_selected": "{count} sélectionné | {count} sélectionnés",
+    "no_results": "Aucun résultat",
+    "clear_selection": "Effacer la sélection"
   },
   "toast": {
     "coming_soon": "Bientôt disponible",
@@ -67,8 +73,8 @@
       "invested_label": "Investi",
       "cash_label": "Cash"
     },
-    "coming_soon": "Cette page sera bientôt disponible.",
     "detail": {
+      "loading_title": "Chargement du portefeuille",
       "tabs_label": "Sections du portefeuille",
       "tab_resume": "Résumé",
       "tab_transactions": "Transactions",
@@ -89,10 +95,68 @@
         "delete": "Supprimer"
       },
       "coming_soon": {
-        "resume": "Le résumé sera disponible en phase 2.",
-        "transactions": "La liste des transactions sera disponible en phase 3.",
         "performance": "Les graphiques de performance seront disponibles en phase 4.",
         "scoring": "Le scoring sera disponible quand la feature scoring de l'API sera mergée."
+      },
+      "transactions": {
+        "title": "Transactions",
+        "summary": {
+          "total": "{count} transaction | {count} transactions",
+          "total_zero": "Aucune transaction",
+          "separator": "·"
+        },
+        "filters": {
+          "type_label": "Type",
+          "type_placeholder": "Tous les types",
+          "stock_label": "Action",
+          "stock_placeholder": "Toutes les actions",
+          "stock_search_placeholder": "Rechercher par symbole ou nom",
+          "stock_empty": "Aucune action",
+          "stock_clear": "Effacer la sélection",
+          "from_label": "Du",
+          "to_label": "Au",
+          "reset": "Réinitialiser les filtres",
+          "chip_type": "Type : {value}",
+          "chip_stock": "Action : {value}",
+          "chip_from": "Depuis : {value}",
+          "chip_to": "Jusqu'au : {value}",
+          "remove_chip": "Supprimer le filtre"
+        },
+        "columns": {
+          "date": "Date",
+          "type": "Type",
+          "action": "Action",
+          "quantity": "Quantité",
+          "unit_price": "Prix unitaire",
+          "amount": "Montant",
+          "fees": "Frais",
+          "tax": "Taxes",
+          "currency": "Devise",
+          "notes": "Notes"
+        },
+        "row": {
+          "expand": "Voir les détails de la transaction",
+          "collapse": "Masquer les détails",
+          "has_notes": "Cette transaction a des notes",
+          "no_action": "—",
+          "split_display": "{from} → {to}"
+        },
+        "detail": {
+          "region_label": "Détails de la transaction du {date}",
+          "notes_label": "Notes",
+          "no_notes": "Aucune note",
+          "exchange_rate_label": "Taux de change",
+          "edit": "Modifier",
+          "duplicate": "Dupliquer",
+          "delete": "Supprimer"
+        },
+        "empty_title": "Aucune transaction",
+        "empty_description": "Enregistrez votre première transaction pour la voir apparaître ici.",
+        "empty_filtered_title": "Aucun résultat pour ces filtres",
+        "empty_filtered_description": "Essayez d'ajuster ou de réinitialiser les filtres.",
+        "error_title": "Impossible de charger les transactions",
+        "error_description": "Une erreur est survenue. Réessayez dans un instant.",
+        "error_retry": "Réessayer"
       },
       "resume": {
         "positions": {

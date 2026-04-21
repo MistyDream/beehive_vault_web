@@ -5,16 +5,16 @@
     </label>
     <input
       :id="inputId"
+      v-model="model"
       type="date"
-      :value="modelValue"
       :min="min"
       :max="max"
       :disabled="disabled"
+      :aria-label="label ? undefined : ariaLabel"
       :aria-invalid="!!error || undefined"
       :aria-describedby="error ? errorId : undefined"
       class="bh-date-input__input"
       :class="{ 'bh-date-input__input--error': !!error }"
-      @input="handleInput"
     />
     <p v-if="error" :id="errorId" role="alert" class="bh-date-input__error">
       {{ error }}
@@ -25,6 +25,7 @@
 <script setup lang="ts">
 interface Props {
   label?: string;
+  ariaLabel?: string;
   id?: string;
   modelValue?: string;
   placeholder?: string;
@@ -36,6 +37,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   label: '',
+  ariaLabel: '',
   id: '',
   modelValue: '',
   placeholder: '',
@@ -45,16 +47,16 @@ const props = withDefaults(defineProps<Props>(), {
   max: undefined,
 });
 
+if (import.meta.dev && !props.label && !props.ariaLabel) {
+  console.warn('[BHDateInput] provide either `label` or `ariaLabel` for accessibility.');
+}
+
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void;
 }>();
 
-const inputId = computed(() => props.id || useId());
-const errorId = computed(() => `${inputId.value}-error`);
-
-const handleInput = (event: Event) => {
-  emit('update:modelValue', (event.target as HTMLInputElement).value);
-};
+const model = useVModel(props, 'modelValue', emit, { passive: true });
+const { inputId, errorId } = useFieldIds(() => props.id);
 </script>
 
 <style lang="css" scoped>
@@ -72,11 +74,18 @@ const handleInput = (event: Event) => {
   @apply bg-theme-bg-card;
   @apply border border-theme-border-secondary;
   @apply text-sm text-theme-text-primary font-medium;
+  @apply transition-colors duration-150;
+  @apply hover:border-theme-border-primary;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary focus-visible:border-transparent;
+  @apply disabled:opacity-60 disabled:cursor-not-allowed;
 }
 
 .bh-date-input__input::-webkit-calendar-picker-indicator {
   @apply cursor-pointer;
-  filter: invert(0.7);
+}
+
+:root.dark .bh-date-input__input::-webkit-calendar-picker-indicator {
+  filter: invert(0.85);
 }
 
 .bh-date-input__input--error {

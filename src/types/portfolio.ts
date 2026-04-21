@@ -1,14 +1,16 @@
 export const PORTFOLIO_KINDS = ['real', 'virtual'] as const;
 export type PortfolioKind = (typeof PORTFOLIO_KINDS)[number];
 
-export type TransactionType =
-  | 'buy'
-  | 'sell'
-  | 'dividend'
-  | 'fee'
-  | 'split'
-  | 'deposit'
-  | 'withdrawal';
+export const TRANSACTION_TYPES = [
+  'buy',
+  'sell',
+  'dividend',
+  'fee',
+  'split',
+  'deposit',
+  'withdrawal',
+] as const;
+export type TransactionType = (typeof TRANSACTION_TYPES)[number];
 
 export interface Stock {
   id: number;
@@ -158,10 +160,15 @@ export interface CreateTransactionPayload {
 export type UpdateTransactionPayload = CreateTransactionPayload;
 
 export interface TransactionFilters {
-  transaction_type?: TransactionType;
+  transaction_types?: TransactionType[];
   stock_id?: number;
   from_date?: string;
   to_date?: string;
+}
+
+export interface TransactionStats {
+  total: number;
+  by_type: Record<TransactionType, number>;
 }
 
 export interface PerformanceFilters {

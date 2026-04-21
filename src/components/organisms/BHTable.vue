@@ -9,7 +9,6 @@
               :key="column.key"
               scope="col"
               class="header-cell"
-              :class="column.centerAlign ? 'header-cell--center' : ''"
               :aria-sort="ariaSortFor(column)"
             >
               <button
@@ -104,7 +103,6 @@ interface Column {
   key: string;
   label: string;
   sortable?: boolean;
-  centerAlign?: boolean;
 }
 
 interface Props {
@@ -269,13 +267,9 @@ watch(
 }
 
 .header-cell {
-  @apply px-6 py-4 text-left;
+  @apply px-4 py-3 text-left;
   @apply text-sm font-medium text-theme-text-secondary;
   @apply transition-colors;
-}
-
-.header-cell--center {
-  @apply text-center;
 }
 
 .header-content {
@@ -308,13 +302,13 @@ watch(
 }
 
 .table-cell {
-  @apply px-6 py-4;
+  @apply px-4 py-3;
   @apply text-sm text-theme-text-primary;
 }
 
 .pagination {
   @apply flex justify-between items-center;
-  @apply px-6 py-3;
+  @apply px-4 py-3;
 }
 
 .pagination-info {

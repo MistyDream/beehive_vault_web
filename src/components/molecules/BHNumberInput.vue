@@ -55,11 +55,12 @@ const emit = defineEmits<{
   (e: 'update:modelValue', value: number | null): void;
 }>();
 
-const inputId = computed(() => props.id || useId());
-const errorId = computed(() => `${inputId.value}-error`);
+const { inputId, errorId } = useFieldIds(() => props.id);
 
 const isFocused = ref(false);
 const rawInput = ref('');
+
+const { locale } = useI18n();
 
 const displayValue = computed(() => {
   if (isFocused.value) {
@@ -68,7 +69,7 @@ const displayValue = computed(() => {
   if (props.modelValue === null || props.modelValue === undefined) {
     return '';
   }
-  return new Intl.NumberFormat('fr-FR', {
+  return new Intl.NumberFormat(locale.value, {
     minimumFractionDigits: props.precision,
     maximumFractionDigits: props.precision,
   }).format(props.modelValue);
@@ -125,6 +126,10 @@ function onInput(event: Event) {
   @apply bg-theme-bg-card;
   @apply border border-theme-border-secondary;
   @apply text-sm text-theme-text-primary font-medium placeholder:text-theme-text-muted;
+  @apply transition-colors duration-150;
+  @apply hover:border-theme-border-primary;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary focus-visible:border-transparent;
+  @apply disabled:opacity-60 disabled:cursor-not-allowed;
 }
 
 .bh-number-input__input--error {

@@ -31,6 +31,7 @@ export const API_ENDPOINTS = {
     PERFORMANCE: (id: number) => `/portfolios/${id}/performance`,
     SCORING: (id: number) => `/portfolios/${id}/scoring`,
     TRANSACTIONS: (id: number) => `/portfolios/${id}/transactions`,
+    TRANSACTIONS_STATS: (id: number) => `/portfolios/${id}/transactions/stats`,
     TRANSACTION: (portfolioId: number, txId: number) =>
       `/portfolios/${portfolioId}/transactions/${txId}`,
   },

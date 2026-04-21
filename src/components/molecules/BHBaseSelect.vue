@@ -127,11 +127,7 @@ const selectRef = ref<HTMLElement | null>(null);
 const isOpen = ref(false);
 const activeIndex = ref(-1);
 
-const autoId = useId();
-const triggerId = computed(() => props.id || autoId);
-const listboxId = computed(() => `${triggerId.value}-listbox`);
-const errorId = computed(() => `${triggerId.value}-error`);
-const optionId = (index: number) => `${triggerId.value}-option-${index}`;
+const { triggerId, listboxId, errorId, optionId } = useSelectIds(() => props.id);
 
 function firstEnabledIndex(from: number, direction: 1 | -1): number {
   const len = props.options.length;
@@ -230,17 +226,18 @@ const selectedOptions = computed(() =>
 
 const hasValue = computed(() => selectedOptions.value.length > 0);
 
+const { t } = useI18n();
+
 const displayLabel = computed(() => {
   if (!hasValue.value) {
-    return props.placeholder || 'Select';
+    return props.placeholder || t('common.select_placeholder');
   }
 
   if (!props.multiple) {
     return selectedOptions.value[0].label;
   }
 
-  const count = selectedOptions.value.length;
-  return `${count} selected`;
+  return t('common.select_n_selected', selectedOptions.value.length);
 });
 
 const closeDropdown = () => {
@@ -307,6 +304,8 @@ onClickOutside(selectRef, () => {
   @apply flex items-center justify-between gap-2;
   @apply text-left;
   @apply transition-colors duration-150 ease-out;
+  @apply hover:border-theme-border-primary;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary focus-visible:border-transparent;
 }
 
 .bh-select__control--disabled {

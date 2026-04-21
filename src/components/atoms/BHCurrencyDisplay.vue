@@ -16,24 +16,43 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   currency: 'EUR',
-  locale: 'fr-FR',
+  locale: undefined,
   showSign: false,
   compact: false,
   size: 'md',
 });
 
+const { locale } = useI18n();
+
 // Zero is coerced to +0 so Intl never emits "-0,00 €" for a negative-signed zero.
 const amount = computed(() => props.amount || 0);
 
+// Compose manually: locale-aware number + space + currency symbol (always
+// suffix). Using style:'currency' directly places the symbol per locale which
+// breaks visual consistency when switching languages (e.g. "€10.00" in en
+// vs "10,00 €" in fr).
 const formattedAmount = computed(() => {
-  const formatted = new Intl.NumberFormat(props.locale, {
-    style: 'currency',
-    currency: props.currency,
+  const activeLocale = props.locale ?? locale.value;
+  const number = new Intl.NumberFormat(activeLocale, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
     notation: props.compact ? 'compact' : 'standard',
   }).format(amount.value);
 
-  return props.showSign && amount.value > 0 ? `+${formatted}` : formatted;
+  const symbol = getCurrencySymbol(props.currency, activeLocale);
+  const signed = props.showSign && amount.value > 0 ? `+${number}` : number;
+  return `${signed} ${symbol}`;
 });
+
+function getCurrencySymbol(currency: string, locale: string): string {
+  const parts = new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency,
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).formatToParts(0);
+  return parts.find((p) => p.type === 'currency')?.value ?? currency;
+}
 
 const sizeClass = computed(() => `bh-currency-display--${props.size}`);
 

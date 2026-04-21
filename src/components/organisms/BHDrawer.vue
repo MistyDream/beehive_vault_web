@@ -13,14 +13,14 @@
       >
         <div class="bh-drawer--header">
           <BHButton
-            class="absolute top-0 left-0 text-theme-text-muted"
+            class="bh-drawer--close text-theme-text-muted"
             :aria-label="t('common.close')"
             @click="close"
           >
             <LucideX :size="20" aria-hidden="true" />
           </BHButton>
-          <component :is="icon" :size="24" class="bh-drawer--header__icon" />
-          <h1 :id="titleId">{{ title }}</h1>
+          <component :is="icon" :size="24" class="bh-drawer--header__icon" aria-hidden="true" />
+          <h2 :id="titleId">{{ title }}</h2>
         </div>
         <div class="bh-drawer--content">
           <component :is="content" v-bind="props" />
@@ -53,28 +53,31 @@ onKeyStroke('Escape', () => {
   if (showDrawer.value) close();
 });
 
+const bodyRef = ref<HTMLElement | null>(null);
+const isScrollLocked = useScrollLock(bodyRef);
+const { activate, deactivate } = useFocusTrap(drawerRef, {
+  allowOutsideClick: true,
+  returnFocusOnDeactivate: false,
+});
+
+let previousFocus: HTMLElement | null = null;
+
 onMounted(() => {
-  const isScrollLocked = useScrollLock(document.body);
-  const { activate, deactivate } = useFocusTrap(drawerRef, {
-    allowOutsideClick: true,
-    returnFocusOnDeactivate: false,
-  });
+  bodyRef.value = document.body;
+});
 
-  let previousFocus: HTMLElement | null = null;
-
-  watch(showDrawer, (open) => {
-    isScrollLocked.value = open;
-    if (open) {
-      previousFocus = document.activeElement as HTMLElement | null;
-      nextTick(() => activate());
-    } else {
-      deactivate();
-      if (previousFocus && document.body.contains(previousFocus)) {
-        previousFocus.focus({ preventScroll: true });
-      }
-      previousFocus = null;
+watch(showDrawer, (open) => {
+  isScrollLocked.value = open;
+  if (open) {
+    previousFocus = document.activeElement as HTMLElement | null;
+    nextTick(() => activate());
+  } else {
+    deactivate();
+    if (previousFocus && document.body.contains(previousFocus)) {
+      previousFocus.focus({ preventScroll: true });
     }
-  });
+    previousFocus = null;
+  }
 });
 </script>
 
@@ -99,15 +102,23 @@ onMounted(() => {
 
 .bh-drawer {
   @apply absolute top-0 right-0;
-  @apply w-full sm:w-[480px] lg:w-[560px] h-screen p-4;
+  @apply flex flex-col;
+  @apply w-full sm:w-[480px] lg:w-[560px] h-screen;
   @apply bg-theme-bg-card;
   @apply shadow-2xl;
 }
 
 .bh-drawer--header {
+  @apply sticky top-0 z-10 shrink-0;
   @apply flex gap-2 items-center justify-start;
-  @apply p-4;
+  @apply p-4 pl-14;
+  @apply bg-theme-bg-card;
+  @apply border-b border-theme-border-secondary/60;
   @apply font-poppins text-xl font-bold text-theme-text-primary;
+}
+
+.bh-drawer--close {
+  @apply absolute top-2 left-2;
 }
 
 .bh-drawer--header__icon {
@@ -115,6 +126,7 @@ onMounted(() => {
 }
 
 .bh-drawer--content {
+  @apply flex-1 min-h-0 overflow-y-auto;
   @apply p-4;
 }
 </style>

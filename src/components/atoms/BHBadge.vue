@@ -1,6 +1,5 @@
 <template>
-  <span class="bh-badge" :class="[variantClass, sizeClass, { 'bh-badge--rounded': rounded }]">
-    <span v-if="dot" class="bh-badge__dot" />
+  <span class="bh-badge" :class="[variantClass, sizeClass]">
     <slot />
   </span>
 </template>
@@ -16,15 +15,11 @@ interface Props {
     | 'accent-primary'
     | 'accent-secondary';
   size?: 'sm' | 'md';
-  dot?: boolean;
-  rounded?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   variant: 'neutral',
   size: 'md',
-  dot: false,
-  rounded: true,
 });
 
 const variantClass = computed(() => `bh-badge--${props.variant}`);
@@ -34,15 +29,7 @@ const sizeClass = computed(() => `bh-badge--${props.size}`);
 <style lang="css" scoped>
 .bh-badge {
   @apply inline-flex items-center gap-1.5;
-  @apply font-medium border;
-}
-
-.bh-badge--rounded {
-  @apply rounded-full;
-}
-
-.bh-badge:not(.bh-badge--rounded) {
-  @apply rounded-md;
+  @apply rounded-full font-medium border;
 }
 
 .bh-badge--sm {
@@ -51,10 +38,6 @@ const sizeClass = computed(() => `bh-badge--${props.size}`);
 
 .bh-badge--md {
   @apply text-sm px-3 py-1;
-}
-
-.bh-badge__dot {
-  @apply w-1.5 h-1.5 rounded-full bg-current;
 }
 
 .bh-badge--success {

@@ -23,6 +23,15 @@
       </li>
     </ul>
 
+    <div v-else-if="hasError" class="bh-recent-card__error" role="alert">
+      <span class="bh-recent-card__error-text">
+        {{ t('toast.error.generic') }}
+      </span>
+      <BHButton variant="ghost" size="sm" @click="refresh()">
+        {{ t('portfolios.detail.error.retry') }}
+      </BHButton>
+    </div>
+
     <div v-else-if="items.length === 0" class="bh-recent-card__empty">
       <div class="bh-recent-card__empty-pattern bh-hex-pattern" aria-hidden="true" />
       <div class="bh-recent-card__empty-inner">
@@ -96,10 +105,11 @@ const query = computed<TransactionsQuery>(() => ({
   limit: 5,
   page: 1,
 }));
-const { data, pending } = list(() => props.portfolioId, query);
+const { data, pending, error, refresh } = list(() => props.portfolioId, query);
 
 const items = computed(() => data.value?.items ?? []);
 const loading = computed(() => pending.value && !data.value);
+const hasError = computed(() => !loading.value && !data.value && !!error.value);
 
 const entries = computed(() =>
   items.value.map((tx) => ({ tx, amount: displayAmount(tx) })),
@@ -217,5 +227,14 @@ function labelFor(tx: Transaction): string {
 
 .bh-recent-card__skel-line--short {
   @apply w-1/2;
+}
+
+.bh-recent-card__error {
+  @apply flex items-center justify-between gap-3;
+  @apply py-3;
+}
+
+.bh-recent-card__error-text {
+  @apply text-sm text-theme-status-error;
 }
 </style>

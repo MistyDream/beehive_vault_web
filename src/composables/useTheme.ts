@@ -18,14 +18,16 @@ export function useTheme() {
 
   const isDark = computed(() => mode.value === 'dark');
 
+  const { start: scheduleClassRemoval } = useTimeoutFn(
+    () => document.documentElement.classList.remove(THEME_SWITCH_CLASS),
+    THEME_SWITCH_DURATION_MS,
+    { immediate: false },
+  );
+
   function toggle() {
     if (import.meta.client) {
-      const html = document.documentElement;
-      html.classList.add(THEME_SWITCH_CLASS);
-      window.setTimeout(
-        () => html.classList.remove(THEME_SWITCH_CLASS),
-        THEME_SWITCH_DURATION_MS,
-      );
+      document.documentElement.classList.add(THEME_SWITCH_CLASS);
+      scheduleClassRemoval();
     }
     mode.value = isDark.value ? 'light' : 'dark';
   }

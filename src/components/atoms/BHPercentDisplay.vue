@@ -20,8 +20,10 @@ const props = withDefaults(defineProps<Props>(), {
   size: 'md',
 });
 
+const { locale } = useI18n();
+
 const formattedValue = computed(() => {
-  const formatted = new Intl.NumberFormat('fr-FR', {
+  const formatted = new Intl.NumberFormat(locale.value, {
     minimumFractionDigits: props.precision,
     maximumFractionDigits: props.precision,
   }).format(Math.abs(props.value));
