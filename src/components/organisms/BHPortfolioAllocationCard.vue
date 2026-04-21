@@ -142,6 +142,7 @@ const barAriaLabel = computed(() =>
 
 .bh-allocation-card__segment {
   @apply transition-[width] duration-300 ease-out;
+  min-width: 6px;
 }
 
 .bh-allocation-card__legend {

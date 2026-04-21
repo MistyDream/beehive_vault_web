@@ -9,7 +9,7 @@
         v-if="summary"
         :amount="summary.total_invested"
         :currency="currency"
-        size="md"
+        size="lg"
       />
     </BHKpiTile>
 
@@ -22,7 +22,7 @@
         v-if="summary"
         :amount="summary.cash.balance"
         :currency="summary.cash.currency"
-        size="md"
+        size="lg"
       />
     </BHKpiTile>
 
@@ -35,7 +35,7 @@
         <BHCurrencyDisplay
           :amount="performance.net_result"
           :currency="performance.currency"
-          size="md"
+          size="lg"
         />
         <BHPercentDisplay
           v-if="netResultPercent !== null"

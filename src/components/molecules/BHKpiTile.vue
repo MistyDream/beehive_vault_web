@@ -37,8 +37,8 @@ withDefaults(defineProps<Props>(), {
 <style lang="css" scoped>
 .bh-kpi-tile {
   @apply flex flex-col gap-2;
-  @apply bg-theme-bg-card rounded-lg border border-theme-border-primary;
-  @apply p-4;
+  @apply bg-theme-bg-card rounded-2xl border border-theme-border-primary;
+  @apply p-4 md:p-5;
 }
 
 .bh-kpi-tile__header {

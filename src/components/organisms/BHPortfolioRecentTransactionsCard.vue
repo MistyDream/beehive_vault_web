@@ -24,7 +24,16 @@
     </ul>
 
     <div v-else-if="items.length === 0" class="bh-recent-card__empty">
-      {{ t('portfolios.detail.resume.recent.empty') }}
+      <div class="bh-recent-card__empty-pattern bh-hex-pattern" aria-hidden="true" />
+      <div class="bh-recent-card__empty-inner">
+        <LucideReceipt :size="40" class="bh-recent-card__empty-icon" aria-hidden="true" />
+        <p class="bh-recent-card__empty-title">
+          {{ t('portfolios.detail.resume.recent.empty_title') }}
+        </p>
+        <p class="bh-recent-card__empty-description">
+          {{ t('portfolios.detail.resume.recent.empty_description') }}
+        </p>
+      </div>
     </div>
 
     <ul v-else class="bh-recent-card__list">
@@ -66,7 +75,7 @@
 </template>
 
 <script setup lang="ts">
-import { LucideArrowRight } from '#components';
+import { LucideArrowRight, LucideReceipt } from '#components';
 import type { Transaction, TransactionsQuery } from '~/types/portfolio';
 import { displayAmount, iconForTransaction } from '~/utils/transaction';
 
@@ -184,8 +193,28 @@ function labelFor(tx: Transaction): string {
 }
 
 .bh-recent-card__empty {
-  @apply text-sm text-theme-text-muted italic;
-  @apply py-4 text-center;
+  @apply relative overflow-hidden rounded-xl;
+}
+
+.bh-recent-card__empty-pattern {
+  @apply pointer-events-none absolute inset-0 opacity-[0.08];
+}
+
+.bh-recent-card__empty-inner {
+  @apply relative flex flex-col items-center gap-2;
+  @apply py-8 px-4 text-center;
+}
+
+.bh-recent-card__empty-icon {
+  @apply text-theme-accent-primary/60;
+}
+
+.bh-recent-card__empty-title {
+  @apply font-poppins text-base font-semibold text-theme-text-primary;
+}
+
+.bh-recent-card__empty-description {
+  @apply text-sm text-theme-text-secondary max-w-xs;
 }
 
 .bh-recent-card__skel-icon {

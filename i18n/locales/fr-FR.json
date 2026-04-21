@@ -123,7 +123,8 @@
         "recent": {
           "title": "Dernières transactions",
           "view_all": "Voir tout",
-          "empty": "Aucune transaction pour l'instant"
+          "empty_title": "Aucune transaction",
+          "empty_description": "Vos transactions récentes s'afficheront ici dès qu'elles seront enregistrées."
         },
         "drawer": {
           "count": "{count} transaction | {count} transactions",

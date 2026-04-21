@@ -65,7 +65,7 @@
           :aria-label="t('table.previous_page')"
           @click="prev"
         >
-          <LucideChevronLeft :size="16" aria-hidden="true" />
+          <LucideChevronLeft :size="18" aria-hidden="true" />
         </BHButton>
 
         <BHButton
@@ -86,7 +86,7 @@
           :aria-label="t('table.next_page')"
           @click="next"
         >
-          <LucideChevronRight :size="16" aria-hidden="true" />
+          <LucideChevronRight :size="18" aria-hidden="true" />
         </BHButton>
       </div>
     </div>
@@ -300,7 +300,7 @@ watch(
 
 .sort-indicator {
   @apply ml-2 text-theme-text-primary;
-  @apply transition-all duration-300 ease-in-out;
+  @apply transition-transform duration-300 ease-in-out;
   transform: rotate(0deg);
 }
 
@@ -334,19 +334,19 @@ watch(
 
 .pagination-button {
   @apply w-8 h-8 flex items-center justify-center;
-  @apply bg-theme-bg-elevated hover:bg-theme-bg-card;
-  @apply border border-theme-border-primary rounded;
+  @apply bg-theme-bg-elevated-strong hover:bg-theme-accent-secondary/20;
+  @apply border border-theme-border-secondary rounded-md;
   @apply text-sm;
   @apply transition-colors;
 }
 
 .pagination-button--active {
   @apply bg-theme-accent-secondary border-theme-accent-secondary;
-  @apply text-theme-text-primary;
+  @apply text-theme-text-on-accent-secondary;
 }
 
 .pagination-button:disabled {
   @apply opacity-50 cursor-not-allowed;
-  @apply hover:bg-theme-bg-elevated;
+  @apply hover:bg-theme-bg-elevated-strong;
 }
 </style>

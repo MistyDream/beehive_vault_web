@@ -18,7 +18,7 @@
 
     <div v-else-if="error" class="bh-stock-drawer__error" role="alert">
       <span>{{ t('toast.error.generic') }}</span>
-      <BHButton variant="ghost" size="sm" @click="refresh()">
+      <BHButton variant="secondary" size="sm" @click="refresh()">
         {{ t('portfolios.detail.error.retry') }}
       </BHButton>
     </div>

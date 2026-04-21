@@ -123,7 +123,8 @@
         "recent": {
           "title": "Recent transactions",
           "view_all": "View all",
-          "empty": "No transaction yet"
+          "empty_title": "No transaction",
+          "empty_description": "Your recent transactions will show up here as soon as they are recorded."
         },
         "drawer": {
           "count": "{count} transaction | {count} transactions",
