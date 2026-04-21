@@ -10,6 +10,7 @@
       :min="min"
       :max="max"
       :disabled="disabled"
+      :aria-label="label ? undefined : ariaLabel"
       :aria-invalid="!!error || undefined"
       :aria-describedby="error ? errorId : undefined"
       class="bh-date-input__input"
@@ -25,6 +26,7 @@
 <script setup lang="ts">
 interface Props {
   label?: string;
+  ariaLabel?: string;
   id?: string;
   modelValue?: string;
   placeholder?: string;
@@ -36,6 +38,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   label: '',
+  ariaLabel: '',
   id: '',
   modelValue: '',
   placeholder: '',
@@ -44,6 +47,10 @@ const props = withDefaults(defineProps<Props>(), {
   min: undefined,
   max: undefined,
 });
+
+if (import.meta.dev && !props.label && !props.ariaLabel) {
+  console.warn('[BHDateInput] provide either `label` or `ariaLabel` for accessibility.');
+}
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void;

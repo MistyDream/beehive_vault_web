@@ -1,49 +1,43 @@
 <template>
   <div ref="triggerRef" class="bh-dropdown">
-    <!-- Trigger -->
-    <div
-      class="bh-dropdown__trigger"
-      tabindex="0"
-      role="button"
-      :aria-expanded="isOpen"
-      :aria-haspopup="true"
-      @click="handleToggle"
-      @keydown.enter="handleToggle"
-      @keydown.space.prevent="handleToggle"
-      @keydown.escape="close"
-      @keydown.arrow-down.prevent="open"
+    <slot
+      name="trigger"
+      :is-open="isOpen"
+      :toggle="handleToggle"
+      :open="open"
+      :close="close"
     >
-      <slot
-        name="trigger"
-        :is-open="isOpen"
-        :toggle="toggle"
-        :open="open"
-        :close="close"
+      <button
+        type="button"
+        class="bh-dropdown__default-trigger"
+        :disabled="disabled"
+        :aria-expanded="isOpen"
+        aria-haspopup="true"
+        @click="handleToggle"
+        @keydown.down.prevent="open"
       >
-        <button class="bh-dropdown__default-trigger" :disabled="disabled">
-          Select an option
-          <svg
-            class="bh-dropdown__arrow"
-            :class="{ 'bh-dropdown__arrow--open': isOpen }"
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="currentColor"
-          >
-            <path
-              d="M4 6l4 4 4-4"
-              stroke="currentColor"
-              stroke-width="2"
-              fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </button>
-      </slot>
-    </div>
+        Select an option
+        <svg
+          class="bh-dropdown__arrow"
+          :class="{ 'bh-dropdown__arrow--open': isOpen }"
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            d="M4 6l4 4 4-4"
+            stroke="currentColor"
+            stroke-width="2"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </button>
+    </slot>
 
-    <!-- Dropdown Menu -->
     <Teleport to="body">
       <div
         v-if="showMenu"
@@ -53,11 +47,13 @@
         :style="menuStyles"
         role="menu"
         tabindex="-1"
+        @keydown="handleMenuKeydown"
       >
         <template v-if="hasItems">
           <div class="bh-dropdown__items">
             <BHButton
               v-for="(item, index) in items"
+              :ref="(el: Element | ComponentPublicInstance | null) => setItemRef(el, index)"
               :key="index"
               :to="item.to"
               :href="item.href"
@@ -65,14 +61,13 @@
               role="menuitem"
               :tabindex="item.disabled ? -1 : 0"
               @click="handleItemSelect(item)"
-              @keydown.enter.prevent="handleItemSelect(item)"
-              @keydown.space.prevent="handleItemSelect(item)"
             >
               <component
                 :is="item.icon"
                 v-if="item.icon"
                 :size="16"
                 class="bh-dropdown__item-icon"
+                aria-hidden="true"
               />
               <span>{{ item.text }}</span>
             </BHButton>
@@ -83,26 +78,15 @@
           name="content"
           :close="close"
           :is-open="isOpen"
-          :toggle="toggle"
-        >
-          <div class="bh-dropdown__default-content">
-            <div class="bh-dropdown__item" role="menuitem" tabindex="-1">
-              Option 1
-            </div>
-            <div class="bh-dropdown__item" role="menuitem" tabindex="-1">
-              Option 2
-            </div>
-            <div class="bh-dropdown__item" role="menuitem" tabindex="-1">
-              Option 3
-            </div>
-          </div>
-        </slot>
+          :toggle="handleToggle"
+        />
       </div>
     </Teleport>
   </div>
 </template>
 
 <script setup lang="ts">
+import type { ComponentPublicInstance } from 'vue';
 import type { NavigationLink } from '~/types/navigation-link';
 
 interface Props {
@@ -137,54 +121,67 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits<Emits>();
 
-// Refs pour les éléments
 const triggerRef = ref<HTMLElement>();
 const floatingRef = ref<HTMLElement>();
+const itemRefs = ref<HTMLElement[]>([]);
+const ANIMATION_MS = 300;
 
-// État du dropdown avec VueUse
 const [isOpen, toggle] = useToggle(props.modelValue);
 const showMenu = ref(false);
 const isAnimating = ref(false);
 const items = computed(() => props.items);
 const hasItems = computed(() => items.value.length > 0);
 
-// Synchronisation avec v-model
-// syncRef(toRef(props, 'modelValue'), isOpen, { direction: 'both' });
+const setItemRef = (
+  el: Element | ComponentPublicInstance | null,
+  index: number,
+) => {
+  if (!el) {
+    return;
+  }
+  const node =
+    el instanceof Element
+      ? el
+      : ((el as ComponentPublicInstance).$el as HTMLElement);
+  if (node instanceof HTMLElement) {
+    itemRefs.value[index] = node;
+  }
+};
 
+const focusableItems = () =>
+  itemRefs.value.filter(
+    (el): el is HTMLElement =>
+      !!el && !el.hasAttribute('disabled') && el.tabIndex !== -1,
+  );
 
-// Fonctions de contrôle avec animation
 const open = () => {
   if (props.disabled || isAnimating.value) return;
   showMenu.value = true;
   isOpen.value = true;
   isAnimating.value = true;
-
   setTimeout(() => {
     isAnimating.value = false;
-  }, 300); // Durée par défaut d'animate.css
+  }, ANIMATION_MS);
 };
 
 const close = () => {
   if (isAnimating.value) return;
   isAnimating.value = true;
   isOpen.value = false;
-
-  // Attendre la fin de l'animation de sortie avant de masquer
   setTimeout(() => {
     showMenu.value = false;
     isAnimating.value = false;
-  }, 300); // Durée par défaut d'animate.css
+  }, ANIMATION_MS);
 };
 
 const handleItemSelect = (item: NavigationLink) => {
   if (item.disabled) {
     return;
   }
-
   item.onClick?.();
-
   if (props.autoClose) {
     close();
+    getTriggerButton()?.focus();
   }
 };
 
@@ -197,7 +194,57 @@ const handleToggle = () => {
   }
 };
 
-// Positionnement du menu avec useElementBounding
+const handleMenuKeydown = (e: KeyboardEvent) => {
+  const focusable = focusableItems();
+  if (focusable.length === 0) return;
+
+  const currentIndex = focusable.findIndex(
+    (el) => el === document.activeElement,
+  );
+
+  switch (e.key) {
+    case 'ArrowDown': {
+      e.preventDefault();
+      const next =
+        currentIndex < 0 ? 0 : (currentIndex + 1) % focusable.length;
+      focusable[next]?.focus();
+      break;
+    }
+    case 'ArrowUp': {
+      e.preventDefault();
+      const prev =
+        currentIndex <= 0
+          ? focusable.length - 1
+          : currentIndex - 1;
+      focusable[prev]?.focus();
+      break;
+    }
+    case 'Home':
+      e.preventDefault();
+      focusable[0]?.focus();
+      break;
+    case 'End':
+      e.preventDefault();
+      focusable[focusable.length - 1]?.focus();
+      break;
+    case 'Escape':
+      e.preventDefault();
+      close();
+      getTriggerButton()?.focus();
+      break;
+    case 'Tab':
+      close();
+      break;
+  }
+};
+
+const getTriggerButton = (): HTMLElement | undefined => {
+  const btn = triggerRef.value?.querySelector<HTMLElement>(
+    'button, [role="button"], a, [tabindex]:not([tabindex="-1"])',
+  );
+  return btn ?? undefined;
+};
+
 const {
   top: triggerTop,
   left: triggerLeft,
@@ -213,7 +260,6 @@ const menuStyles = computed(() => {
   let top = 0;
   let left = 0;
 
-  // Calcul de la position selon le placement
   switch (props.placement) {
     case 'bottom-start':
     case 'bottom':
@@ -235,7 +281,6 @@ const menuStyles = computed(() => {
       break;
   }
 
-  // Ajustement si le menu sort du viewport
   const viewport = { width: window.innerWidth, height: window.innerHeight };
 
   if (left + menuWidth.value > viewport.width) {
@@ -259,7 +304,6 @@ const menuStyles = computed(() => {
   };
 });
 
-// Fermeture au clic extérieur
 onClickOutside(
   triggerRef,
   () => {
@@ -268,32 +312,17 @@ onClickOutside(
   { ignore: [floatingRef] },
 );
 
-// Gestion des événements clavier
-useEventListener('keydown', (e) => {
-  if (!isOpen.value) return;
-
-  if (e.key === 'Escape') {
-    close();
-    triggerRef.value?.focus();
-  }
-});
-
-// Focus management simple
-const { focused } = useFocus(floatingRef, { initialValue: false });
-
-watch(isOpen, (newValue) => {
+watch(isOpen, async (newValue) => {
   if (newValue) {
     emit('open');
-    nextTick(() => {
-      focused.value = true;
-    });
+    await nextTick();
+    const focusable = focusableItems();
+    focusable[0]?.focus();
   } else {
     emit('close');
-    focused.value = false;
   }
 });
 
-// Synchronisation avec la prop modelValue
 watch(
   () => props.modelValue,
   (newValue) => {
@@ -311,7 +340,6 @@ watch(isOpen, (newValue) => {
   emit('update:modelValue', newValue);
 });
 
-// Initialisation
 onMounted(() => {
   if (props.modelValue) {
     showMenu.value = true;
@@ -324,18 +352,13 @@ onMounted(() => {
   @apply relative inline-block;
 }
 
-.bh-dropdown__trigger {
-  @apply cursor-pointer;
-  @apply focus:outline-none;
-}
-
 .bh-dropdown__default-trigger {
   @apply flex items-center justify-between gap-2;
   @apply bg-theme-bg-card text-theme-text-primary;
   @apply px-4 py-2 rounded-lg;
   @apply border border-theme-border-secondary;
   @apply hover:bg-theme-bg-elevated transition-colors;
-  @apply focus:outline-none focus:ring-2 focus:ring-theme-accent-primary;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary;
   @apply disabled:opacity-50 disabled:cursor-not-allowed;
   @apply min-w-[200px];
 }
@@ -356,6 +379,7 @@ onMounted(() => {
   @apply min-w-[200px];
   @apply py-2;
   @apply z-50;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary;
 }
 
 .bh-dropdown__menu--entering {
@@ -366,28 +390,7 @@ onMounted(() => {
   animation: bh-fadeOut 0.2s ease-in forwards;
 }
 
-.bh-dropdown__default-content {
-  @apply flex flex-col;
-}
-
 .bh-dropdown__items {
   @apply flex flex-col;
 }
-
-.bh-dropdown__item {
-  @apply flex items-center gap-2;
-  @apply px-4 py-2;
-  @apply text-left text-sm text-theme-text-primary;
-  @apply hover:text-theme-accent-primary focus:text-theme-accent-primary;
-  @apply cursor-pointer;
-  @apply transition-colors;
-  @apply focus:outline-none;
-}
-
-.bh-dropdown__item--disabled {
-  @apply cursor-not-allowed opacity-60;
-  @apply hover:bg-transparent hover:text-theme-text-secondary;
-  @apply focus:bg-transparent;
-}
-
 </style>

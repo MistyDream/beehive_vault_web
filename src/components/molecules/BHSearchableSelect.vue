@@ -391,7 +391,7 @@ onClickOutside(selectRef, () => {
   @apply w-full pl-7 pr-2 py-1 rounded-md;
   @apply bg-transparent text-sm text-theme-text-primary;
   @apply placeholder:text-theme-text-muted;
-  @apply focus:outline-none;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary;
 }
 
 .bh-searchable-select__options {

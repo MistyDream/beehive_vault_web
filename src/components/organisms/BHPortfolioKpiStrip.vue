@@ -1,5 +1,5 @@
 <template>
-  <div class="bh-kpi-strip" aria-live="polite">
+  <div class="bh-kpi-strip">
     <BHKpiTile
       :label="t('portfolios.detail.kpi.invested')"
       :icon="LucideBanknote"
@@ -54,6 +54,8 @@
         {{ summary.positions.length }}
       </span>
     </BHKpiTile>
+
+    <span class="sr-only" aria-live="polite">{{ srSummary }}</span>
   </div>
 </template>
 
@@ -82,6 +84,24 @@ const netResultPercent = computed(() => {
   const base = summary.value.total_invested;
   if (!base) return null;
   return (performance.value.net_result / base) * 100;
+});
+
+const srSummary = computed(() => {
+  if (summaryPending.value || performancePending.value) return '';
+  if (!summary.value) return '';
+  const parts = [
+    `${t('portfolios.detail.kpi.invested')}: ${summary.value.total_invested} ${props.currency}`,
+    `${t('portfolios.detail.kpi.cash')}: ${summary.value.cash.balance} ${summary.value.cash.currency}`,
+  ];
+  if (performance.value) {
+    parts.push(
+      `${t('portfolios.detail.kpi.net_result')}: ${performance.value.net_result} ${performance.value.currency}`,
+    );
+  }
+  parts.push(
+    `${t('portfolios.detail.kpi.positions_count')}: ${summary.value.positions.length}`,
+  );
+  return parts.join(', ');
 });
 </script>
 

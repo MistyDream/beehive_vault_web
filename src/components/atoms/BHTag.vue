@@ -5,10 +5,10 @@
       v-if="removable"
       type="button"
       class="bh-tag__remove"
-      aria-label="Remove"
+      :aria-label="removeAriaLabel"
       @click.stop="$emit('remove')"
     >
-      <LucideX :size="12" />
+      <LucideX :size="12" aria-hidden="true" />
     </button>
   </span>
 </template>
@@ -19,18 +19,27 @@ import { LucideX } from '#components';
 interface Props {
   color?: 'accent' | 'success' | 'warning' | 'error' | 'info' | 'neutral';
   removable?: boolean;
+  removeLabel?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   color: 'neutral',
   removable: false,
+  removeLabel: '',
 });
 
 defineEmits<{
   (e: 'remove'): void;
 }>();
 
+const { t } = useI18n();
+
 const colorClass = computed(() => `bh-tag--${props.color}`);
+const removeAriaLabel = computed(() =>
+  props.removeLabel
+    ? t('common.remove_value', { value: props.removeLabel })
+    : t('common.remove'),
+);
 </script>
 
 <style lang="css" scoped>

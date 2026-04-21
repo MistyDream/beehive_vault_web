@@ -3,7 +3,11 @@
   "bank-account": "Compte bancaire",
   "settings": "Paramètres",
   "common": {
-    "close": "Fermer"
+    "close": "Fermer",
+    "remove": "Supprimer",
+    "remove_value": "Supprimer {value}",
+    "select_placeholder": "Sélectionner",
+    "select_n_selected": "{count} sélectionné | {count} sélectionnés"
   },
   "toast": {
     "coming_soon": "Bientôt disponible",
@@ -69,6 +73,7 @@
     },
     "coming_soon": "Cette page sera bientôt disponible.",
     "detail": {
+      "loading_title": "Chargement du portefeuille",
       "tabs_label": "Sections du portefeuille",
       "tab_resume": "Résumé",
       "tab_transactions": "Transactions",
@@ -137,6 +142,7 @@
           "split_display": "{from} → {to}"
         },
         "detail": {
+          "region_label": "Détails de la transaction du {date}",
           "notes_label": "Notes",
           "no_notes": "Aucune note",
           "exchange_rate_label": "Taux de change",

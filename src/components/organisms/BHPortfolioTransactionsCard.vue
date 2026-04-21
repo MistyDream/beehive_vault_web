@@ -179,12 +179,14 @@
               {{ tx.currency }}
             </td>
             <td class="bh-tx-card__cell bh-tx-card__cell--notes">
-              <LucideStickyNote
+              <span
                 v-if="tx.notes"
-                :size="16"
-                class="bh-tx-card__notes-icon"
+                role="img"
                 :aria-label="t('portfolios.detail.transactions.row.has_notes')"
-              />
+                class="bh-tx-card__notes-icon"
+              >
+                <LucideStickyNote :size="16" aria-hidden="true" />
+              </span>
             </td>
             <td class="bh-tx-card__cell bh-tx-card__cell--chevron">
               <button
@@ -214,7 +216,11 @@
             class="bh-tx-card__details-row"
           >
             <td :colspan="columns.length" class="bh-tx-card__details-cell">
-              <div class="bh-tx-card__details">
+              <div
+                class="bh-tx-card__details"
+                role="region"
+                :aria-label="t('portfolios.detail.transactions.detail.region_label', { date: formatDate(tx.executed_at) })"
+              >
                 <dl class="bh-tx-card__details-grid">
                   <div class="bh-tx-card__details-field">
                     <dt class="bh-tx-card__details-label">

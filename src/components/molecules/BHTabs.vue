@@ -1,12 +1,14 @@
 <template>
   <nav v-if="isNavMode" class="bh-tabs" :aria-label="ariaLabel">
     <template v-for="tab in tabs" :key="tab.id">
-      <span
+      <button
         v-if="tab.disabled"
         :id="`tab-${tab.id}`"
+        type="button"
         aria-disabled="true"
-        :title="tab.tooltip || undefined"
+        :aria-describedby="tab.tooltip ? `tab-${tab.id}-desc` : undefined"
         class="bh-tabs__tab bh-tabs__tab--disabled"
+        @click.prevent
       >
         <span>{{ tab.label }}</span>
         <BHBadge
@@ -16,13 +18,20 @@
         >
           {{ tab.count }}
         </BHBadge>
-      </span>
+        <span
+          v-if="tab.tooltip"
+          :id="`tab-${tab.id}-desc`"
+          class="sr-only"
+        >
+          {{ tab.tooltip }}
+        </span>
+      </button>
       <NuxtLink
         v-else
         :id="`tab-${tab.id}`"
         :to="tab.to ?? ''"
         :aria-current="isTabActive(tab) ? 'page' : undefined"
-        :title="tab.tooltip || undefined"
+        :aria-describedby="tab.tooltip ? `tab-${tab.id}-desc` : undefined"
         active-class="bh-tabs__tab--active"
         class="bh-tabs__tab"
         :class="{ 'bh-tabs__tab--muted': tab.muted }"
@@ -35,6 +44,13 @@
         >
           {{ tab.count }}
         </BHBadge>
+        <span
+          v-if="tab.tooltip"
+          :id="`tab-${tab.id}-desc`"
+          class="sr-only"
+        >
+          {{ tab.tooltip }}
+        </span>
       </NuxtLink>
     </template>
   </nav>

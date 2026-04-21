@@ -72,6 +72,7 @@
         :key="chip.key"
         color="accent"
         removable
+        :remove-label="chip.label"
         @remove="chip.onRemove"
       >
         {{ chip.label }}

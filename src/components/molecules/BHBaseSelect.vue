@@ -230,17 +230,18 @@ const selectedOptions = computed(() =>
 
 const hasValue = computed(() => selectedOptions.value.length > 0);
 
+const { t } = useI18n();
+
 const displayLabel = computed(() => {
   if (!hasValue.value) {
-    return props.placeholder || 'Select';
+    return props.placeholder || t('common.select_placeholder');
   }
 
   if (!props.multiple) {
     return selectedOptions.value[0].label;
   }
 
-  const count = selectedOptions.value.length;
-  return `${count} selected`;
+  return t('common.select_n_selected', selectedOptions.value.length);
 });
 
 const closeDropdown = () => {

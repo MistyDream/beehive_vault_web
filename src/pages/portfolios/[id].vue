@@ -77,6 +77,19 @@ const tabs = computed<TabItem[]>(() => [
 
 const showLoading = computed(() => detailPending.value && !portfolio.value);
 const showError = computed(() => !!detailError.value && !portfolio.value);
+
+const activeTabLabel = computed(() => {
+  const active = tabs.value.find((tab) => tab.to && route.path.startsWith(tab.to));
+  return active?.label ?? '';
+});
+
+useHead({
+  title: () => {
+    const name = portfolio.value?.name ?? t('portfolios.detail.loading_title');
+    const tab = activeTabLabel.value;
+    return tab ? `${name} — ${tab}` : name;
+  },
+});
 </script>
 
 <style lang="css" scoped>

@@ -3,7 +3,11 @@
   "bank-account": "Bank account",
   "settings": "Settings",
   "common": {
-    "close": "Close"
+    "close": "Close",
+    "remove": "Remove",
+    "remove_value": "Remove {value}",
+    "select_placeholder": "Select",
+    "select_n_selected": "{count} selected | {count} selected"
   },
   "toast": {
     "coming_soon": "Coming soon",
@@ -69,6 +73,7 @@
     },
     "coming_soon": "This page will be available soon.",
     "detail": {
+      "loading_title": "Loading portfolio",
       "tabs_label": "Portfolio sections",
       "tab_resume": "Overview",
       "tab_transactions": "Transactions",
@@ -137,6 +142,7 @@
           "split_display": "{from} → {to}"
         },
         "detail": {
+          "region_label": "Transaction details for {date}",
           "notes_label": "Notes",
           "no_notes": "No notes",
           "exchange_rate_label": "Exchange rate",

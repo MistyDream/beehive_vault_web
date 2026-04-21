@@ -84,6 +84,10 @@
   --color-overlay: 0 0 0;
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
 body {
   @apply font-nunito bg-theme-bg-primary text-theme-text-primary;
 }
