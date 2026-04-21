@@ -172,7 +172,6 @@ watch(
     if (sortDir.value !== 'desc') q.sort_dir = sortDir.value;
     router.replace({ query: q });
   },
-  { deep: true },
 );
 </script>
 

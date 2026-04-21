@@ -17,17 +17,24 @@ export const usePortfolioApi = () => {
   const $api = useNuxtApp().$api as typeof $fetch;
 
   const list = () =>
-    useFetch<Portfolio[]>(API_ENDPOINTS.PORTFOLIOS.LIST, { $fetch: $api });
+    useFetch<Portfolio[]>(API_ENDPOINTS.PORTFOLIOS.LIST, {
+      $fetch: $api,
+      key: 'portfolios:list',
+    });
 
   const detail = (id: MaybeRefOrGetter<number>) =>
     useFetch<Portfolio>(() => API_ENDPOINTS.PORTFOLIOS.DETAIL(toValue(id)), {
       $fetch: $api,
+      key: computed(() => `portfolios:detail:${toValue(id)}`),
     });
 
   const summary = (id: MaybeRefOrGetter<number>) =>
     useFetch<PortfolioSummary>(
       () => API_ENDPOINTS.PORTFOLIOS.SUMMARY(toValue(id)),
-      { $fetch: $api },
+      {
+        $fetch: $api,
+        key: computed(() => `portfolios:summary:${toValue(id)}`),
+      },
     );
 
   const positions = (
@@ -39,12 +46,14 @@ export const usePortfolioApi = () => {
       {
         $fetch: $api,
         query: computed(() => toValue(query) ?? {}),
+        key: computed(() => `portfolios:positions:${toValue(id)}`),
       },
     );
 
   const cash = (id: MaybeRefOrGetter<number>) =>
     useFetch<CashBalance>(() => API_ENDPOINTS.PORTFOLIOS.CASH(toValue(id)), {
       $fetch: $api,
+      key: computed(() => `portfolios:cash:${toValue(id)}`),
     });
 
   const performance = (
@@ -56,13 +65,17 @@ export const usePortfolioApi = () => {
       {
         $fetch: $api,
         query: computed(() => toValue(filters) ?? {}),
+        key: computed(() => `portfolios:performance:${toValue(id)}`),
       },
     );
 
   const scoring = (id: MaybeRefOrGetter<number>) =>
     useFetch<PortfolioScoring>(
       () => API_ENDPOINTS.PORTFOLIOS.SCORING(toValue(id)),
-      { $fetch: $api },
+      {
+        $fetch: $api,
+        key: computed(() => `portfolios:scoring:${toValue(id)}`),
+      },
     );
 
   const create = (payload: CreatePortfolioPayload) =>

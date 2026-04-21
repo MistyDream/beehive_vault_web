@@ -47,7 +47,6 @@ export const useDrawerStore = defineStore('drawer', {
       this.content = null;
       this.props = null;
       this.showDrawer = false;
-      // Execute onClose callback if provided
       if (this.onClose) {
         this.onClose();
         this.onClose = null;

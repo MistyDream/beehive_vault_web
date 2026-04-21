@@ -174,7 +174,7 @@ const chips = computed<Chip[]>(() => {
       onRemove: () =>
         emit(
           'update:transactionTypes',
-          props.transactionTypes.filter((t) => t !== type),
+          props.transactionTypes.filter((other) => other !== type),
         ),
     });
   }

@@ -191,11 +191,7 @@ const searchQuery = ref('');
 const debouncedQuery = refDebounced(searchQuery, 150);
 const activeIndex = ref(-1);
 
-const autoId = useId();
-const triggerId = computed(() => props.id || autoId);
-const listboxId = computed(() => `${triggerId.value}-listbox`);
-const errorId = computed(() => `${triggerId.value}-error`);
-const optionId = (index: number) => `${triggerId.value}-option-${index}`;
+const { triggerId, listboxId, errorId, optionId } = useSelectIds(() => props.id);
 
 const normalizedValues = computed<PrimitiveValue[]>(() => {
   if (props.modelValue === null || props.modelValue === undefined) return [];
@@ -213,7 +209,8 @@ const displayLabel = computed(() => {
   if (!hasValue.value) return props.placeholder;
   if (!props.multiple) return selectedOptions.value[0].label;
   const count = selectedOptions.value.length;
-  return count === 1 ? selectedOptions.value[0].label : `${count} selected`;
+  if (count === 1) return selectedOptions.value[0].label;
+  return t('common.select_n_selected', count);
 });
 
 const filteredOptions = computed(() => {

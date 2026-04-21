@@ -55,8 +55,7 @@ const emit = defineEmits<{
   (e: 'update:modelValue', value: number | null): void;
 }>();
 
-const inputId = computed(() => props.id || useId());
-const errorId = computed(() => `${inputId.value}-error`);
+const { inputId, errorId } = useFieldIds(() => props.id);
 
 const isFocused = ref(false);
 const rawInput = ref('');

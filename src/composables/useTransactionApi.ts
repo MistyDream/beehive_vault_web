@@ -34,13 +34,17 @@ export const useTransactionApi = () => {
       {
         $fetch: $api,
         query: computed(() => toWireQuery(toValue(query))),
+        key: computed(() => `portfolios:transactions:${toValue(portfolioId)}`),
       },
     );
 
   const stats = (portfolioId: MaybeRefOrGetter<number>) =>
     useFetch<TransactionStats>(
       () => API_ENDPOINTS.PORTFOLIOS.TRANSACTIONS_STATS(toValue(portfolioId)),
-      { $fetch: $api },
+      {
+        $fetch: $api,
+        key: computed(() => `portfolios:transactions-stats:${toValue(portfolioId)}`),
+      },
     );
 
   const detail = (
@@ -50,7 +54,10 @@ export const useTransactionApi = () => {
     useFetch<Transaction>(
       () =>
         API_ENDPOINTS.PORTFOLIOS.TRANSACTION(toValue(portfolioId), toValue(txId)),
-      { $fetch: $api },
+      {
+        $fetch: $api,
+        key: computed(() => `portfolios:transaction:${toValue(portfolioId)}:${toValue(txId)}`),
+      },
     );
 
   const create = (portfolioId: number, payload: CreateTransactionPayload) =>

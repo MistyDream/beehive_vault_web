@@ -61,8 +61,7 @@ const emit = defineEmits<{
 }>();
 
 const model = useVModel(props, 'modelValue', emit, { passive: true });
-const inputId = computed(() => props.id || useId());
-const errorId = computed(() => `${inputId.value}-error`);
+const { inputId, errorId } = useFieldIds(() => props.id);
 const currentLength = computed(() => props.modelValue?.length ?? 0);
 
 const counterClass = computed(() => {

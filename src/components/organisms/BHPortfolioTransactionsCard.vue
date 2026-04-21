@@ -426,7 +426,6 @@ watch(
   () => {
     expandedId.value = null;
   },
-  { deep: true },
 );
 
 function onSortChange(by: string, direction: SortDirection) {

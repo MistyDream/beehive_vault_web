@@ -127,11 +127,7 @@ const selectRef = ref<HTMLElement | null>(null);
 const isOpen = ref(false);
 const activeIndex = ref(-1);
 
-const autoId = useId();
-const triggerId = computed(() => props.id || autoId);
-const listboxId = computed(() => `${triggerId.value}-listbox`);
-const errorId = computed(() => `${triggerId.value}-error`);
-const optionId = (index: number) => `${triggerId.value}-option-${index}`;
+const { triggerId, listboxId, errorId, optionId } = useSelectIds(() => props.id);
 
 function firstEnabledIndex(from: number, direction: 1 | -1): number {
   const len = props.options.length;
