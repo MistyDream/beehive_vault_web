@@ -94,7 +94,7 @@ const query = computed<TransactionsQuery>(() => ({
   stock_id: props.stockId,
   sort_by: 'executed_at',
   sort_dir: 'desc',
-  limit: 100,
+  limit: 20,
   page: 1,
 }));
 const { data, pending, error, refresh } = list(() => props.portfolioId, query);

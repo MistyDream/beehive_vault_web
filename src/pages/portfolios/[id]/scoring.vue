@@ -1,8 +1,6 @@
 <template>
-  <div id="tabpanel-scoring" class="portfolio-scoring">
-    <div class="portfolio-scoring__stub">
-      {{ t('portfolios.detail.coming_soon.scoring') }}
-    </div>
+  <div class="portfolio-scoring__stub">
+    {{ t('portfolios.detail.coming_soon.scoring') }}
   </div>
 </template>
 

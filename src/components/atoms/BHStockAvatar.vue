@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { colorFromSymbol, foregroundFromSymbol } from '~/utils/stringToColor';
+import { avatarColorsFromSymbol } from '~/utils/stringToColor';
 
 interface Props {
   symbol: string;
@@ -27,8 +27,9 @@ const props = withDefaults(defineProps<Props>(), {
 
 const { t } = useI18n();
 
-const bg = computed(() => colorFromSymbol(props.symbol));
-const fg = computed(() => foregroundFromSymbol(props.symbol));
+const colors = computed(() => avatarColorsFromSymbol(props.symbol));
+const bg = computed(() => colors.value.bg);
+const fg = computed(() => colors.value.fg);
 const sizeClass = computed(() => `bh-stock-avatar--${props.size}`);
 const initials = computed(() => props.symbol.slice(0, 2).toUpperCase());
 </script>

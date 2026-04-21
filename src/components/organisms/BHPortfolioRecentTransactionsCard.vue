@@ -150,27 +150,13 @@ function labelFor(tx: Transaction): string {
   @apply bg-theme-bg-elevated text-theme-text-muted;
 }
 
-.bh-recent-card__icon--buy {
-  @apply text-theme-status-success-strong;
-}
-.bh-recent-card__icon--sell {
-  @apply text-theme-status-error-strong;
-}
-.bh-recent-card__icon--dividend {
-  @apply text-theme-accent-primary-strong;
-}
-.bh-recent-card__icon--fee {
-  @apply text-theme-status-warning-strong;
-}
-.bh-recent-card__icon--deposit {
-  @apply text-theme-accent-secondary-strong;
-}
-.bh-recent-card__icon--withdrawal {
-  @apply text-theme-text-muted;
-}
-.bh-recent-card__icon--split {
-  @apply text-theme-text-muted;
-}
+.bh-recent-card__icon--buy { @apply text-theme-status-success-strong; }
+.bh-recent-card__icon--sell { @apply text-theme-status-error-strong; }
+.bh-recent-card__icon--dividend { @apply text-theme-accent-primary-strong; }
+.bh-recent-card__icon--fee { @apply text-theme-status-warning-strong; }
+.bh-recent-card__icon--deposit { @apply text-theme-accent-secondary-strong; }
+.bh-recent-card__icon--withdrawal { @apply text-theme-text-muted; }
+.bh-recent-card__icon--split { @apply text-theme-text-muted; }
 
 .bh-recent-card__content {
   @apply flex flex-col gap-0.5 flex-1 min-w-0;

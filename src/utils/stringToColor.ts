@@ -31,17 +31,15 @@ function relativeLuminance([r, g, b]: readonly [number, number, number]): number
   return 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
 }
 
-export function colorFromSymbol(input: string): string {
-  const [r, g, b] = PALETTE[hashIndex(input)];
-  return `rgb(${r} ${g} ${b})`;
+// Foreground is picked so initials meet WCAG AA (≥4.5:1) against the palette background.
+export function avatarColorsFromSymbol(input: string): { bg: string; fg: string } {
+  const rgb = PALETTE[hashIndex(input)];
+  return {
+    bg: `rgb(${rgb[0]} ${rgb[1]} ${rgb[2]})`,
+    fg: relativeLuminance(rgb) > 0.35 ? 'rgb(26 26 26)' : 'rgb(255 255 255)',
+  };
 }
 
-/**
- * Picks white or near-black foreground so initials meet WCAG AA (≥4.5:1)
- * against the deterministic palette background.
- */
-export function foregroundFromSymbol(input: string): string {
-  return relativeLuminance(PALETTE[hashIndex(input)]) > 0.35
-    ? 'rgb(26 26 26)'
-    : 'rgb(255 255 255)';
+export function colorFromSymbol(input: string): string {
+  return avatarColorsFromSymbol(input).bg;
 }

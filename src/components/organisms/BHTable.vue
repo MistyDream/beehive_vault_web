@@ -191,13 +191,6 @@ const visiblePages = computed(() => {
 const currentSortBy = ref(props.sortBy);
 const currentSortDirection = ref<'asc' | 'desc'>(props.sortDirection);
 
-const debouncedSortChange = useDebounceFn(
-  (sortBy: string, direction: 'asc' | 'desc') => {
-    emit('sort-change', sortBy, direction);
-  },
-  100,
-);
-
 const toggleSort = (columnKey: string) => {
   if (currentSortBy.value === columnKey) {
     currentSortDirection.value =
@@ -207,7 +200,7 @@ const toggleSort = (columnKey: string) => {
     currentSortDirection.value = 'desc';
   }
 
-  debouncedSortChange(currentSortBy.value, currentSortDirection.value);
+  emit('sort-change', currentSortBy.value, currentSortDirection.value);
 };
 
 const ariaSortFor = (column: Column): 'ascending' | 'descending' | 'none' | undefined => {

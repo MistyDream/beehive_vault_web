@@ -1,17 +1,15 @@
 <template>
-  <div id="tabpanel-resume" class="portfolio-resume">
-    <div class="portfolio-resume__grid">
-      <div class="portfolio-resume__main">
-        <BHPortfolioPositionsCard
-          :portfolio-id="id"
-          @row-click="onPositionClick"
-        />
-        <BHPortfolioAllocationCard :portfolio-id="id" />
-      </div>
-      <div class="portfolio-resume__side">
-        <BHPortfolioCashCard :portfolio-id="id" />
-        <BHPortfolioRecentTransactionsCard :portfolio-id="id" />
-      </div>
+  <div class="portfolio-resume__grid">
+    <div class="portfolio-resume__main">
+      <BHPortfolioPositionsCard
+        :portfolio-id="id"
+        @row-click="onPositionClick"
+      />
+      <BHPortfolioAllocationCard :portfolio-id="id" />
+    </div>
+    <div class="portfolio-resume__side">
+      <BHPortfolioCashCard :portfolio-id="id" />
+      <BHPortfolioRecentTransactionsCard :portfolio-id="id" />
     </div>
   </div>
 </template>

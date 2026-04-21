@@ -66,8 +66,9 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const { t, locale } = useI18n();
+const { t } = useI18n();
 const toast = useToast();
+const { formatRelative } = useLocaleFormatters();
 
 const kindLabel = computed(() =>
   props.portfolio.kind === 'real'
@@ -75,27 +76,10 @@ const kindLabel = computed(() =>
     : t('portfolios.form.kind_virtual'),
 );
 
-const updatedAgo = computed(() => {
-  const then = new Date(props.portfolio.updated_at).getTime();
-  const diffSeconds = Math.round((then - Date.now()) / 1000);
-  const rtf = new Intl.RelativeTimeFormat(locale.value, { numeric: 'auto' });
-
-  const units: Array<[Intl.RelativeTimeFormatUnit, number]> = [
-    ['year', 60 * 60 * 24 * 365],
-    ['month', 60 * 60 * 24 * 30],
-    ['day', 60 * 60 * 24],
-    ['hour', 60 * 60],
-    ['minute', 60],
-    ['second', 1],
-  ];
-
-  for (const [unit, seconds] of units) {
-    if (Math.abs(diffSeconds) >= seconds || unit === 'second') {
-      return rtf.format(Math.round(diffSeconds / seconds), unit);
-    }
-  }
-  return rtf.format(0, 'second');
-});
+const now = useNow({ interval: 60_000 });
+const updatedAgo = computed(() =>
+  formatRelative(props.portfolio.updated_at, now.value.getTime()),
+);
 
 function onAddTransaction() {
   toast.info(t('toast.coming_soon'));

@@ -1,8 +1,3 @@
-/**
- * Consolidates the three fetches needed across the portfolio detail view
- * (detail, summary, performance). Multiple call sites for the same id
- * share state via Nuxt's URL-based asyncData key — no duplicate requests.
- */
 export function usePortfolioDetail(id: MaybeRefOrGetter<number>) {
   const { detail, summary, performance } = usePortfolioApi();
 
