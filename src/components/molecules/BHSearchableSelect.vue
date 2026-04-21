@@ -188,6 +188,7 @@ const selectRef = ref<HTMLElement | null>(null);
 const searchRef = ref<HTMLInputElement | null>(null);
 const isOpen = ref(false);
 const searchQuery = ref('');
+const debouncedQuery = refDebounced(searchQuery, 150);
 const activeIndex = ref(-1);
 
 const autoId = useId();
@@ -216,7 +217,7 @@ const displayLabel = computed(() => {
 });
 
 const filteredOptions = computed(() => {
-  const q = searchQuery.value.trim().toLowerCase();
+  const q = debouncedQuery.value.trim().toLowerCase();
   if (!q) return props.options;
   return props.options.filter((opt) => {
     const label = opt.label.toLowerCase();

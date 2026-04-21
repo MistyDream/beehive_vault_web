@@ -5,9 +5,9 @@
     </label>
     <input
       :id="inputId"
+      v-model="model"
       :type="type"
       :placeholder="placeholder"
-      :value="modelValue"
       :disabled="disabled"
       :required="required || undefined"
       :aria-required="required || undefined"
@@ -15,7 +15,6 @@
       :aria-describedby="error ? errorId : undefined"
       class="bh-input__input"
       :class="{ 'bh-input__input--error': !!error }"
-      @input="handleInput"
     />
     <p v-if="error" :id="errorId" role="alert" class="bh-input__error">
       {{ error }}
@@ -50,12 +49,9 @@ const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void;
 }>();
 
+const model = useVModel(props, 'modelValue', emit, { passive: true });
 const inputId = computed(() => props.id || useId());
 const errorId = computed(() => `${inputId.value}-error`);
-
-const handleInput = (event: Event) => {
-  emit('update:modelValue', (event.target as HTMLInputElement).value);
-};
 </script>
 
 <style lang="css" scoped>

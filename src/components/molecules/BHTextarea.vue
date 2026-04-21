@@ -5,7 +5,7 @@
     </label>
     <textarea
       :id="inputId"
-      :value="modelValue"
+      v-model="model"
       :placeholder="placeholder"
       :disabled="disabled"
       :required="required || undefined"
@@ -17,7 +17,6 @@
       :aria-describedby="error ? errorId : undefined"
       class="bh-textarea__input"
       :class="{ 'bh-textarea__input--error': !!error }"
-      @input="handleInput"
     />
     <div class="bh-textarea__footer">
       <p v-if="error" :id="errorId" role="alert" class="bh-textarea__error">
@@ -61,6 +60,7 @@ const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void;
 }>();
 
+const model = useVModel(props, 'modelValue', emit, { passive: true });
 const inputId = computed(() => props.id || useId());
 const errorId = computed(() => `${inputId.value}-error`);
 const currentLength = computed(() => props.modelValue?.length ?? 0);
@@ -72,10 +72,6 @@ const counterClass = computed(() => {
   if (ratio >= 0.9) return 'bh-textarea__counter--warning';
   return '';
 });
-
-const handleInput = (event: Event) => {
-  emit('update:modelValue', (event.target as HTMLTextAreaElement).value);
-};
 </script>
 
 <style lang="css" scoped>

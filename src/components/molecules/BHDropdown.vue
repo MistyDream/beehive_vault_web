@@ -44,7 +44,7 @@
         ref="floatingRef"
         class="bh-dropdown__menu"
         :class="{ 'bh-dropdown__menu--entering': isAnimating && isOpen, 'bh-dropdown__menu--leaving': isAnimating && !isOpen }"
-        :style="menuStyles"
+        :style="floatingStyles"
         role="menu"
         tabindex="-1"
         @keydown="handleMenuKeydown"
@@ -87,6 +87,13 @@
 
 <script setup lang="ts">
 import type { ComponentPublicInstance } from 'vue';
+import {
+  useFloating,
+  offset as offsetMiddleware,
+  flip,
+  shift,
+  autoUpdate,
+} from '@floating-ui/vue';
 import type { NavigationLink } from '~/types/navigation-link';
 
 interface Props {
@@ -154,24 +161,28 @@ const focusableItems = () =>
       !!el && !el.hasAttribute('disabled') && el.tabIndex !== -1,
   );
 
+const { start: scheduleOpenEnd } = useTimeoutFn(() => {
+  isAnimating.value = false;
+}, ANIMATION_MS, { immediate: false });
+
+const { start: scheduleCloseEnd } = useTimeoutFn(() => {
+  showMenu.value = false;
+  isAnimating.value = false;
+}, ANIMATION_MS, { immediate: false });
+
 const open = () => {
   if (props.disabled || isAnimating.value) return;
   showMenu.value = true;
   isOpen.value = true;
   isAnimating.value = true;
-  setTimeout(() => {
-    isAnimating.value = false;
-  }, ANIMATION_MS);
+  scheduleOpenEnd();
 };
 
 const close = () => {
   if (isAnimating.value) return;
   isAnimating.value = true;
   isOpen.value = false;
-  setTimeout(() => {
-    showMenu.value = false;
-    isAnimating.value = false;
-  }, ANIMATION_MS);
+  scheduleCloseEnd();
 };
 
 const handleItemSelect = (item: NavigationLink) => {
@@ -245,63 +256,15 @@ const getTriggerButton = (): HTMLElement | undefined => {
   return btn ?? undefined;
 };
 
-const {
-  top: triggerTop,
-  left: triggerLeft,
-  width: triggerWidth,
-  height: triggerHeight,
-} = useElementBounding(triggerRef);
-const { width: menuWidth, height: menuHeight } =
-  useElementBounding(floatingRef);
-
-const menuStyles = computed(() => {
-  if (!showMenu.value) return {};
-
-  let top = 0;
-  let left = 0;
-
-  switch (props.placement) {
-    case 'bottom-start':
-    case 'bottom':
-      top = triggerTop.value + triggerHeight.value + props.offset;
-      left = triggerLeft.value;
-      break;
-    case 'bottom-end':
-      top = triggerTop.value + triggerHeight.value + props.offset;
-      left = triggerLeft.value + triggerWidth.value - menuWidth.value;
-      break;
-    case 'top-start':
-    case 'top':
-      top = triggerTop.value - menuHeight.value - props.offset;
-      left = triggerLeft.value;
-      break;
-    case 'top-end':
-      top = triggerTop.value - menuHeight.value - props.offset;
-      left = triggerLeft.value + triggerWidth.value - menuWidth.value;
-      break;
-  }
-
-  const viewport = { width: window.innerWidth, height: window.innerHeight };
-
-  if (left + menuWidth.value > viewport.width) {
-    left = viewport.width - menuWidth.value - 16;
-  }
-  if (left < 16) {
-    left = 16;
-  }
-  if (top + menuHeight.value > viewport.height) {
-    top = triggerTop.value - menuHeight.value - props.offset;
-  }
-  if (top < 16) {
-    top = triggerTop.value + triggerHeight.value + props.offset;
-  }
-
-  return {
-    position: 'fixed' as const,
-    top: `${top}px`,
-    left: `${left}px`,
-    zIndex: 50,
-  };
+const { floatingStyles } = useFloating(triggerRef, floatingRef, {
+  placement: computed(() => props.placement),
+  middleware: [
+    offsetMiddleware(() => props.offset),
+    flip(),
+    shift({ padding: 16 }),
+  ],
+  strategy: 'fixed',
+  whileElementsMounted: autoUpdate,
 });
 
 onClickOutside(
