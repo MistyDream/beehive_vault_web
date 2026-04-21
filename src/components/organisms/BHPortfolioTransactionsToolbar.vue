@@ -1,63 +1,67 @@
 <template>
   <div class="bh-tx-toolbar">
     <div class="bh-tx-toolbar__row bh-tx-toolbar__row--controls">
-      <BHBaseSelect
-        class="bh-tx-toolbar__field bh-tx-toolbar__field--type"
-        :label="t('portfolios.detail.transactions.filters.type_label')"
-        :placeholder="t('portfolios.detail.transactions.filters.type_placeholder')"
-        :model-value="transactionTypes"
-        :options="typeOptions"
-        multiple
-        @update:model-value="onTypesUpdate"
-      />
-      <BHSearchableSelect
-        class="bh-tx-toolbar__field bh-tx-toolbar__field--stock"
-        :label="t('portfolios.detail.transactions.filters.stock_label')"
-        :placeholder="t('portfolios.detail.transactions.filters.stock_placeholder')"
-        :search-placeholder="t('portfolios.detail.transactions.filters.stock_search_placeholder')"
-        :empty-text="t('portfolios.detail.transactions.filters.stock_empty')"
-        :clear-label="t('portfolios.detail.transactions.filters.stock_clear')"
-        :model-value="stockId ?? undefined"
-        :options="stockOptions"
-        @update:model-value="onStockUpdate"
-      >
-        <template #selected="{ options }">
-          <span v-if="options[0]" class="bh-tx-toolbar__stock-selected">
-            <BHStockAvatar :symbol="String(options[0].label)" size="sm" />
-            {{ options[0].label }}
-          </span>
-        </template>
-        <template #option="{ option }">
-          <span class="bh-tx-toolbar__stock-option">
-            <BHStockAvatar :symbol="String(option.label)" size="sm" />
-            <span class="bh-tx-toolbar__option-body">
-              <span class="bh-tx-toolbar__option-label">{{ option.label }}</span>
-              <span
-                v-if="option.description"
-                class="bh-tx-toolbar__option-description"
-              >
-                {{ option.description }}
+      <div class="flex-1 min-w-[10rem]">
+        <BHBaseSelect
+          :label="t('portfolios.detail.transactions.filters.type_label')"
+          :placeholder="t('portfolios.detail.transactions.filters.type_placeholder')"
+          :model-value="transactionTypes"
+          :options="typeOptions"
+          multiple
+          @update:model-value="onTypesUpdate"
+        />
+      </div>
+      <div class="flex-1 min-w-[14rem]">
+        <BHSearchableSelect
+          :label="t('portfolios.detail.transactions.filters.stock_label')"
+          :placeholder="t('portfolios.detail.transactions.filters.stock_placeholder')"
+          :search-placeholder="t('portfolios.detail.transactions.filters.stock_search_placeholder')"
+          :empty-text="t('portfolios.detail.transactions.filters.stock_empty')"
+          :clear-label="t('portfolios.detail.transactions.filters.stock_clear')"
+          :model-value="stockId ?? undefined"
+          :options="stockOptions"
+          @update:model-value="onStockUpdate"
+        >
+          <template #selected="{ options }">
+            <span v-if="options[0]" class="bh-tx-toolbar__stock-selected">
+              <BHStockAvatar :symbol="String(options[0].label)" size="sm" />
+              {{ options[0].label }}
+            </span>
+          </template>
+          <template #option="{ option }">
+            <span class="bh-tx-toolbar__stock-option">
+              <BHStockAvatar :symbol="String(option.label)" size="sm" />
+              <span class="bh-tx-toolbar__option-body">
+                <span class="bh-tx-toolbar__option-label">{{ option.label }}</span>
+                <span
+                  v-if="option.description"
+                  class="bh-tx-toolbar__option-description"
+                >
+                  {{ option.description }}
+                </span>
               </span>
             </span>
-          </span>
-        </template>
-      </BHSearchableSelect>
-      <BHDateInput
-        class="bh-tx-toolbar__field bh-tx-toolbar__field--date"
-        :label="t('portfolios.detail.transactions.filters.from_label')"
-        :model-value="fromDate ?? ''"
-        :max="toDate ?? undefined"
-        @update:model-value="onFromUpdate"
-      />
-      <BHDateInput
-        class="bh-tx-toolbar__field bh-tx-toolbar__field--date"
-        :label="t('portfolios.detail.transactions.filters.to_label')"
-        :model-value="toDate ?? ''"
-        :min="fromDate ?? undefined"
-        @update:model-value="onToUpdate"
-      />
+          </template>
+        </BHSearchableSelect>
+      </div>
+      <div class="w-[10rem] flex-shrink-0">
+        <BHDateInput
+          :label="t('portfolios.detail.transactions.filters.from_label')"
+          :model-value="fromDate ?? ''"
+          :max="toDate ?? undefined"
+          @update:model-value="onFromUpdate"
+        />
+      </div>
+      <div class="w-[10rem] flex-shrink-0">
+        <BHDateInput
+          :label="t('portfolios.detail.transactions.filters.to_label')"
+          :model-value="toDate ?? ''"
+          :min="fromDate ?? undefined"
+          @update:model-value="onToUpdate"
+        />
+      </div>
       <BHButton
-        class="bh-tx-toolbar__cta"
+        class="ml-auto flex-shrink-0"
         variant="primary"
         @click="emit('add')"
       >
@@ -223,26 +227,6 @@ const chips = computed<Chip[]>(() => {
 
 .bh-tx-toolbar__row--controls {
   @apply items-end;
-}
-
-.bh-tx-toolbar__field {
-  @apply min-w-[10rem];
-}
-
-.bh-tx-toolbar__field--type {
-  @apply flex-1 min-w-[10rem];
-}
-
-.bh-tx-toolbar__field--stock {
-  @apply flex-1 min-w-[14rem];
-}
-
-.bh-tx-toolbar__field--date {
-  @apply w-[10rem] flex-shrink-0;
-}
-
-.bh-tx-toolbar__cta {
-  @apply ml-auto flex-shrink-0;
 }
 
 .bh-tx-toolbar__chips {
