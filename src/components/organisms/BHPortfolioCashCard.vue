@@ -6,55 +6,66 @@
       </h2>
     </header>
 
-    <div class="bh-cash-card__balance">
-      <span v-if="summaryLoading" class="bh-cash-card__skel-balance bh-skeleton" />
-      <BHCurrencyDisplay
-        v-else-if="summaryData"
-        :amount="summaryData.cash.balance"
-        :currency="summaryData.cash.currency"
-        size="lg"
-      />
-      <span v-else class="bh-cash-card__fallback">—</span>
+    <div v-if="hasError" class="bh-cash-card__error" role="alert">
+      <span class="bh-cash-card__error-text">
+        {{ t('toast.error.generic') }}
+      </span>
+      <BHButton variant="ghost" size="sm" @click="refresh">
+        {{ t('portfolios.detail.error.retry') }}
+      </BHButton>
     </div>
 
-    <div class="bh-cash-card__flows">
-      <div class="bh-cash-card__flow">
-        <span class="bh-cash-card__flow-label">
-          {{ t('portfolios.detail.resume.cash.deposits') }}
-        </span>
-        <span v-if="performanceLoading" class="bh-cash-card__skel-flow bh-skeleton" />
+    <template v-else>
+      <div class="bh-cash-card__balance">
+        <span v-if="summaryLoading" class="bh-cash-card__skel-balance bh-skeleton" />
         <BHCurrencyDisplay
-          v-else-if="performanceData"
-          :amount="performanceData.total_deposited"
-          :currency="performanceData.currency"
-          size="sm"
+          v-else-if="summaryData"
+          :amount="summaryData.cash.balance"
+          :currency="summaryData.cash.currency"
+          size="lg"
         />
         <span v-else class="bh-cash-card__fallback">—</span>
       </div>
-      <div class="bh-cash-card__flow">
-        <span class="bh-cash-card__flow-label">
-          {{ t('portfolios.detail.resume.cash.withdrawals') }}
-        </span>
-        <span v-if="performanceLoading" class="bh-cash-card__skel-flow bh-skeleton" />
-        <BHCurrencyDisplay
-          v-else-if="performanceData"
-          :amount="performanceData.total_withdrawn"
-          :currency="performanceData.currency"
-          size="sm"
-        />
-        <span v-else class="bh-cash-card__fallback">—</span>
-      </div>
-    </div>
 
-    <BHButton
-      variant="ghost"
-      size="sm"
-      class="bh-cash-card__cta"
-      @click="onAddDeposit"
-    >
-      <LucidePlus :size="14" aria-hidden="true" />
-      {{ t('portfolios.detail.resume.cash.add_deposit') }}
-    </BHButton>
+      <div class="bh-cash-card__flows">
+        <div class="bh-cash-card__flow">
+          <span class="bh-cash-card__flow-label">
+            {{ t('portfolios.detail.resume.cash.deposits') }}
+          </span>
+          <span v-if="performanceLoading" class="bh-cash-card__skel-flow bh-skeleton" />
+          <BHCurrencyDisplay
+            v-else-if="performanceData"
+            :amount="performanceData.total_deposited"
+            :currency="performanceData.currency"
+            size="sm"
+          />
+          <span v-else class="bh-cash-card__fallback">—</span>
+        </div>
+        <div class="bh-cash-card__flow">
+          <span class="bh-cash-card__flow-label">
+            {{ t('portfolios.detail.resume.cash.withdrawals') }}
+          </span>
+          <span v-if="performanceLoading" class="bh-cash-card__skel-flow bh-skeleton" />
+          <BHCurrencyDisplay
+            v-else-if="performanceData"
+            :amount="performanceData.total_withdrawn"
+            :currency="performanceData.currency"
+            size="sm"
+          />
+          <span v-else class="bh-cash-card__fallback">—</span>
+        </div>
+      </div>
+
+      <BHButton
+        variant="ghost"
+        size="sm"
+        class="bh-cash-card__cta"
+        @click="onAddDeposit"
+      >
+        <LucidePlus :size="14" aria-hidden="true" />
+        {{ t('portfolios.detail.resume.cash.add_deposit') }}
+      </BHButton>
+    </template>
   </section>
 </template>
 
@@ -75,10 +86,24 @@ const {
   performance: performanceData,
   summaryPending,
   performancePending,
+  summaryError,
+  performanceError,
+  refreshSummary,
+  refreshPerformance,
 } = usePortfolioDetail(() => props.portfolioId);
 
 const summaryLoading = computed(() => summaryPending.value && !summaryData.value);
 const performanceLoading = computed(() => performancePending.value && !performanceData.value);
+const hasError = computed(
+  () =>
+    (!summaryData.value && !!summaryError.value)
+    || (!performanceData.value && !!performanceError.value),
+);
+
+function refresh() {
+  void refreshSummary();
+  void refreshPerformance();
+}
 
 function onAddDeposit() {
   toast.info(t('toast.coming_soon'));
@@ -132,5 +157,13 @@ function onAddDeposit() {
 
 .bh-cash-card__cta {
   @apply self-start;
+}
+
+.bh-cash-card__error {
+  @apply flex items-center justify-between gap-3;
+}
+
+.bh-cash-card__error-text {
+  @apply text-sm text-theme-status-error;
 }
 </style>

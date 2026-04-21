@@ -103,7 +103,7 @@ onMounted(() => {
 }
 
 .bh-navigation-expandable--child-button.exact-active-class {
-  @apply bg-theme-accent-primary text-gray-900;
+  @apply bg-theme-accent-primary text-theme-text-on-accent-primary;
 }
 
 /* Animation d'expansion */

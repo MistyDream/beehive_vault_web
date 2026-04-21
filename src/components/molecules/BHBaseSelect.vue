@@ -308,6 +308,8 @@ onClickOutside(selectRef, () => {
   @apply flex items-center justify-between gap-2;
   @apply text-left;
   @apply transition-colors duration-150 ease-out;
+  @apply hover:border-theme-border-primary;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary focus-visible:border-transparent;
 }
 
 .bh-select__control--disabled {

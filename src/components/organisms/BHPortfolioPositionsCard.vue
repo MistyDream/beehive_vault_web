@@ -241,7 +241,7 @@ function onPageChange(newPage: number) {
 }
 
 .bh-positions-card__cell {
-  @apply px-6 py-3 text-sm text-theme-text-primary;
+  @apply px-4 py-3 text-sm text-theme-text-primary;
   @apply border-b border-theme-border-secondary/60;
 }
 

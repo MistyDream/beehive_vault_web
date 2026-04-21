@@ -13,11 +13,15 @@ export function usePortfolioDetail(id: MaybeRefOrGetter<number>) {
     summaryPending: summaryResult.pending,
     performancePending: performanceResult.pending,
     detailError: detailResult.error,
+    summaryError: summaryResult.error,
+    performanceError: performanceResult.error,
     refresh: () =>
       Promise.all([
         detailResult.refresh(),
         summaryResult.refresh(),
         performanceResult.refresh(),
       ]),
+    refreshSummary: () => summaryResult.refresh(),
+    refreshPerformance: () => performanceResult.refresh(),
   };
 }

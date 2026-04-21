@@ -269,7 +269,7 @@ watch(
 }
 
 .header-cell {
-  @apply px-6 py-4 text-left;
+  @apply px-4 py-3 text-left;
   @apply text-sm font-medium text-theme-text-secondary;
   @apply transition-colors;
 }
@@ -308,13 +308,13 @@ watch(
 }
 
 .table-cell {
-  @apply px-6 py-4;
+  @apply px-4 py-3;
   @apply text-sm text-theme-text-primary;
 }
 
 .pagination {
   @apply flex justify-between items-center;
-  @apply px-6 py-3;
+  @apply px-4 py-3;
 }
 
 .pagination-info {

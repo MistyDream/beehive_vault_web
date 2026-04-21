@@ -559,7 +559,7 @@ function onDelete(_tx: Transaction) {
 }
 
 .bh-tx-card__cell--currency {
-  @apply text-xs text-theme-text-muted uppercase tracking-wide;
+  @apply text-xs text-theme-text-muted uppercase tracking-wide text-center;
 }
 
 .bh-tx-card__cell--notes {

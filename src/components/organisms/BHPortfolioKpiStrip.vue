@@ -112,7 +112,7 @@ const srSummary = computed(() => {
 }
 
 .bh-kpi-strip__count {
-  @apply font-poppins text-2xl font-semibold text-theme-text-primary;
+  @apply font-space text-2xl font-semibold text-theme-text-primary;
   @apply tabular-nums;
 }
 </style>

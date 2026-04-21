@@ -79,11 +79,18 @@ const handleInput = (event: Event) => {
   @apply bg-theme-bg-card;
   @apply border border-theme-border-secondary;
   @apply text-sm text-theme-text-primary font-medium;
+  @apply transition-colors duration-150;
+  @apply hover:border-theme-border-primary;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary focus-visible:border-transparent;
+  @apply disabled:opacity-60 disabled:cursor-not-allowed;
 }
 
 .bh-date-input__input::-webkit-calendar-picker-indicator {
   @apply cursor-pointer;
-  filter: invert(0.7);
+}
+
+:root.dark .bh-date-input__input::-webkit-calendar-picker-indicator {
+  filter: invert(0.85);
 }
 
 .bh-date-input__input--error {
