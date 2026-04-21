@@ -3,13 +3,24 @@
     <div class="bh-drawer-overlay" @click="close" />
 
     <Transition name="drawer" @after-leave="toggleWrapper">
-      <div v-if="showDrawer" ref="drawerRef" class="bh-drawer">
+      <div
+        v-if="showDrawer"
+        ref="drawerRef"
+        class="bh-drawer"
+        role="dialog"
+        aria-modal="true"
+        :aria-labelledby="titleId"
+      >
         <div class="bh-drawer--header">
-          <BHButton class="absolute top-0 left-0 text-theme-text-muted">
-            <LucideChevronsRight :size="20" />
+          <BHButton
+            class="absolute top-0 left-0 text-theme-text-muted"
+            :aria-label="t('common.close')"
+            @click="close"
+          >
+            <LucideX :size="20" aria-hidden="true" />
           </BHButton>
           <component :is="icon" :size="24" class="bh-drawer--header__icon" />
-          <h1>{{ title }}</h1>
+          <h1 :id="titleId">{{ title }}</h1>
         </div>
         <div class="bh-drawer--content">
           <component :is="content" v-bind="props" />
@@ -21,7 +32,9 @@
 
 <script setup lang="ts">
 import { useFocusTrap } from '@vueuse/integrations/useFocusTrap';
+import { LucideX } from '#components';
 
+const { t } = useI18n();
 const {
   showWrapper,
   showDrawer,
@@ -34,19 +47,32 @@ const {
 } = useDrawer();
 
 const drawerRef = ref<HTMLElement | null>(null);
+const titleId = useId();
+
+onKeyStroke('Escape', () => {
+  if (showDrawer.value) close();
+});
 
 onMounted(() => {
   const isScrollLocked = useScrollLock(document.body);
   const { activate, deactivate } = useFocusTrap(drawerRef, {
     allowOutsideClick: true,
+    returnFocusOnDeactivate: false,
   });
+
+  let previousFocus: HTMLElement | null = null;
 
   watch(showDrawer, (open) => {
     isScrollLocked.value = open;
     if (open) {
+      previousFocus = document.activeElement as HTMLElement | null;
       nextTick(() => activate());
     } else {
       deactivate();
+      if (previousFocus && document.body.contains(previousFocus)) {
+        previousFocus.focus({ preventScroll: true });
+      }
+      previousFocus = null;
     }
   });
 });
@@ -61,22 +87,19 @@ onMounted(() => {
   animation: bh-slideOutRight 0.3s ease-in;
 }
 
-/* Wrapper qui contient l'overlay et le drawer */
 .bh-drawer-wrapper {
   @apply fixed inset-0 z-50;
 }
 
-/* Overlay sombre qui couvre toute la page */
 .bh-drawer-overlay {
   @apply absolute inset-0;
-  @apply bg-black bg-opacity-50;
+  @apply bg-theme-overlay/50;
   @apply cursor-pointer;
 }
 
-/* Le drawer lui-même */
 .bh-drawer {
   @apply absolute top-0 right-0;
-  @apply w-1/2 h-screen p-4;
+  @apply w-full sm:w-[480px] lg:w-[560px] h-screen p-4;
   @apply bg-theme-bg-card;
   @apply shadow-2xl;
 }

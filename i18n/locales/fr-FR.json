@@ -5,8 +5,23 @@
   "common": {
     "close": "Fermer"
   },
+  "toast": {
+    "coming_soon": "Bientôt disponible",
+    "error": {
+      "generic": "Une erreur est survenue"
+    }
+  },
+  "table": {
+    "pagination_info": "Affichage de {from} à {to} sur {total} résultats",
+    "sort_ascending": "Trier par ordre croissant",
+    "sort_descending": "Trier par ordre décroissant",
+    "previous_page": "Page précédente",
+    "next_page": "Page suivante",
+    "go_to_page": "Aller à la page {n}"
+  },
   "a11y": {
-    "skip_to_main": "Aller au contenu principal"
+    "skip_to_main": "Aller au contenu principal",
+    "stock_avatar_label": "Avatar {symbol}"
   },
   "nav": {
     "main": "Navigation principale",
@@ -52,6 +67,85 @@
       "invested_label": "Investi",
       "cash_label": "Cash"
     },
-    "coming_soon": "Cette page sera bientôt disponible."
+    "coming_soon": "Cette page sera bientôt disponible.",
+    "detail": {
+      "tabs_label": "Sections du portefeuille",
+      "tab_resume": "Résumé",
+      "tab_transactions": "Transactions",
+      "tab_performance": "Performance",
+      "tab_scoring": "Scoring",
+      "tab_scoring_tooltip": "Bientôt disponible — chaque action du portefeuille sera notée sur ses fondamentaux",
+      "updated_ago": "Mis à jour {time}",
+      "kpi": {
+        "invested": "Total investi",
+        "cash": "Solde cash",
+        "net_result": "Résultat net",
+        "positions_count": "Positions ouvertes"
+      },
+      "actions": {
+        "add_transaction": "Ajouter une transaction",
+        "menu": "Actions du portefeuille",
+        "edit": "Modifier",
+        "delete": "Supprimer"
+      },
+      "coming_soon": {
+        "resume": "Le résumé sera disponible en phase 2.",
+        "transactions": "La liste des transactions sera disponible en phase 3.",
+        "performance": "Les graphiques de performance seront disponibles en phase 4.",
+        "scoring": "Le scoring sera disponible quand la feature scoring de l'API sera mergée."
+      },
+      "resume": {
+        "positions": {
+          "title": "Positions",
+          "count": "{count} position | {count} positions",
+          "empty_title": "Aucune position",
+          "empty_description": "Enregistrez un achat pour commencer à suivre vos positions.",
+          "view_row_action": "Voir les détails de {symbol}",
+          "columns": {
+            "symbol": "Symbole",
+            "name": "Nom",
+            "quantity": "Quantité",
+            "avg_cost": "Coût moyen",
+            "total_cost": "Coût total",
+            "weight": "Poids"
+          }
+        },
+        "allocation": {
+          "title": "Répartition",
+          "others": "Autres"
+        },
+        "cash": {
+          "title": "Trésorerie",
+          "deposits": "Dépôts cumulés",
+          "withdrawals": "Retraits cumulés",
+          "add_deposit": "Enregistrer un dépôt"
+        },
+        "recent": {
+          "title": "Dernières transactions",
+          "view_all": "Voir tout",
+          "empty_title": "Aucune transaction",
+          "empty_description": "Vos transactions récentes s'afficheront ici dès qu'elles seront enregistrées."
+        },
+        "drawer": {
+          "count": "{count} transaction | {count} transactions",
+          "empty": "Aucune transaction pour cette action",
+          "view_full": "Voir dans le tableau complet"
+        },
+        "tx_type": {
+          "buy": "Achat",
+          "sell": "Vente",
+          "dividend": "Dividende",
+          "fee": "Frais",
+          "split": "Split",
+          "deposit": "Dépôt",
+          "withdrawal": "Retrait"
+        }
+      },
+      "error": {
+        "title": "Impossible de charger ce portefeuille",
+        "description": "Une erreur est survenue. Réessayez dans un instant.",
+        "retry": "Réessayer"
+      }
+    }
   }
 }

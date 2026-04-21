@@ -5,8 +5,23 @@
   "common": {
     "close": "Close"
   },
+  "toast": {
+    "coming_soon": "Coming soon",
+    "error": {
+      "generic": "Something went wrong"
+    }
+  },
+  "table": {
+    "pagination_info": "Showing {from} to {to} of {total} results",
+    "sort_ascending": "Sort ascending",
+    "sort_descending": "Sort descending",
+    "previous_page": "Previous page",
+    "next_page": "Next page",
+    "go_to_page": "Go to page {n}"
+  },
   "a11y": {
-    "skip_to_main": "Skip to main content"
+    "skip_to_main": "Skip to main content",
+    "stock_avatar_label": "{symbol} avatar"
   },
   "nav": {
     "main": "Main navigation",
@@ -52,6 +67,85 @@
       "invested_label": "Invested",
       "cash_label": "Cash"
     },
-    "coming_soon": "This page will be available soon."
+    "coming_soon": "This page will be available soon.",
+    "detail": {
+      "tabs_label": "Portfolio sections",
+      "tab_resume": "Overview",
+      "tab_transactions": "Transactions",
+      "tab_performance": "Performance",
+      "tab_scoring": "Scoring",
+      "tab_scoring_tooltip": "Coming soon — each stock in the portfolio will be rated on its fundamentals",
+      "updated_ago": "Updated {time}",
+      "kpi": {
+        "invested": "Total invested",
+        "cash": "Cash balance",
+        "net_result": "Net result",
+        "positions_count": "Open positions"
+      },
+      "actions": {
+        "add_transaction": "Add transaction",
+        "menu": "Portfolio actions",
+        "edit": "Edit",
+        "delete": "Delete"
+      },
+      "coming_soon": {
+        "resume": "Overview will land in phase 2.",
+        "transactions": "Transactions list will land in phase 3.",
+        "performance": "Performance charts will land in phase 4.",
+        "scoring": "Scoring will land once the API scoring feature is merged."
+      },
+      "resume": {
+        "positions": {
+          "title": "Positions",
+          "count": "{count} position | {count} positions",
+          "empty_title": "No position yet",
+          "empty_description": "Record a buy to start tracking your positions.",
+          "view_row_action": "View details for {symbol}",
+          "columns": {
+            "symbol": "Symbol",
+            "name": "Name",
+            "quantity": "Quantity",
+            "avg_cost": "Avg cost",
+            "total_cost": "Total cost",
+            "weight": "Weight"
+          }
+        },
+        "allocation": {
+          "title": "Allocation",
+          "others": "Others"
+        },
+        "cash": {
+          "title": "Cash",
+          "deposits": "Total deposits",
+          "withdrawals": "Total withdrawals",
+          "add_deposit": "Record a deposit"
+        },
+        "recent": {
+          "title": "Recent transactions",
+          "view_all": "View all",
+          "empty_title": "No transaction",
+          "empty_description": "Your recent transactions will show up here as soon as they are recorded."
+        },
+        "drawer": {
+          "count": "{count} transaction | {count} transactions",
+          "empty": "No transaction for this stock",
+          "view_full": "View in full table"
+        },
+        "tx_type": {
+          "buy": "Buy",
+          "sell": "Sell",
+          "dividend": "Dividend",
+          "fee": "Fee",
+          "split": "Split",
+          "deposit": "Deposit",
+          "withdrawal": "Withdrawal"
+        }
+      },
+      "error": {
+        "title": "Unable to load this portfolio",
+        "description": "Something went wrong. Please try again.",
+        "retry": "Retry"
+      }
+    }
   }
 }

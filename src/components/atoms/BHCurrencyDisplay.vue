@@ -22,31 +22,26 @@ const props = withDefaults(defineProps<Props>(), {
   size: 'md',
 });
 
+// Zero is coerced to +0 so Intl never emits "-0,00 €" for a negative-signed zero.
+const amount = computed(() => props.amount || 0);
+
 const formattedAmount = computed(() => {
-  const options: Intl.NumberFormatOptions = {
+  const formatted = new Intl.NumberFormat(props.locale, {
     style: 'currency',
     currency: props.currency,
     notation: props.compact ? 'compact' : 'standard',
-  };
+  }).format(amount.value);
 
-  const formatted = new Intl.NumberFormat(props.locale, options).format(
-    props.amount,
-  );
-
-  if (props.showSign && props.amount > 0) {
-    return `+${formatted}`;
-  }
-
-  return formatted;
+  return props.showSign && amount.value > 0 ? `+${formatted}` : formatted;
 });
 
 const sizeClass = computed(() => `bh-currency-display--${props.size}`);
 
 const colorClass = computed(() => {
-  if (!props.showSign) return '';
-  if (props.amount > 0) return 'bh-currency-display--positive';
-  if (props.amount < 0) return 'bh-currency-display--negative';
-  return '';
+  if (!props.showSign || amount.value === 0) return '';
+  return amount.value > 0
+    ? 'bh-currency-display--positive'
+    : 'bh-currency-display--negative';
 });
 </script>
 

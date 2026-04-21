@@ -2,12 +2,14 @@ import { API_ENDPOINTS } from '~/constants/http';
 import type {
   CashBalance,
   CreatePortfolioPayload,
+  Paginated,
   PerformanceFilters,
   PerformanceReport,
   Portfolio,
   PortfolioScoring,
   PortfolioSummary,
   Position,
+  PositionsQuery,
   UpdatePortfolioPayload,
 } from '~/types/portfolio';
 
@@ -28,10 +30,16 @@ export const usePortfolioApi = () => {
       { $fetch: $api },
     );
 
-  const positions = (id: MaybeRefOrGetter<number>) =>
-    useFetch<Position[]>(
+  const positions = (
+    id: MaybeRefOrGetter<number>,
+    query?: MaybeRefOrGetter<PositionsQuery | undefined>,
+  ) =>
+    useFetch<Paginated<Position>>(
       () => API_ENDPOINTS.PORTFOLIOS.POSITIONS(toValue(id)),
-      { $fetch: $api },
+      {
+        $fetch: $api,
+        query: computed(() => toValue(query) ?? {}),
+      },
     );
 
   const cash = (id: MaybeRefOrGetter<number>) =>

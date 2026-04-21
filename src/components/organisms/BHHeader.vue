@@ -1,5 +1,5 @@
 <template>
-  <header class="bh-header">
+  <header class="bh-header" :class="{ 'bh-header--has-title': title }">
     <button
       type="button"
       class="bh-header__menu-trigger"
@@ -35,6 +35,12 @@ const subtitle = computed(() => useHeaderStore().subtitle);
 .bh-header {
   @apply flex items-center gap-3;
   @apply ml-0 lg:ml-72 p-4;
+}
+
+/* Hide the empty header shell on desktop — the hamburger is only visible
+   on mobile, so a header without a title wastes 48px of top space on lg+. */
+.bh-header:not(.bh-header--has-title) {
+  @apply lg:hidden;
 }
 
 .bh-header__menu-trigger {

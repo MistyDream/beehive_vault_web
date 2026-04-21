@@ -10,6 +10,50 @@ export type TransactionType =
   | 'deposit'
   | 'withdrawal';
 
+export interface Stock {
+  id: number;
+  symbol: string;
+  name: string;
+  isin: string;
+  currency: string | null;
+  market: string | null;
+  sector: string | null;
+  industry: string | null;
+  country: string | null;
+}
+
+export interface Paginated<T> {
+  items: T[];
+  total: number;
+  page: number;
+  per_page: number;
+}
+
+export type PositionsSortBy =
+  | 'weight'
+  | 'symbol'
+  | 'quantity'
+  | 'average_cost'
+  | 'total_cost';
+
+export type TransactionsSortBy = 'executed_at' | 'amount' | 'transaction_type';
+
+export type SortDirection = 'asc' | 'desc';
+
+export interface PositionsQuery {
+  sort_by?: PositionsSortBy;
+  sort_dir?: SortDirection;
+  page?: number;
+  limit?: number;
+}
+
+export interface TransactionsQuery extends TransactionFilters {
+  sort_by?: TransactionsSortBy;
+  sort_dir?: SortDirection;
+  page?: number;
+  limit?: number;
+}
+
 export interface Portfolio {
   id: number;
   name: string;
@@ -22,7 +66,7 @@ export interface Portfolio {
 export interface Transaction {
   id: number;
   portfolio_id: number;
-  stock_id: number | null;
+  stock: Stock | null;
   transaction_type: TransactionType;
   executed_at: string;
   quantity: number | null;
@@ -38,11 +82,13 @@ export interface Transaction {
 }
 
 export interface Position {
-  stock_id: number;
+  stock: Stock;
   quantity: number;
   average_cost: number;
   total_cost: number;
   currency: string;
+  /** Share of the portfolio's total invested cost, as a fraction in [0, 1]. */
+  weight: number;
 }
 
 export interface CashBalance {

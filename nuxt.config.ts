@@ -33,6 +33,7 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
     '@vueuse/nuxt',
+    'nuxt-charts',
     'nuxt-lucide-icons',
   ],
 
