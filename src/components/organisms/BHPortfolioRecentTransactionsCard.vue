@@ -119,10 +119,10 @@ function labelFor(tx: Transaction): string {
 
 .bh-recent-card__view-all {
   @apply inline-flex items-center gap-1;
-  @apply text-xs font-medium text-theme-accent-primary;
-  @apply no-underline;
+  @apply text-xs font-medium text-theme-accent-primary-strong;
+  @apply underline underline-offset-2;
   @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary focus-visible:rounded-md;
-  @apply hover:underline;
+  @apply hover:text-theme-text-primary;
 }
 
 .bh-recent-card__list {

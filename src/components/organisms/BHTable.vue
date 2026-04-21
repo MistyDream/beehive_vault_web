@@ -7,23 +7,29 @@
             <th
               v-for="column in columns"
               :key="column.key"
+              scope="col"
               class="header-cell"
               :class="column.centerAlign ? 'header-cell--center' : ''"
-              :style="column.sortable ? 'cursor: pointer' : ''"
-              @click="column.sortable ? toggleSort(column.key) : null"
+              :aria-sort="ariaSortFor(column)"
             >
-              <div class="header-content">
+              <button
+                v-if="column.sortable"
+                type="button"
+                class="header-button"
+                :aria-label="sortAriaLabel(column)"
+                @click="toggleSort(column.key)"
+              >
                 {{ column.label }}
                 <span
-                  v-if="column.sortable && currentSortBy === column.key"
+                  v-if="currentSortBy === column.key"
                   class="sort-indicator"
-                  :class="{
-                    'sort-indicator--desc': currentSortDirection === 'desc',
-                  }"
+                  :class="{ 'sort-indicator--desc': currentSortDirection === 'desc' }"
+                  aria-hidden="true"
                 >
                   <LucideChevronUp :size="16" />
                 </span>
-              </div>
+              </button>
+              <span v-else class="header-content">{{ column.label }}</span>
             </th>
           </tr>
         </thead>
@@ -53,8 +59,13 @@
         {{ t('table.pagination_info', { from: startIndex + 1, to: endIndex, total }) }}
       </span>
       <div class="pagination-controls">
-        <BHButton class="pagination-button" :disabled="!hasPrev" @click="prev">
-          <LucideChevronLeft :size="16" />
+        <BHButton
+          class="pagination-button"
+          :disabled="!hasPrev"
+          :aria-label="t('table.previous_page')"
+          @click="prev"
+        >
+          <LucideChevronLeft :size="16" aria-hidden="true" />
         </BHButton>
 
         <BHButton
@@ -62,13 +73,20 @@
           :key="page"
           class="pagination-button"
           :class="{ 'pagination-button--active': page === current }"
+          :aria-label="t('table.go_to_page', { n: page })"
+          :aria-current="page === current ? 'page' : undefined"
           @click="setCurrent(page)"
         >
           {{ page }}
         </BHButton>
 
-        <BHButton class="pagination-button" :disabled="!hasNext" @click="next">
-          <LucideChevronRight :size="16" />
+        <BHButton
+          class="pagination-button"
+          :disabled="!hasNext"
+          :aria-label="t('table.next_page')"
+          @click="next"
+        >
+          <LucideChevronRight :size="16" aria-hidden="true" />
         </BHButton>
       </div>
     </div>
@@ -192,6 +210,22 @@ const toggleSort = (columnKey: string) => {
   debouncedSortChange(currentSortBy.value, currentSortDirection.value);
 };
 
+const ariaSortFor = (column: Column): 'ascending' | 'descending' | 'none' | undefined => {
+  if (!column.sortable) return undefined;
+  if (currentSortBy.value !== column.key) return 'none';
+  return currentSortDirection.value === 'asc' ? 'ascending' : 'descending';
+};
+
+const sortAriaLabel = (column: Column): string => {
+  const nextDir =
+    currentSortBy.value === column.key && currentSortDirection.value === 'asc'
+      ? 'desc'
+      : 'asc';
+  const action =
+    nextDir === 'asc' ? t('table.sort_ascending') : t('table.sort_descending');
+  return `${column.label} — ${action}`;
+};
+
 const setCurrent = (page: number) => {
   if (page >= 1 && page <= pageCount.value) {
     currentPage.value = page;
@@ -243,12 +277,8 @@ watch(
 
 .header-cell {
   @apply px-6 py-4 text-left;
-  @apply text-sm font-medium text-gray-400;
+  @apply text-sm font-medium text-theme-text-secondary;
   @apply transition-colors;
-}
-
-.header-cell:hover {
-  @apply text-theme-text-primary;
 }
 
 .header-cell--center {
@@ -257,6 +287,15 @@ watch(
 
 .header-content {
   @apply flex items-center justify-center;
+}
+
+.header-button {
+  @apply inline-flex items-center justify-center gap-1;
+  @apply bg-transparent border-0 p-0 m-0;
+  @apply text-sm font-medium text-theme-text-secondary;
+  @apply cursor-pointer transition-colors;
+  @apply hover:text-theme-text-primary;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary focus-visible:rounded-md;
 }
 
 .sort-indicator {
@@ -286,7 +325,7 @@ watch(
 }
 
 .pagination-info {
-  @apply text-sm text-gray-400;
+  @apply text-sm text-theme-text-secondary;
 }
 
 .pagination-controls {

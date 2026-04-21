@@ -8,10 +8,10 @@
   --color-bg-elevated: 231 227 219;    /* hover */
   --color-bg-elevated-strong: 225 220 209; /* deeper hover for card-on-body contrast */
 
-  /* Text */
+  /* Text (contrast ≥4.5:1 on bg-primary for AA on small text) */
   --color-text-primary: 26 26 26;
-  --color-text-secondary: 107 114 128;
-  --color-text-muted: 156 163 175;
+  --color-text-secondary: 90 96 110;
+  --color-text-muted: 100 106 119;
   --color-text-on-accent-primary: 26 26 26;
   --color-text-on-accent-secondary: 255 255 255;
   --color-text-on-danger: 255 255 255;
@@ -50,10 +50,10 @@
   --color-bg-elevated: 41 41 41;
   --color-bg-elevated-strong: 52 52 52;
 
-  /* Text */
+  /* Text (contrast ≥4.5:1 on bg-primary for AA on small text) */
   --color-text-primary: 245 245 245;
-  --color-text-secondary: 160 160 160;
-  --color-text-muted: 120 120 120;
+  --color-text-secondary: 180 180 180;
+  --color-text-muted: 145 145 145;
   --color-text-on-accent-primary: 26 26 26;
   --color-text-on-accent-secondary: 255 255 255;
   --color-text-on-danger: 255 255 255;

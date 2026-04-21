@@ -12,7 +12,12 @@
     }
   },
   "table": {
-    "pagination_info": "Affichage de {from} à {to} sur {total} résultats"
+    "pagination_info": "Affichage de {from} à {to} sur {total} résultats",
+    "sort_ascending": "Trier par ordre croissant",
+    "sort_descending": "Trier par ordre décroissant",
+    "previous_page": "Page précédente",
+    "next_page": "Page suivante",
+    "go_to_page": "Aller à la page {n}"
   },
   "a11y": {
     "skip_to_main": "Aller au contenu principal",

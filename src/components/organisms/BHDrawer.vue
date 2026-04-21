@@ -3,17 +3,24 @@
     <div class="bh-drawer-overlay" @click="close" />
 
     <Transition name="drawer" @after-leave="toggleWrapper">
-      <div v-if="showDrawer" ref="drawerRef" class="bh-drawer">
+      <div
+        v-if="showDrawer"
+        ref="drawerRef"
+        class="bh-drawer"
+        role="dialog"
+        aria-modal="true"
+        :aria-labelledby="titleId"
+      >
         <div class="bh-drawer--header">
           <BHButton
             class="absolute top-0 left-0 text-theme-text-muted"
             :aria-label="t('common.close')"
             @click="close"
           >
-            <LucideChevronsRight :size="20" aria-hidden="true" />
+            <LucideX :size="20" aria-hidden="true" />
           </BHButton>
           <component :is="icon" :size="24" class="bh-drawer--header__icon" />
-          <h1>{{ title }}</h1>
+          <h1 :id="titleId">{{ title }}</h1>
         </div>
         <div class="bh-drawer--content">
           <component :is="content" v-bind="props" />
@@ -25,6 +32,7 @@
 
 <script setup lang="ts">
 import { useFocusTrap } from '@vueuse/integrations/useFocusTrap';
+import { LucideX } from '#components';
 
 const { t } = useI18n();
 const {
@@ -39,6 +47,11 @@ const {
 } = useDrawer();
 
 const drawerRef = ref<HTMLElement | null>(null);
+const titleId = useId();
+
+onKeyStroke('Escape', () => {
+  if (showDrawer.value) close();
+});
 
 onMounted(() => {
   const isScrollLocked = useScrollLock(document.body);

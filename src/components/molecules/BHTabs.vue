@@ -1,78 +1,12 @@
 <template>
-  <div
-    class="bh-tabs"
-    role="tablist"
-    :aria-label="ariaLabel"
-  >
-    <template v-if="isNavMode">
-      <template v-for="tab in tabs" :key="tab.id">
-        <span
-          v-if="tab.disabled"
-          :id="`tab-${tab.id}`"
-          role="tab"
-          :aria-selected="false"
-          aria-disabled="true"
-          :aria-controls="`tabpanel-${tab.id}`"
-          :title="tab.tooltip || undefined"
-          tabindex="-1"
-          class="bh-tabs__tab bh-tabs__tab--disabled"
-        >
-          <span>{{ tab.label }}</span>
-          <BHBadge
-            v-if="typeof tab.count === 'number'"
-            variant="neutral"
-            size="sm"
-          >
-            {{ tab.count }}
-          </BHBadge>
-        </span>
-        <NuxtLink
-          v-else
-          :id="`tab-${tab.id}`"
-          :to="tab.to ?? ''"
-          role="tab"
-          :aria-selected="isTabActive(tab)"
-          :aria-controls="`tabpanel-${tab.id}`"
-          :title="tab.tooltip || undefined"
-          active-class="bh-tabs__tab--active"
-          class="bh-tabs__tab"
-          :class="{ 'bh-tabs__tab--muted': tab.muted }"
-        >
-          <span>{{ tab.label }}</span>
-          <BHBadge
-            v-if="typeof tab.count === 'number'"
-            variant="neutral"
-            size="sm"
-          >
-            {{ tab.count }}
-          </BHBadge>
-        </NuxtLink>
-      </template>
-    </template>
-
-    <template v-else>
-      <button
-        v-for="(tab, index) in tabs"
-        :key="tab.id"
-        :ref="(el) => registerTab(el as HTMLElement | null, index)"
-        type="button"
-        role="tab"
-        :aria-selected="tab.id === modelValue"
-        :aria-disabled="tab.disabled || undefined"
-        :tabindex="tab.id === modelValue ? 0 : -1"
-        :disabled="tab.disabled"
+  <nav v-if="isNavMode" class="bh-tabs" :aria-label="ariaLabel">
+    <template v-for="tab in tabs" :key="tab.id">
+      <span
+        v-if="tab.disabled"
+        :id="`tab-${tab.id}`"
+        aria-disabled="true"
         :title="tab.tooltip || undefined"
-        class="bh-tabs__tab"
-        :class="{
-          'bh-tabs__tab--active': tab.id === modelValue,
-          'bh-tabs__tab--muted': tab.muted,
-          'bh-tabs__tab--disabled': tab.disabled,
-        }"
-        @click="select(tab)"
-        @keydown.left.prevent="move(-1)"
-        @keydown.right.prevent="move(1)"
-        @keydown.home.prevent="move('start')"
-        @keydown.end.prevent="move('end')"
+        class="bh-tabs__tab bh-tabs__tab--disabled"
       >
         <span>{{ tab.label }}</span>
         <BHBadge
@@ -82,8 +16,67 @@
         >
           {{ tab.count }}
         </BHBadge>
-      </button>
+      </span>
+      <NuxtLink
+        v-else
+        :id="`tab-${tab.id}`"
+        :to="tab.to ?? ''"
+        :aria-current="isTabActive(tab) ? 'page' : undefined"
+        :title="tab.tooltip || undefined"
+        active-class="bh-tabs__tab--active"
+        class="bh-tabs__tab"
+        :class="{ 'bh-tabs__tab--muted': tab.muted }"
+      >
+        <span>{{ tab.label }}</span>
+        <BHBadge
+          v-if="typeof tab.count === 'number'"
+          variant="neutral"
+          size="sm"
+        >
+          {{ tab.count }}
+        </BHBadge>
+      </NuxtLink>
     </template>
+  </nav>
+
+  <div
+    v-else
+    class="bh-tabs"
+    role="tablist"
+    :aria-label="ariaLabel"
+  >
+    <button
+      v-for="(tab, index) in tabs"
+      :key="tab.id"
+      :ref="(el) => registerTab(el as HTMLElement | null, index)"
+      type="button"
+      role="tab"
+      :aria-selected="tab.id === modelValue"
+      :aria-disabled="tab.disabled || undefined"
+      :tabindex="tab.id === modelValue ? 0 : -1"
+      :disabled="tab.disabled"
+      :title="tab.tooltip || undefined"
+      class="bh-tabs__tab"
+      :class="{
+        'bh-tabs__tab--active': tab.id === modelValue,
+        'bh-tabs__tab--muted': tab.muted,
+        'bh-tabs__tab--disabled': tab.disabled,
+      }"
+      @click="select(tab)"
+      @keydown.left.prevent="move(-1)"
+      @keydown.right.prevent="move(1)"
+      @keydown.home.prevent="move('start')"
+      @keydown.end.prevent="move('end')"
+    >
+      <span>{{ tab.label }}</span>
+      <BHBadge
+        v-if="typeof tab.count === 'number'"
+        variant="neutral"
+        size="sm"
+      >
+        {{ tab.count }}
+      </BHBadge>
+    </button>
   </div>
 </template>
 
@@ -182,7 +175,7 @@ function move(action: -1 | 1 | 'start' | 'end') {
   @apply transition-colors duration-150;
   @apply no-underline;
   @apply hover:text-theme-text-primary;
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary focus-visible:rounded-md;
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-theme-accent-primary;
 }
 
 .bh-tabs__tab--active {

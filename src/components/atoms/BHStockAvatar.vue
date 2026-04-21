@@ -2,7 +2,7 @@
   <span
     class="bh-stock-avatar"
     :class="sizeClass"
-    :style="{ backgroundColor: color }"
+    :style="{ backgroundColor: bg, color: fg }"
     :aria-hidden="ariaHidden || undefined"
     :role="ariaHidden ? undefined : 'img'"
     :aria-label="ariaHidden ? undefined : t('a11y.stock_avatar_label', { symbol })"
@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { colorFromSymbol } from '~/utils/stringToColor';
+import { colorFromSymbol, foregroundFromSymbol } from '~/utils/stringToColor';
 
 interface Props {
   symbol: string;
@@ -27,7 +27,8 @@ const props = withDefaults(defineProps<Props>(), {
 
 const { t } = useI18n();
 
-const color = computed(() => colorFromSymbol(props.symbol));
+const bg = computed(() => colorFromSymbol(props.symbol));
+const fg = computed(() => foregroundFromSymbol(props.symbol));
 const sizeClass = computed(() => `bh-stock-avatar--${props.size}`);
 const initials = computed(() => props.symbol.slice(0, 2).toUpperCase());
 </script>
@@ -36,7 +37,7 @@ const initials = computed(() => props.symbol.slice(0, 2).toUpperCase());
 .bh-stock-avatar {
   @apply inline-flex items-center justify-center;
   @apply rounded-full;
-  @apply font-poppins font-semibold text-theme-text-on-accent-secondary;
+  @apply font-poppins font-semibold;
   @apply select-none shrink-0;
   @apply tabular-nums;
 }
