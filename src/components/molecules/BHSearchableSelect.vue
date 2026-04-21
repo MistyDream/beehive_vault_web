@@ -38,7 +38,7 @@
           v-if="clearable && hasValue && !disabled"
           type="button"
           class="bh-searchable-select__clear"
-          :aria-label="clearLabel"
+          :aria-label="resolvedClearLabel"
           @click.stop="onClear"
           @keydown.enter.stop.prevent="onClear"
           @keydown.space.stop.prevent="onClear"
@@ -122,7 +122,7 @@
               class="bh-searchable-select__empty"
               role="presentation"
             >
-              {{ emptyText }}
+              {{ resolvedEmptyText }}
             </li>
           </ul>
         </div>
@@ -166,8 +166,8 @@ const props = withDefaults(defineProps<Props>(), {
   id: '',
   placeholder: '',
   searchPlaceholder: '',
-  emptyText: 'No results',
-  clearLabel: 'Clear selection',
+  emptyText: '',
+  clearLabel: '',
   modelValue: null,
   disabled: false,
   options: () => [],
@@ -175,6 +175,10 @@ const props = withDefaults(defineProps<Props>(), {
   clearable: true,
   error: '',
 });
+
+const { t } = useI18n();
+const resolvedEmptyText = computed(() => props.emptyText || t('common.no_results'));
+const resolvedClearLabel = computed(() => props.clearLabel || t('common.clear_selection'));
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: SelectValue | PrimitiveValue[]): void;

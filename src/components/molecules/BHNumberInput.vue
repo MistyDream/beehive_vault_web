@@ -61,6 +61,8 @@ const errorId = computed(() => `${inputId.value}-error`);
 const isFocused = ref(false);
 const rawInput = ref('');
 
+const { locale } = useI18n();
+
 const displayValue = computed(() => {
   if (isFocused.value) {
     return rawInput.value;
@@ -68,7 +70,7 @@ const displayValue = computed(() => {
   if (props.modelValue === null || props.modelValue === undefined) {
     return '';
   }
-  return new Intl.NumberFormat('fr-FR', {
+  return new Intl.NumberFormat(locale.value, {
     minimumFractionDigits: props.precision,
     maximumFractionDigits: props.precision,
   }).format(props.modelValue);

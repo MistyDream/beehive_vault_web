@@ -7,7 +7,9 @@
     "remove": "Remove",
     "remove_value": "Remove {value}",
     "select_placeholder": "Select",
-    "select_n_selected": "{count} selected | {count} selected"
+    "select_n_selected": "{count} selected | {count} selected",
+    "no_results": "No results",
+    "clear_selection": "Clear selection"
   },
   "toast": {
     "coming_soon": "Coming soon",
@@ -71,7 +73,6 @@
       "invested_label": "Invested",
       "cash_label": "Cash"
     },
-    "coming_soon": "This page will be available soon.",
     "detail": {
       "loading_title": "Loading portfolio",
       "tabs_label": "Portfolio sections",
@@ -94,7 +95,6 @@
         "delete": "Delete"
       },
       "coming_soon": {
-        "resume": "Overview will land in phase 2.",
         "performance": "Performance charts will land in phase 4.",
         "scoring": "Scoring will land once the API scoring feature is merged."
       },

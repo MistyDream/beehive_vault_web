@@ -7,7 +7,9 @@
     "remove": "Supprimer",
     "remove_value": "Supprimer {value}",
     "select_placeholder": "Sélectionner",
-    "select_n_selected": "{count} sélectionné | {count} sélectionnés"
+    "select_n_selected": "{count} sélectionné | {count} sélectionnés",
+    "no_results": "Aucun résultat",
+    "clear_selection": "Effacer la sélection"
   },
   "toast": {
     "coming_soon": "Bientôt disponible",
@@ -71,7 +73,6 @@
       "invested_label": "Investi",
       "cash_label": "Cash"
     },
-    "coming_soon": "Cette page sera bientôt disponible.",
     "detail": {
       "loading_title": "Chargement du portefeuille",
       "tabs_label": "Sections du portefeuille",
@@ -94,7 +95,6 @@
         "delete": "Supprimer"
       },
       "coming_soon": {
-        "resume": "Le résumé sera disponible en phase 2.",
         "performance": "Les graphiques de performance seront disponibles en phase 4.",
         "scoring": "Le scoring sera disponible quand la feature scoring de l'API sera mergée."
       },
