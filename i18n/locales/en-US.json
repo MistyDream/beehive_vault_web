@@ -90,9 +90,67 @@
       },
       "coming_soon": {
         "resume": "Overview will land in phase 2.",
-        "transactions": "Transactions list will land in phase 3.",
         "performance": "Performance charts will land in phase 4.",
         "scoring": "Scoring will land once the API scoring feature is merged."
+      },
+      "transactions": {
+        "title": "Transactions",
+        "summary": {
+          "total": "{count} transaction | {count} transactions",
+          "total_zero": "No transaction",
+          "separator": "·"
+        },
+        "filters": {
+          "type_label": "Type",
+          "type_placeholder": "All types",
+          "stock_label": "Stock",
+          "stock_placeholder": "All stocks",
+          "stock_search_placeholder": "Search by symbol or name",
+          "stock_empty": "No stock",
+          "stock_clear": "Clear selection",
+          "from_label": "From",
+          "to_label": "To",
+          "reset": "Reset filters",
+          "chip_type": "Type: {value}",
+          "chip_stock": "Stock: {value}",
+          "chip_from": "From: {value}",
+          "chip_to": "Until: {value}",
+          "remove_chip": "Remove filter"
+        },
+        "columns": {
+          "date": "Date",
+          "type": "Type",
+          "action": "Action",
+          "quantity": "Quantity",
+          "unit_price": "Unit price",
+          "amount": "Amount",
+          "fees": "Fees",
+          "tax": "Tax",
+          "currency": "Currency",
+          "notes": "Notes"
+        },
+        "row": {
+          "expand": "View transaction details",
+          "collapse": "Hide details",
+          "has_notes": "This transaction has notes",
+          "no_action": "—",
+          "split_display": "{from} → {to}"
+        },
+        "detail": {
+          "notes_label": "Notes",
+          "no_notes": "No notes",
+          "exchange_rate_label": "Exchange rate",
+          "edit": "Edit",
+          "duplicate": "Duplicate",
+          "delete": "Delete"
+        },
+        "empty_title": "No transaction",
+        "empty_description": "Record your first transaction to see it here.",
+        "empty_filtered_title": "No result for these filters",
+        "empty_filtered_description": "Try adjusting or resetting your filters.",
+        "error_title": "Unable to load transactions",
+        "error_description": "Something went wrong. Please try again.",
+        "error_retry": "Retry"
       },
       "resume": {
         "positions": {

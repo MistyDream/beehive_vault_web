@@ -29,6 +29,21 @@ export function displayAmount(tx: Transaction): number | null {
   return null;
 }
 
+const OUTFLOW_TYPES: ReadonlySet<TransactionType> = new Set([
+  'buy',
+  'fee',
+  'withdrawal',
+]);
+
+// Returns the cash-flow-oriented amount: negative for outflows (buy, fee, withdrawal),
+// positive for inflows (sell, dividend, deposit), null for splits / missing amounts.
+export function signedAmount(tx: Transaction): number | null {
+  const base = displayAmount(tx);
+  if (base === null) return null;
+  const magnitude = Math.abs(base);
+  return OUTFLOW_TYPES.has(tx.transaction_type) ? -magnitude : magnitude;
+}
+
 export function iconForTransaction(type: TransactionType): Component {
   return TRANSACTION_ICON[type];
 }

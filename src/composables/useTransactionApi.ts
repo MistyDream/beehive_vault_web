@@ -3,9 +3,24 @@ import type {
   CreateTransactionPayload,
   Paginated,
   Transaction,
+  TransactionStats,
   TransactionsQuery,
   UpdateTransactionPayload,
 } from '~/types/portfolio';
+
+type TransactionsQueryWire = Omit<TransactionsQuery, 'transaction_types'> & {
+  transaction_types?: string;
+};
+
+function toWireQuery(query: TransactionsQuery | undefined): TransactionsQueryWire {
+  if (!query) return {};
+  const { transaction_types, ...rest } = query;
+  const wire: TransactionsQueryWire = { ...rest };
+  if (transaction_types && transaction_types.length > 0) {
+    wire.transaction_types = transaction_types.join(',');
+  }
+  return wire;
+}
 
 export const useTransactionApi = () => {
   const $api = useNuxtApp().$api as typeof $fetch;
@@ -18,8 +33,14 @@ export const useTransactionApi = () => {
       () => API_ENDPOINTS.PORTFOLIOS.TRANSACTIONS(toValue(portfolioId)),
       {
         $fetch: $api,
-        query: computed(() => toValue(query) ?? {}),
+        query: computed(() => toWireQuery(toValue(query))),
       },
+    );
+
+  const stats = (portfolioId: MaybeRefOrGetter<number>) =>
+    useFetch<TransactionStats>(
+      () => API_ENDPOINTS.PORTFOLIOS.TRANSACTIONS_STATS(toValue(portfolioId)),
+      { $fetch: $api },
     );
 
   const detail = (
@@ -55,6 +76,7 @@ export const useTransactionApi = () => {
 
   return {
     list,
+    stats,
     detail,
     create,
     update,
