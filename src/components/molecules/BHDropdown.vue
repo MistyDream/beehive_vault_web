@@ -16,7 +16,7 @@
         @click="handleToggle"
         @keydown.down.prevent="open"
       >
-        Select an option
+        {{ t('common.select_placeholder') }}
         <svg
           class="bh-dropdown__arrow"
           :class="{ 'bh-dropdown__arrow--open': isOpen }"
@@ -127,6 +127,8 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const emit = defineEmits<Emits>();
+
+const { t } = useI18n();
 
 const triggerRef = ref<HTMLElement>();
 const floatingRef = ref<HTMLElement>();

@@ -87,18 +87,27 @@ function onBlur() {
   isFocused.value = false;
 }
 
+function parseLocalized(value: string): number {
+  const parts = new Intl.NumberFormat(locale.value).formatToParts(12345.6);
+  const decimalSep = parts.find((p) => p.type === 'decimal')?.value ?? '.';
+  const groupSep = parts.find((p) => p.type === 'group')?.value ?? ',';
+  const normalized = value
+    .split(groupSep).join('')
+    .replace(decimalSep, '.')
+    .replace(/[^\d.\-]/g, '');
+  return parseFloat(normalized);
+}
+
 function onInput(event: Event) {
   const value = (event.target as HTMLInputElement).value;
   rawInput.value = value;
-
-  const cleaned = value.replace(',', '.').replace(/[^\d.\-]/g, '');
-  const parsed = parseFloat(cleaned);
 
   if (value === '' || value === '-') {
     emit('update:modelValue', null);
     return;
   }
 
+  const parsed = parseLocalized(value);
   if (isNaN(parsed)) {
     return;
   }
