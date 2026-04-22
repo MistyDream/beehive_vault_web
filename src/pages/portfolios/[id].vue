@@ -42,9 +42,12 @@
       <NuxtPage />
 
       <BHModal
-        v-model="isEditOpen"
+        :model-value="isEditOpen"
         :title="t('portfolios.form.modal_title_edit')"
         size="md"
+        :close-on-overlay-click="!updating"
+        :close-on-escape="!updating"
+        @update:model-value="onEditModalUpdate"
       >
         <BHPortfolioForm
           :initial-value="portfolio"
@@ -69,7 +72,7 @@ import { promiseTimeout } from '@vueuse/core';
 import { LucideArrowLeft } from '#components';
 import type { TabItem } from '~/components/molecules/BHTabs.vue';
 import { ApiError } from '~/types/api';
-import type { CreatePortfolioPayload } from '~/types/portfolio';
+import type { UpdatePortfolioPayload } from '~/types/portfolio';
 
 // Delay between a success toast and a route change — lets assistive tech
 // finish announcing the live-region message before the dialog unmounts.
@@ -113,12 +116,12 @@ async function runAction(
   }
 }
 
-async function onEdit(payload: CreatePortfolioPayload) {
+async function onEdit(payload: UpdatePortfolioPayload) {
   await runAction(
     'edit',
     async () => {
       await portfolioApi.update(id.value, payload);
-      await refresh();
+      await Promise.all([refresh(), refreshNuxtData('portfolios:list')]);
       isEditOpen.value = false;
     },
     'portfolios.toast.updated',
@@ -127,10 +130,11 @@ async function onEdit(payload: CreatePortfolioPayload) {
 }
 
 async function onDelete() {
+  const deletedId = id.value;
   await runAction(
     'delete',
     async () => {
-      await portfolioApi.remove(id.value);
+      await portfolioApi.remove(deletedId);
       isDeleteOpen.value = false;
     },
     'portfolios.toast.deleted',
@@ -140,10 +144,18 @@ async function onDelete() {
         refreshNuxtData('portfolios:list'),
         promiseTimeout(TOAST_ANNOUNCE_DELAY_MS),
       ]);
+      clearNuxtData(
+        (key) => key.startsWith('portfolios:') && key.includes(`:${deletedId}`),
+      );
       if (!isMounted.value) return;
       await navigateTo(localePath('/'));
     },
   );
+}
+
+function onEditModalUpdate(value: boolean) {
+  if (updating.value && !value) return;
+  isEditOpen.value = value;
 }
 
 const tabs = computed<TabItem[]>(() => [
