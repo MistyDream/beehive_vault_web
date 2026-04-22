@@ -63,10 +63,17 @@
       "cancel": "Cancel",
       "save": "Save",
       "modal_title": "New portfolio",
+      "modal_title_edit": "Edit portfolio",
       "errors": {
         "name_length": "Name must be between 1 and 120 characters",
         "currency_length": "Currency must be exactly 3 characters"
       }
+    },
+    "toast": {
+      "updated": "Portfolio updated",
+      "deleted": "Portfolio deleted",
+      "update_failed": "Unable to update portfolio",
+      "delete_failed": "Unable to delete portfolio"
     },
     "card": {
       "invested_label": "Invested",
@@ -95,6 +102,14 @@
       },
       "coming_soon": {
         "scoring": "Scoring will land once the API scoring feature is merged."
+      },
+      "delete": {
+        "title": "Delete portfolio",
+        "description": "This action is permanent. All associated transactions and positions will also be deleted.",
+        "confirm_label": "To confirm, type the portfolio name:",
+        "confirm_input_label": "Portfolio name to delete",
+        "cancel": "Cancel",
+        "confirm": "Delete permanently"
       },
       "transactions": {
         "title": "Transactions",

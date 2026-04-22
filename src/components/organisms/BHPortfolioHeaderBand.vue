@@ -66,6 +66,11 @@ interface Props {
 
 const props = defineProps<Props>();
 
+const emit = defineEmits<{
+  (e: 'edit'): void;
+  (e: 'delete'): void;
+}>();
+
 const { t } = useI18n();
 const toast = useToast();
 const { formatRelative } = useLocaleFormatters();
@@ -89,12 +94,12 @@ const menuItems = computed<NavigationLink[]>(() => [
   {
     text: t('portfolios.detail.actions.edit'),
     icon: LucidePencil,
-    onClick: () => toast.info(t('toast.coming_soon')),
+    onClick: () => emit('edit'),
   },
   {
     text: t('portfolios.detail.actions.delete'),
     icon: LucideTrash2,
-    onClick: () => toast.info(t('toast.coming_soon')),
+    onClick: () => emit('delete'),
   },
 ]);
 </script>

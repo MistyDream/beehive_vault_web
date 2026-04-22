@@ -29,13 +29,37 @@
     </div>
 
     <template v-else-if="portfolio">
-      <BHPortfolioHeaderBand :portfolio="portfolio" />
+      <BHPortfolioHeaderBand
+        :portfolio="portfolio"
+        @edit="isEditOpen = true"
+        @delete="isDeleteOpen = true"
+      />
 
       <BHPortfolioKpiStrip :portfolio-id="id" :currency="portfolio.currency" />
 
       <BHTabs :tabs="tabs" :aria-label="t('portfolios.detail.tabs_label')" />
 
       <NuxtPage />
+
+      <BHModal
+        v-model="isEditOpen"
+        :title="t('portfolios.form.modal_title_edit')"
+        size="md"
+      >
+        <BHPortfolioForm
+          :initial-value="portfolio"
+          :loading="updating"
+          @submit="onEdit"
+          @cancel="isEditOpen = false"
+        />
+      </BHModal>
+
+      <BHPortfolioDeleteDialog
+        v-model="isDeleteOpen"
+        :portfolio="portfolio"
+        :loading="deleting"
+        @confirm="onDelete"
+      />
     </template>
   </section>
 </template>
@@ -43,13 +67,60 @@
 <script setup lang="ts">
 import { LucideArrowLeft } from '#components';
 import type { TabItem } from '~/components/molecules/BHTabs.vue';
+import { ApiError } from '~/types/api';
+import type { CreatePortfolioPayload } from '~/types/portfolio';
 
 const { t } = useI18n();
 const localePath = useLocalePath();
 const route = useRoute();
 const id = computed(() => Number(route.params.id));
 
+const portfolioApi = usePortfolioApi();
+const toast = useToast();
+
 const { portfolio, detailPending, detailError, refresh } = usePortfolioDetail(id);
+
+const isEditOpen = ref(false);
+const isDeleteOpen = ref(false);
+const updating = ref(false);
+const deleting = ref(false);
+
+async function onEdit(payload: CreatePortfolioPayload) {
+  updating.value = true;
+  try {
+    await portfolioApi.update(id.value, payload);
+    await refresh();
+    isEditOpen.value = false;
+    toast.success(t('portfolios.toast.updated'));
+  } catch (err) {
+    const message =
+      err instanceof ApiError && err.detail
+        ? err.detail
+        : t('portfolios.toast.update_failed');
+    toast.error(message);
+  } finally {
+    updating.value = false;
+  }
+}
+
+async function onDelete() {
+  deleting.value = true;
+  try {
+    await portfolioApi.remove(id.value);
+    await refreshNuxtData('portfolios:list');
+    isDeleteOpen.value = false;
+    toast.success(t('portfolios.toast.deleted'));
+    await navigateTo(localePath('/'));
+  } catch (err) {
+    const message =
+      err instanceof ApiError && err.detail
+        ? err.detail
+        : t('portfolios.toast.delete_failed');
+    toast.error(message);
+  } finally {
+    deleting.value = false;
+  }
+}
 
 const tabs = computed<TabItem[]>(() => [
   {
