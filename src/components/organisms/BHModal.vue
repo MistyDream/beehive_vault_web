@@ -50,7 +50,6 @@
 </template>
 
 <script setup lang="ts">
-import { useFocusTrap } from '@vueuse/integrations/useFocusTrap';
 import { LucideX } from '#components';
 import type { Component } from 'vue';
 
@@ -91,31 +90,11 @@ function onOverlayClick() {
 const isScrollLocked = useScrollLock(
   () => (import.meta.client ? document.body : null),
 );
-const { activate, deactivate } = useFocusTrap(modalRef, {
-  allowOutsideClick: true,
-  escapeDeactivates: false,
-  returnFocusOnDeactivate: false,
+const isOpen = computed(() => props.modelValue);
+watch(isOpen, (open) => {
+  isScrollLocked.value = open;
 });
-
-let previousFocus: HTMLElement | null = null;
-
-watch(
-  () => props.modelValue,
-  (open) => {
-    isScrollLocked.value = open;
-    if (open) {
-      previousFocus = document.activeElement as HTMLElement | null;
-      nextTick(() => activate());
-    } else {
-      deactivate();
-      if (previousFocus && document.body.contains(previousFocus)) {
-        previousFocus.focus({ preventScroll: true });
-      }
-      previousFocus = null;
-    }
-  },
-  { immediate: true },
-);
+useModalFocusTrap(modalRef, isOpen, { escapeDeactivates: false });
 
 onKeyStroke('Escape', (e) => {
   if (!props.modelValue || !props.closeOnEscape) return;

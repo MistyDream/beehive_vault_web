@@ -31,7 +31,6 @@
 </template>
 
 <script setup lang="ts">
-import { useFocusTrap } from '@vueuse/integrations/useFocusTrap';
 import { LucideX } from '#components';
 
 const { t } = useI18n();
@@ -55,12 +54,6 @@ onKeyStroke('Escape', () => {
 
 const bodyRef = ref<HTMLElement | null>(null);
 const isScrollLocked = useScrollLock(bodyRef);
-const { activate, deactivate } = useFocusTrap(drawerRef, {
-  allowOutsideClick: true,
-  returnFocusOnDeactivate: false,
-});
-
-let previousFocus: HTMLElement | null = null;
 
 onMounted(() => {
   bodyRef.value = document.body;
@@ -68,17 +61,9 @@ onMounted(() => {
 
 watch(showDrawer, (open) => {
   isScrollLocked.value = open;
-  if (open) {
-    previousFocus = document.activeElement as HTMLElement | null;
-    nextTick(() => activate());
-  } else {
-    deactivate();
-    if (previousFocus && document.body.contains(previousFocus)) {
-      previousFocus.focus({ preventScroll: true });
-    }
-    previousFocus = null;
-  }
 });
+
+useModalFocusTrap(drawerRef, showDrawer);
 </script>
 
 <style lang="css" scoped>

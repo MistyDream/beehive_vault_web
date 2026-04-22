@@ -61,6 +61,7 @@ const isFocused = ref(false);
 const rawInput = ref('');
 
 const { locale } = useI18n();
+const { parseLocalizedNumber } = useLocaleFormatters();
 
 const displayValue = computed(() => {
   if (isFocused.value) {
@@ -87,17 +88,6 @@ function onBlur() {
   isFocused.value = false;
 }
 
-function parseLocalized(value: string): number {
-  const parts = new Intl.NumberFormat(locale.value).formatToParts(12345.6);
-  const decimalSep = parts.find((p) => p.type === 'decimal')?.value ?? '.';
-  const groupSep = parts.find((p) => p.type === 'group')?.value ?? ',';
-  const normalized = value
-    .split(groupSep).join('')
-    .replace(decimalSep, '.')
-    .replace(/[^\d.\-]/g, '');
-  return parseFloat(normalized);
-}
-
 function onInput(event: Event) {
   const value = (event.target as HTMLInputElement).value;
   rawInput.value = value;
@@ -107,7 +97,7 @@ function onInput(event: Event) {
     return;
   }
 
-  const parsed = parseLocalized(value);
+  const parsed = parseLocalizedNumber(value);
   if (isNaN(parsed)) {
     return;
   }

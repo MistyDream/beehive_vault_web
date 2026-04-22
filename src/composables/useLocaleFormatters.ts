@@ -47,5 +47,28 @@ export function useLocaleFormatters() {
     return relativeFmt.value.format(0, 'second');
   };
 
-  return { formatQuantity, formatPercent, formatDate, formatRelative };
+  const numberSeparators = computed(() => {
+    const parts = new Intl.NumberFormat(locale.value).formatToParts(12345.6);
+    return {
+      decimal: parts.find((p) => p.type === 'decimal')?.value ?? '.',
+      group: parts.find((p) => p.type === 'group')?.value ?? ',',
+    };
+  });
+
+  const parseLocalizedNumber = (value: string): number => {
+    const { decimal, group } = numberSeparators.value;
+    const normalized = value
+      .replaceAll(group, '')
+      .replace(decimal, '.')
+      .replace(/[^\d.\-]/g, '');
+    return parseFloat(normalized);
+  };
+
+  return {
+    formatQuantity,
+    formatPercent,
+    formatDate,
+    formatRelative,
+    parseLocalizedNumber,
+  };
 }
