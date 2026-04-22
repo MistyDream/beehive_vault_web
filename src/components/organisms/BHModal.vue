@@ -76,7 +76,7 @@ const emit = defineEmits<{
 
 const { t } = useI18n();
 const modalRef = ref<HTMLElement | null>(null);
-const titleId = computed(() => `bh-modal-title-${useId()}`);
+const titleId = useId();
 
 const sizeClass = computed(() => `bh-modal--${props.size}`);
 
@@ -94,16 +94,24 @@ const isScrollLocked = useScrollLock(
 const { activate, deactivate } = useFocusTrap(modalRef, {
   allowOutsideClick: true,
   escapeDeactivates: false,
+  returnFocusOnDeactivate: false,
 });
+
+let previousFocus: HTMLElement | null = null;
 
 watch(
   () => props.modelValue,
   (open) => {
     isScrollLocked.value = open;
     if (open) {
+      previousFocus = document.activeElement as HTMLElement | null;
       nextTick(() => activate());
     } else {
       deactivate();
+      if (previousFocus && document.body.contains(previousFocus)) {
+        previousFocus.focus({ preventScroll: true });
+      }
+      previousFocus = null;
     }
   },
   { immediate: true },

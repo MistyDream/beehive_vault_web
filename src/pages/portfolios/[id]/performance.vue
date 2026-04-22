@@ -1,9 +1,9 @@
 <template>
   <div class="portfolio-performance">
     <header class="portfolio-performance__toolbar">
-      <h1 class="portfolio-performance__title">
+      <h2 class="portfolio-performance__title">
         {{ t('portfolios.detail.performance.title') }}
-      </h1>
+      </h2>
       <BHPortfolioPeriodPicker
         :model-value="periodState"
         class="portfolio-performance__period"

@@ -320,7 +320,7 @@ watch(
 }
 
 .pagination-button {
-  @apply w-8 h-8 flex items-center justify-center;
+  @apply w-11 h-11 flex items-center justify-center;
   @apply bg-theme-bg-elevated-strong hover:bg-theme-accent-secondary/20;
   @apply border border-theme-border-secondary rounded-md;
   @apply text-sm;
