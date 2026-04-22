@@ -74,7 +74,7 @@ const removeAriaLabel = computed(() =>
 
 .bh-tag__remove {
   @apply rounded-full p-0.5;
-  @apply hover:bg-black/10;
+  @apply hover:bg-theme-text-primary/10;
   @apply transition-colors;
 }
 </style>

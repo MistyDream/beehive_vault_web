@@ -377,7 +377,7 @@ onClickOutside(selectRef, () => {
 
 .bh-searchable-select__panel {
   @apply absolute left-0 right-0 mt-2 z-10;
-  @apply bg-theme-bg-card border border-theme-border-secondary rounded-lg shadow-lg;
+  @apply bg-theme-bg-card border border-theme-border-secondary rounded-lg shadow-xl;
   @apply overflow-hidden flex flex-col;
 }
 
