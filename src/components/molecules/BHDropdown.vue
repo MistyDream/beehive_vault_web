@@ -402,7 +402,7 @@ onMounted(() => {
   @apply flex flex-col;
 }
 
-.bh-dropdown__items .bh-dropdown__item--danger {
+.bh-dropdown__items :deep(.bh-dropdown__item--danger) {
   @apply text-theme-status-error;
   @apply hover:bg-theme-status-error/10;
 }

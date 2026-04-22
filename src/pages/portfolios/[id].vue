@@ -65,10 +65,17 @@
 </template>
 
 <script setup lang="ts">
+import { promiseTimeout } from '@vueuse/core';
 import { LucideArrowLeft } from '#components';
 import type { TabItem } from '~/components/molecules/BHTabs.vue';
 import { ApiError } from '~/types/api';
 import type { CreatePortfolioPayload } from '~/types/portfolio';
+
+// Delay between a success toast and a route change — lets assistive tech
+// finish announcing the live-region message before the dialog unmounts.
+const TOAST_ANNOUNCE_DELAY_MS = 400;
+
+type BusyKind = 'edit' | 'delete';
 
 const { t } = useI18n();
 const localePath = useLocalePath();
@@ -77,51 +84,66 @@ const id = computed(() => Number(route.params.id));
 
 const portfolioApi = usePortfolioApi();
 const toast = useToast();
+const isMounted = useMounted();
 
 const { portfolio, detailPending, detailError, refresh } = usePortfolioDetail(id);
 
 const isEditOpen = ref(false);
 const isDeleteOpen = ref(false);
-const updating = ref(false);
-const deleting = ref(false);
+const busy = ref<BusyKind | null>(null);
+const updating = computed(() => busy.value === 'edit');
+const deleting = computed(() => busy.value === 'delete');
 
-async function onEdit(payload: CreatePortfolioPayload) {
-  updating.value = true;
+async function runAction(
+  kind: BusyKind,
+  op: () => Promise<void>,
+  successKey: string,
+  failKey: string,
+  afterSuccess?: () => Promise<void>,
+) {
+  busy.value = kind;
   try {
-    await portfolioApi.update(id.value, payload);
-    await refresh();
-    isEditOpen.value = false;
-    toast.success(t('portfolios.toast.updated'));
+    await op();
+    toast.success(t(successKey));
+    await afterSuccess?.();
   } catch (err) {
-    const message =
-      err instanceof ApiError && err.detail
-        ? err.detail
-        : t('portfolios.toast.update_failed');
-    toast.error(message);
+    toast.error(err instanceof ApiError && err.detail ? err.detail : t(failKey));
   } finally {
-    updating.value = false;
+    busy.value = null;
   }
 }
 
+async function onEdit(payload: CreatePortfolioPayload) {
+  await runAction(
+    'edit',
+    async () => {
+      await portfolioApi.update(id.value, payload);
+      await refresh();
+      isEditOpen.value = false;
+    },
+    'portfolios.toast.updated',
+    'portfolios.toast.update_failed',
+  );
+}
+
 async function onDelete() {
-  deleting.value = true;
-  try {
-    await portfolioApi.remove(id.value);
-    await refreshNuxtData('portfolios:list');
-    isDeleteOpen.value = false;
-    toast.success(t('portfolios.toast.deleted'));
-    // Give assistive tech time to announce the success toast before the route unmounts the dialog.
-    await new Promise((resolve) => setTimeout(resolve, 400));
-    await navigateTo(localePath('/'));
-  } catch (err) {
-    const message =
-      err instanceof ApiError && err.detail
-        ? err.detail
-        : t('portfolios.toast.delete_failed');
-    toast.error(message);
-  } finally {
-    deleting.value = false;
-  }
+  await runAction(
+    'delete',
+    async () => {
+      await portfolioApi.remove(id.value);
+      isDeleteOpen.value = false;
+    },
+    'portfolios.toast.deleted',
+    'portfolios.toast.delete_failed',
+    async () => {
+      await Promise.all([
+        refreshNuxtData('portfolios:list'),
+        promiseTimeout(TOAST_ANNOUNCE_DELAY_MS),
+      ]);
+      if (!isMounted.value) return;
+      await navigateTo(localePath('/'));
+    },
+  );
 }
 
 const tabs = computed<TabItem[]>(() => [
