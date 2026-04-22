@@ -101,6 +101,7 @@ const menuItems = computed<NavigationLink[]>(() => [
   {
     text: t('portfolios.detail.actions.delete'),
     icon: LucideTrash2,
+    danger: true,
     onClick: () => emit('delete'),
   },
 ]);

@@ -3,12 +3,13 @@
     :model-value="modelValue"
     :title="t('portfolios.detail.delete.title')"
     :icon="LucideTriangleAlert"
+    icon-class="text-theme-status-error"
     size="md"
     role="alertdialog"
     :described-by="warningId"
     :close-on-overlay-click="!loading"
     :close-on-escape="!loading"
-    @update:model-value="$emit('update:modelValue', $event)"
+    @update:model-value="onDialogUpdate"
   >
     <div class="bh-portfolio-delete">
       <p :id="warningId" class="bh-portfolio-delete__warning">
@@ -69,12 +70,17 @@ const props = withDefaults(defineProps<Props>(), {
   loading: false,
 });
 
-defineEmits<{
+const emit = defineEmits<{
   (e: 'update:modelValue', value: boolean): void;
   (e: 'confirm'): void;
 }>();
 
 const { t } = useI18n();
+
+function onDialogUpdate(value: boolean) {
+  if (props.loading && value === false) return;
+  emit('update:modelValue', value);
+}
 
 const warningId = useId();
 const targetId = useId();
@@ -114,14 +120,14 @@ const canConfirm = computed(
 }
 
 .bh-portfolio-delete__target {
-  @apply block px-3 py-2 rounded-md;
+  @apply block px-3 py-2 rounded-lg;
   @apply bg-theme-bg-elevated;
-  @apply font-mono text-sm text-theme-text-primary font-semibold;
+  @apply font-space text-sm text-theme-text-primary font-semibold;
   @apply break-all select-all;
 }
 
 .bh-portfolio-delete__input {
-  @apply w-full px-4 py-2 rounded-lg;
+  @apply w-full px-4 py-2.5 rounded-lg min-h-[40px];
   @apply bg-theme-bg-card;
   @apply border border-theme-border-secondary;
   @apply text-sm text-theme-text-primary font-medium placeholder:text-theme-text-muted;

@@ -25,6 +25,7 @@
             v-if="icon"
             :size="20"
             class="bh-modal__icon"
+            :class="iconClass"
             aria-hidden="true"
           />
           <h2 :id="titleId" class="bh-modal__title">{{ title }}</h2>
@@ -58,6 +59,7 @@ interface Props {
   modelValue: boolean;
   title: string;
   icon?: Component;
+  iconClass?: string;
   size?: 'sm' | 'md' | 'lg';
   closeOnOverlayClick?: boolean;
   closeOnEscape?: boolean;
@@ -67,6 +69,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   icon: undefined,
+  iconClass: undefined,
   size: 'md',
   closeOnOverlayClick: true,
   closeOnEscape: true,
@@ -157,7 +160,7 @@ onKeyStroke('Escape', (e) => {
 }
 
 .bh-modal__icon {
-  @apply text-theme-text-primary;
+  @apply shrink-0;
 }
 
 .bh-modal__title {

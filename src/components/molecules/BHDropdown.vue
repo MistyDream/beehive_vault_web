@@ -65,6 +65,7 @@
               :to="item.to"
               :href="item.href"
               :disabled="item.disabled"
+              :class="{ 'bh-dropdown__item--danger': item.danger }"
               role="menuitem"
               :tabindex="item.disabled ? -1 : 0"
               @click="handleItemSelect(item)"
@@ -399,5 +400,10 @@ onMounted(() => {
 
 .bh-dropdown__items {
   @apply flex flex-col;
+}
+
+.bh-dropdown__items .bh-dropdown__item--danger {
+  @apply text-theme-status-error;
+  @apply hover:bg-theme-status-error/10;
 }
 </style>
