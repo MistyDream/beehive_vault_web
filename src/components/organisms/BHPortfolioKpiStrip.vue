@@ -3,7 +3,7 @@
     <BHKpiTile
       :label="t('portfolios.detail.kpi.invested')"
       :icon="LucideBanknote"
-      :loading="summaryPending"
+      :loading="summaryLoading"
     >
       <BHCurrencyDisplay
         v-if="summary"
@@ -16,7 +16,7 @@
     <BHKpiTile
       :label="t('portfolios.detail.kpi.cash')"
       :icon="LucideWallet"
-      :loading="summaryPending"
+      :loading="summaryLoading"
     >
       <BHCurrencyDisplay
         v-if="summary"
@@ -29,7 +29,7 @@
     <BHKpiTile
       :label="t('portfolios.detail.kpi.net_result')"
       :icon="LucideTrendingUp"
-      :loading="performancePending"
+      :loading="performanceLoading"
     >
       <template v-if="performance">
         <BHCurrencyDisplay
@@ -48,7 +48,7 @@
     <BHKpiTile
       :label="t('portfolios.detail.kpi.positions_count')"
       :icon="LucideLayers"
-      :loading="summaryPending"
+      :loading="summaryLoading"
     >
       <span v-if="summary" class="bh-kpi-strip__count">
         {{ summary.positions.length }}
@@ -78,6 +78,11 @@ const { t } = useI18n();
 
 const { summary, performance, summaryPending, performancePending } =
   usePortfolioDetail(() => props.portfolioId);
+
+const summaryLoading = computed(() => summaryPending.value && !summary.value);
+const performanceLoading = computed(
+  () => performancePending.value && !performance.value,
+);
 
 const netResultPercent = computed(() => {
   if (!performance.value || !summary.value) return null;

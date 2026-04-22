@@ -5,7 +5,7 @@
         :is="icon"
         v-if="icon"
         :size="16"
-        class="bh-kpi-tile__icon"
+        :class="['bh-kpi-tile__icon', iconVariantClass]"
         aria-hidden="true"
       />
       <span class="bh-kpi-tile__label">{{ label }}</span>
@@ -26,12 +26,18 @@ interface Props {
   label: string;
   loading?: boolean;
   icon?: Component;
+  iconVariant?: 'muted' | 'success' | 'error' | 'warning' | 'accent';
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   loading: false,
   icon: undefined,
+  iconVariant: 'muted',
 });
+
+const iconVariantClass = computed(
+  () => `bh-kpi-tile__icon--${props.iconVariant}`,
+);
 </script>
 
 <style lang="css" scoped>
@@ -47,6 +53,22 @@ withDefaults(defineProps<Props>(), {
 
 .bh-kpi-tile__icon {
   @apply text-theme-text-muted;
+}
+
+.bh-kpi-tile__icon--success {
+  @apply text-theme-status-success;
+}
+
+.bh-kpi-tile__icon--error {
+  @apply text-theme-status-error;
+}
+
+.bh-kpi-tile__icon--warning {
+  @apply text-theme-status-warning;
+}
+
+.bh-kpi-tile__icon--accent {
+  @apply text-theme-accent-primary;
 }
 
 .bh-kpi-tile__label {

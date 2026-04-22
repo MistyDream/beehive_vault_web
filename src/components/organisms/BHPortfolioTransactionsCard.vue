@@ -211,16 +211,19 @@
             </td>
           </tr>
           <tr
-            v-if="expandedId === tx.id"
             :id="`tx-details-${tx.id}`"
             class="bh-tx-card__details-row"
+            :class="{ 'bh-tx-card__details-row--open': expandedId === tx.id }"
+            :aria-hidden="expandedId !== tx.id || undefined"
           >
             <td :colspan="columns.length" class="bh-tx-card__details-cell">
-              <div
-                class="bh-tx-card__details"
-                role="region"
-                :aria-label="t('portfolios.detail.transactions.detail.region_label', { date: formatDate(tx.executed_at) })"
-              >
+              <div class="bh-tx-card__details-wrap">
+                <div class="bh-tx-card__details-inner">
+                  <div
+                    class="bh-tx-card__details"
+                    role="region"
+                    :aria-label="t('portfolios.detail.transactions.detail.region_label', { date: formatDate(tx.executed_at) })"
+                  >
                 <dl class="bh-tx-card__details-grid">
                   <div class="bh-tx-card__details-field">
                     <dt class="bh-tx-card__details-label">
@@ -263,6 +266,8 @@
                     />
                     {{ t('portfolios.detail.transactions.detail.delete') }}
                   </BHButton>
+                </div>
+                  </div>
                 </div>
               </div>
             </td>
@@ -532,13 +537,21 @@ function onDelete(_tx: Transaction) {
 }
 
 .bh-tx-card__row {
-  @apply cursor-pointer transition-colors duration-150;
-  @apply hover:bg-theme-bg-elevated;
+  @apply cursor-pointer;
 }
 
-.bh-tx-card__row--expanded {
+.bh-tx-card__row > td {
+  @apply transition-colors duration-300;
+}
+
+.bh-tx-card__row:hover > td {
+  @apply bg-theme-bg-elevated;
+}
+
+.bh-tx-card__row--expanded > td {
   @apply bg-theme-bg-elevated/60;
 }
+
 
 .bh-tx-card__cell {
   @apply px-4 py-3 text-sm text-theme-text-primary;
@@ -648,17 +661,34 @@ function onDelete(_tx: Transaction) {
   @apply rotate-180;
 }
 
-.bh-tx-card__details-row {
-  @apply bg-theme-bg-elevated/30;
+.bh-tx-card__details-cell {
+  @apply p-0;
 }
 
-.bh-tx-card__details-cell {
-  @apply px-4 py-4;
-  @apply border-b border-theme-border-secondary/60;
+.bh-tx-card__details-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.25s ease;
+}
+
+.bh-tx-card__details-row--open .bh-tx-card__details-wrap {
+  grid-template-rows: 1fr;
+}
+
+.bh-tx-card__details-inner {
+  @apply overflow-hidden bg-theme-bg-elevated/30;
 }
 
 .bh-tx-card__details {
   @apply flex flex-col gap-4 md:flex-row md:items-start md:justify-between;
+  @apply px-4 py-4;
+  @apply border-b border-theme-border-secondary/60;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bh-tx-card__details-wrap {
+    transition: none;
+  }
 }
 
 .bh-tx-card__details-grid {

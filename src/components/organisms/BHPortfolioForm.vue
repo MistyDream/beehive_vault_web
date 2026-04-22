@@ -16,7 +16,6 @@
     <BHBaseInput
       v-model="form.currency"
       :label="t('portfolios.form.currency_label')"
-      placeholder="EUR"
       :error="errors.currency"
     />
 

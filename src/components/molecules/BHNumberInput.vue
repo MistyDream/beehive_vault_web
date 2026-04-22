@@ -61,6 +61,7 @@ const isFocused = ref(false);
 const rawInput = ref('');
 
 const { locale } = useI18n();
+const { parseLocalizedNumber } = useLocaleFormatters();
 
 const displayValue = computed(() => {
   if (isFocused.value) {
@@ -91,14 +92,12 @@ function onInput(event: Event) {
   const value = (event.target as HTMLInputElement).value;
   rawInput.value = value;
 
-  const cleaned = value.replace(',', '.').replace(/[^\d.\-]/g, '');
-  const parsed = parseFloat(cleaned);
-
   if (value === '' || value === '-') {
     emit('update:modelValue', null);
     return;
   }
 
+  const parsed = parseLocalizedNumber(value);
   if (isNaN(parsed)) {
     return;
   }

@@ -189,7 +189,7 @@ function labelFor(tx: Transaction): string {
 }
 
 .bh-recent-card__empty {
-  @apply relative overflow-hidden rounded-xl;
+  @apply relative overflow-hidden rounded-2xl;
 }
 
 .bh-recent-card__empty-pattern {

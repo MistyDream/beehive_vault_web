@@ -70,7 +70,7 @@ const { isDark, toggle } = useTheme();
 const { isOpen, close } = useSidebar();
 const route = useRoute();
 
-const navigation: NavigationLink[] = [
+const navigation = computed<NavigationLink[]>(() => [
   {
     text: t('dashboard'),
     to: localePath('/'),
@@ -81,7 +81,7 @@ const navigation: NavigationLink[] = [
     to: localePath('/bank-account'),
     icon: LucideWallet,
   },
-];
+]);
 
 watch(() => route.fullPath, () => {
   if (isOpen.value) close();

@@ -8401,6 +8401,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+"highcharts-vue@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "highcharts-vue@npm:2.0.1"
+  peerDependencies:
+    highcharts: ">=5.0.0"
+    vue: ">=3.0.0"
+  checksum: 10c0/de8bd03e2e18acba36c8b019a414515fbf0a2237a17e5bd8ae06630c870d50f16a171c1290adc6321799c65bedab3195148f083582b59795cc2b61eb3dc5e4f8
+  languageName: node
+  linkType: hard
+
+"highcharts@npm:^12.6.0":
+  version: 12.6.0
+  resolution: "highcharts@npm:12.6.0"
+  peerDependencies:
+    jspdf: ^4.1.0
+    svg2pdf.js: ^2.7.0
+  peerDependenciesMeta:
+    jspdf:
+      optional: true
+    svg2pdf.js:
+      optional: true
+  checksum: 10c0/563862b15e935dbe93fba9a89f9c03e8f0ee2344151361d5fd97564f72b4bbb5f483cfb7e5c38fd49be7c95850b2ba72e278b9b39292aef4b4f1dbe2f5602b82
+  languageName: node
+  linkType: hard
+
 "hookable@npm:^5.5.3":
   version: 5.5.3
   resolution: "hookable@npm:5.5.3"
@@ -10301,6 +10326,8 @@ __metadata:
     "@vueuse/nuxt": "npm:13.0.0"
     eslint: "npm:^9.0.0"
     focus-trap: "npm:^8.0.1"
+    highcharts: "npm:^12.6.0"
+    highcharts-vue: "npm:^2.0.1"
     nuxt: "npm:^3.19.0"
     nuxt-charts: "npm:^2.1.4"
     nuxt-lucide-icons: "npm:1.0.5"
