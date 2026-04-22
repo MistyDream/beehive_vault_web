@@ -35,11 +35,13 @@
       </BHButton>
 
       <BHDropdown placement="bottom-end" :items="menuItems">
-        <template #trigger="{ toggle }">
+        <template #trigger="{ toggle, isOpen }">
           <button
             type="button"
             class="bh-portfolio-header__menu-trigger"
             :aria-label="t('portfolios.detail.actions.menu')"
+            aria-haspopup="true"
+            :aria-expanded="isOpen"
             @click.stop="toggle"
           >
             <LucideEllipsisVertical :size="20" aria-hidden="true" />

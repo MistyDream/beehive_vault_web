@@ -4,27 +4,30 @@
     :title="t('portfolios.detail.delete.title')"
     :icon="LucideTriangleAlert"
     size="md"
+    role="alertdialog"
+    :described-by="warningId"
     :close-on-overlay-click="!loading"
     :close-on-escape="!loading"
     @update:model-value="$emit('update:modelValue', $event)"
   >
     <div class="bh-portfolio-delete">
-      <p class="bh-portfolio-delete__warning">
+      <p :id="warningId" class="bh-portfolio-delete__warning">
         {{ t('portfolios.detail.delete.description') }}
       </p>
 
-      <p class="bh-portfolio-delete__instruction">
+      <label :for="inputId" class="bh-portfolio-delete__instruction">
         {{ t('portfolios.detail.delete.confirm_label') }}
-      </p>
-      <p class="bh-portfolio-delete__target">{{ portfolio.name }}</p>
+      </label>
+      <code :id="targetId" class="bh-portfolio-delete__target">{{ portfolio.name }}</code>
 
       <input
+        :id="inputId"
         ref="inputRef"
         v-model="typedName"
         type="text"
         :placeholder="portfolio.name"
         :disabled="loading"
-        :aria-label="t('portfolios.detail.delete.confirm_input_label')"
+        :aria-describedby="`${warningId} ${targetId}`"
         autocomplete="off"
         class="bh-portfolio-delete__input"
       />
@@ -73,6 +76,10 @@ defineEmits<{
 
 const { t } = useI18n();
 
+const warningId = useId();
+const targetId = useId();
+const inputId = useId();
+
 const typedName = ref('');
 const inputRef = ref<HTMLInputElement | null>(null);
 
@@ -107,7 +114,7 @@ const canConfirm = computed(
 }
 
 .bh-portfolio-delete__target {
-  @apply px-3 py-2 rounded-md;
+  @apply block px-3 py-2 rounded-md;
   @apply bg-theme-bg-elevated;
   @apply font-mono text-sm text-theme-text-primary font-semibold;
   @apply break-all select-all;

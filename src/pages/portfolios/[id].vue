@@ -110,6 +110,8 @@ async function onDelete() {
     await refreshNuxtData('portfolios:list');
     isDeleteOpen.value = false;
     toast.success(t('portfolios.toast.deleted'));
+    // Give assistive tech time to announce the success toast before the route unmounts the dialog.
+    await new Promise((resolve) => setTimeout(resolve, 400));
     await navigateTo(localePath('/'));
   } catch (err) {
     const message =

@@ -14,9 +14,10 @@
         ref="modalRef"
         class="bh-modal"
         :class="sizeClass"
-        role="dialog"
+        :role="role"
         aria-modal="true"
         :aria-labelledby="titleId"
+        :aria-describedby="describedBy"
       >
         <header class="bh-modal__header">
           <component
@@ -60,6 +61,8 @@ interface Props {
   size?: 'sm' | 'md' | 'lg';
   closeOnOverlayClick?: boolean;
   closeOnEscape?: boolean;
+  role?: 'dialog' | 'alertdialog';
+  describedBy?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -67,6 +70,8 @@ const props = withDefaults(defineProps<Props>(), {
   size: 'md',
   closeOnOverlayClick: true,
   closeOnEscape: true,
+  role: 'dialog',
+  describedBy: undefined,
 });
 
 const emit = defineEmits<{

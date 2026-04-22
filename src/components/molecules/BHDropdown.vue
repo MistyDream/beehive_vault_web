@@ -140,8 +140,9 @@ const { t } = useI18n();
 const triggerRef = ref<HTMLElement>();
 const floatingRef = ref<HTMLElement>();
 const itemRefs = ref<HTMLElement[]>([]);
-const ENTER_ANIMATION_MS = 200;
-const LEAVE_ANIMATION_MS = 160;
+const reducedMotion = usePreferredReducedMotion();
+const enterMs = computed(() => (reducedMotion.value === 'reduce' ? 0 : 200));
+const leaveMs = computed(() => (reducedMotion.value === 'reduce' ? 0 : 160));
 
 const [isOpen, toggle] = useToggle(props.modelValue);
 const showMenu = ref(false);
@@ -173,12 +174,12 @@ const focusableItems = () =>
 
 const { start: scheduleOpenEnd } = useTimeoutFn(() => {
   isAnimating.value = false;
-}, ENTER_ANIMATION_MS, { immediate: false });
+}, enterMs, { immediate: false });
 
 const { start: scheduleCloseEnd } = useTimeoutFn(() => {
   showMenu.value = false;
   isAnimating.value = false;
-}, LEAVE_ANIMATION_MS, { immediate: false });
+}, leaveMs, { immediate: false });
 
 const open = () => {
   if (props.disabled || isAnimating.value) return;

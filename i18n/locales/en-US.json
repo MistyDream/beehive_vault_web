@@ -107,7 +107,6 @@
         "title": "Delete portfolio",
         "description": "This action is permanent. All associated transactions and positions will also be deleted.",
         "confirm_label": "To confirm, type the portfolio name:",
-        "confirm_input_label": "Portfolio name to delete",
         "cancel": "Cancel",
         "confirm": "Delete permanently"
       },
