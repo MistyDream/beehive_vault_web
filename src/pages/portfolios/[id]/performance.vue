@@ -6,7 +6,6 @@
       </h2>
       <BHPortfolioPeriodPicker
         :model-value="periodState"
-        class="portfolio-performance__period"
         @update:model-value="setPeriodState"
       />
     </header>
@@ -121,15 +120,11 @@ watch(
 
 .portfolio-performance__toolbar {
   @apply flex flex-col gap-3;
-  @apply sm:flex-row sm:items-end sm:justify-between;
+  @apply sm:flex-row sm:items-start sm:justify-between;
 }
 
 .portfolio-performance__title {
   @apply font-poppins text-xl font-semibold text-theme-text-primary;
-}
-
-.portfolio-performance__period {
-  @apply sm:self-end;
 }
 
 .portfolio-performance__error {

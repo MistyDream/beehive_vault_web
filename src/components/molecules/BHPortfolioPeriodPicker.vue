@@ -41,22 +41,26 @@
       </button>
     </div>
 
-    <div v-if="modelValue.preset === 'custom'" class="bh-period-picker__dates">
-      <BHDateInput
-        :label="t('portfolios.detail.performance.period.from_label')"
-        :model-value="modelValue.from ?? ''"
-        :max="modelValue.to || undefined"
-        class="bh-period-picker__date"
-        @update:model-value="onFromChange"
-      />
-      <BHDateInput
-        :label="t('portfolios.detail.performance.period.to_label')"
-        :model-value="modelValue.to ?? ''"
-        :min="modelValue.from || undefined"
-        class="bh-period-picker__date"
-        @update:model-value="onToChange"
-      />
-    </div>
+    <Transition name="bh-period-picker__dates">
+      <div v-if="modelValue.preset === 'custom'" class="bh-period-picker__dates-collapse">
+        <div class="bh-period-picker__dates">
+          <BHDateInput
+            :label="t('portfolios.detail.performance.period.from_label')"
+            :model-value="modelValue.from ?? ''"
+            :max="modelValue.to || undefined"
+            class="bh-period-picker__date"
+            @update:model-value="onFromChange"
+          />
+          <BHDateInput
+            :label="t('portfolios.detail.performance.period.to_label')"
+            :model-value="modelValue.to ?? ''"
+            :min="modelValue.from || undefined"
+            class="bh-period-picker__date"
+            @update:model-value="onToChange"
+          />
+        </div>
+      </div>
+    </Transition>
   </div>
 </template>
 
@@ -158,18 +162,39 @@ const onKeyNav = (event: KeyboardEvent, current: PeriodPreset) => {
   @apply border-l border-theme-border-secondary;
 }
 
-.bh-period-picker__pill--active {
-  @apply bg-theme-accent-primary text-theme-text-on-accent-primary;
-  @apply hover:bg-theme-accent-primary-strong hover:text-theme-text-on-accent-primary;
-}
-
 .bh-period-picker__pill--custom {
   @apply rounded-lg border border-theme-border-secondary;
   @apply bg-theme-bg-card;
 }
 
+.bh-period-picker__pill--active {
+  @apply bg-theme-accent-primary text-theme-text-on-accent-primary;
+  @apply hover:bg-theme-accent-primary-strong hover:text-theme-text-on-accent-primary;
+}
+
+.bh-period-picker__dates-collapse {
+  display: grid;
+  grid-template-rows: 1fr;
+}
+
+.bh-period-picker__dates-collapse > .bh-period-picker__dates {
+  overflow: hidden;
+  min-height: 0;
+}
+
 .bh-period-picker__dates {
   @apply flex flex-col sm:flex-row sm:items-end gap-3;
+}
+
+.bh-period-picker__dates-enter-from,
+.bh-period-picker__dates-leave-to {
+  grid-template-rows: 0fr;
+  opacity: 0;
+}
+
+.bh-period-picker__dates-enter-active,
+.bh-period-picker__dates-leave-active {
+  transition: grid-template-rows 0.25s ease-out, opacity 0.2s ease-out;
 }
 
 .bh-period-picker__date {
