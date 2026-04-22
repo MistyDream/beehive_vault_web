@@ -95,7 +95,6 @@
         "delete": "Delete"
       },
       "coming_soon": {
-        "performance": "Performance charts will land in phase 4.",
         "scoring": "Scoring will land once the API scoring feature is merged."
       },
       "transactions": {
@@ -204,6 +203,59 @@
           "deposit": "Deposit",
           "withdrawal": "Withdrawal"
         }
+      },
+      "performance": {
+        "title": "Performance",
+        "period": {
+          "label": "Period",
+          "preset_7d": "7 days",
+          "preset_30d": "30 days",
+          "preset_ytd": "Year to date",
+          "preset_12m": "12 months",
+          "preset_all": "Since inception",
+          "preset_custom": "Custom",
+          "from_label": "From",
+          "to_label": "To"
+        },
+        "hero": {
+          "label": "Net result",
+          "caption": "Realized flows only — unrealized gains are not included.",
+          "vs_deposited": "{percent} of total deposited"
+        },
+        "waterfall": {
+          "title": "Result breakdown",
+          "caption": "Cascade from deposits to net result.",
+          "step": {
+            "deposited": "Total deposited",
+            "realized_pnl": "Realized P&L",
+            "dividends": "Dividends",
+            "fees": "Fees",
+            "taxes": "Taxes",
+            "net": "Net result",
+            "total": "Total"
+          }
+        },
+        "breakdown": {
+          "title": "Details",
+          "total_deposited": "Total deposited",
+          "total_withdrawn": "Total withdrawn",
+          "realized_pnl": "Realized P&L",
+          "dividends": "Dividends",
+          "fees": "Fees",
+          "taxes": "Taxes"
+        },
+        "formula": {
+          "title": "Calculation formula",
+          "toggle_show": "Show formula",
+          "toggle_hide": "Hide formula",
+          "expression": "Net = P&L + Div − Fees − Taxes",
+          "caption": "Total deposited and total withdrawn are funding flows, not components of the result."
+        },
+        "empty_title": "No flow on this period",
+        "empty_description": "No transaction has been recorded for the selected period.",
+        "error_title": "Unable to load performance",
+        "error_description": "Something went wrong. Please try again.",
+        "error_retry": "Retry"
       },
       "error": {
         "title": "Unable to load this portfolio",

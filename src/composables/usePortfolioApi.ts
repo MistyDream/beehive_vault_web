@@ -65,7 +65,14 @@ export const usePortfolioApi = () => {
       {
         $fetch: $api,
         query: computed(() => toValue(filters) ?? {}),
-        key: computed(() => `portfolios:performance:${toValue(id)}`),
+        // Include filters in the dedup key so the unfiltered call from the
+        // header KPI strip (all-time) and the filtered call from the
+        // performance tab don't share the same cache entry.
+        key: computed(() => {
+          const f = toValue(filters) ?? {};
+          const { from_date, to_date } = f;
+          return `portfolios:performance:${toValue(id)}:${from_date ?? ''}:${to_date ?? ''}`;
+        }),
       },
     );
 
