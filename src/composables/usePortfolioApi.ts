@@ -98,7 +98,7 @@ export const usePortfolioApi = () => {
     });
 
   const remove = (id: number) =>
-    $api<void>(API_ENDPOINTS.PORTFOLIOS.DELETE(id), { method: 'DELETE' });
+    $api<unknown>(API_ENDPOINTS.PORTFOLIOS.DELETE(id), { method: 'DELETE' });
 
   return {
     list,

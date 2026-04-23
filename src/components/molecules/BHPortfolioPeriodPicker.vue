@@ -129,7 +129,7 @@ const onKeyNav = (event: KeyboardEvent, current: PeriodPreset) => {
     nextIndex = (index - 1 + ALL_PRESETS.length) % ALL_PRESETS.length;
   else if (key === 'Home') nextIndex = 0;
   else if (key === 'End') nextIndex = ALL_PRESETS.length - 1;
-  selectPreset(ALL_PRESETS[nextIndex]);
+  selectPreset(ALL_PRESETS[nextIndex]!);
 };
 </script>
 

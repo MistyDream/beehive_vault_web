@@ -14,17 +14,18 @@ yarn lint:fix   # ESLint + autofix
 yarn format     # Prettier
 ```
 
-Node 20+, yarn 4 (Berry). API base URL is wired through `src/plugins/api.ts`.
+Node 22+ (enforced via `engines.node` + `.nvmrc`). Yarn 4 (Berry) via corepack. API base URL is wired through `src/plugins/api.ts`.
 
 ## Stack
 
-- Nuxt 3 + Vue 3 (Composition API, `<script setup lang="ts">`)
-- TypeScript strict
-- Pinia (stores) + `@pinia/nuxt`
-- VueUse — prefer composables over hand-rolled logic
+- Nuxt 4 + Vue 3.5 (Composition API, `<script setup lang="ts">`)
+- vue-router 5, Unhead v2 (bundled)
+- TypeScript strict (noUncheckedIndexedAccess active)
+- Pinia 3 (stores) + `@pinia/nuxt`
+- VueUse 14 — prefer composables over hand-rolled logic; `@floating-ui/vue` for positioning
 - Tailwind via `@nuxtjs/tailwindcss` with custom `theme-*` tokens backed by CSS vars
-- `@nuxtjs/i18n` — strategy `prefix_except_default`, FR default, EN under `/en/*`
-- `vue-sonner` (toasts), `focus-trap`, `nuxt-charts` (Unovis wrapper), `nuxt-lucide-icons`, `@nuxt/fonts`, `@nuxt/image`
+- `@nuxtjs/i18n` 10 — strategy `prefix_except_default`, FR default, EN under `/en/*`
+- `vue-sonner` (toasts), `focus-trap`, `highcharts` + `highcharts-vue` (waterfall/performance charts), `nuxt-lucide-icons`, `@nuxt/fonts`, `@nuxt/image` 2
 
 ## Structure
 
@@ -39,7 +40,7 @@ src/
 ├── constants/               # theme.ts, http.ts
 ├── layouts/default.vue      # Shell applied to every page
 ├── pages/                   # Nuxt file-based routing (nested under [id]/ for tabs)
-├── plugins/api.ts           # $fetch wrapper with base URL + auth
+├── plugins/api.ts           # $fetch wrapper with base URL + Problem+JSON error mapping
 ├── stores/                  # Pinia (drawer, header, portfolio)
 ├── types/                   # Domain types (portfolio.ts, navigation-link.ts)
 ├── utils/                   # Pure functions (stringToColor.ts, transaction.ts)
@@ -122,7 +123,7 @@ Main vault at `/mnt/c/Users/Max/Documents/Obsidian Vault/`.
 - [[Projets/Beehive Vault/Implémentation Portfolio Pages]] / [[Projets/Beehive Vault/Implémentation Portfolio Detail]] — feature recaps + post-review logs
 - [[Projets/Beehive Vault/Product Brief]] — visual direction, typography, brand
 - [[Projets/Beehive Vault/Design Portfolio Detail]] — spec for the portfolio detail screen
-- [[Projets/Beehive Vault/Choix lib charts]] — chart library decision (nuxt-charts + TradingView)
+- [[Projets/Beehive Vault/Choix lib charts]] — chart library decision (nuxt-charts → Highcharts pivot, licensing tradeoffs)
 - [[Concepts/Atomic Design]] — component layering rationale
 - [[Concepts/Frontière DTO et value object]] — where serde/serializable types belong (applies to response shapes)
 - [[Concepts/Architecture hexagonale]] — backend layering (context for DTO shapes and error contracts)

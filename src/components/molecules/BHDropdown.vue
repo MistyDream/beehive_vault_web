@@ -145,7 +145,7 @@ const reducedMotion = usePreferredReducedMotion();
 const enterMs = computed(() => (reducedMotion.value === 'reduce' ? 0 : 200));
 const leaveMs = computed(() => (reducedMotion.value === 'reduce' ? 0 : 160));
 
-const [isOpen, toggle] = useToggle(props.modelValue);
+const [isOpen] = useToggle(props.modelValue);
 const showMenu = ref(false);
 const isAnimating = ref(false);
 const items = computed(() => props.items);

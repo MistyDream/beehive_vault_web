@@ -77,7 +77,7 @@
               @keydown.end.prevent="onEnd"
               @keydown.enter.prevent="onEnter"
               @keydown.escape.stop.prevent="closeDropdown"
-            />
+            >
           </div>
           <ul
             :id="listboxId"
@@ -207,9 +207,9 @@ const hasValue = computed(() => selectedOptions.value.length > 0);
 
 const displayLabel = computed(() => {
   if (!hasValue.value) return props.placeholder;
-  if (!props.multiple) return selectedOptions.value[0].label;
+  if (!props.multiple) return selectedOptions.value[0]!.label;
   const count = selectedOptions.value.length;
-  if (count === 1) return selectedOptions.value[0].label;
+  if (count === 1) return selectedOptions.value[0]!.label;
   return t('common.select_n_selected', count);
 });
 

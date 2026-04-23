@@ -19,7 +19,7 @@ export default defineNuxtConfig({
       script: [
         {
           tagPosition: 'head',
-          children: antiFlashScript,
+          innerHTML: antiFlashScript,
         },
       ],
     },
@@ -33,7 +33,6 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
     '@vueuse/nuxt',
-    'nuxt-charts',
     'nuxt-lucide-icons',
   ],
 
@@ -85,11 +84,13 @@ export default defineNuxtConfig({
   routeRules: {
     '/**': {
       headers: {
-        'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
+        'Strict-Transport-Security':
+          'max-age=63072000; includeSubDomains; preload',
         'X-Content-Type-Options': 'nosniff',
         'X-Frame-Options': 'DENY',
         'Referrer-Policy': 'strict-origin-when-cross-origin',
-        'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), interest-cohort=()',
+        'Permissions-Policy':
+          'camera=(), microphone=(), geolocation=(), interest-cohort=()',
         'Cross-Origin-Opener-Policy': 'same-origin',
         'Cross-Origin-Resource-Policy': 'same-origin',
       },

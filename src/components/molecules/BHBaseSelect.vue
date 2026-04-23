@@ -159,7 +159,7 @@ function onTriggerEnter() {
     return;
   }
   if (activeIndex.value >= 0) {
-    onOptionSelect(props.options[activeIndex.value]);
+    onOptionSelect(props.options[activeIndex.value]!);
   }
 }
 
@@ -234,7 +234,7 @@ const displayLabel = computed(() => {
   }
 
   if (!props.multiple) {
-    return selectedOptions.value[0].label;
+    return selectedOptions.value[0]!.label;
   }
 
   return t('common.select_n_selected', selectedOptions.value.length);

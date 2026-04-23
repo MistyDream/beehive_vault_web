@@ -33,7 +33,7 @@ function relativeLuminance([r, g, b]: readonly [number, number, number]): number
 
 // Foreground is picked so initials meet WCAG AA (≥4.5:1) against the palette background.
 export function avatarColorsFromSymbol(input: string): { bg: string; fg: string } {
-  const rgb = PALETTE[hashIndex(input)];
+  const rgb = PALETTE[hashIndex(input)]!;
   return {
     bg: `rgb(${rgb[0]} ${rgb[1]} ${rgb[2]})`,
     fg: relativeLuminance(rgb) > 0.35 ? 'rgb(26 26 26)' : 'rgb(255 255 255)',

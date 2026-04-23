@@ -147,7 +147,7 @@ function firstEnabledFrom(start: number, direction: 1 | -1): number {
   for (let step = 0; step < len; step++) {
     if (i < 0) i = len - 1;
     if (i >= len) i = 0;
-    const candidate = props.tabs[i];
+    const candidate = props.tabs[i]!;
     if (!candidate.disabled && !candidate.muted) return i;
     i += direction;
   }
@@ -168,7 +168,7 @@ function move(action: -1 | 1 | 'start' | 'end') {
   }
 
   if (targetIndex >= 0 && targetIndex !== currentIndex) {
-    emit('update:modelValue', props.tabs[targetIndex].id);
+    emit('update:modelValue', props.tabs[targetIndex]!.id);
     nextTick(() => tabRefs.value[targetIndex]?.focus());
   }
 }

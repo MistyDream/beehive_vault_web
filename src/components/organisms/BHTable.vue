@@ -68,15 +68,15 @@
         </BHButton>
 
         <BHButton
-          v-for="page in visiblePages"
-          :key="page"
+          v-for="pageNumber in visiblePages"
+          :key="pageNumber"
           class="pagination-button"
-          :class="{ 'pagination-button--active': page === current }"
-          :aria-label="t('table.go_to_page', { n: page })"
-          :aria-current="page === current ? 'page' : undefined"
-          @click="setCurrent(page)"
+          :class="{ 'pagination-button--active': pageNumber === current }"
+          :aria-label="t('table.go_to_page', { n: pageNumber })"
+          :aria-current="pageNumber === current ? 'page' : undefined"
+          @click="setCurrent(pageNumber)"
         >
-          {{ page }}
+          {{ pageNumber }}
         </BHButton>
 
         <BHButton
