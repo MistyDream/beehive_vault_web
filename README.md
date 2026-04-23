@@ -1,77 +1,35 @@
-# Nuxt Minimal Starter
+# Beehive Vault Web
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Frontend Nuxt 4 pour Beehive Vault — portfolio tracking et scoring d'actions.
+
+## Prérequis
+
+- **Node 22+** (`.nvmrc` fourni — `nvm use` pour aligner)
+- **Yarn 4** via corepack (`corepack enable` une fois, puis `yarn <cmd>`)
+- API Rust lancée sur `$API_BASE_URL` (par défaut `http://127.0.0.1:8080`)
 
 ## Setup
 
-Make sure to install dependencies:
-
 ```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
+nvm use                  # Node 22 depuis .nvmrc
+corepack enable          # active le shim yarn 4
 yarn install
-
-# bun
-bun install
+cp .env.example .env     # si présent, sinon définir API_BASE_URL
 ```
 
-ou
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
+## Commandes
 
 ```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
+yarn dev                 # dev server http://localhost:3000
+yarn build               # build production (Nitro + client)
+yarn preview             # preview du build
+yarn lint                # ESLint
+yarn lint:fix            # ESLint + autofix
+yarn format              # Prettier
+yarn nuxt typecheck      # Vue/TypeScript typecheck
 ```
 
-## Production
+## Documentation
 
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+- `CLAUDE.md` — stack, structure, conventions, patterns (point d'entrée pour contribuer)
+- Notes Obsidian dans `/mnt/c/Users/Max/Documents/Obsidian Vault/Projets/Beehive Vault/`
