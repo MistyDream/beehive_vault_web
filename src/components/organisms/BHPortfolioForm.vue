@@ -27,7 +27,12 @@
     />
 
     <div class="bh-portfolio-form__footer">
-      <BHButton variant="ghost" type="button" @click="$emit('cancel')">
+      <BHButton
+        variant="ghost"
+        type="button"
+        :disabled="loading"
+        @click="$emit('cancel')"
+      >
         {{ t('portfolios.form.cancel') }}
       </BHButton>
       <BHButton

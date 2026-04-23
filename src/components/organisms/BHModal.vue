@@ -14,9 +14,10 @@
         ref="modalRef"
         class="bh-modal"
         :class="sizeClass"
-        role="dialog"
+        :role="role"
         aria-modal="true"
         :aria-labelledby="titleId"
+        :aria-describedby="describedBy"
       >
         <header class="bh-modal__header">
           <component
@@ -24,6 +25,7 @@
             v-if="icon"
             :size="20"
             class="bh-modal__icon"
+            :class="iconClass"
             aria-hidden="true"
           />
           <h2 :id="titleId" class="bh-modal__title">{{ title }}</h2>
@@ -57,16 +59,22 @@ interface Props {
   modelValue: boolean;
   title: string;
   icon?: Component;
+  iconClass?: string;
   size?: 'sm' | 'md' | 'lg';
   closeOnOverlayClick?: boolean;
   closeOnEscape?: boolean;
+  role?: 'dialog' | 'alertdialog';
+  describedBy?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   icon: undefined,
+  iconClass: undefined,
   size: 'md',
   closeOnOverlayClick: true,
   closeOnEscape: true,
+  role: 'dialog',
+  describedBy: undefined,
 });
 
 const emit = defineEmits<{
@@ -152,7 +160,7 @@ onKeyStroke('Escape', (e) => {
 }
 
 .bh-modal__icon {
-  @apply text-theme-text-primary;
+  @apply shrink-0;
 }
 
 .bh-modal__title {

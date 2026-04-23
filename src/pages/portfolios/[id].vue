@@ -29,27 +29,134 @@
     </div>
 
     <template v-else-if="portfolio">
-      <BHPortfolioHeaderBand :portfolio="portfolio" />
+      <BHPortfolioHeaderBand
+        :portfolio="portfolio"
+        @edit="isEditOpen = true"
+        @delete="isDeleteOpen = true"
+      />
 
       <BHPortfolioKpiStrip :portfolio-id="id" :currency="portfolio.currency" />
 
       <BHTabs :tabs="tabs" :aria-label="t('portfolios.detail.tabs_label')" />
 
       <NuxtPage />
+
+      <BHModal
+        :model-value="isEditOpen"
+        :title="t('portfolios.form.modal_title_edit')"
+        size="md"
+        :close-on-overlay-click="!updating"
+        :close-on-escape="!updating"
+        @update:model-value="onEditModalUpdate"
+      >
+        <BHPortfolioForm
+          :initial-value="portfolio"
+          :loading="updating"
+          @submit="onEdit"
+          @cancel="isEditOpen = false"
+        />
+      </BHModal>
+
+      <BHPortfolioDeleteDialog
+        v-model="isDeleteOpen"
+        :portfolio="portfolio"
+        :loading="deleting"
+        @confirm="onDelete"
+      />
     </template>
   </section>
 </template>
 
 <script setup lang="ts">
+import { promiseTimeout } from '@vueuse/core';
 import { LucideArrowLeft } from '#components';
 import type { TabItem } from '~/components/molecules/BHTabs.vue';
+import { ApiError } from '~/types/api';
+import type { UpdatePortfolioPayload } from '~/types/portfolio';
+
+// Delay between a success toast and a route change — lets assistive tech
+// finish announcing the live-region message before the dialog unmounts.
+const TOAST_ANNOUNCE_DELAY_MS = 400;
+
+type BusyKind = 'edit' | 'delete';
 
 const { t } = useI18n();
 const localePath = useLocalePath();
 const route = useRoute();
 const id = computed(() => Number(route.params.id));
 
+const portfolioApi = usePortfolioApi();
+const toast = useToast();
+const isMounted = useMounted();
+
 const { portfolio, detailPending, detailError, refresh } = usePortfolioDetail(id);
+
+const isEditOpen = ref(false);
+const isDeleteOpen = ref(false);
+const busy = ref<BusyKind | null>(null);
+const updating = computed(() => busy.value === 'edit');
+const deleting = computed(() => busy.value === 'delete');
+
+async function runAction(
+  kind: BusyKind,
+  op: () => Promise<void>,
+  successKey: string,
+  failKey: string,
+  afterSuccess?: () => Promise<void>,
+) {
+  busy.value = kind;
+  try {
+    await op();
+    toast.success(t(successKey));
+    await afterSuccess?.();
+  } catch (err) {
+    toast.error(err instanceof ApiError && err.detail ? err.detail : t(failKey));
+  } finally {
+    busy.value = null;
+  }
+}
+
+async function onEdit(payload: UpdatePortfolioPayload) {
+  await runAction(
+    'edit',
+    async () => {
+      await portfolioApi.update(id.value, payload);
+      await Promise.all([refresh(), refreshNuxtData('portfolios:list')]);
+      isEditOpen.value = false;
+    },
+    'portfolios.toast.updated',
+    'portfolios.toast.update_failed',
+  );
+}
+
+async function onDelete() {
+  const deletedId = id.value;
+  await runAction(
+    'delete',
+    async () => {
+      await portfolioApi.remove(deletedId);
+      isDeleteOpen.value = false;
+    },
+    'portfolios.toast.deleted',
+    'portfolios.toast.delete_failed',
+    async () => {
+      await Promise.all([
+        refreshNuxtData('portfolios:list'),
+        promiseTimeout(TOAST_ANNOUNCE_DELAY_MS),
+      ]);
+      clearNuxtData(
+        (key) => key.startsWith('portfolios:') && key.includes(`:${deletedId}`),
+      );
+      if (!isMounted.value) return;
+      await navigateTo(localePath('/'));
+    },
+  );
+}
+
+function onEditModalUpdate(value: boolean) {
+  if (updating.value && !value) return;
+  isEditOpen.value = value;
+}
 
 const tabs = computed<TabItem[]>(() => [
   {

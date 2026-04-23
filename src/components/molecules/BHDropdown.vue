@@ -43,8 +43,15 @@
         v-if="showMenu"
         ref="floatingRef"
         class="bh-dropdown__menu"
-        :class="{ 'bh-dropdown__menu--entering': isAnimating && isOpen, 'bh-dropdown__menu--leaving': isAnimating && !isOpen }"
-        :style="floatingStyles"
+        :class="{
+          'bh-dropdown__menu--entering': isPositioned && isAnimating && isOpen,
+          'bh-dropdown__menu--leaving': isPositioned && isAnimating && !isOpen,
+        }"
+        :style="[
+          floatingStyles,
+          { transformOrigin: transformOrigin },
+          !isPositioned && { visibility: 'hidden' },
+        ]"
         role="menu"
         tabindex="-1"
         @keydown="handleMenuKeydown"
@@ -58,6 +65,7 @@
               :to="item.to"
               :href="item.href"
               :disabled="item.disabled"
+              :class="{ 'bh-dropdown__item--danger': item.danger }"
               role="menuitem"
               :tabindex="item.disabled ? -1 : 0"
               @click="handleItemSelect(item)"
@@ -133,7 +141,9 @@ const { t } = useI18n();
 const triggerRef = ref<HTMLElement>();
 const floatingRef = ref<HTMLElement>();
 const itemRefs = ref<HTMLElement[]>([]);
-const ANIMATION_MS = 300;
+const reducedMotion = usePreferredReducedMotion();
+const enterMs = computed(() => (reducedMotion.value === 'reduce' ? 0 : 200));
+const leaveMs = computed(() => (reducedMotion.value === 'reduce' ? 0 : 160));
 
 const [isOpen, toggle] = useToggle(props.modelValue);
 const showMenu = ref(false);
@@ -165,12 +175,12 @@ const focusableItems = () =>
 
 const { start: scheduleOpenEnd } = useTimeoutFn(() => {
   isAnimating.value = false;
-}, ANIMATION_MS, { immediate: false });
+}, enterMs, { immediate: false });
 
 const { start: scheduleCloseEnd } = useTimeoutFn(() => {
   showMenu.value = false;
   isAnimating.value = false;
-}, ANIMATION_MS, { immediate: false });
+}, leaveMs, { immediate: false });
 
 const open = () => {
   if (props.disabled || isAnimating.value) return;
@@ -258,15 +268,25 @@ const getTriggerButton = (): HTMLElement | undefined => {
   return btn ?? undefined;
 };
 
-const { floatingStyles } = useFloating(triggerRef, floatingRef, {
-  placement: computed(() => props.placement),
-  middleware: [
-    offsetMiddleware(() => props.offset),
-    flip(),
-    shift({ padding: 16 }),
-  ],
-  strategy: 'fixed',
-  whileElementsMounted: autoUpdate,
+const { floatingStyles, isPositioned, placement: resolvedPlacement } =
+  useFloating(triggerRef, floatingRef, {
+    placement: computed(() => props.placement),
+    middleware: [
+      offsetMiddleware(() => props.offset),
+      flip(),
+      shift({ padding: 16 }),
+    ],
+    strategy: 'fixed',
+    transform: false,
+    whileElementsMounted: autoUpdate,
+  });
+
+const transformOrigin = computed(() => {
+  const [side, align] = resolvedPlacement.value.split('-');
+  const vertical = side === 'top' ? 'bottom' : 'top';
+  const horizontal =
+    align === 'start' ? 'left' : align === 'end' ? 'right' : 'center';
+  return `${vertical} ${horizontal}`;
 });
 
 onClickOutside(
@@ -345,17 +365,45 @@ onMounted(() => {
   @apply py-2;
   @apply z-50;
   @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary;
+  will-change: transform, opacity;
 }
 
 .bh-dropdown__menu--entering {
-  animation: bh-fadeIn 0.2s ease-out forwards;
+  animation: bh-dropdown-enter 180ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .bh-dropdown__menu--leaving {
-  animation: bh-fadeOut 0.2s ease-in forwards;
+  animation: bh-dropdown-leave 140ms ease-in forwards;
+}
+
+@keyframes bh-dropdown-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes bh-dropdown-leave {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.96) translateY(-4px);
+  }
 }
 
 .bh-dropdown__items {
   @apply flex flex-col;
+}
+
+.bh-dropdown__items :deep(.bh-dropdown__item--danger) {
+  @apply text-theme-status-error;
+  @apply hover:bg-theme-status-error/10;
 }
 </style>

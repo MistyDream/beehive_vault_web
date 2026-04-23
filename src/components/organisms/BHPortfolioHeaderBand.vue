@@ -35,11 +35,13 @@
       </BHButton>
 
       <BHDropdown placement="bottom-end" :items="menuItems">
-        <template #trigger="{ toggle }">
+        <template #trigger="{ toggle, isOpen }">
           <button
             type="button"
             class="bh-portfolio-header__menu-trigger"
             :aria-label="t('portfolios.detail.actions.menu')"
+            aria-haspopup="true"
+            :aria-expanded="isOpen"
             @click.stop="toggle"
           >
             <LucideEllipsisVertical :size="20" aria-hidden="true" />
@@ -66,6 +68,11 @@ interface Props {
 
 const props = defineProps<Props>();
 
+const emit = defineEmits<{
+  (e: 'edit'): void;
+  (e: 'delete'): void;
+}>();
+
 const { t } = useI18n();
 const toast = useToast();
 const { formatRelative } = useLocaleFormatters();
@@ -89,12 +96,13 @@ const menuItems = computed<NavigationLink[]>(() => [
   {
     text: t('portfolios.detail.actions.edit'),
     icon: LucidePencil,
-    onClick: () => toast.info(t('toast.coming_soon')),
+    onClick: () => emit('edit'),
   },
   {
     text: t('portfolios.detail.actions.delete'),
     icon: LucideTrash2,
-    onClick: () => toast.info(t('toast.coming_soon')),
+    danger: true,
+    onClick: () => emit('delete'),
   },
 ]);
 </script>

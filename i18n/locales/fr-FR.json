@@ -63,10 +63,17 @@
       "cancel": "Annuler",
       "save": "Enregistrer",
       "modal_title": "Nouveau portefeuille",
+      "modal_title_edit": "Modifier le portefeuille",
       "errors": {
         "name_length": "Le nom doit faire entre 1 et 120 caractères",
         "currency_length": "La devise doit faire exactement 3 caractères"
       }
+    },
+    "toast": {
+      "updated": "Portefeuille mis à jour",
+      "deleted": "Portefeuille supprimé",
+      "update_failed": "Impossible de mettre à jour le portefeuille",
+      "delete_failed": "Impossible de supprimer le portefeuille"
     },
     "card": {
       "invested_label": "Investi",
@@ -95,6 +102,13 @@
       },
       "coming_soon": {
         "scoring": "Le scoring sera disponible quand la feature scoring de l'API sera mergée."
+      },
+      "delete": {
+        "title": "Supprimer le portefeuille",
+        "description": "Cette action est définitive. Toutes les transactions et positions associées seront également supprimées.",
+        "confirm_label": "Pour confirmer, tapez le nom du portefeuille :",
+        "cancel": "Annuler",
+        "confirm": "Supprimer définitivement"
       },
       "transactions": {
         "title": "Transactions",
