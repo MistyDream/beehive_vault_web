@@ -107,6 +107,8 @@ const menuItems = computed<NavigationLink[]>(() => [
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .bh-portfolio-header {
   @apply flex flex-col gap-4;
   @apply md:flex-row md:items-start md:justify-between;
@@ -140,7 +142,7 @@ const menuItems = computed<NavigationLink[]>(() => [
 
 .bh-portfolio-header__actions {
   @apply flex items-center gap-2;
-  @apply flex-shrink-0;
+  @apply shrink-0;
 }
 
 .bh-portfolio-header__menu-trigger {
@@ -149,6 +151,6 @@ const menuItems = computed<NavigationLink[]>(() => [
   @apply text-theme-text-muted;
   @apply hover:bg-theme-bg-elevated hover:text-theme-text-primary;
   @apply transition-colors duration-150;
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary;
+  @apply focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-theme-accent-primary;
 }
 </style>

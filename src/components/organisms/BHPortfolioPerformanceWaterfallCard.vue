@@ -163,6 +163,8 @@ function getCurrencySymbol(currency: string, activeLocale: string): string {
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .bh-perf-wf {
   @apply flex flex-col gap-4;
   @apply bg-theme-bg-card rounded-2xl border border-theme-border-primary;

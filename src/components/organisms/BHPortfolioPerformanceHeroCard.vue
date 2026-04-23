@@ -68,6 +68,8 @@ const pillClass = computed(() => {
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .bh-perf-hero {
   @apply flex flex-col items-center gap-3;
   @apply bg-theme-bg-elevated rounded-2xl border border-theme-border-primary;

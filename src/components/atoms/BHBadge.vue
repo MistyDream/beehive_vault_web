@@ -27,6 +27,8 @@ const sizeClass = computed(() => `bh-badge--${props.size}`);
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .bh-badge {
   @apply inline-flex items-center gap-1.5;
   @apply rounded-full font-medium border;

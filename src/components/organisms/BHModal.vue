@@ -112,6 +112,8 @@ onKeyStroke('Escape', (e) => {
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .bh-modal-overlay {
   @apply fixed inset-0 z-40;
   @apply bg-theme-overlay/60;
@@ -175,7 +177,7 @@ onKeyStroke('Escape', (e) => {
   @apply text-theme-text-muted;
   @apply hover:bg-theme-bg-elevated hover:text-theme-text-primary;
   @apply transition-colors;
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary;
+  @apply focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-theme-accent-primary;
 }
 
 .bh-modal__content {

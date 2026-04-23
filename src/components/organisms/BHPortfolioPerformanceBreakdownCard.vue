@@ -114,6 +114,8 @@ const tiles = computed<BreakdownTile[]>(() => [
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .bh-perf-breakdown {
   @apply flex flex-col gap-3;
 }

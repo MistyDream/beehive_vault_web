@@ -37,6 +37,8 @@ const props = withDefaults(defineProps<Props>(), {});
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .bh-vertical-navigation {
   @apply flex flex-col gap-2;
   @apply w-full;

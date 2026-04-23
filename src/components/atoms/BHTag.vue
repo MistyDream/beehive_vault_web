@@ -43,6 +43,8 @@ const removeAriaLabel = computed(() =>
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .bh-tag {
   @apply inline-flex items-center gap-1;
   @apply text-xs font-medium px-2 py-0.5 rounded;

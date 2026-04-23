@@ -200,6 +200,8 @@ useHead({
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .portfolio-detail {
   @apply flex flex-col gap-6;
   @apply p-4 md:p-6 lg:p-8;
@@ -211,7 +213,7 @@ useHead({
   @apply hover:text-theme-text-primary;
   @apply transition-colors;
   @apply no-underline;
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary focus-visible:rounded-md;
+  @apply focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-theme-accent-primary focus-visible:rounded-md;
 }
 
 .portfolio-detail__loading {

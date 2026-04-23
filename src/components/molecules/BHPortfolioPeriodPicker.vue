@@ -134,6 +134,8 @@ const onKeyNav = (event: KeyboardEvent, current: PeriodPreset) => {
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .bh-period-picker {
   @apply flex flex-col gap-3;
 }
@@ -155,7 +157,7 @@ const onKeyNav = (event: KeyboardEvent, current: PeriodPreset) => {
   @apply whitespace-nowrap;
   @apply transition-colors;
   @apply hover:bg-theme-bg-elevated hover:text-theme-text-primary;
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-theme-accent-primary;
+  @apply focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-theme-accent-primary;
 }
 
 .bh-period-picker__segment > .bh-period-picker__pill + .bh-period-picker__pill {

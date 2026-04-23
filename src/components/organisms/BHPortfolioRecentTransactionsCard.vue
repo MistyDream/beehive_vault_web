@@ -122,6 +122,8 @@ function labelFor(tx: Transaction): string {
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .bh-recent-card {
   @apply flex flex-col gap-3;
   @apply bg-theme-bg-card rounded-2xl border border-theme-border-primary;
@@ -140,7 +142,7 @@ function labelFor(tx: Transaction): string {
   @apply inline-flex items-center gap-1;
   @apply text-xs font-medium text-theme-accent-primary-strong;
   @apply underline underline-offset-2;
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary focus-visible:rounded-md;
+  @apply focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-theme-accent-primary focus-visible:rounded-md;
   @apply hover:text-theme-text-primary;
 }
 

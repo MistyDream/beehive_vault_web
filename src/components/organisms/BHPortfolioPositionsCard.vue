@@ -170,6 +170,8 @@ function onPageChange(newPage: number) {
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .bh-positions-card {
   @apply flex flex-col gap-3;
 }
@@ -233,7 +235,7 @@ function onPageChange(newPage: number) {
   @apply text-theme-text-muted;
   @apply hover:bg-theme-bg-elevated hover:text-theme-text-primary;
   @apply transition-colors duration-150;
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary;
+  @apply focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-theme-accent-primary;
 }
 
 .bh-positions-card__row--even {

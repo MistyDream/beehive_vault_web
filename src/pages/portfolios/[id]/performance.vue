@@ -114,6 +114,8 @@ watch(
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .portfolio-performance {
   @apply flex flex-col gap-4 lg:gap-6;
 }

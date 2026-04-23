@@ -1,3 +1,4 @@
+import tailwindcss from '@tailwindcss/vite';
 import { THEME_DEFAULT, THEME_STORAGE_KEY } from './src/constants/theme';
 
 const antiFlashScript = `(function(){try{var k='${THEME_STORAGE_KEY}';var t=localStorage.getItem(k);var d=t?t==='dark':${THEME_DEFAULT === 'dark'};var h=document.documentElement;h.classList.toggle('dark',d);h.classList.toggle('light',!d);}catch(e){document.documentElement.classList.add('${THEME_DEFAULT}');}})();`;
@@ -30,11 +31,14 @@ export default defineNuxtConfig({
     '@nuxt/fonts',
     '@nuxt/image',
     '@nuxtjs/i18n',
-    '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
     '@vueuse/nuxt',
     'nuxt-lucide-icons',
   ],
+
+  vite: {
+    plugins: [tailwindcss()],
+  },
 
   components: [
     {

@@ -111,6 +111,8 @@ function onInput(event: Event) {
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .bh-number-input {
   @apply flex flex-col gap-2;
   @apply w-full;
@@ -127,7 +129,7 @@ function onInput(event: Event) {
   @apply text-sm text-theme-text-primary font-medium placeholder:text-theme-text-muted;
   @apply transition-colors duration-150;
   @apply hover:border-theme-border-primary;
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary focus-visible:border-transparent;
+  @apply focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-theme-accent-primary focus-visible:border-transparent;
   @apply disabled:opacity-60 disabled:cursor-not-allowed;
 }
 

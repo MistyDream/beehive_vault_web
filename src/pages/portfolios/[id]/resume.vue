@@ -39,6 +39,8 @@ function onPositionClick(position: Position) {
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .portfolio-resume__grid {
   @apply grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6;
 }

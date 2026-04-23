@@ -67,6 +67,8 @@ useModalFocusTrap(drawerRef, showDrawer);
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .drawer-enter-active {
   animation: bh-slideInRight 0.3s ease-out;
 }

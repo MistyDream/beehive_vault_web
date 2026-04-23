@@ -22,7 +22,6 @@
     "@nuxt/fonts": "^0.14.0",
     "@nuxt/image": "^2.0.0",
     "@nuxtjs/i18n": "10.2.4",
-    "@nuxtjs/tailwindcss": "6.14.0",
     "@pinia/nuxt": "0.11.3",
     "@vueuse/integrations": "^14.2.1",
     "@vueuse/nuxt": "14.2.1",
@@ -33,12 +32,14 @@
     "nuxt": "^4.4.2",
     "nuxt-lucide-icons": "2.1.0",
     "pinia": "^3.0.4",
+    "tailwindcss": "^4.2.4",
     "vue": "^3.5.33",
     "vue-router": "^5.0.6",
     "vue-sonner": "^2.0.9"
   },
   "packageManager": "yarn@4.7.0+sha512.5a0afa1d4c1d844b3447ee3319633797bcd6385d9a44be07993ae52ff4facabccafb4af5dcd1c2f9a94ac113e5e9ff56f6130431905884414229e284e37bb7c9",
   "devDependencies": {
+    "@tailwindcss/vite": "^4.2.4",
     "@types/node": "^25.6.0",
     "prettier": "^3.8.3",
     "typescript": "^6.0.3",

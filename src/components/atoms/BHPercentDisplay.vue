@@ -44,6 +44,8 @@ const colorClass = computed(() => {
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .bh-percent-display {
   @apply font-space tabular-nums;
 }

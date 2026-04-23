@@ -21,6 +21,8 @@ const { isOpen, toggle } = useSidebar();
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .bh-header {
   @apply flex items-center gap-3;
   @apply ml-0 lg:ml-72 p-4;
@@ -33,6 +35,6 @@ const { isOpen, toggle } = useSidebar();
   @apply text-theme-text-primary;
   @apply hover:bg-theme-bg-elevated;
   @apply transition-colors;
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary;
+  @apply focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-theme-accent-primary;
 }
 </style>

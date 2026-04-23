@@ -44,7 +44,7 @@
           </template>
         </BHSearchableSelect>
       </div>
-      <div class="w-[10rem] flex-shrink-0">
+      <div class="w-[10rem] shrink-0">
         <BHDateInput
           :label="t('portfolios.detail.transactions.filters.from_label')"
           :model-value="fromDate ?? ''"
@@ -52,7 +52,7 @@
           @update:model-value="onFromUpdate"
         />
       </div>
-      <div class="w-[10rem] flex-shrink-0">
+      <div class="w-[10rem] shrink-0">
         <BHDateInput
           :label="t('portfolios.detail.transactions.filters.to_label')"
           :model-value="toDate ?? ''"
@@ -61,7 +61,7 @@
         />
       </div>
       <BHButton
-        class="ml-auto flex-shrink-0"
+        class="ml-auto shrink-0"
         variant="primary"
         @click="emit('add')"
       >
@@ -214,6 +214,8 @@ const chips = computed<Chip[]>(() => {
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .bh-tx-toolbar {
   @apply flex flex-col gap-3;
   @apply p-4 md:p-5;
@@ -237,7 +239,7 @@ const chips = computed<Chip[]>(() => {
   @apply text-xs font-medium text-theme-accent-primary-strong;
   @apply underline underline-offset-2;
   @apply hover:text-theme-text-primary;
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary focus-visible:rounded-md;
+  @apply focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-theme-accent-primary focus-visible:rounded-md;
 }
 
 .bh-tx-toolbar__stock-selected {

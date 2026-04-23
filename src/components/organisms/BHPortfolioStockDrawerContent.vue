@@ -117,6 +117,8 @@ async function onViewFull() {
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .bh-stock-drawer {
   @apply flex flex-col gap-4;
   @apply h-full;

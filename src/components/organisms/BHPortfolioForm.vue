@@ -123,6 +123,8 @@ function onSubmit() {
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .bh-portfolio-form {
   @apply flex flex-col gap-4;
 }

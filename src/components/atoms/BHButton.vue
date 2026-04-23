@@ -88,12 +88,14 @@ function handleClick(event: MouseEvent) {
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .bh-button {
   @apply flex gap-3 items-center;
   @apply rounded-lg;
   @apply hover:bg-theme-bg-elevated;
   @apply text-theme-text-primary;
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-theme-bg-primary;
+  @apply focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-theme-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-theme-bg-primary;
   @apply disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:bg-transparent;
   filter: brightness(1);
   transition:

@@ -249,6 +249,8 @@ watch(
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .bh-table {
   @apply bg-theme-bg-card rounded-2xl border border-theme-border-primary;
 }
@@ -282,7 +284,7 @@ watch(
   @apply text-sm font-medium text-theme-text-secondary;
   @apply cursor-pointer transition-colors;
   @apply hover:text-theme-text-primary;
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary focus-visible:rounded-md;
+  @apply focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-theme-accent-primary focus-visible:rounded-md;
 }
 
 .sort-indicator {

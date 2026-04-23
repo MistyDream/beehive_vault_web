@@ -62,6 +62,8 @@ const panelId = `bh-perf-formula-panel-${baseId}`;
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .bh-perf-formula {
   @apply bg-theme-bg-card rounded-2xl border border-theme-border-primary;
   @apply overflow-hidden;
@@ -72,7 +74,7 @@ const panelId = `bh-perf-formula-panel-${baseId}`;
   @apply p-4 md:px-5;
   @apply text-left;
   @apply hover:bg-theme-bg-elevated transition-colors;
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-theme-accent-primary;
+  @apply focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-theme-accent-primary;
 }
 
 .bh-perf-formula__icon {

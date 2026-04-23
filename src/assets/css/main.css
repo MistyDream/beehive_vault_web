@@ -1,88 +1,216 @@
-/* ─── Theme variables (RGB channels for Tailwind alpha modifiers) ─── */
+@import 'tailwindcss';
+
+/* Dark mode driven by the `dark` class on <html>, toggled by useTheme(). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ─── Raw theme channels (switched by .dark on <html>) ─── */
 
 :root {
   /* Background */
-  --color-bg-primary: 244 242 237;     /* soft warm off-white (body) */
-  --color-bg-secondary: 235 232 225;   /* sidebar, slightly darker */
-  --color-bg-card: 238 235 228;        /* cards slightly darker than body, blends hex */
-  --color-bg-elevated: 231 227 219;    /* hover */
-  --color-bg-elevated-strong: 225 220 209; /* deeper hover for card-on-body contrast */
+  --color-bg-primary-raw: 244 242 237;       /* soft warm off-white (body) */
+  --color-bg-secondary-raw: 235 232 225;     /* sidebar, slightly darker */
+  --color-bg-card-raw: 238 235 228;          /* cards slightly darker than body */
+  --color-bg-elevated-raw: 231 227 219;      /* hover */
+  --color-bg-elevated-strong-raw: 225 220 209;
 
   /* Text (contrast ≥4.5:1 on bg-primary for AA on small text) */
-  --color-text-primary: 26 26 26;
-  --color-text-secondary: 90 96 110;
-  --color-text-muted: 100 106 119;
-  --color-text-on-accent-primary: 26 26 26;
-  --color-text-on-accent-secondary: 255 255 255;
-  --color-text-on-danger: 255 255 255;
+  --color-text-primary-raw: 26 26 26;
+  --color-text-secondary-raw: 90 96 110;
+  --color-text-muted-raw: 100 106 119;
+  --color-text-on-accent-primary-raw: 26 26 26;
+  --color-text-on-accent-secondary-raw: 255 255 255;
+  --color-text-on-danger-raw: 255 255 255;
 
   /* Border */
-  --color-border-primary: 229 225 216;
-  --color-border-secondary: 209 205 196;
+  --color-border-primary-raw: 229 225 216;
+  --color-border-secondary-raw: 209 205 196;
 
   /* Status (base fill) */
-  --color-status-success: 22 163 74;
-  --color-status-warning: 234 88 12;
-  --color-status-error: 220 38 38;
-  --color-status-info: 59 113 130;
+  --color-status-success-raw: 22 163 74;
+  --color-status-warning-raw: 234 88 12;
+  --color-status-error-raw: 220 38 38;
+  --color-status-info-raw: 59 113 130;
 
   /* Status (strong foreground, readable on translucent same-color bg) */
-  --color-status-success-strong: 22 163 74;
-  --color-status-warning-strong: 234 88 12;
-  --color-status-error-strong: 220 38 38;
-  --color-status-info-strong: 59 113 130;
+  --color-status-success-strong-raw: 22 163 74;
+  --color-status-warning-strong-raw: 234 88 12;
+  --color-status-error-strong-raw: 220 38 38;
+  --color-status-info-strong-raw: 59 113 130;
 
   /* Accent */
-  --color-accent-primary: 205 155 55;        /* honey gold */
-  --color-accent-secondary: 55 105 122;      /* teal */
-  --color-accent-primary-strong: 120 85 20;  /* dark gold — ≥4.5:1 on gold/20 bg */
-  --color-accent-secondary-strong: 40 80 95; /* darker teal — ≥4.5:1 on teal/20 bg */
+  --color-accent-primary-raw: 205 155 55;
+  --color-accent-secondary-raw: 55 105 122;
+  --color-accent-primary-strong-raw: 120 85 20;
+  --color-accent-secondary-strong-raw: 40 80 95;
 
-  /* Overlay (modal scrim base — alpha applied at usage site) */
-  --color-overlay: 0 0 0;
+  /* Overlay */
+  --color-overlay-raw: 0 0 0;
 }
 
 .dark {
-  /* Background */
-  --color-bg-primary: 26 26 26;
-  --color-bg-secondary: 22 22 22;
-  --color-bg-card: 33 33 33;
-  --color-bg-elevated: 41 41 41;
-  --color-bg-elevated-strong: 52 52 52;
+  --color-bg-primary-raw: 26 26 26;
+  --color-bg-secondary-raw: 22 22 22;
+  --color-bg-card-raw: 33 33 33;
+  --color-bg-elevated-raw: 41 41 41;
+  --color-bg-elevated-strong-raw: 52 52 52;
 
-  /* Text (contrast ≥4.5:1 on bg-primary for AA on small text) */
-  --color-text-primary: 245 245 245;
-  --color-text-secondary: 180 180 180;
-  --color-text-muted: 145 145 145;
-  --color-text-on-accent-primary: 26 26 26;
-  --color-text-on-accent-secondary: 255 255 255;
-  --color-text-on-danger: 255 255 255;
+  --color-text-primary-raw: 245 245 245;
+  --color-text-secondary-raw: 180 180 180;
+  --color-text-muted-raw: 145 145 145;
+  --color-text-on-accent-primary-raw: 26 26 26;
+  --color-text-on-accent-secondary-raw: 255 255 255;
+  --color-text-on-danger-raw: 255 255 255;
 
-  /* Border */
-  --color-border-primary: 41 41 41;
-  --color-border-secondary: 55 65 81;
+  --color-border-primary-raw: 41 41 41;
+  --color-border-secondary-raw: 55 65 81;
 
-  /* Status (base fill) */
-  --color-status-success: 34 197 94;
-  --color-status-warning: 249 115 22;
-  --color-status-error: 239 68 68;
-  --color-status-info: 74 138 160;
+  --color-status-success-raw: 34 197 94;
+  --color-status-warning-raw: 249 115 22;
+  --color-status-error-raw: 239 68 68;
+  --color-status-info-raw: 74 138 160;
 
-  /* Status (strong foreground, lightened for translucent bg readability) */
-  --color-status-success-strong: 110 220 140;
-  --color-status-warning-strong: 255 160 90;
-  --color-status-error-strong: 255 120 120;
-  --color-status-info-strong: 120 180 200;
+  --color-status-success-strong-raw: 110 220 140;
+  --color-status-warning-strong-raw: 255 160 90;
+  --color-status-error-strong-raw: 255 120 120;
+  --color-status-info-strong-raw: 120 180 200;
 
-  /* Accent */
-  --color-accent-primary: 234 182 78;
-  --color-accent-secondary: 74 138 160;
-  --color-accent-primary-strong: 234 182 78;
-  --color-accent-secondary-strong: 120 180 200;
+  --color-accent-primary-raw: 234 182 78;
+  --color-accent-secondary-raw: 74 138 160;
+  --color-accent-primary-strong-raw: 234 182 78;
+  --color-accent-secondary-strong-raw: 120 180 200;
 
-  /* Overlay */
-  --color-overlay: 0 0 0;
+  --color-overlay-raw: 0 0 0;
 }
+
+/* ─── Tailwind theme: expose raw channels as utilities ─── */
+/* `@theme inline` keeps the var() reference at runtime so .dark toggles work. */
+
+@theme inline {
+  /* Theme-aware semantic colors */
+  --color-theme-bg-primary: rgb(var(--color-bg-primary-raw));
+  --color-theme-bg-secondary: rgb(var(--color-bg-secondary-raw));
+  --color-theme-bg-card: rgb(var(--color-bg-card-raw));
+  --color-theme-bg-elevated: rgb(var(--color-bg-elevated-raw));
+  --color-theme-bg-elevated-strong: rgb(var(--color-bg-elevated-strong-raw));
+
+  --color-theme-text-primary: rgb(var(--color-text-primary-raw));
+  --color-theme-text-secondary: rgb(var(--color-text-secondary-raw));
+  --color-theme-text-muted: rgb(var(--color-text-muted-raw));
+  --color-theme-text-on-accent-primary: rgb(var(--color-text-on-accent-primary-raw));
+  --color-theme-text-on-accent-secondary: rgb(var(--color-text-on-accent-secondary-raw));
+  --color-theme-text-on-danger: rgb(var(--color-text-on-danger-raw));
+
+  --color-theme-border-primary: rgb(var(--color-border-primary-raw));
+  --color-theme-border-secondary: rgb(var(--color-border-secondary-raw));
+
+  --color-theme-status-success: rgb(var(--color-status-success-raw));
+  --color-theme-status-success-strong: rgb(var(--color-status-success-strong-raw));
+  --color-theme-status-warning: rgb(var(--color-status-warning-raw));
+  --color-theme-status-warning-strong: rgb(var(--color-status-warning-strong-raw));
+  --color-theme-status-error: rgb(var(--color-status-error-raw));
+  --color-theme-status-error-strong: rgb(var(--color-status-error-strong-raw));
+  --color-theme-status-info: rgb(var(--color-status-info-raw));
+  --color-theme-status-info-strong: rgb(var(--color-status-info-strong-raw));
+
+  --color-theme-accent-primary: rgb(var(--color-accent-primary-raw));
+  --color-theme-accent-primary-strong: rgb(var(--color-accent-primary-strong-raw));
+  --color-theme-accent-secondary: rgb(var(--color-accent-secondary-raw));
+  --color-theme-accent-secondary-strong: rgb(var(--color-accent-secondary-strong-raw));
+
+  --color-theme-overlay: rgb(var(--color-overlay-raw));
+
+  /* Raw palettes (unchanged, usable directly via bg-golden-yellow-500 etc.) */
+  --color-golden-yellow-100: #fff9e6;
+  --color-golden-yellow-200: #ffedbf;
+  --color-golden-yellow-300: #ffe199;
+  --color-golden-yellow-400: #ffd272;
+  --color-golden-yellow-500: #eab64e;
+  --color-golden-yellow-600: #c8963d;
+  --color-golden-yellow-700: #a3782f;
+  --color-golden-yellow-800: #7f5b23;
+  --color-golden-yellow-900: #5c4018;
+
+  --color-deep-blue-100: #e9f3f7;
+  --color-deep-blue-200: #c6dfe8;
+  --color-deep-blue-300: #a3cad8;
+  --color-deep-blue-400: #87b4e7;
+  --color-deep-blue-500: #4a8aa0;
+  --color-deep-blue-600: #37414d;
+  --color-deep-blue-700: #2d5865;
+  --color-deep-blue-800: #1f3f48;
+  --color-deep-blue-900: #11262b;
+
+  --color-dark-gray-100: #eaeaea;
+  --color-dark-gray-200: #d4d4d4;
+  --color-dark-gray-300: #bebebe;
+  --color-dark-gray-400: #a0a0a0;
+  --color-dark-gray-450: #374151;
+  --color-dark-gray-500: #212121;
+  --color-dark-gray-600: #1a1a1a;
+  --color-dark-gray-700: #161616;
+  --color-dark-gray-800: #121212;
+  --color-dark-gray-900: #0e0e0e;
+
+  --color-light-gray-100: #fcfcfc;
+  --color-light-gray-200: #f8f8f8;
+  --color-light-gray-300: #f3f3f3;
+  --color-light-gray-400: #ececec;
+  --color-light-gray-500: #d9d9d9;
+  --color-light-gray-600: #c0c0c0;
+  --color-light-gray-700: #a8a8a8;
+  --color-light-gray-800: #909090;
+  --color-light-gray-900: #787878;
+
+  --color-warm-white-100: #ffffff;
+  --color-warm-white-200: #fbfbfb;
+  --color-warm-white-300: #f5f5f5;
+  --color-warm-white-400: #efefef;
+  --color-warm-white-500: #e8e8e8;
+
+  --color-mint-green-100: #f0fdf4;
+  --color-mint-green-200: #dcfce7;
+  --color-mint-green-300: #bbf7d0;
+  --color-mint-green-400: #86efac;
+  --color-mint-green-500: #22c55e;
+  --color-mint-green-600: #16a34a;
+  --color-mint-green-700: #15803d;
+  --color-mint-green-800: #166534;
+  --color-mint-green-900: #14532d;
+
+  --color-filter-orange-100: #fff7ed;
+  --color-filter-orange-200: #ffedd5;
+  --color-filter-orange-300: #fed7aa;
+  --color-filter-orange-400: #fdba74;
+  --color-filter-orange-500: #f97316;
+  --color-filter-orange-600: #ea580c;
+  --color-filter-orange-700: #c2410c;
+  --color-filter-orange-800: #9a3412;
+  --color-filter-orange-900: #7c2d12;
+
+  --color-filter-red-100: #fef2f2;
+  --color-filter-red-200: #fecaca;
+  --color-filter-red-300: #fca5a5;
+  --color-filter-red-400: #f87171;
+  --color-filter-red-500: #ef4444;
+  --color-filter-red-600: #dc2626;
+  --color-filter-red-700: #b91c1c;
+  --color-filter-red-800: #991b1b;
+  --color-filter-red-900: #7f1d1d;
+
+  /* Fonts */
+  --font-poppins: 'Poppins', sans-serif;
+  --font-nunito: 'Nunito', sans-serif;
+  --font-space: 'Space Mono', monospace;
+
+  /* Font size extension */
+  --text-2xs: 0.625rem;
+  --text-2xs--line-height: 0.875rem;
+
+  /* Transition duration extension */
+  --duration-250: 250ms;
+}
+
+/* ─── Base layer ─── */
 
 html {
   scrollbar-gutter: stable;
@@ -126,7 +254,7 @@ html.theme-switching *::after {
 .bh-skeleton {
   position: relative;
   overflow: hidden;
-  background-color: rgb(var(--color-bg-elevated));
+  background-color: rgb(var(--color-bg-elevated-raw));
 }
 
 .bh-skeleton::after {
@@ -136,7 +264,7 @@ html.theme-switching *::after {
   background-image: linear-gradient(
     90deg,
     transparent 0%,
-    rgb(var(--color-text-muted) / 0.10) 50%,
+    rgb(var(--color-text-muted-raw) / 0.1) 50%,
     transparent 100%
   );
   animation: bh-shimmer 1.6s ease-in-out infinite;
@@ -147,7 +275,7 @@ html.theme-switching *::after {
   background-image: linear-gradient(
     90deg,
     transparent 0%,
-    rgb(var(--color-text-primary) / 0.12) 50%,
+    rgb(var(--color-text-primary-raw) / 0.12) 50%,
     transparent 100%
   );
 }
@@ -172,40 +300,71 @@ html.theme-switching *::after {
   mask-size: 80px 114px;
   -webkit-mask-repeat: repeat;
   mask-repeat: repeat;
-  background-color: rgb(var(--color-text-muted) / 1);
+  background-color: rgb(var(--color-text-muted-raw) / 1);
 }
-
 
 /* ─── Shared keyframes ─── */
 
 @keyframes bh-fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes bh-fadeOut {
-  from { opacity: 1; transform: translateY(0); }
-  to { opacity: 0; transform: translateY(4px); }
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(4px);
+  }
 }
 
 @keyframes bh-slideInRight {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
 @keyframes bh-slideOutRight {
-  from { transform: translateX(0); }
-  to { transform: translateX(100%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
 }
 
 @keyframes bh-slideInDown {
-  from { opacity: 0; transform: translateY(-12px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes bh-slideOutUp {
-  from { opacity: 1; transform: translateY(0); }
-  to { opacity: 0; transform: translateY(-12px); }
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
 }
 
 /* ─── Reduced motion ─── */

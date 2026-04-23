@@ -35,6 +35,8 @@ const initials = computed(() => props.symbol.slice(0, 2).toUpperCase());
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .bh-stock-avatar {
   @apply inline-flex items-center justify-center;
   @apply rounded-full;

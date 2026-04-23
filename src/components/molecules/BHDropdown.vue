@@ -333,6 +333,8 @@ onMounted(() => {
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .bh-dropdown {
   @apply relative inline-block;
 }
@@ -343,7 +345,7 @@ onMounted(() => {
   @apply px-4 py-2 rounded-lg;
   @apply border border-theme-border-secondary;
   @apply hover:bg-theme-bg-elevated transition-colors;
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary;
+  @apply focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-theme-accent-primary;
   @apply disabled:opacity-50 disabled:cursor-not-allowed;
   @apply min-w-[200px];
 }
@@ -364,7 +366,7 @@ onMounted(() => {
   @apply min-w-[200px];
   @apply py-2;
   @apply z-50;
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary;
+  @apply focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-theme-accent-primary;
   will-change: transform, opacity;
 }
 

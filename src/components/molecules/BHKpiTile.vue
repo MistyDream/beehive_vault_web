@@ -41,6 +41,8 @@ const iconVariantClass = computed(
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .bh-kpi-tile {
   @apply flex flex-col gap-2;
   @apply bg-theme-bg-card rounded-2xl border border-theme-border-primary;

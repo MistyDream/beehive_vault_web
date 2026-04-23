@@ -1,5 +1,5 @@
 export function useChartTheme() {
-  const color = (token: string) => `rgb(var(--color-${token}))`;
+  const color = (token: string) => `rgb(var(--color-${token}-raw))`;
 
   return {
     accentPrimary: color('accent-primary'),

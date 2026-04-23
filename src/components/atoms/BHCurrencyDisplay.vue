@@ -65,6 +65,8 @@ const colorClass = computed(() => {
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .bh-currency-display {
   @apply font-space tabular-nums;
 }

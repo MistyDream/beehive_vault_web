@@ -19,6 +19,8 @@ const { t } = useI18n();
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 main {
   @apply ml-0 lg:ml-72 py-4;
 }
@@ -30,6 +32,6 @@ main {
   @apply bg-theme-accent-primary text-theme-text-on-accent-primary;
   @apply font-medium text-sm no-underline;
   @apply transition-transform duration-150;
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary focus-visible:ring-offset-2;
+  @apply focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-theme-accent-primary focus-visible:ring-offset-2;
 }
 </style>

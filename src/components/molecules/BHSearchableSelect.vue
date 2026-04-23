@@ -315,6 +315,8 @@ onClickOutside(selectRef, () => {
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .bh-searchable-select {
   @apply flex flex-col gap-2 w-full;
 }
@@ -334,7 +336,7 @@ onClickOutside(selectRef, () => {
   @apply text-sm text-theme-text-primary font-medium;
   @apply flex items-center justify-between gap-2 text-left;
   @apply transition-colors duration-150 ease-out;
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary;
+  @apply focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-theme-accent-primary;
 }
 
 .bh-searchable-select__control--disabled {
@@ -363,7 +365,7 @@ onClickOutside(selectRef, () => {
   @apply text-theme-text-muted;
   @apply hover:bg-theme-bg-elevated hover:text-theme-text-primary;
   @apply transition-colors duration-100;
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary;
+  @apply focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-theme-accent-primary;
 }
 
 .bh-searchable-select__icon {
@@ -393,7 +395,7 @@ onClickOutside(selectRef, () => {
   @apply w-full pl-7 pr-2 py-1 rounded-md;
   @apply bg-transparent text-sm text-theme-text-primary;
   @apply placeholder:text-theme-text-muted;
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary;
+  @apply focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-theme-accent-primary;
 }
 
 .bh-searchable-select__options {
@@ -429,7 +431,7 @@ onClickOutside(selectRef, () => {
 }
 
 .bh-searchable-select__option-check {
-  @apply flex-shrink-0 text-theme-accent-secondary-strong;
+  @apply shrink-0 text-theme-accent-secondary-strong;
 }
 
 .bh-searchable-select__empty {

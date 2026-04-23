@@ -121,6 +121,8 @@ const barAriaLabel = computed(() =>
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .bh-allocation-card {
   @apply flex flex-col gap-3;
   @apply bg-theme-bg-card rounded-2xl border border-theme-border-primary;

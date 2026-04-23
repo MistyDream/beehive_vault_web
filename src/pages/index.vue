@@ -140,6 +140,8 @@ async function onCreate(payload: CreatePortfolioPayload) {
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .portfolios-page {
   @apply flex flex-col gap-6;
   @apply p-4 md:p-6 lg:p-8;

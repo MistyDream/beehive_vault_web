@@ -175,6 +175,8 @@ function move(action: -1 | 1 | 'start' | 'end') {
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .bh-tabs {
   @apply flex items-stretch gap-1;
   @apply border-b border-theme-border-secondary;
@@ -191,7 +193,7 @@ function move(action: -1 | 1 | 'start' | 'end') {
   @apply transition-colors duration-150;
   @apply no-underline;
   @apply hover:text-theme-text-primary;
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-theme-accent-primary;
+  @apply focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-theme-accent-primary;
 }
 
 .bh-tabs__tab--active {

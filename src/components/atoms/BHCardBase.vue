@@ -24,6 +24,8 @@ const optionsClass = computed(() => {
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .bh-card-base {
   @apply flex items-center justify-between gap-4;
   @apply bg-theme-bg-card rounded-2xl;

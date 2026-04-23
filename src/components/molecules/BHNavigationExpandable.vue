@@ -62,6 +62,8 @@ onMounted(() => {
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .bh-navigation-expandable {
   @apply flex flex-col;
   @apply w-full;

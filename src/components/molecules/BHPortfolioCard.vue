@@ -111,6 +111,8 @@ const summaryPending = computed(() => fetchResult?.pending.value ?? false);
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .bh-portfolio-card {
   @apply relative overflow-hidden;
   @apply flex flex-col gap-3;
@@ -118,7 +120,7 @@ const summaryPending = computed(() => fetchResult?.pending.value ?? false);
   @apply bg-theme-bg-card rounded-2xl border border-theme-border-primary;
   @apply transition-colors duration-300 ease-out;
   @apply hover:bg-theme-bg-elevated-strong cursor-pointer no-underline;
-  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary;
+  @apply focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-theme-accent-primary;
 }
 
 .bh-portfolio-card--skeleton {

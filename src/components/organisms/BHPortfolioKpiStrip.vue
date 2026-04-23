@@ -111,6 +111,8 @@ const srSummary = computed(() => {
 </script>
 
 <style lang="css" scoped>
+@reference "~/assets/css/main.css";
+
 .bh-kpi-strip {
   @apply grid gap-3;
   @apply grid-cols-1 md:grid-cols-2 xl:grid-cols-4;
