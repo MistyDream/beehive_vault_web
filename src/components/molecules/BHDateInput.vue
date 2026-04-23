@@ -15,7 +15,7 @@
       :aria-describedby="error ? errorId : undefined"
       class="bh-date-input__input"
       :class="{ 'bh-date-input__input--error': !!error }"
-    />
+    >
     <p v-if="error" :id="errorId" role="alert" class="bh-date-input__error">
       {{ error }}
     </p>

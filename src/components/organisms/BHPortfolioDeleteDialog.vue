@@ -31,7 +31,7 @@
         :aria-describedby="`${warningId} ${targetId}`"
         autocomplete="off"
         class="bh-portfolio-delete__input"
-      />
+      >
     </div>
 
     <template #footer>

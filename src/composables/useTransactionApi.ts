@@ -77,7 +77,7 @@ export const useTransactionApi = () => {
     );
 
   const remove = (portfolioId: number, txId: number) =>
-    $api<void>(API_ENDPOINTS.PORTFOLIOS.TRANSACTION(portfolioId, txId), {
+    $api<unknown>(API_ENDPOINTS.PORTFOLIOS.TRANSACTION(portfolioId, txId), {
       method: 'DELETE',
     });
 

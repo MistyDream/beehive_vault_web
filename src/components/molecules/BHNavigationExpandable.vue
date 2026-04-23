@@ -3,7 +3,7 @@
     <BHButton
       class="bh-navigation-expandable--trigger"
       :class="{ 'is-expanded': isExpanded }"
-      @click="toggleExpansion"
+      @click="toggleExpansion()"
     >
       <div class="bh-navigation-expandable--trigger-content">
         <slot name="icon" :item="item" />

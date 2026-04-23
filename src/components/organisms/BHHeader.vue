@@ -6,7 +6,7 @@
       :aria-label="t('nav.open_menu')"
       aria-controls="bh-main-sidebar"
       :aria-expanded="isOpen"
-      @click="toggle"
+      @click="toggle()"
     >
       <LucideMenu :size="24" aria-hidden="true" />
     </button>

@@ -60,7 +60,7 @@ export function useLocaleFormatters() {
     const normalized = value
       .replaceAll(group, '')
       .replace(decimal, '.')
-      .replace(/[^\d.\-]/g, '');
+      .replace(/[^\d.-]/g, '');
     return parseFloat(normalized);
   };
 

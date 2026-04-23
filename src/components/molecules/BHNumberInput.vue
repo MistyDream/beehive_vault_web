@@ -17,7 +17,7 @@
       @focus="onFocus"
       @blur="onBlur"
       @input="onInput"
-    />
+    >
     <p v-if="error" :id="errorId" role="alert" class="bh-number-input__error">
       {{ error }}
     </p>

@@ -1,7 +1,7 @@
 import { REQUEST_TIMEOUT } from '~/constants/http';
 import { ApiError, type ProblemDetail } from '~/types/api';
 
-export default defineNuxtPlugin((): { provide: { $api: typeof $fetch } } => {
+export default defineNuxtPlugin(() => {
   const { public: config } = useRuntimeConfig();
 
   const api = $fetch.create({

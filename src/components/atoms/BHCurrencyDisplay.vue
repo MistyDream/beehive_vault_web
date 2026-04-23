@@ -22,7 +22,7 @@ const props = withDefaults(defineProps<Props>(), {
   size: 'md',
 });
 
-const { locale } = useI18n();
+const { locale: i18nLocale } = useI18n();
 
 // Zero is coerced to +0 so Intl never emits "-0,00 €" for a negative-signed zero.
 const amount = computed(() => props.amount || 0);
@@ -32,7 +32,7 @@ const amount = computed(() => props.amount || 0);
 // breaks visual consistency when switching languages (e.g. "€10.00" in en
 // vs "10,00 €" in fr).
 const formattedAmount = computed(() => {
-  const activeLocale = props.locale ?? locale.value;
+  const activeLocale = props.locale ?? i18nLocale.value;
   const number = new Intl.NumberFormat(activeLocale, {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,

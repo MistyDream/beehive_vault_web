@@ -4,9 +4,6 @@ const antiFlashScript = `(function(){try{var k='${THEME_STORAGE_KEY}';var t=loca
 
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
-  future: {
-    compatibilityVersion: 4,
-  },
   devtools: { enabled: true },
   srcDir: 'src/',
 
@@ -22,7 +19,7 @@ export default defineNuxtConfig({
       script: [
         {
           tagPosition: 'head',
-          children: antiFlashScript,
+          innerHTML: antiFlashScript,
         },
       ],
     },
