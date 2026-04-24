@@ -14,7 +14,7 @@ yarn lint:fix   # ESLint + autofix
 yarn format     # Prettier
 ```
 
-Node 22+ (enforced via `engines.node` + `.nvmrc`). Yarn 4 (Berry) via corepack. Browser traffic never hits the Rust API directly: `src/plugins/api.ts` targets `/api/v1` which is served by the Nitro catch-all in `src/server/api/v1/[...].ts`, and that handler injects `Authorization: Bearer ${runtimeConfig.apiKey}` before forwarding to `runtimeConfig.apiBase`. Both `apiBase` and `apiKey` are server-only (never in `runtimeConfig.public`).
+Node 22+ (enforced via `engines.node` + `.nvmrc`). Yarn 4 (Berry) via corepack. Browser traffic never hits the Rust API directly: `src/plugins/api.ts` targets `/api/v1` which is served by the Nitro catch-all in `server/api/v1/[...].ts`, and that handler injects `Authorization: Bearer ${runtimeConfig.apiKey}` before forwarding to `runtimeConfig.apiBase`. Both `apiBase` and `apiKey` are server-only (never in `runtimeConfig.public`).
 
 ## Stack
 
