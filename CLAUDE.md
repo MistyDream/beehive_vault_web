@@ -14,7 +14,7 @@ yarn lint:fix   # ESLint + autofix
 yarn format     # Prettier
 ```
 
-Node 22+ (enforced via `engines.node` + `.nvmrc`). Yarn 4 (Berry) via corepack. API base URL is wired through `src/plugins/api.ts`.
+Node 22+ (enforced via `engines.node` + `.nvmrc`). Yarn 4 (Berry) via corepack. Browser traffic never hits the Rust API directly: `src/plugins/api.ts` targets `/api/v1` which is served by the Nitro catch-all in `server/api/v1/[...].ts`, and that handler injects `Authorization: Bearer ${runtimeConfig.apiKey}` before forwarding to `runtimeConfig.apiBase`. Both `apiBase` and `apiKey` are server-only (never in `runtimeConfig.public`).
 
 ## Stack
 
@@ -40,7 +40,8 @@ src/
 ├── constants/               # theme.ts, http.ts
 ├── layouts/default.vue      # Shell applied to every page
 ├── pages/                   # Nuxt file-based routing (nested under [id]/ for tabs)
-├── plugins/api.ts           # $fetch wrapper with base URL + Problem+JSON error mapping
+├── plugins/api.ts           # $fetch wrapper targeting /api/v1 (Nitro proxy) + Problem+JSON error mapping
+├── server/api/v1/[...].ts   # Nitro catch-all: proxies to Rust API with server-side bearer auth
 ├── stores/                  # Pinia (drawer, header, portfolio)
 ├── types/                   # Domain types (portfolio.ts, navigation-link.ts)
 ├── utils/                   # Pure functions (stringToColor.ts, transaction.ts)

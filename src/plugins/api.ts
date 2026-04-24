@@ -2,10 +2,8 @@ import { REQUEST_TIMEOUT } from '~/constants/http';
 import { ApiError, type ProblemDetail } from '~/types/api';
 
 export default defineNuxtPlugin(() => {
-  const { public: config } = useRuntimeConfig();
-
   const api = $fetch.create({
-    baseURL: config.apiBase,
+    baseURL: '/api/v1',
     timeout: REQUEST_TIMEOUT.DEFAULT,
     headers: {
       Accept: 'application/json',

@@ -7,6 +7,7 @@ Frontend Nuxt 4 pour Beehive Vault — portfolio tracking et scoring d'actions.
 - **Node 22+** (`.nvmrc` fourni — `nvm use` pour aligner)
 - **Yarn 4** via corepack (`corepack enable` une fois, puis `yarn <cmd>`)
 - API Rust lancée sur `$API_BASE_URL` (par défaut `http://127.0.0.1:8080`)
+- `API_KEY` optionnelle aujourd'hui (le backend ne la vérifie pas encore) ; deviendra obligatoire une fois `feature/api-auth` mergée sur l'API. Format attendu : `bhv_<env>_<hex-32>`.
 
 ## Setup
 
