@@ -9,6 +9,8 @@ export default defineNuxtConfig({
   srcDir: 'src/',
 
   runtimeConfig: {
+    apiBase: process.env.API_BASE_URL,
+    apiKey: process.env.API_KEY,
     public: {
       apiBase: process.env.API_BASE_URL,
     },
