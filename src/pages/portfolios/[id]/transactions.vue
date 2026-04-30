@@ -300,11 +300,10 @@ async function runMutation(
   onValidationError?: (err: ApiError) => void,
 ): Promise<void> {
   submitting.value = true;
+  let mutated = false;
   try {
     await op();
-    toast.success(t(successKey));
-    modal.value = null;
-    await cardRef.value?.refresh();
+    mutated = true;
   } catch (err) {
     if (
       onValidationError
@@ -319,6 +318,12 @@ async function runMutation(
   } finally {
     submitting.value = false;
   }
+  if (!mutated) return;
+  toast.success(t(successKey));
+  modal.value = null;
+  // Refresh outside the mutation try/catch so a refetch failure does not
+  // surface as the mutation-failed toast after we already announced success.
+  await cardRef.value?.refresh().catch(() => undefined);
 }
 
 async function onFormSubmit(payload: CreateTransactionPayload) {

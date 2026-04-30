@@ -332,6 +332,10 @@ const stockLoading = ref(false);
 const stockTruncated = ref(false);
 let searchAbort: AbortController | null = null;
 
+onUnmounted(() => {
+  searchAbort?.abort();
+});
+
 const stockOptions = computed<SearchableOption[]>(() => {
   const list = [...searchResults.value];
   const selected = selectedStockOption.value;
