@@ -381,7 +381,7 @@ onClickOutside(
 }
 
 .bh-select__options {
-  @apply z-60;
+  @apply z-80;
   @apply bg-theme-bg-card border border-theme-border-secondary rounded-lg shadow-xl;
   @apply overflow-auto;
 }

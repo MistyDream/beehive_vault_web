@@ -495,7 +495,7 @@ onClickOutside(
 }
 
 .bh-searchable-select__panel {
-  @apply z-60;
+  @apply z-80;
   @apply bg-theme-bg-card border border-theme-border-secondary rounded-lg shadow-xl;
   @apply overflow-hidden flex flex-col;
 }

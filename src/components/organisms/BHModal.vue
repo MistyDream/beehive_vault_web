@@ -126,13 +126,13 @@ onKeyStroke('Escape', (e) => {
 @reference "~/assets/css/main.css";
 
 .bh-modal-overlay {
-  @apply fixed inset-0 z-40;
+  @apply fixed inset-0 z-60;
   @apply bg-theme-overlay/60;
   @apply cursor-pointer;
 }
 
 .bh-modal {
-  @apply fixed z-50;
+  @apply fixed z-70;
   @apply bg-theme-bg-card border border-theme-border-secondary shadow-2xl;
   @apply flex flex-col;
   /* Mobile: bottom sheet full-width */
