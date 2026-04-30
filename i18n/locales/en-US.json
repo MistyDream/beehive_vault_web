@@ -199,9 +199,6 @@
           "errors": {
             "executed_at_required": "Date is required",
             "stock_required": "Stock is required",
-            "quantity_required": "Quantity is required",
-            "unit_price_required": "Unit price is required",
-            "amount_required": "Amount is required",
             "split_from_required": "Provide the pre-split value",
             "split_to_required": "Provide the post-split value",
             "currency_length": "Currency must be exactly 3 characters",

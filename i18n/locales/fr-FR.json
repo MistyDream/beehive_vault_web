@@ -199,9 +199,6 @@
           "errors": {
             "executed_at_required": "Date requise",
             "stock_required": "Action requise",
-            "quantity_required": "Quantité requise",
-            "unit_price_required": "Prix unitaire requis",
-            "amount_required": "Montant requis",
             "split_from_required": "Renseignez la valeur avant le split",
             "split_to_required": "Renseignez la valeur après le split",
             "currency_length": "La devise doit faire 3 caractères",
