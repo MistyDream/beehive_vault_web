@@ -35,6 +35,9 @@ export const API_ENDPOINTS = {
     TRANSACTION: (portfolioId: number, txId: number) =>
       `/portfolios/${portfolioId}/transactions/${txId}`,
   },
+  STOCKS: {
+    SEARCH: '/stocks',
+  },
 } as const;
 
 export const REQUEST_TIMEOUT = {

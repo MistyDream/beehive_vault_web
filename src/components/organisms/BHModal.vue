@@ -88,6 +88,10 @@ const titleId = useId();
 const sizeClass = computed(() => `bh-modal--${props.size}`);
 
 function close() {
+  // When both close paths are gated off (e.g. parent passes
+  // close-on-overlay-click=false + close-on-escape=false during a submit),
+  // the header X button must respect the same lock.
+  if (!props.closeOnOverlayClick && !props.closeOnEscape) return;
   emit('update:modelValue', false);
 }
 
@@ -102,7 +106,14 @@ const isOpen = computed(() => props.modelValue);
 watch(isOpen, (open) => {
   isScrollLocked.value = open;
 });
-useModalFocusTrap(modalRef, isOpen, { escapeDeactivates: false });
+const { pause: pauseFocusTrap, unpause: unpauseFocusTrap } = useModalFocusTrap(
+  modalRef,
+  isOpen,
+  { escapeDeactivates: false },
+);
+
+provide('bh-modal-trap-pause', pauseFocusTrap);
+provide('bh-modal-trap-unpause', unpauseFocusTrap);
 
 onKeyStroke('Escape', (e) => {
   if (!props.modelValue || !props.closeOnEscape) return;

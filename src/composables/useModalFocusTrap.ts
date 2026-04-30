@@ -10,7 +10,7 @@ export function useModalFocusTrap(
   isOpen: Ref<boolean>,
   options: UseModalFocusTrapOptions = {},
 ) {
-  const { activate, deactivate } = useFocusTrap(target, {
+  const { activate, deactivate, pause, unpause } = useFocusTrap(target, {
     allowOutsideClick: true,
     returnFocusOnDeactivate: false,
     escapeDeactivates: options.escapeDeactivates ?? true,
@@ -34,4 +34,6 @@ export function useModalFocusTrap(
     },
     { immediate: true },
   );
+
+  return { pause, unpause };
 }

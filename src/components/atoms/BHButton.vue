@@ -91,7 +91,7 @@ function handleClick(event: MouseEvent) {
 @reference "~/assets/css/main.css";
 
 .bh-button {
-  @apply flex gap-3 items-center;
+  @apply flex gap-3 items-center cursor-pointer;
   @apply rounded-lg;
   @apply hover:bg-theme-bg-elevated;
   @apply text-theme-text-primary;

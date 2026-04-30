@@ -52,8 +52,15 @@
           aria-hidden="true"
         />
       </button>
+    </div>
+    <Teleport to="body">
       <Transition name="bh-searchable-select-dropdown">
-        <div v-if="isOpen" class="bh-searchable-select__panel">
+        <div
+          v-if="isOpen"
+          ref="floatingRef"
+          :style="[floatingStyles, !isPositioned && { visibility: 'hidden' }]"
+          class="bh-searchable-select__panel"
+        >
           <div class="bh-searchable-select__search">
             <LucideSearch
               :size="14"
@@ -84,50 +91,81 @@
             class="bh-searchable-select__options"
             role="listbox"
             :aria-multiselectable="multiple"
+            :aria-busy="remote && loading ? true : undefined"
           >
             <li
-              v-for="(option, index) in filteredOptions"
-              :id="optionId(index)"
-              :key="option.value"
-              class="bh-searchable-select__option"
-              :class="{
-                'bh-searchable-select__option--selected': isSelected(option.value),
-                'bh-searchable-select__option--active': index === activeIndex,
-              }"
-              role="option"
-              :aria-selected="isSelected(option.value)"
-              @click="onOptionSelect(option)"
-              @mouseenter="activeIndex = index"
-            >
-              <span class="bh-searchable-select__option-body">
-                <slot name="option" :option="option" :selected="isSelected(option.value)">
-                  <span class="bh-searchable-select__option-label">{{ option.label }}</span>
-                  <span
-                    v-if="option.description"
-                    class="bh-searchable-select__option-description"
-                  >
-                    {{ option.description }}
-                  </span>
-                </slot>
-              </span>
-              <LucideCheck
-                v-if="isSelected(option.value)"
-                :size="16"
-                aria-hidden="true"
-                class="bh-searchable-select__option-check"
-              />
-            </li>
-            <li
-              v-if="filteredOptions.length === 0"
-              class="bh-searchable-select__empty"
+              v-if="belowMinSearch"
+              class="bh-searchable-select__hint"
               role="presentation"
             >
-              {{ resolvedEmptyText }}
+              {{ minSearchHint }}
             </li>
+            <li
+              v-else-if="remote && loading"
+              class="bh-searchable-select__hint bh-searchable-select__hint--loading"
+              role="status"
+              aria-live="polite"
+            >
+              <LucideLoader2
+                :size="14"
+                class="bh-searchable-select__spinner"
+                aria-hidden="true"
+              />
+              <span>{{ t('common.loading') }}</span>
+            </li>
+            <template v-else>
+              <li
+                v-for="(option, index) in filteredOptions"
+                :id="optionId(index)"
+                :key="option.value"
+                class="bh-searchable-select__option"
+                :class="{
+                  'bh-searchable-select__option--selected': isSelected(option.value),
+                  'bh-searchable-select__option--active': index === activeIndex,
+                }"
+                role="option"
+                :aria-selected="isSelected(option.value)"
+                @click="onOptionSelect(option)"
+                @mouseenter="activeIndex = index"
+              >
+                <span class="bh-searchable-select__option-body">
+                  <slot name="option" :option="option" :selected="isSelected(option.value)">
+                    <span class="bh-searchable-select__option-label">{{ option.label }}</span>
+                    <span
+                      v-if="option.description"
+                      class="bh-searchable-select__option-description"
+                    >
+                      {{ option.description }}
+                    </span>
+                  </slot>
+                </span>
+                <LucideCheck
+                  v-if="isSelected(option.value)"
+                  :size="16"
+                  aria-hidden="true"
+                  class="bh-searchable-select__option-check"
+                />
+              </li>
+              <li
+                v-if="filteredOptions.length === 0"
+                class="bh-searchable-select__empty"
+                role="presentation"
+              >
+                {{ resolvedEmptyText }}
+              </li>
+              <li
+                v-if="truncated && filteredOptions.length > 0"
+                class="bh-searchable-select__truncated"
+                role="note"
+                aria-live="polite"
+              >
+                {{ truncatedHint }}
+              </li>
+            </template>
           </ul>
         </div>
       </Transition>
-    </div>
+    </Teleport>
     <p v-if="error" :id="errorId" role="alert" class="bh-searchable-select__error">
       {{ error }}
     </p>
@@ -135,7 +173,21 @@
 </template>
 
 <script setup lang="ts">
-import { LucideCheck, LucideChevronDown, LucideSearch, LucideX } from '#components';
+import {
+  LucideCheck,
+  LucideChevronDown,
+  LucideLoader2,
+  LucideSearch,
+  LucideX,
+} from '#components';
+import {
+  useFloating,
+  offset as offsetMiddleware,
+  flip,
+  shift,
+  size,
+  autoUpdate,
+} from '@floating-ui/vue';
 
 type PrimitiveValue = string | number;
 type SelectValue = PrimitiveValue | null | undefined;
@@ -159,6 +211,12 @@ interface Props {
   multiple?: boolean;
   clearable?: boolean;
   error?: string;
+  remote?: boolean;
+  loading?: boolean;
+  truncated?: boolean;
+  truncatedHint?: string;
+  minSearchChars?: number;
+  minSearchHint?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -174,6 +232,12 @@ const props = withDefaults(defineProps<Props>(), {
   multiple: false,
   clearable: true,
   error: '',
+  remote: false,
+  loading: false,
+  truncated: false,
+  truncatedHint: '',
+  minSearchChars: 0,
+  minSearchHint: '',
 });
 
 const { t } = useI18n();
@@ -182,9 +246,11 @@ const resolvedClearLabel = computed(() => props.clearLabel || t('common.clear_se
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: SelectValue | PrimitiveValue[]): void;
+  (e: 'search', query: string): void;
 }>();
 
 const selectRef = ref<HTMLElement | null>(null);
+const floatingRef = ref<HTMLElement | null>(null);
 const searchRef = ref<HTMLInputElement | null>(null);
 const isOpen = ref(false);
 const searchQuery = ref('');
@@ -192,6 +258,40 @@ const debouncedQuery = refDebounced(searchQuery, 150);
 const activeIndex = ref(-1);
 
 const { triggerId, listboxId, errorId, optionId } = useSelectIds(() => props.id);
+
+// When this select opens inside a BHModal, the modal's focus trap would
+// intercept the search input focus (the panel is teleported to body, outside
+// the trap container). Pause the trap while the dropdown is open.
+const pauseModalTrap = inject<(() => void) | null>('bh-modal-trap-pause', null);
+const unpauseModalTrap = inject<(() => void) | null>(
+  'bh-modal-trap-unpause',
+  null,
+);
+watch(isOpen, (open) => {
+  if (open) pauseModalTrap?.();
+  else unpauseModalTrap?.();
+});
+
+const { floatingStyles, isPositioned } = useFloating(selectRef, floatingRef, {
+  placement: 'bottom-start',
+  middleware: [
+    offsetMiddleware(8),
+    flip({ padding: 8 }),
+    shift({ padding: 8 }),
+    size({
+      apply({ rects, elements, availableHeight }) {
+        Object.assign(elements.floating.style, {
+          width: `${rects.reference.width}px`,
+          maxHeight: `${Math.min(availableHeight - 8, 320)}px`,
+        });
+      },
+      padding: 8,
+    }),
+  ],
+  strategy: 'fixed',
+  transform: false,
+  whileElementsMounted: autoUpdate,
+});
 
 const normalizedValues = computed<PrimitiveValue[]>(() => {
   if (props.modelValue === null || props.modelValue === undefined) return [];
@@ -213,7 +313,13 @@ const displayLabel = computed(() => {
   return t('common.select_n_selected', count);
 });
 
+const trimmedQueryLength = computed(() => debouncedQuery.value.trim().length);
+const belowMinSearch = computed(
+  () => props.remote && props.minSearchChars > 0 && trimmedQueryLength.value < props.minSearchChars,
+);
+
 const filteredOptions = computed(() => {
+  if (props.remote) return props.options;
   const q = debouncedQuery.value.trim().toLowerCase();
   if (!q) return props.options;
   return props.options.filter((opt) => {
@@ -221,6 +327,13 @@ const filteredOptions = computed(() => {
     const desc = opt.description?.toLowerCase() ?? '';
     return label.includes(q) || desc.includes(q);
   });
+});
+
+watch(debouncedQuery, (q) => {
+  if (!props.remote) return;
+  const trimmed = q.trim();
+  if (props.minSearchChars > 0 && trimmed.length < props.minSearchChars) return;
+  emit('search', trimmed);
 });
 
 function isSelected(value: PrimitiveValue) {
@@ -309,9 +422,13 @@ watch(filteredOptions, () => {
   }
 });
 
-onClickOutside(selectRef, () => {
-  if (isOpen.value) closeDropdown();
-});
+onClickOutside(
+  selectRef,
+  () => {
+    if (isOpen.value) closeDropdown();
+  },
+  { ignore: [floatingRef] },
+);
 </script>
 
 <style lang="css" scoped>
@@ -330,7 +447,7 @@ onClickOutside(selectRef, () => {
 }
 
 .bh-searchable-select__control {
-  @apply w-full px-4 py-2 rounded-lg;
+  @apply w-full px-4 py-2 rounded-lg cursor-pointer;
   @apply bg-theme-bg-card;
   @apply border border-theme-border-secondary;
   @apply text-sm text-theme-text-primary font-medium;
@@ -378,7 +495,7 @@ onClickOutside(selectRef, () => {
 }
 
 .bh-searchable-select__panel {
-  @apply absolute left-0 right-0 mt-2 z-10;
+  @apply z-60;
   @apply bg-theme-bg-card border border-theme-border-secondary rounded-lg shadow-xl;
   @apply overflow-hidden flex flex-col;
 }
@@ -399,7 +516,7 @@ onClickOutside(selectRef, () => {
 }
 
 .bh-searchable-select__options {
-  @apply max-h-60 overflow-auto;
+  @apply flex-1 overflow-auto;
 }
 
 .bh-searchable-select__option {
@@ -436,6 +553,23 @@ onClickOutside(selectRef, () => {
 
 .bh-searchable-select__empty {
   @apply px-4 py-6 text-sm text-theme-text-muted text-center;
+}
+
+.bh-searchable-select__hint {
+  @apply px-4 py-6 text-sm text-theme-text-muted text-center;
+}
+
+.bh-searchable-select__hint--loading {
+  @apply inline-flex items-center justify-center gap-2 w-full;
+}
+
+.bh-searchable-select__spinner {
+  @apply animate-spin;
+}
+
+.bh-searchable-select__truncated {
+  @apply px-4 py-2 text-xs text-theme-text-muted text-center;
+  @apply border-t border-theme-border-secondary/60;
 }
 
 .bh-searchable-select__error {
