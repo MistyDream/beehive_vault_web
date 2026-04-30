@@ -157,6 +157,7 @@
                 v-if="truncated && filteredOptions.length > 0"
                 class="bh-searchable-select__truncated"
                 role="note"
+                aria-live="polite"
               >
                 {{ truncatedHint }}
               </li>

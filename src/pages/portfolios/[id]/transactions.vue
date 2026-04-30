@@ -49,6 +49,7 @@
       v-model="deleteModalOpen"
       :title="t('portfolios.detail.transactions.delete_confirm.title')"
       size="md"
+      role="alertdialog"
       :close-on-overlay-click="!submitting"
       :close-on-escape="!submitting"
     >
