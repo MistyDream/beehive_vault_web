@@ -47,10 +47,14 @@
           aria-hidden="true"
         />
       </button>
+    </div>
+    <Teleport to="body">
       <Transition name="bh-select-dropdown">
         <ul
           v-if="isOpen"
           :id="listboxId"
+          ref="floatingRef"
+          :style="[floatingStyles, !isPositioned && { visibility: 'hidden' }]"
           class="bh-select__options"
           role="listbox"
           :aria-multiselectable="multiple"
@@ -76,7 +80,7 @@
           </li>
         </ul>
       </Transition>
-    </div>
+    </Teleport>
     <p v-if="error" :id="errorId" role="alert" class="bh-select__error">
       {{ error }}
     </p>
@@ -85,6 +89,14 @@
 
 <script setup lang="ts">
 import { LucideCheck, LucideChevronDown } from '#components';
+import {
+  useFloating,
+  offset as offsetMiddleware,
+  flip,
+  shift,
+  size,
+  autoUpdate,
+} from '@floating-ui/vue';
 
 type PrimitiveValue = string | number;
 type SelectValue = PrimitiveValue | null | undefined;
@@ -124,10 +136,32 @@ const emit = defineEmits<{
 }>();
 
 const selectRef = ref<HTMLElement | null>(null);
+const floatingRef = ref<HTMLElement | null>(null);
 const isOpen = ref(false);
 const activeIndex = ref(-1);
 
 const { triggerId, listboxId, errorId, optionId } = useSelectIds(() => props.id);
+
+const { floatingStyles, isPositioned } = useFloating(selectRef, floatingRef, {
+  placement: 'bottom-start',
+  middleware: [
+    offsetMiddleware(8),
+    flip({ padding: 8 }),
+    shift({ padding: 8 }),
+    size({
+      apply({ rects, elements, availableHeight }) {
+        Object.assign(elements.floating.style, {
+          width: `${rects.reference.width}px`,
+          maxHeight: `${Math.min(availableHeight - 8, 240)}px`,
+        });
+      },
+      padding: 8,
+    }),
+  ],
+  strategy: 'fixed',
+  transform: false,
+  whileElementsMounted: autoUpdate,
+});
 
 function firstEnabledIndex(from: number, direction: 1 | -1): number {
   const len = props.options.length;
@@ -277,9 +311,13 @@ const onOptionSelect = (option: Option) => {
   closeDropdown();
 };
 
-onClickOutside(selectRef, () => {
-  closeDropdown();
-});
+onClickOutside(
+  selectRef,
+  () => {
+    closeDropdown();
+  },
+  { ignore: [floatingRef] },
+);
 </script>
 
 <style lang="css" scoped>
@@ -299,14 +337,13 @@ onClickOutside(selectRef, () => {
 }
 
 .bh-select__control {
-  @apply w-full px-4 py-2 rounded-lg;
+  @apply w-full px-4 py-2 rounded-lg cursor-pointer;
   @apply bg-theme-bg-card;
   @apply border border-theme-border-secondary;
   @apply text-sm text-theme-text-primary font-medium;
   @apply flex items-center justify-between gap-2;
   @apply text-left;
   @apply transition-colors duration-150 ease-out;
-  @apply hover:border-theme-border-primary;
   @apply focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-theme-accent-primary focus-visible:border-transparent;
 }
 
@@ -344,9 +381,9 @@ onClickOutside(selectRef, () => {
 }
 
 .bh-select__options {
-  @apply absolute left-0 right-0 mt-2 z-10;
+  @apply z-60;
   @apply bg-theme-bg-card border border-theme-border-secondary rounded-lg shadow-xl;
-  @apply max-h-60 overflow-auto;
+  @apply overflow-auto;
 }
 
 .bh-select__option {

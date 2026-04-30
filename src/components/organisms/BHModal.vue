@@ -102,7 +102,14 @@ const isOpen = computed(() => props.modelValue);
 watch(isOpen, (open) => {
   isScrollLocked.value = open;
 });
-useModalFocusTrap(modalRef, isOpen, { escapeDeactivates: false });
+const { pause: pauseFocusTrap, unpause: unpauseFocusTrap } = useModalFocusTrap(
+  modalRef,
+  isOpen,
+  { escapeDeactivates: false },
+);
+
+provide('bh-modal-trap-pause', pauseFocusTrap);
+provide('bh-modal-trap-unpause', unpauseFocusTrap);
 
 onKeyStroke('Escape', (e) => {
   if (!props.modelValue || !props.closeOnEscape) return;
