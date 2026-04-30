@@ -14,18 +14,17 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
     "@floating-ui/vue": "^1.1.11",
-    "@nuxt/eslint": "1.15.2",
     "@nuxt/fonts": "^0.14.0",
     "@nuxt/image": "^2.0.0",
     "@nuxtjs/i18n": "10.2.4",
     "@pinia/nuxt": "0.11.3",
     "@vueuse/integrations": "^14.2.1",
     "@vueuse/nuxt": "14.2.1",
-    "eslint": "^10.2.1",
     "focus-trap": "^8.0.1",
     "highcharts": "^12.6.0",
     "highcharts-vue": "^2.0.1",
@@ -39,8 +38,10 @@
   },
   "packageManager": "yarn@4.7.0+sha512.5a0afa1d4c1d844b3447ee3319633797bcd6385d9a44be07993ae52ff4facabccafb4af5dcd1c2f9a94ac113e5e9ff56f6130431905884414229e284e37bb7c9",
   "devDependencies": {
+    "@nuxt/eslint": "1.15.2",
     "@tailwindcss/vite": "^4.2.4",
     "@types/node": "^25.6.0",
+    "eslint": "^10.2.1",
     "prettier": "^3.8.3",
     "typescript": "^6.0.3",
     "vue-tsc": "^3.2.7"
