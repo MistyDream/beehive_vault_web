@@ -24,6 +24,18 @@ export interface Stock {
   country: string | null;
 }
 
+export interface StockSearchItem {
+  id: number;
+  symbol: string;
+  name: string;
+  currency: string;
+}
+
+export interface StockSearchResult {
+  items: StockSearchItem[];
+  truncated: boolean;
+}
+
 export interface Paginated<T> {
   items: T[];
   total: number;

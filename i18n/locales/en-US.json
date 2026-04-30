@@ -8,7 +8,8 @@
     "select_placeholder": "Select",
     "select_n_selected": "{count} selected | {count} selected",
     "no_results": "No results",
-    "clear_selection": "Clear selection"
+    "clear_selection": "Clear selection",
+    "loading": "Loading..."
   },
   "toast": {
     "coming_soon": "Coming soon",
@@ -168,7 +169,62 @@
         "empty_filtered_description": "Try adjusting or resetting your filters.",
         "error_title": "Unable to load transactions",
         "error_description": "Something went wrong. Please try again.",
-        "error_retry": "Retry"
+        "error_retry": "Retry",
+        "form": {
+          "create_title": "New transaction",
+          "edit_title": "Edit transaction",
+          "duplicate_title": "Duplicate transaction",
+          "type_label": "Type",
+          "type_placeholder": "Choose a type",
+          "executed_at_label": "Date",
+          "stock_label": "Stock",
+          "stock_placeholder": "Search a stock",
+          "stock_search_placeholder": "Symbol or name",
+          "stock_min_search": "Type at least 2 characters",
+          "stock_truncated": "More results — refine your search",
+          "stock_no_results": "No stock found",
+          "quantity_label": "Quantity",
+          "unit_price_label": "Unit price",
+          "amount_label": "Amount",
+          "fees_label": "Fees",
+          "tax_label": "Tax",
+          "split_from_label": "Before",
+          "split_to_label": "After",
+          "currency_label": "Currency",
+          "exchange_rate_label": "Exchange rate",
+          "notes_label": "Notes",
+          "notes_placeholder": "Optional",
+          "cancel": "Cancel",
+          "save": "Save",
+          "errors": {
+            "executed_at_required": "Date is required",
+            "stock_required": "Stock is required",
+            "quantity_required": "Quantity is required",
+            "unit_price_required": "Unit price is required",
+            "amount_required": "Amount is required",
+            "split_from_required": "Provide the pre-split value",
+            "split_to_required": "Provide the post-split value",
+            "currency_length": "Currency must be exactly 3 characters",
+            "notes_too_long": "Notes too long (max 500)",
+            "positive_required": "Must be greater than 0",
+            "non_negative_required": "Must be positive or zero"
+          }
+        },
+        "delete_confirm": {
+          "title": "Delete transaction",
+          "message": "This action is permanent. Confirm deletion?",
+          "cancel": "Cancel",
+          "confirm": "Delete"
+        },
+        "toast": {
+          "created": "Transaction created",
+          "updated": "Transaction updated",
+          "duplicated": "Transaction duplicated",
+          "deleted": "Transaction deleted",
+          "create_failed": "Unable to create transaction",
+          "update_failed": "Unable to update transaction",
+          "delete_failed": "Unable to delete transaction"
+        }
       },
       "resume": {
         "positions": {

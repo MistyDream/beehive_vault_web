@@ -8,7 +8,8 @@
     "select_placeholder": "Sélectionner",
     "select_n_selected": "{count} sélectionné | {count} sélectionnés",
     "no_results": "Aucun résultat",
-    "clear_selection": "Effacer la sélection"
+    "clear_selection": "Effacer la sélection",
+    "loading": "Chargement..."
   },
   "toast": {
     "coming_soon": "Bientôt disponible",
@@ -168,7 +169,62 @@
         "empty_filtered_description": "Essayez d'ajuster ou de réinitialiser les filtres.",
         "error_title": "Impossible de charger les transactions",
         "error_description": "Une erreur est survenue. Réessayez dans un instant.",
-        "error_retry": "Réessayer"
+        "error_retry": "Réessayer",
+        "form": {
+          "create_title": "Nouvelle transaction",
+          "edit_title": "Modifier la transaction",
+          "duplicate_title": "Dupliquer la transaction",
+          "type_label": "Type",
+          "type_placeholder": "Choisir un type",
+          "executed_at_label": "Date",
+          "stock_label": "Action",
+          "stock_placeholder": "Rechercher une action",
+          "stock_search_placeholder": "Symbole ou nom",
+          "stock_min_search": "Tapez au moins 2 caractères",
+          "stock_truncated": "Plus de résultats — affinez votre recherche",
+          "stock_no_results": "Aucune action trouvée",
+          "quantity_label": "Quantité",
+          "unit_price_label": "Prix unitaire",
+          "amount_label": "Montant",
+          "fees_label": "Frais",
+          "tax_label": "Taxes",
+          "split_from_label": "Avant",
+          "split_to_label": "Après",
+          "currency_label": "Devise",
+          "exchange_rate_label": "Taux de change",
+          "notes_label": "Notes",
+          "notes_placeholder": "Optionnel",
+          "cancel": "Annuler",
+          "save": "Enregistrer",
+          "errors": {
+            "executed_at_required": "Date requise",
+            "stock_required": "Action requise",
+            "quantity_required": "Quantité requise",
+            "unit_price_required": "Prix unitaire requis",
+            "amount_required": "Montant requis",
+            "split_from_required": "Renseignez la valeur avant le split",
+            "split_to_required": "Renseignez la valeur après le split",
+            "currency_length": "La devise doit faire 3 caractères",
+            "notes_too_long": "Notes trop longues (max 500)",
+            "positive_required": "Doit être supérieur à 0",
+            "non_negative_required": "Doit être positif ou nul"
+          }
+        },
+        "delete_confirm": {
+          "title": "Supprimer la transaction",
+          "message": "Cette action est définitive. Confirmer la suppression ?",
+          "cancel": "Annuler",
+          "confirm": "Supprimer"
+        },
+        "toast": {
+          "created": "Transaction créée",
+          "updated": "Transaction modifiée",
+          "duplicated": "Transaction dupliquée",
+          "deleted": "Transaction supprimée",
+          "create_failed": "Impossible de créer la transaction",
+          "update_failed": "Impossible de modifier la transaction",
+          "delete_failed": "Impossible de supprimer la transaction"
+        }
       },
       "resume": {
         "positions": {

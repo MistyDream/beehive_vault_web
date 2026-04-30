@@ -312,10 +312,10 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits<{
   (e: 'page-change', page: number): void;
   (e: 'sort-change', sortBy: TransactionsSortBy, direction: SortDirection): void;
+  (e: 'edit' | 'duplicate' | 'delete', tx: Transaction): void;
 }>();
 
 const { t } = useI18n();
-const toast = useToast();
 const { formatDate, formatQuantity } = useLocaleFormatters();
 
 const limit = computed(() => props.itemsPerPage);
@@ -393,8 +393,15 @@ const query = computed<TransactionsQuery>(() => ({
 }));
 
 const { data, pending, error, refresh } = list(() => props.portfolioId, query);
+const { data: statsData, refresh: refreshStats } = stats(
+  () => props.portfolioId,
+);
 
-const { data: statsData } = stats(() => props.portfolioId);
+async function refreshAll() {
+  await Promise.all([refresh(), refreshStats()]);
+}
+
+defineExpose({ refresh: refreshAll });
 
 const items = computed(() => data.value?.items ?? []);
 const total = computed(() => data.value?.total ?? 0);
@@ -441,16 +448,16 @@ function onPageChange(newPage: number) {
   emit('page-change', newPage);
 }
 
-function onEdit(_tx: Transaction) {
-  toast.info(t('toast.coming_soon'));
+function onEdit(tx: Transaction) {
+  emit('edit', tx);
 }
 
-function onDuplicate(_tx: Transaction) {
-  toast.info(t('toast.coming_soon'));
+function onDuplicate(tx: Transaction) {
+  emit('duplicate', tx);
 }
 
-function onDelete(_tx: Transaction) {
-  toast.info(t('toast.coming_soon'));
+function onDelete(tx: Transaction) {
+  emit('delete', tx);
 }
 </script>
 

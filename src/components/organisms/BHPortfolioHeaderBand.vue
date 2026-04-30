@@ -73,7 +73,7 @@ const emit = defineEmits<{
 }>();
 
 const { t } = useI18n();
-const toast = useToast();
+const localePath = useLocalePath();
 const { formatRelative } = useLocaleFormatters();
 
 const kindLabel = computed(() =>
@@ -88,7 +88,10 @@ const updatedAgo = computed(() =>
 );
 
 function onAddTransaction() {
-  toast.info(t('toast.coming_soon'));
+  navigateTo({
+    path: localePath(`/portfolios/${props.portfolio.id}/transactions`),
+    query: { action: 'create' },
+  });
 }
 
 const menuItems = computed<NavigationLink[]>(() => [
