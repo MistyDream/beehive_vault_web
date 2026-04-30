@@ -1,12 +1,20 @@
 import { API_ENDPOINTS } from '~/constants/http';
 import type { StockSearchItem, StockSearchResult } from '~/types/portfolio';
 
+interface SearchOptions {
+  signal?: AbortSignal;
+}
+
 export const useStockApi = () => {
   const $api = useNuxtApp().$api as typeof $fetch;
 
-  const search = async (q: string): Promise<StockSearchResult> => {
+  const search = async (
+    q: string,
+    options: SearchOptions = {},
+  ): Promise<StockSearchResult> => {
     const response = await $api.raw<StockSearchItem[]>(API_ENDPOINTS.STOCKS.SEARCH, {
       query: { q },
+      signal: options.signal,
     });
     return {
       items: response._data ?? [],

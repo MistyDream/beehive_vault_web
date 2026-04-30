@@ -165,6 +165,7 @@ const emit = defineEmits<{
 }>();
 
 const { t, locale } = useI18n();
+const toast = useToast();
 const { search: searchStocks } = useStockApi();
 
 const TYPES_NEEDING_STOCK: readonly TransactionType[] = [
@@ -205,7 +206,7 @@ function buildInitialForm() {
       split_from: init.split_from,
       split_to: init.split_to,
       currency: init.currency,
-      exchange_rate: init.exchange_rate,
+      exchange_rate: init.exchange_rate as number | null,
       notes: init.notes ?? '',
     };
   }
@@ -221,7 +222,7 @@ function buildInitialForm() {
     split_from: null as number | null,
     split_to: null as number | null,
     currency: props.portfolioCurrency,
-    exchange_rate: 1,
+    exchange_rate: 1 as number | null,
     notes: '',
   };
 }
@@ -292,6 +293,7 @@ const hasCustomCurrency = computed(
 watch(
   () => form.transaction_type,
   () => {
+    clearErrors();
     if (!needsStock.value) form.stock_id = null;
     if (!needsQuantityAndPrice.value) {
       form.quantity = null;
@@ -312,7 +314,9 @@ watch(
 watch(
   () => form.currency,
   () => {
-    if (!hasCustomCurrency.value) form.exchange_rate = 1;
+    // Switching to a foreign currency clears the rate so the user must enter
+    // a fresh value (a stale 1.0 from EUR-on-EUR would silently ship).
+    form.exchange_rate = hasCustomCurrency.value ? null : 1;
   },
 );
 
@@ -326,7 +330,7 @@ const selectedStockOption = ref<SearchableOption | null>(initialStockOption.valu
 const searchResults = ref<SearchableOption[]>([]);
 const stockLoading = ref(false);
 const stockTruncated = ref(false);
-let searchSeq = 0;
+let searchAbort: AbortController | null = null;
 
 const stockOptions = computed<SearchableOption[]>(() => {
   const list = [...searchResults.value];
@@ -352,29 +356,33 @@ const stockValue = computed({
 });
 
 async function onStockSearch(query: string) {
+  searchAbort?.abort();
   if (query.length < 2) {
+    searchAbort = null;
     searchResults.value = [];
     stockTruncated.value = false;
     stockLoading.value = false;
     return;
   }
-  const seq = ++searchSeq;
+  searchAbort = new AbortController();
+  const { signal } = searchAbort;
   stockLoading.value = true;
   try {
-    const result = await searchStocks(query);
-    if (seq !== searchSeq) return;
+    const result = await searchStocks(query, { signal });
     searchResults.value = result.items.map((item) => ({
       value: item.id,
       label: item.symbol,
       description: item.name,
     }));
     stockTruncated.value = result.truncated;
-  } catch {
-    if (seq !== searchSeq) return;
+  } catch (err) {
+    if (signal.aborted) return;
+    toast.error(t('portfolios.detail.transactions.toast.stock_search_failed'));
     searchResults.value = [];
     stockTruncated.value = false;
+    if (import.meta.dev) console.error('[stock search] failed', err);
   } finally {
-    if (seq === searchSeq) stockLoading.value = false;
+    if (!signal.aborted) stockLoading.value = false;
   }
 }
 
@@ -388,7 +396,6 @@ watch(
       }
     }
   },
-  { deep: true },
 );
 
 function clearErrors() {

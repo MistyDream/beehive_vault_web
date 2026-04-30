@@ -41,7 +41,7 @@
         :loading="submitting"
         :api-errors="apiErrors"
         @submit="onFormSubmit"
-        @cancel="closeFormModal"
+        @cancel="closeModal"
       />
     </BHModal>
 
@@ -58,7 +58,7 @@
         :transaction="modal.tx"
         :loading="submitting"
         @confirm="onDeleteConfirm"
-        @cancel="closeDeleteModal"
+        @cancel="closeModal"
       />
     </BHModal>
   </div>
@@ -281,11 +281,7 @@ function openDelete(tx: Transaction) {
   modal.value = { kind: 'delete', tx };
 }
 
-function closeFormModal() {
-  modal.value = null;
-}
-
-function closeDeleteModal() {
+function closeModal() {
   modal.value = null;
 }
 
@@ -297,60 +293,75 @@ function extractFieldErrors(err: ApiError): Record<string, string> {
   return out;
 }
 
-async function onFormSubmit(payload: CreateTransactionPayload) {
-  const current = modal.value;
-  if (!current || current.kind === 'delete') return;
-
+async function runMutation(
+  op: () => Promise<unknown>,
+  successKey: string,
+  failKey: string,
+  onValidationError?: (err: ApiError) => void,
+): Promise<void> {
   submitting.value = true;
-  apiErrors.value = {};
   try {
-    if (current.kind === 'edit') {
-      await transactionApi.update(
-        id.value,
-        current.tx.id,
-        payload as UpdateTransactionPayload,
-      );
-      toast.success(t('portfolios.detail.transactions.toast.updated'));
-    } else {
-      await transactionApi.create(id.value, payload);
-      toast.success(
-        current.kind === 'duplicate'
-          ? t('portfolios.detail.transactions.toast.duplicated')
-          : t('portfolios.detail.transactions.toast.created'),
-      );
-    }
+    await op();
+    toast.success(t(successKey));
     modal.value = null;
     await cardRef.value?.refresh();
   } catch (err) {
-    if (err instanceof ApiError && err.status === 422 && err.errors?.length) {
-      apiErrors.value = extractFieldErrors(err);
+    if (
+      onValidationError
+      && err instanceof ApiError
+      && err.status === 422
+      && err.errors?.length
+    ) {
+      onValidationError(err);
     } else {
-      toast.error(
-        current.kind === 'edit'
-          ? t('portfolios.detail.transactions.toast.update_failed')
-          : t('portfolios.detail.transactions.toast.create_failed'),
-      );
+      toast.error(t(failKey));
     }
   } finally {
     submitting.value = false;
   }
 }
 
+async function onFormSubmit(payload: CreateTransactionPayload) {
+  const current = modal.value;
+  if (!current || current.kind === 'delete') return;
+  apiErrors.value = {};
+
+  const onValidationError = (err: ApiError) => {
+    apiErrors.value = extractFieldErrors(err);
+  };
+
+  if (current.kind === 'edit') {
+    await runMutation(
+      () => transactionApi.update(
+        id.value,
+        current.tx.id,
+        payload as UpdateTransactionPayload,
+      ),
+      'portfolios.detail.transactions.toast.updated',
+      'portfolios.detail.transactions.toast.update_failed',
+      onValidationError,
+    );
+    return;
+  }
+
+  await runMutation(
+    () => transactionApi.create(id.value, payload),
+    current.kind === 'duplicate'
+      ? 'portfolios.detail.transactions.toast.duplicated'
+      : 'portfolios.detail.transactions.toast.created',
+    'portfolios.detail.transactions.toast.create_failed',
+    onValidationError,
+  );
+}
+
 async function onDeleteConfirm() {
   const current = modal.value;
   if (current?.kind !== 'delete') return;
-
-  submitting.value = true;
-  try {
-    await transactionApi.remove(id.value, current.tx.id);
-    toast.success(t('portfolios.detail.transactions.toast.deleted'));
-    modal.value = null;
-    await cardRef.value?.refresh();
-  } catch {
-    toast.error(t('portfolios.detail.transactions.toast.delete_failed'));
-  } finally {
-    submitting.value = false;
-  }
+  await runMutation(
+    () => transactionApi.remove(id.value, current.tx.id),
+    'portfolios.detail.transactions.toast.deleted',
+    'portfolios.detail.transactions.toast.delete_failed',
+  );
 }
 
 watch(

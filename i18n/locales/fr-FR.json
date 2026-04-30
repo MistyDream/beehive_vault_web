@@ -220,7 +220,8 @@
           "deleted": "Transaction supprimée",
           "create_failed": "Impossible de créer la transaction",
           "update_failed": "Impossible de modifier la transaction",
-          "delete_failed": "Impossible de supprimer la transaction"
+          "delete_failed": "Impossible de supprimer la transaction",
+          "stock_search_failed": "Impossible de rechercher des actions"
         }
       },
       "resume": {

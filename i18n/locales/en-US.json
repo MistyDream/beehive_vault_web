@@ -220,7 +220,8 @@
           "deleted": "Transaction deleted",
           "create_failed": "Unable to create transaction",
           "update_failed": "Unable to update transaction",
-          "delete_failed": "Unable to delete transaction"
+          "delete_failed": "Unable to delete transaction",
+          "stock_search_failed": "Unable to search stocks"
         }
       },
       "resume": {
