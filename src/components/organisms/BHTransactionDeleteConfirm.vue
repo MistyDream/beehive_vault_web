@@ -119,6 +119,11 @@ const { formatDate } = useLocaleFormatters();
   @apply bg-theme-accent-secondary/15 text-theme-accent-secondary-strong;
 }
 
+.bh-tx-delete__type--withdrawal,
+.bh-tx-delete__type--split {
+  @apply bg-theme-bg-elevated text-theme-text-muted;
+}
+
 .bh-tx-delete__stock {
   @apply flex items-center gap-2 min-w-0;
 }
