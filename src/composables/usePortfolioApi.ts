@@ -22,13 +22,13 @@ export const usePortfolioApi = () => {
       key: 'portfolios:list',
     });
 
-  const detail = (id: MaybeRefOrGetter<number>) =>
+  const detail = (id: MaybeRefOrGetter<string>) =>
     useFetch<Portfolio>(() => API_ENDPOINTS.PORTFOLIOS.DETAIL(toValue(id)), {
       $fetch: $api,
       key: computed(() => `portfolios:detail:${toValue(id)}`),
     });
 
-  const summary = (id: MaybeRefOrGetter<number>) =>
+  const summary = (id: MaybeRefOrGetter<string>) =>
     useFetch<PortfolioSummary>(
       () => API_ENDPOINTS.PORTFOLIOS.SUMMARY(toValue(id)),
       {
@@ -38,7 +38,7 @@ export const usePortfolioApi = () => {
     );
 
   const positions = (
-    id: MaybeRefOrGetter<number>,
+    id: MaybeRefOrGetter<string>,
     query?: MaybeRefOrGetter<PositionsQuery | undefined>,
   ) =>
     useFetch<Paginated<Position>>(
@@ -50,14 +50,14 @@ export const usePortfolioApi = () => {
       },
     );
 
-  const cash = (id: MaybeRefOrGetter<number>) =>
+  const cash = (id: MaybeRefOrGetter<string>) =>
     useFetch<CashBalance>(() => API_ENDPOINTS.PORTFOLIOS.CASH(toValue(id)), {
       $fetch: $api,
       key: computed(() => `portfolios:cash:${toValue(id)}`),
     });
 
   const performance = (
-    id: MaybeRefOrGetter<number>,
+    id: MaybeRefOrGetter<string>,
     filters?: MaybeRefOrGetter<PerformanceFilters | undefined>,
   ) =>
     useFetch<PerformanceReport>(
@@ -76,7 +76,7 @@ export const usePortfolioApi = () => {
       },
     );
 
-  const scoring = (id: MaybeRefOrGetter<number>) =>
+  const scoring = (id: MaybeRefOrGetter<string>) =>
     useFetch<PortfolioScoring>(
       () => API_ENDPOINTS.PORTFOLIOS.SCORING(toValue(id)),
       {
@@ -91,13 +91,13 @@ export const usePortfolioApi = () => {
       body: payload,
     });
 
-  const update = (id: number, payload: UpdatePortfolioPayload) =>
+  const update = (id: string, payload: UpdatePortfolioPayload) =>
     $api<Portfolio>(API_ENDPOINTS.PORTFOLIOS.UPDATE(id), {
       method: 'PUT',
       body: payload,
     });
 
-  const remove = (id: number) =>
+  const remove = (id: string) =>
     $api<unknown>(API_ENDPOINTS.PORTFOLIOS.DELETE(id), { method: 'DELETE' });
 
   return {

@@ -20,7 +20,7 @@ import BHPortfolioStockDrawerContent from '~/components/organisms/BHPortfolioSto
 import type { Position } from '~/types/portfolio';
 
 const route = useRoute();
-const id = computed(() => Number(route.params.id));
+const id = computed(() => String(route.params.id));
 
 const drawer = useDrawer();
 

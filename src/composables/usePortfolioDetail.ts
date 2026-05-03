@@ -1,4 +1,4 @@
-export function usePortfolioDetail(id: MaybeRefOrGetter<number>) {
+export function usePortfolioDetail(id: MaybeRefOrGetter<string>) {
   const { detail, summary, performance } = usePortfolioApi();
 
   const detailResult = detail(id);

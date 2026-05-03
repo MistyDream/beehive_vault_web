@@ -116,7 +116,7 @@ import type {
 } from '~/types/portfolio';
 
 interface Props {
-  portfolioId: number;
+  portfolioId: string;
 }
 
 const props = defineProps<Props>();

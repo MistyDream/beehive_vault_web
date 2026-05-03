@@ -56,7 +56,7 @@ import type { Position } from '~/types/portfolio';
 import { colorFromSymbol } from '~/utils/stringToColor';
 
 interface Props {
-  portfolioId: number;
+  portfolioId: string;
 }
 
 const props = defineProps<Props>();

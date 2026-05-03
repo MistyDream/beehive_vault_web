@@ -83,7 +83,7 @@ type BusyKind = 'edit' | 'delete';
 const { t } = useI18n();
 const localePath = useLocalePath();
 const route = useRoute();
-const id = computed(() => Number(route.params.id));
+const id = computed(() => String(route.params.id));
 
 const portfolioApi = usePortfolioApi();
 const toast = useToast();

@@ -89,7 +89,7 @@ import type { Transaction, TransactionsQuery } from '~/types/portfolio';
 import { displayAmount, iconForTransaction } from '~/utils/transaction';
 
 interface Props {
-  portfolioId: number;
+  portfolioId: string;
 }
 
 const props = defineProps<Props>();

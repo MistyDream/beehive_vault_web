@@ -53,7 +53,7 @@ const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
 
-const id = computed(() => Number(route.params.id));
+const id = computed(() => String(route.params.id));
 
 function parseIsoDate(raw: unknown): string | undefined {
   if (typeof raw !== 'string' || raw.length === 0) return undefined;

@@ -26,7 +26,7 @@ export const useTransactionApi = () => {
   const $api = useNuxtApp().$api as typeof $fetch;
 
   const list = (
-    portfolioId: MaybeRefOrGetter<number>,
+    portfolioId: MaybeRefOrGetter<string>,
     query?: MaybeRefOrGetter<TransactionsQuery | undefined>,
   ) =>
     useFetch<Paginated<Transaction>>(
@@ -38,7 +38,7 @@ export const useTransactionApi = () => {
       },
     );
 
-  const stats = (portfolioId: MaybeRefOrGetter<number>) =>
+  const stats = (portfolioId: MaybeRefOrGetter<string>) =>
     useFetch<TransactionStats>(
       () => API_ENDPOINTS.PORTFOLIOS.TRANSACTIONS_STATS(toValue(portfolioId)),
       {
@@ -48,8 +48,8 @@ export const useTransactionApi = () => {
     );
 
   const detail = (
-    portfolioId: MaybeRefOrGetter<number>,
-    txId: MaybeRefOrGetter<number>,
+    portfolioId: MaybeRefOrGetter<string>,
+    txId: MaybeRefOrGetter<string>,
   ) =>
     useFetch<Transaction>(
       () =>
@@ -60,15 +60,15 @@ export const useTransactionApi = () => {
       },
     );
 
-  const create = (portfolioId: number, payload: CreateTransactionPayload) =>
+  const create = (portfolioId: string, payload: CreateTransactionPayload) =>
     $api<Transaction>(API_ENDPOINTS.PORTFOLIOS.TRANSACTIONS(portfolioId), {
       method: 'POST',
       body: payload,
     });
 
   const update = (
-    portfolioId: number,
-    txId: number,
+    portfolioId: string,
+    txId: string,
     payload: UpdateTransactionPayload,
   ) =>
     $api<Transaction>(
@@ -76,7 +76,7 @@ export const useTransactionApi = () => {
       { method: 'PUT', body: payload },
     );
 
-  const remove = (portfolioId: number, txId: number) =>
+  const remove = (portfolioId: string, txId: string) =>
     $api<unknown>(API_ENDPOINTS.PORTFOLIOS.TRANSACTION(portfolioId, txId), {
       method: 'DELETE',
     });

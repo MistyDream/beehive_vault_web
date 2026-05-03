@@ -97,7 +97,7 @@ const toast = useToast();
 const route = useRoute();
 const router = useRouter();
 
-const id = computed(() => Number(route.params.id));
+const id = computed(() => String(route.params.id));
 
 function parseTypesCsv(raw: unknown): TransactionType[] {
   if (typeof raw !== 'string' || raw.length === 0) return [];

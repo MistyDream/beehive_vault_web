@@ -73,7 +73,7 @@
 import { LucidePlus } from '#components';
 
 interface Props {
-  portfolioId: number;
+  portfolioId: string;
 }
 
 const props = defineProps<Props>();

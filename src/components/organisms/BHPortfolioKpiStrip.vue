@@ -68,7 +68,7 @@ import {
 } from '#components';
 
 interface Props {
-  portfolioId: number;
+  portfolioId: string;
   currency: string;
 }
 

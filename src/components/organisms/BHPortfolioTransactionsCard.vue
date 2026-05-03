@@ -297,7 +297,7 @@ import type {
 import { iconForTransaction, signedAmount } from '~/utils/transaction';
 
 interface Props {
-  portfolioId: number;
+  portfolioId: string;
   filters: TransactionFilters;
   page: number;
   sortBy: TransactionsSortBy;
@@ -319,7 +319,7 @@ const { t } = useI18n();
 const { formatDate, formatQuantity } = useLocaleFormatters();
 
 const limit = computed(() => props.itemsPerPage);
-const expandedId = ref<number | null>(null);
+const expandedId = ref<string | null>(null);
 
 const columns = computed(() => [
   {
@@ -429,7 +429,7 @@ const summaryBreakdown = computed(() => {
     .map(([type, count]) => ({ type, count }));
 });
 
-function toggleExpanded(id: number) {
+function toggleExpanded(id: string) {
   expandedId.value = expandedId.value === id ? null : id;
 }
 

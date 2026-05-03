@@ -22,17 +22,17 @@ export const API_ENDPOINTS = {
   PORTFOLIOS: {
     LIST: '/portfolios',
     CREATE: '/portfolios',
-    DETAIL: (id: number) => `/portfolios/${id}`,
-    UPDATE: (id: number) => `/portfolios/${id}`,
-    DELETE: (id: number) => `/portfolios/${id}`,
-    POSITIONS: (id: number) => `/portfolios/${id}/positions`,
-    CASH: (id: number) => `/portfolios/${id}/cash`,
-    SUMMARY: (id: number) => `/portfolios/${id}/summary`,
-    PERFORMANCE: (id: number) => `/portfolios/${id}/performance`,
-    SCORING: (id: number) => `/portfolios/${id}/scoring`,
-    TRANSACTIONS: (id: number) => `/portfolios/${id}/transactions`,
-    TRANSACTIONS_STATS: (id: number) => `/portfolios/${id}/transactions/stats`,
-    TRANSACTION: (portfolioId: number, txId: number) =>
+    DETAIL: (id: string) => `/portfolios/${id}`,
+    UPDATE: (id: string) => `/portfolios/${id}`,
+    DELETE: (id: string) => `/portfolios/${id}`,
+    POSITIONS: (id: string) => `/portfolios/${id}/positions`,
+    CASH: (id: string) => `/portfolios/${id}/cash`,
+    SUMMARY: (id: string) => `/portfolios/${id}/summary`,
+    PERFORMANCE: (id: string) => `/portfolios/${id}/performance`,
+    SCORING: (id: string) => `/portfolios/${id}/scoring`,
+    TRANSACTIONS: (id: string) => `/portfolios/${id}/transactions`,
+    TRANSACTIONS_STATS: (id: string) => `/portfolios/${id}/transactions/stats`,
+    TRANSACTION: (portfolioId: string, txId: string) =>
       `/portfolios/${portfolioId}/transactions/${txId}`,
   },
   STOCKS: {

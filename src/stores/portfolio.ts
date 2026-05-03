@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import type { Portfolio } from '~/types/portfolio';
 
 export const usePortfolioStore = defineStore('portfolio', () => {
-  const activeId = ref<number | null>(null);
+  const activeId = ref<string | null>(null);
   const active = ref<Portfolio | null>(null);
 
   function setActive(portfolio: Portfolio) {

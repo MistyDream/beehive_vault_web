@@ -12,12 +12,21 @@ export const TRANSACTION_TYPES = [
 ] as const;
 export type TransactionType = (typeof TRANSACTION_TYPES)[number];
 
+export const MARKET_REGIONS = [
+  'americas',
+  'europe',
+  'asia_pacific',
+  'other',
+] as const;
+export type MarketRegion = (typeof MARKET_REGIONS)[number];
+
 export interface Stock {
   id: number;
   symbol: string;
   name: string;
   isin: string;
   currency: string | null;
+  market_region?: MarketRegion;
   market: string | null;
   sector: string | null;
   industry: string | null;
@@ -69,7 +78,7 @@ export interface TransactionsQuery extends TransactionFilters {
 }
 
 export interface Portfolio {
-  id: number;
+  id: string;
   name: string;
   kind: PortfolioKind;
   currency: string;
@@ -78,8 +87,8 @@ export interface Portfolio {
 }
 
 export interface Transaction {
-  id: number;
-  portfolio_id: number;
+  id: string;
+  portfolio_id: string;
   stock: Stock | null;
   transaction_type: TransactionType;
   executed_at: string;
@@ -118,7 +127,7 @@ export interface PortfolioSummary {
 }
 
 export interface PerformanceReport {
-  portfolio_id: number;
+  portfolio_id: string;
   currency: string;
   total_deposited: number;
   total_withdrawn: number;
@@ -139,7 +148,7 @@ export interface StockScore {
 }
 
 export interface PortfolioScoring {
-  portfolio_id: number;
+  portfolio_id: string;
   stock_scores: StockScore[];
   weighted_score: number | null;
 }
