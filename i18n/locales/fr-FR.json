@@ -27,7 +27,8 @@
   },
   "a11y": {
     "skip_to_main": "Aller au contenu principal",
-    "stock_avatar_label": "Avatar {symbol}"
+    "stock_avatar_label": "Avatar {symbol}",
+    "logo_label": "Logo BeeHive Vault"
   },
   "nav": {
     "main": "Navigation principale",

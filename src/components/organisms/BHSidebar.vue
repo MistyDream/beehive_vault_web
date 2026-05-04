@@ -15,12 +15,12 @@
     :aria-label="t('nav.main')"
   >
     <div class="bh-sidebar--head">
-      <BHImage
-        src="/img/beehive_vault_logo.png"
-        alt=""
-        class="bh-sidebar--head__logo"
-      />
-      <div class="bh-sidebar--head__app-name">BeeHive Vault</div>
+      <BHLogo class="bh-sidebar--head__logo" />
+      <div class="bh-sidebar--head__app-name">
+        <span class="bh-sidebar--head__app-name-bee">Bee</span>
+        <span class="bh-sidebar--head__app-name-hive">Hive</span>
+        <span class="bh-sidebar--head__app-name-vault">Vault</span>
+      </div>
       <button
         type="button"
         class="bh-sidebar--head__close"
@@ -43,11 +43,19 @@
         <button
           type="button"
           class="bh-sidebar--theme-toggle"
-          :aria-label="isDark ? t('theme.switch_to_light') : t('theme.switch_to_dark')"
+          :aria-label="
+            isDark ? t('theme.switch_to_light') : t('theme.switch_to_dark')
+          "
           @click="toggle"
         >
-          <component :is="isDark ? LucideSun : LucideMoon" :size="18" aria-hidden="true" />
-          <span>{{ isDark ? t('theme.light_mode') : t('theme.dark_mode') }}</span>
+          <component
+            :is="isDark ? LucideSun : LucideMoon"
+            :size="18"
+            aria-hidden="true"
+          />
+          <span>{{
+            isDark ? t('theme.light_mode') : t('theme.dark_mode')
+          }}</span>
         </button>
       </ClientOnly>
     </div>
@@ -83,9 +91,12 @@ const navigation = computed<NavigationLink[]>(() => [
   },
 ]);
 
-watch(() => route.fullPath, () => {
-  if (isOpen.value) close();
-});
+watch(
+  () => route.fullPath,
+  () => {
+    if (isOpen.value) close();
+  },
+);
 
 onKeyStroke('Escape', (e) => {
   if (!isOpen.value) return;
@@ -122,11 +133,23 @@ onKeyStroke('Escape', (e) => {
 }
 
 .bh-sidebar--head__logo {
-  @apply h-12 w-12;
+  @apply h-12 w-auto text-theme-text-primary;
 }
 
 .bh-sidebar--head__app-name {
-  @apply flex-1 font-poppins text-base;
+  @apply flex-1 font-poppins text-xl tracking-tight;
+}
+
+.bh-sidebar--head__app-name-bee {
+  @apply font-semibold text-theme-accent-primary;
+}
+
+.bh-sidebar--head__app-name-hive {
+  @apply font-semibold text-theme-text-primary;
+}
+
+.bh-sidebar--head__app-name-vault {
+  @apply ml-1 font-normal text-theme-text-secondary;
 }
 
 .bh-sidebar--head__close {
