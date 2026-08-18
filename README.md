@@ -1,77 +1,23 @@
-# Nuxt Minimal Starter
+# Beehive Vault Web
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Client web de Beehive Vault, une application personnelle de suivi patrimonial et de compréhension des flux financiers.
 
-## Setup
+Le projet entre dans une reconstruction du MVP sur la branche `reboot/web-foundation`. La version `0.1.0`, centrée sur les portefeuilles d'investissement, reste disponible dans l'historique Git et sous le tag `v0.1.0`.
 
-Make sure to install dependencies:
+## État actuel
 
-```bash
-# npm
-npm install
+- l'audit statique de la version `0.1.0` est terminé ;
+- Nuxt, Vue, TypeScript, l'internationalisation et le socle visuel sont conservés ;
+- le domaine historique des portefeuilles sera remplacé par celui du nouveau socle financier ;
+- la conception produit et visuelle précède toute nouvelle implémentation.
 
-# pnpm
-pnpm install
+## Documentation
 
-# yarn
-yarn install
+- [Feuille de route](docs/roadmap.md)
+- [Décisions de fondation](docs/foundation.md)
+- [Chantier de conception](docs/design.md)
 
-# bun
-bun install
-```
+## Développement
 
-ou
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+L'environnement historique utilise Node.js 20 ou plus récent et Yarn 4.
+Les commandes et dépendances seront revérifiées pendant la phase de fondation avant de servir de référence au nouveau développement.
