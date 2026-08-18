@@ -6,14 +6,14 @@ La feuille de route suit des tranches verticales. La conception précède l'impl
 
 - **Branche :** `reboot/web-foundation` ;
 - **Phase active :** phase 0 — Conception ;
-- **Dernière étape terminée :** audit statique de la version `0.1.0` ;
-- **Prochaine étape :** architecture de l'information et tableau de bord.
+- **Dernière étape terminée :** structure de la navigation et de la vue d'ensemble ;
+- **Prochaine étape :** direction visuelle et audit des composants génériques.
 
 ## Phase 0 — Conception
 
 - définir les parcours principaux du MVP ;
 - revoir la navigation et l'architecture de l'information ;
-- concevoir le tableau de bord sur mobile et ordinateur ;
+- concevoir la vue d'ensemble sur mobile et ordinateur ;
 - définir la nouvelle direction visuelle ;
 - auditer les composants génériques existants ;
 - documenter les états et règles d'accessibilité.

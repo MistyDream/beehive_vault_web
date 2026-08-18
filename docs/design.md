@@ -14,7 +14,7 @@ La reconstruction comprend une nouvelle passe de conception avant l'implémentat
 ## Écrans à concevoir en priorité
 
 1. création ou sélection du foyer ;
-2. navigation générale et tableau de bord ;
+2. navigation générale et [vue d'ensemble](overview.md) — structure validée ;
 3. liste et détail des comptes ;
 4. liste et formulaire des transactions ;
 5. rapport mensuel et accès aux transactions sources ;
@@ -30,4 +30,4 @@ La reconstruction comprend une nouvelle passe de conception avant l'implémentat
 - états de chargement, vide, erreur et succès ;
 - règles de contenu, de formatage financier et d'accessibilité.
 
-La direction visuelle détaillée et les composants définitifs restent à décider pendant ce chantier.
+La structure de la vue d'ensemble est validée. La direction visuelle détaillée et les composants définitifs restent à décider pendant ce chantier.
