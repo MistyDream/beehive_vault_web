@@ -16,6 +16,8 @@ Le projet entre dans une reconstruction du MVP sur la branche `reboot/web-founda
 - [Feuille de route](docs/roadmap.md)
 - [Décisions de fondation](docs/foundation.md)
 - [Chantier de conception](docs/design.md)
+- [Direction visuelle](docs/visual-direction.md)
+- [Audit des composants génériques](docs/component-audit.md)
 - [Vue d'ensemble](docs/overview.md)
 
 ## Développement

@@ -2,6 +2,8 @@
 
 La reconstruction comprend une nouvelle passe de conception avant l'implémentation des parcours. Elle doit améliorer l'expérience sans perdre les acquis d'accessibilité, de responsive design et d'identité visuelle de la version `0.1.0`.
 
+Les décisions prises pendant cette passe sont consignées dans la [direction visuelle](visual-direction.md).
+
 ## Objectifs
 
 - rendre le patrimoine et les flux du mois compréhensibles dès l'accueil ;
@@ -30,4 +32,6 @@ La reconstruction comprend une nouvelle passe de conception avant l'implémentat
 - états de chargement, vide, erreur et succès ;
 - règles de contenu, de formatage financier et d'accessibilité.
 
-La structure de la vue d'ensemble est validée. La direction visuelle détaillée et les composants définitifs restent à décider pendant ce chantier.
+La structure de la vue d'ensemble et la [direction visuelle](visual-direction.md)
+sont validées. L'[audit des composants génériques](component-audit.md) définit
+le socle à préserver, les éléments à reconstruire et leur ordre de migration.
