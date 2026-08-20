@@ -1,7 +1,13 @@
 # Foyer actif
 
-- Statut : conception fonctionnelle validée, wireframe à produire
+- Statut : structure et wireframe validés
 - Date : 2026-08-20
+
+## Wireframe de référence
+
+[Ouvrir le wireframe interactif](wireframes/active-household.html)
+
+Le wireframe couvre la création initiale, la sélection entre plusieurs foyers et le menu du foyer sur ordinateur et mobile. Il sert de référence fonctionnelle et applique la direction visuelle validée sans figer les dimensions exactes de l'implémentation.
 
 ## Rôle
 
@@ -134,4 +140,4 @@ La connexion d'une banque sera étudiée avec le parcours des comptes. L'ajout m
 
 ## Suite
 
-Le wireframe fonctionnel devra couvrir la création initiale, la sélection et le menu du foyer sur ordinateur et mobile. La conception des comptes précisera ensuite la transition vers l'ajout du premier compte.
+La conception des comptes précisera la transition vers l'ajout du premier compte.

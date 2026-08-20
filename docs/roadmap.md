@@ -8,8 +8,8 @@ soient pas dictés par les composants historiques.
 
 - **Branche :** `reboot/web-foundation` ;
 - **Phase active :** phase 0 — Conception ;
-- **Dernière étape terminée :** 0.5 — Audit des composants génériques ;
-- **Prochaine étape :** 0.6 — Parcours et états restants.
+- **Dernière étape terminée :** 0.6.1 — Foyer actif ;
+- **Prochaine étape :** 0.6.2 — Comptes.
 
 Légende :
 
@@ -58,9 +58,32 @@ Les décisions détaillées sont consignées dans l'[audit des composants géné
 
 ### 0.6 — Parcours et états restants 🚧
 
-- documenter la [création et la sélection du foyer](active-household.md) —
-  conception fonctionnelle validée, wireframe à produire ;
-- concevoir les comptes, transactions et rapports mensuels ;
+#### 0.6.1 — Foyer actif ✅
+
+- concevoir la création, la sélection et la persistance du foyer actif ;
+- traiter le démarrage avec zéro, un ou plusieurs foyers ;
+- valider le [wireframe ordinateur et mobile](active-household.md).
+
+#### 0.6.2 — Comptes ⬜
+
+- concevoir la liste, le détail et la création d'un compte ;
+- définir le rapprochement, l'archivage et les établissements associés ;
+- préciser la transition depuis la création d'un foyer.
+
+#### 0.6.3 — Transactions ⬜
+
+- concevoir la liste, les filtres et les formulaires ;
+- distinguer les revenus, dépenses et transferts ;
+- préserver le contexte pendant la consultation et la modification.
+
+#### 0.6.4 — Rapport mensuel ⬜
+
+- concevoir le choix du mois et la ventilation par catégorie ;
+- représenter les transactions non catégorisées ;
+- permettre de remonter aux transactions sources.
+
+#### 0.6.5 — Règles transversales ⬜
+
 - documenter les états de chargement, vide, erreur et succès ;
 - définir les règles de contenu et de formatage financier ;
 - viser WCAG 2.1 AA sur les parcours du MVP.
