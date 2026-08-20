@@ -1,15 +1,17 @@
 # Comptes
 
-- Statut : conception fonctionnelle en cours
+- Statut : conception fonctionnelle validée provisoirement
 - Date : 2026-08-20
-- Liste : structure validée provisoirement
-- Détail et formulaires : wireframes à produire
+- Liste, détail et formulaires : structure validée provisoirement
 
-## Wireframe de référence
+## Wireframes de référence
 
-[Ouvrir la liste des comptes sur ordinateur et mobile](wireframes/accounts.html)
+- [Liste des comptes](wireframes/accounts.html) ;
+- [détail d'un compte](wireframes/account-detail.html) ;
+- [création d'un compte](wireframes/account-creation.html) ;
+- [mise à jour et correction d'un solde](wireframes/balance-dialog.html).
 
-Le wireframe fixe la hiérarchie de l'état normal sans constituer une spécification au pixel près.
+Ces wireframes couvrent les formats ordinateur et mobile. Ils fixent la hiérarchie des parcours principaux sans constituer une spécification au pixel près.
 Les espacements, la densité et les détails visuels seront ajustés pendant l'implémentation réelle.
 
 ## Rôle
@@ -217,4 +219,6 @@ La liste filtrée des transactions par `accountId` existe déjà et peut aliment
 
 ## Suite
 
-Les wireframes du détail, de la création et de la mise à jour du solde restent à produire avant de terminer 0.6.2.
+La conception fonctionnelle de 0.6.2 est suffisamment définie pour préparer les contrats API puis l'implémentation. Les règles et wireframes restent provisoires jusqu'à leur validation en usage réel.
+
+La prochaine étape de conception est 0.6.3 — Transactions.
