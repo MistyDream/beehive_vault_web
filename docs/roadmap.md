@@ -8,8 +8,8 @@ soient pas dictés par les composants historiques.
 
 - **Branche :** `reboot/web-foundation` ;
 - **Phase active :** phase 0 — Conception ;
+- **Étape active :** 0.6.2 — Comptes ;
 - **Dernière étape terminée :** 0.6.1 — Foyer actif ;
-- **Prochaine étape :** 0.6.2 — Comptes.
 
 Légende :
 
@@ -64,11 +64,12 @@ Les décisions détaillées sont consignées dans l'[audit des composants géné
 - traiter le démarrage avec zéro, un ou plusieurs foyers ;
 - valider le [wireframe ordinateur et mobile](active-household.md).
 
-#### 0.6.2 — Comptes ⬜
+#### 0.6.2 — Comptes 🚧
 
-- concevoir la liste, le détail et la création d'un compte ;
-- définir le rapprochement, l'archivage et les établissements associés ;
-- préciser la transition depuis la création d'un foyer.
+- documenter la [liste, le détail et les formulaires](accounts.md) ;
+- valider provisoirement le wireframe de la liste sur ordinateur et mobile ;
+- définir le rapprochement, l'archivage et les établissements référencés ;
+- produire les wireframes du détail et des formulaires.
 
 #### 0.6.3 — Transactions ⬜
 

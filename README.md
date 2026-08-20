@@ -20,6 +20,7 @@ Le projet entre dans une reconstruction du MVP sur la branche `reboot/web-founda
 - [Direction visuelle](docs/visual-direction.md)
 - [Audit des composants génériques](docs/component-audit.md)
 - [Foyer actif](docs/active-household.md)
+- [Comptes](docs/accounts.md)
 - [Vue d'ensemble](docs/overview.md)
 
 ## Développement
