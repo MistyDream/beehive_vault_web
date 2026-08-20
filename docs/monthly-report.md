@@ -110,7 +110,7 @@ Lorsqu'un mois ne comporte aucun revenu ni aucune dépense :
 - le message « Aucun flux enregistré pour ce mois » remplace la ventilation ;
 - un lien permet de consulter les transactions du mois.
 
-Aucun bouton de création de transaction n'est ajouté au rapport. Les états génériques de chargement et d'erreur seront harmonisés pendant l'étape 0.6.5.
+Aucun bouton de création de transaction n'est ajouté au rapport. Les états génériques de chargement et d'erreur suivent les [règles transversales](cross-cutting-rules.md).
 
 ## Responsive et accessibilité
 
@@ -130,4 +130,4 @@ Le client peut déterminer le mois courant à partir du fuseau horaire déjà ex
 
 ## Suite
 
-La conception fonctionnelle de 0.6.4 est suffisamment définie pour préparer l'implémentation. La prochaine étape est 0.6.5 — Règles transversales.
+La conception fonctionnelle de 0.6.4 est suffisamment définie pour préparer l'implémentation. Les comportements communs sont précisés par les [règles transversales](cross-cutting-rules.md).

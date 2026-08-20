@@ -11,7 +11,7 @@ Les décisions prises pendant cette passe sont consignées dans la [direction vi
 - réduire la densité et la complexité des écrans de gestion ;
 - permettre de remonter d'un total financier à ses comptes ou transactions sources ;
 - conserver une expérience cohérente sur mobile et ordinateur ;
-- viser WCAG 2.1 AA pour les parcours du MVP.
+- viser WCAG 2.2 AA pour les parcours du MVP.
 
 ## Écrans à concevoir en priorité
 
@@ -35,3 +35,4 @@ Les décisions prises pendant cette passe sont consignées dans la [direction vi
 La structure de la vue d'ensemble et la [direction visuelle](visual-direction.md) sont validées. L'[audit des composants génériques](component-audit.md) définit le socle à préserver, les éléments à reconstruire et leur ordre de migration.
 La structure et le wireframe du [foyer actif](active-household.md) sont également validés.
 Les parcours des [comptes](accounts.md), des [transactions](transactions.md) et du [rapport mensuel](monthly-report.md) disposent également de wireframes validés provisoirement.
+Les [règles transversales](cross-cutting-rules.md) harmonisent les états, le contenu financier, le responsive et l'accessibilité. La phase de conception fournit désormais un socle suffisant pour commencer la reconstruction ; les référentiels encore planifiés seront précisés avant leur tranche d'implémentation.

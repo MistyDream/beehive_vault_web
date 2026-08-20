@@ -128,7 +128,7 @@ Les composants interactifs migrés devront être vérifiés au minimum selon les
 - navigation complète au clavier, ordre de focus prévisible et retour du focus après fermeture d'une couche ;
 - nom accessible, état et message d'erreur reliés à chaque contrôle ;
 - cible tactile d'au moins 44 par 44 pixels pour les actions isolées ;
-- contraste WCAG 2.1 AA dans les deux thèmes, sans utiliser la couleur comme seule porteuse de sens ;
+- contraste WCAG 2.2 AA dans les deux thèmes, sans utiliser la couleur comme seule porteuse de sens ;
 - prise en charge du zoom, du mouvement réduit et des largeurs mobiles ;
 - transformation explicite des tableaux en listes ou cartes lorsque le simple défilement horizontal ne suffit pas.
 

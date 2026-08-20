@@ -38,8 +38,10 @@ Aucune fonctionnalité métier n'est actuellement en cours d'implémentation.
 | Rapport mensuel | Sélection du mois, revenus, dépenses et flux net | Aucun mois futur ni comparaison temporelle dans le MVP |
 | Rapport mensuel | Sankey sur ordinateur et listes à barres sur mobile | Liste de repli lorsque les montants ne permettent pas un Sankey fiable |
 | Rapport mensuel | Ventilation par catégorie et transactions sources | Réutilise les filtres de la page Transactions |
+| Qualité | États de chargement, vide, erreur et succès | Règles communes à implémenter dans chaque parcours |
+| Accessibilité | Responsive, clavier et cible WCAG 2.2 AA | Conformité à vérifier après implémentation |
 
-Les décisions détaillées sont consignées dans la [vue d'ensemble](overview.md), le [foyer actif](active-household.md), les [comptes](accounts.md), les [transactions](transactions.md) et le [rapport mensuel](monthly-report.md).
+Les décisions détaillées sont consignées dans la [vue d'ensemble](overview.md), le [foyer actif](active-household.md), les [comptes](accounts.md), les [transactions](transactions.md), le [rapport mensuel](monthly-report.md) et les [règles transversales](cross-cutting-rules.md).
 
 ## Prévues pour le MVP
 
@@ -48,7 +50,6 @@ Les décisions détaillées sont consignées dans la [vue d'ensemble](overview.m
 | API côté serveur | Proxy Nuxt de même origine | Masquer l'origine et la version de l'API au navigateur |
 | Erreurs | Problem Details RFC 9457 | Relier les erreurs métier et de validation aux parcours Web |
 | Référentiels | Gestion des catégories et consultation des établissements pris en charge | Alimenter les comptes et transactions sans création libre d'établissement |
-| Qualité | États transversaux, responsive et WCAG 2.1 AA | Fiabiliser les parcours avant validation du MVP |
 | Validation | Données représentatives et tests navigateur | Vérifier le parcours complet en usage régulier |
 
 ## Différées après le MVP

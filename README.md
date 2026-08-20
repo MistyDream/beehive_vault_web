@@ -24,6 +24,7 @@ Le projet entre dans une reconstruction du MVP sur la branche `reboot/web-founda
 - [Comptes](docs/accounts.md)
 - [Transactions](docs/transactions.md)
 - [Rapport mensuel](docs/monthly-report.md)
+- [Règles transversales](docs/cross-cutting-rules.md)
 - [Vue d'ensemble](docs/overview.md)
 
 ## Développement

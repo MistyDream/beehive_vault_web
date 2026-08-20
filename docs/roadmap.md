@@ -9,9 +9,9 @@ Le [catalogue des fonctionnalités](features.md) distingue séparément ce qui e
 ## État actuel
 
 - **Branche :** `reboot/web-foundation` ;
-- **Phase active :** phase 0 — Conception ;
-- **Étape active :** 0.6.5 — Règles transversales ;
-- **Dernière étape terminée :** 0.6.4 — Rapport mensuel ;
+- **Phase active :** phase 1 — Prérequis API ;
+- **Étape active :** 1.1 — Liste des foyers ;
+- **Dernière étape terminée :** 0.6.5 — Règles transversales ;
 
 Légende :
 
@@ -19,7 +19,7 @@ Légende :
 - 🚧 en cours ;
 - ⬜ à faire.
 
-## Phase 0 — Conception 🚧
+## Phase 0 — Conception ✅
 
 ### 0.1 — Audit de la version `0.1.0` ✅
 
@@ -88,11 +88,11 @@ Les décisions détaillées sont consignées dans l'[audit des composants géné
 - représenter les transactions non catégorisées ;
 - permettre de remonter aux transactions sources.
 
-#### 0.6.5 — Règles transversales ⬜
+#### 0.6.5 — Règles transversales ✅
 
-- documenter les états de chargement, vide, erreur et succès ;
+- documenter les [états de chargement, vide, erreur et succès](cross-cutting-rules.md) ;
 - définir les règles de contenu et de formatage financier ;
-- viser WCAG 2.1 AA sur les parcours du MVP.
+- viser WCAG 2.2 AA sur les parcours du MVP.
 
 **Résultat attendu :** le client dispose d'une architecture de l'information, d'une direction visuelle et de parcours suffisamment définis pour commencer la reconstruction sans dépendre du domaine historique.
 
@@ -239,7 +239,7 @@ mensuels et peut vérifier chaque total.
 
 - vérifier les parcours sur mobile et ordinateur ;
 - couvrir les parcours critiques par des tests navigateur ;
-- terminer la passe d'accessibilité WCAG 2.1 AA.
+- terminer la passe d'accessibilité WCAG 2.2 AA.
 
 ### 8.2 — Usage représentatif ⬜
 
