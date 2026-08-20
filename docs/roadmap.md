@@ -56,9 +56,10 @@ Légende :
 
 Les décisions détaillées sont consignées dans l'[audit des composants génériques](component-audit.md).
 
-### 0.6 — Parcours et états restants ⬜
+### 0.6 — Parcours et états restants 🚧
 
-- concevoir la création et la sélection du foyer ;
+- documenter la [création et la sélection du foyer](active-household.md) —
+  conception fonctionnelle validée, wireframe à produire ;
 - concevoir les comptes, transactions et rapports mensuels ;
 - documenter les états de chargement, vide, erreur et succès ;
 - définir les règles de contenu et de formatage financier ;

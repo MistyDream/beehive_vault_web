@@ -15,7 +15,8 @@ Les décisions prises pendant cette passe sont consignées dans la [direction vi
 
 ## Écrans à concevoir en priorité
 
-1. création ou sélection du foyer ;
+1. [création ou sélection du foyer](active-household.md) — conception
+   fonctionnelle validée, wireframe à produire ;
 2. navigation générale et [vue d'ensemble](overview.md) — structure validée ;
 3. liste et détail des comptes ;
 4. liste et formulaire des transactions ;
@@ -35,3 +36,5 @@ Les décisions prises pendant cette passe sont consignées dans la [direction vi
 La structure de la vue d'ensemble et la [direction visuelle](visual-direction.md)
 sont validées. L'[audit des composants génériques](component-audit.md) définit
 le socle à préserver, les éléments à reconstruire et leur ordre de migration.
+La conception fonctionnelle du [foyer actif](active-household.md) est également
+validée ; son wireframe reste à produire.

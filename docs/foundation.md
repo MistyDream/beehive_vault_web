@@ -1,6 +1,8 @@
 # Décisions de fondation
 
-Ce document rassemble les décisions déjà validées pour la reconstruction du client web. Elles pourront devenir des ADR séparés lorsqu'une alternative ou une conséquence mérite de conserver un historique détaillé.
+Ce document résume la fondation de la reconstruction du client web. Les décisions
+structurantes et leur historique sont conservés dans les
+[Architecture Decision Records](adr/README.md).
 
 ## Conserver le socle Nuxt
 
@@ -8,24 +10,11 @@ Le client reste fondé sur Nuxt, Vue et TypeScript. La reconstruction conserve �
 
 Les pages, types, stores, composables et composants propres aux anciens portefeuilles d'investissement ne constituent pas une base fonctionnelle pour le nouveau MVP. Ils seront retirés ou remplacés progressivement après la passe de conception.
 
-## Accéder à l'API par un proxy Nuxt
+## Décisions formalisées
 
-Le navigateur appelle des routes de même origine sous `/api` sans connaître l'adresse du serveur Rust ni sa version :
-
-```text
-Navigateur  GET /api/households
-Nuxt        GET {apiBase}/v1/households
-```
-
-L'adresse et la version de l'API appartiennent à la configuration privée du serveur Nuxt. Cette frontière évite une configuration CORS pour le navigateur, isole le client du préfixe `/v1` et prépare l'ajout ultérieur de l'authentification.
-
-Masquer ces informations au navigateur constitue un découplage, pas une mesure de sécurité. L'autorisation des opérations reste de la responsabilité de l'API.
-
-## Préserver les montants décimaux
-
-Les montants reçus et envoyés restent des chaînes décimales à la frontière HTTP. Le client ne les convertit pas globalement en nombres JavaScript.
-
-Les composants d'affichage et de saisie seront adaptés à ce contrat. Une bibliothèque décimale pourra être retenue pour les calculs locaux après une évaluation ciblée ; l'API reste la source des agrégations financières.
+- [ADR-0001](adr/0001-nuxt-server-api-proxy.md) : le navigateur accède à l'API par un proxy serveur Nuxt de même origine ;
+- [ADR-0002](adr/0002-preserve-decimal-strings.md) : les montants restent des chaînes décimales exactes à la frontière HTTP ;
+- [ADR-0003](adr/0003-active-household-context.md) : le client résout et mémorise le foyer actif sans l'ajouter à toutes les URL de page.
 
 ## Stabiliser les prérequis API
 
