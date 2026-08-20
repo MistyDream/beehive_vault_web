@@ -26,7 +26,7 @@ Aucune fonctionnalité métier n'est actuellement en cours d'implémentation.
 | --- | --- | --- |
 | Navigation | Structure principale sur ordinateur et mobile | Non implémentée |
 | Apparence | Direction visuelle, thèmes clair et sombre | Tokens et composants à reconstruire |
-| Foyer actif | Premier lancement, sélection, persistance et changement de foyer | Dépend de la future liste API des foyers |
+| Foyer actif | Premier lancement, sélection, persistance et changement de foyer | Liste API disponible, client non implémenté |
 | Vue d'ensemble | Patrimoine actuel et flux du mois courant | Aucun changement de mois sur cette page |
 | Comptes | Liste par rôle financier et résumé du patrimoine | Non implémentée |
 | Comptes | Détail, création, modification et archivage | Contrats API complémentaires nécessaires |

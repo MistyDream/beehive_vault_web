@@ -18,9 +18,8 @@ Les pages, types, stores, composables et composants propres aux anciens portefeu
 
 ## Stabiliser les prérequis API
 
-Deux évolutions de l'API précèdent son intégration par le nouveau client :
+La liste nécessaire à la résolution du foyer actif est désormais exposée par `GET /v1/households`. Elle retourne la collection complète dans un ordre déterministe, sans pagination.
 
-- exposer `GET /v1/households` afin de retrouver ou sélectionner un foyer ;
-- adopter les réponses Problem Details de la RFC 9457.
+L'adoption des réponses Problem Details de la RFC 9457 reste le dernier prérequis transversal avant que le nouveau client dépende du contrat d'erreur de l'API.
 
 Le client utilisera le code métier stable des erreurs pour les comportements et les traductions, sans interpréter les messages humains retournés par le serveur.

@@ -10,8 +10,8 @@ Le [catalogue des fonctionnalités](features.md) distingue séparément ce qui e
 
 - **Branche :** `reboot/web-foundation` ;
 - **Phase active :** phase 1 — Prérequis API ;
-- **Étape active :** 1.1 — Liste des foyers ;
-- **Dernière étape terminée :** 0.6.5 — Règles transversales ;
+- **Étape active :** 1.2 — Erreurs RFC 9457 ;
+- **Dernière étape terminée :** 1.1 — Liste des foyers ;
 
 Légende :
 
@@ -98,7 +98,7 @@ Les décisions détaillées sont consignées dans l'[audit des composants géné
 
 ## Phase 1 — Prérequis API ⬜
 
-### 1.1 — Liste des foyers ⬜
+### 1.1 — Liste des foyers ✅
 
 - ajouter la route permettant de retrouver les foyers existants ;
 - définir le contrat nécessaire au premier lancement et à la sélection du foyer.

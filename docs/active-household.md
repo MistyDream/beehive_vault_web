@@ -121,11 +121,13 @@ Les réponses RFC 9457 fourniront les codes métier nécessaires aux messages et
 - empiler la collection de foyers sur petit écran et limiter sa largeur sur grand écran ;
 - respecter le mouvement réduit pendant les transitions de page et de panneau.
 
-## Prérequis API
+## Contrat API
 
-Les routes de création et de consultation individuelle existent déjà. Le parcours de démarrage nécessite encore `GET /v1/households` afin de retourner les foyers accessibles à l'utilisateur courant.
+Les routes de création, de liste et de consultation individuelle existent. Le parcours de démarrage utilise `GET /v1/households`, qui retourne un tableau JSON non paginé. Chaque entrée possède la même représentation que la création et la consultation individuelle : `id`, `name`, `baseCurrency`, `timezone`, `createdAt` et `updatedAt`.
 
-La forme exacte de la collection, son ordre et son futur contrôle d'accès seront stabilisés pendant la phase 1 du client web. La création d'un foyer supplémentaire réutilise `POST /v1/households`.
+Une installation sans foyer retourne `200 OK` avec `[]`. La collection est ordonnée par nom sans distinction de casse, puis par date de création et identifiant. La création d'un foyer supplémentaire réutilise `POST /v1/households`.
+
+L'API locale ne possède pas encore d'authentification ni d'autorisation et retourne donc tous les foyers de l'installation. Une future autorisation conservera le contrat de collection et limitera son contenu aux foyers accessibles à l'utilisateur authentifié.
 
 ## Hors périmètre
 
