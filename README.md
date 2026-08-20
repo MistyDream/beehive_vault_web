@@ -23,6 +23,7 @@ Le projet entre dans une reconstruction du MVP sur la branche `reboot/web-founda
 - [Foyer actif](docs/active-household.md)
 - [Comptes](docs/accounts.md)
 - [Transactions](docs/transactions.md)
+- [Rapport mensuel](docs/monthly-report.md)
 - [Vue d'ensemble](docs/overview.md)
 
 ## Développement

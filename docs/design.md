@@ -19,7 +19,7 @@ Les décisions prises pendant cette passe sont consignées dans la [direction vi
 2. navigation générale et [vue d'ensemble](overview.md) — structure validée ;
 3. [liste et détail des comptes](accounts.md) — structure et wireframes validés provisoirement ;
 4. [liste, détail et formulaires des transactions](transactions.md) — structure et wireframes validés provisoirement ;
-5. rapport mensuel et accès aux transactions sources ;
+5. [rapport mensuel et accès aux transactions sources](monthly-report.md) — structure et wireframe validés provisoirement ;
 6. gestion des catégories et établissements.
 
 ## Livrables attendus
@@ -34,3 +34,4 @@ Les décisions prises pendant cette passe sont consignées dans la [direction vi
 
 La structure de la vue d'ensemble et la [direction visuelle](visual-direction.md) sont validées. L'[audit des composants génériques](component-audit.md) définit le socle à préserver, les éléments à reconstruire et leur ordre de migration.
 La structure et le wireframe du [foyer actif](active-household.md) sont également validés.
+Les parcours des [comptes](accounts.md), des [transactions](transactions.md) et du [rapport mensuel](monthly-report.md) disposent également de wireframes validés provisoirement.

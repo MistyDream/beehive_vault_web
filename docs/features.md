@@ -35,8 +35,11 @@ Aucune fonctionnalité métier n'est actuellement en cours d'implémentation.
 | Transactions | Détail des revenus, dépenses et transferts | Page dédiée uniquement dans la V1 |
 | Transactions | Création et modification manuelles | Sémantique des montants inverses à stabiliser |
 | Transactions | Suppression individuelle et atomique des transferts | Aucune restauration dans la V1 |
+| Rapport mensuel | Sélection du mois, revenus, dépenses et flux net | Aucun mois futur ni comparaison temporelle dans le MVP |
+| Rapport mensuel | Sankey sur ordinateur et listes à barres sur mobile | Liste de repli lorsque les montants ne permettent pas un Sankey fiable |
+| Rapport mensuel | Ventilation par catégorie et transactions sources | Réutilise les filtres de la page Transactions |
 
-Les décisions détaillées sont consignées dans la [vue d'ensemble](overview.md), le [foyer actif](active-household.md), les [comptes](accounts.md) et les [transactions](transactions.md).
+Les décisions détaillées sont consignées dans la [vue d'ensemble](overview.md), le [foyer actif](active-household.md), les [comptes](accounts.md), les [transactions](transactions.md) et le [rapport mensuel](monthly-report.md).
 
 ## Prévues pour le MVP
 
@@ -45,8 +48,6 @@ Les décisions détaillées sont consignées dans la [vue d'ensemble](overview.m
 | API côté serveur | Proxy Nuxt de même origine | Masquer l'origine et la version de l'API au navigateur |
 | Erreurs | Problem Details RFC 9457 | Relier les erreurs métier et de validation aux parcours Web |
 | Référentiels | Gestion des catégories et consultation des établissements pris en charge | Alimenter les comptes et transactions sans création libre d'établissement |
-| Rapport mensuel | Sélection du mois, revenus, dépenses et flux net | Comprendre un mois civil dédié |
-| Rapport mensuel | Ventilation par catégorie et transactions sources | Vérifier chaque total jusqu'aux mouvements concernés |
 | Qualité | États transversaux, responsive et WCAG 2.1 AA | Fiabiliser les parcours avant validation du MVP |
 | Validation | Données représentatives et tests navigateur | Vérifier le parcours complet en usage régulier |
 

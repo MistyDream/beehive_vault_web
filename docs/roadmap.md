@@ -10,8 +10,8 @@ Le [catalogue des fonctionnalités](features.md) distingue séparément ce qui e
 
 - **Branche :** `reboot/web-foundation` ;
 - **Phase active :** phase 0 — Conception ;
-- **Étape active :** 0.6.4 — Rapport mensuel ;
-- **Dernière étape terminée :** 0.6.3 — Transactions ;
+- **Étape active :** 0.6.5 — Règles transversales ;
+- **Dernière étape terminée :** 0.6.4 — Rapport mensuel ;
 
 Légende :
 
@@ -81,9 +81,10 @@ Les décisions détaillées sont consignées dans l'[audit des composants géné
 - valider provisoirement les wireframes sur ordinateur et mobile ;
 - identifier les prérequis API nécessaires à l'implémentation.
 
-#### 0.6.4 — Rapport mensuel ⬜
+#### 0.6.4 — Rapport mensuel ✅
 
-- concevoir le choix du mois et la ventilation par catégorie ;
+- concevoir et documenter le [rapport mensuel](monthly-report.md) ;
+- valider provisoirement le Sankey sur ordinateur et les listes à barres sur mobile ;
 - représenter les transactions non catégorisées ;
 - permettre de remonter aux transactions sources.
 
