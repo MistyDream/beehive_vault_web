@@ -4,12 +4,14 @@ La feuille de route suit des tranches verticales. La conception précède
 l'implémentation afin que les parcours et la hiérarchie de l'information ne
 soient pas dictés par les composants historiques.
 
+Le [catalogue des fonctionnalités](features.md) distingue séparément ce qui est disponible, conçu, en développement, prévu ou différé.
+
 ## État actuel
 
 - **Branche :** `reboot/web-foundation` ;
 - **Phase active :** phase 0 — Conception ;
-- **Étape active :** 0.6.3 — Transactions ;
-- **Dernière étape terminée :** 0.6.2 — Comptes ;
+- **Étape active :** 0.6.4 — Rapport mensuel ;
+- **Dernière étape terminée :** 0.6.3 — Transactions ;
 
 Légende :
 
@@ -71,11 +73,13 @@ Les décisions détaillées sont consignées dans l'[audit des composants géné
 - définir le rapprochement, l'archivage et les établissements référencés ;
 - identifier les prérequis API nécessaires à l'implémentation.
 
-#### 0.6.3 — Transactions ⬜
+#### 0.6.3 — Transactions ✅
 
-- concevoir la liste, les filtres et les formulaires ;
+- concevoir et documenter la [liste, le détail et les formulaires](transactions.md) ;
 - distinguer les revenus, dépenses et transferts ;
-- préserver le contexte pendant la consultation et la modification.
+- préserver le contexte pendant la consultation et la modification ;
+- valider provisoirement les wireframes sur ordinateur et mobile ;
+- identifier les prérequis API nécessaires à l'implémentation.
 
 #### 0.6.4 — Rapport mensuel ⬜
 

@@ -18,7 +18,7 @@ Les décisions prises pendant cette passe sont consignées dans la [direction vi
 1. [création ou sélection du foyer](active-household.md) — structure et wireframe validés ;
 2. navigation générale et [vue d'ensemble](overview.md) — structure validée ;
 3. [liste et détail des comptes](accounts.md) — structure et wireframes validés provisoirement ;
-4. liste et formulaire des transactions ;
+4. [liste, détail et formulaires des transactions](transactions.md) — structure et wireframes validés provisoirement ;
 5. rapport mensuel et accès aux transactions sources ;
 6. gestion des catégories et établissements.
 

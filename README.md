@@ -14,6 +14,7 @@ Le projet entre dans une reconstruction du MVP sur la branche `reboot/web-founda
 ## Documentation
 
 - [Feuille de route](docs/roadmap.md)
+- [Catalogue des fonctionnalités](docs/features.md)
 - [Décisions de fondation](docs/foundation.md)
 - [Décisions d'architecture](docs/adr/README.md)
 - [Chantier de conception](docs/design.md)
@@ -21,6 +22,7 @@ Le projet entre dans une reconstruction du MVP sur la branche `reboot/web-founda
 - [Audit des composants génériques](docs/component-audit.md)
 - [Foyer actif](docs/active-household.md)
 - [Comptes](docs/accounts.md)
+- [Transactions](docs/transactions.md)
 - [Vue d'ensemble](docs/overview.md)
 
 ## Développement
