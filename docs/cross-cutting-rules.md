@@ -73,10 +73,10 @@ Les détails internes, traces, identifiants techniques et réponses brutes de l'
 
 L'API expose ses erreurs selon les Problem Details RFC 9457. Le proxy Nuxt préserve ce contrat et normalise également ses propres erreurs de transport avant qu'elles atteignent les composants de l'interface.
 
-- `type` et les codes métier déterminent le message traduit et le comportement attendu ;
+- `type` est l'identité canonique du problème et l'extension `code` son raccourci stable en `snake_case` ;
 - le statut HTTP ne suffit pas à choisir tout le contenu présenté ;
 - `title` et `detail` fournissent un repli lorsqu'un type n'est pas encore reconnu ;
-- une extension `invalid-params` ou équivalente relie les erreurs de validation aux champs concernés.
+- l'extension `errors` relie les erreurs de validation aux champs avec `location`, `pointer`, `code` et `detail`.
 
 Une erreur de champ apparaît sous son contrôle et lui est reliée sémantiquement. Lorsque plusieurs champs sont invalides, un résumé placé en tête du formulaire fournit des liens vers chacun d'eux sans supprimer les messages locaux.
 

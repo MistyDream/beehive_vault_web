@@ -20,6 +20,6 @@ Les pages, types, stores, composables et composants propres aux anciens portefeu
 
 La liste nécessaire à la résolution du foyer actif est désormais exposée par `GET /v1/households`. Elle retourne la collection complète dans un ordre déterministe, sans pagination.
 
-L'adoption des réponses Problem Details de la RFC 9457 reste le dernier prérequis transversal avant que le nouveau client dépende du contrat d'erreur de l'API.
+Les réponses métier de l'API utilisent désormais les Problem Details de la RFC 9457. Leurs URN `type`, leurs extensions `code` et leurs erreurs de champ structurées fournissent le contrat transversal nécessaire au nouveau client.
 
-Le client utilisera le code métier stable des erreurs pour les comportements et les traductions, sans interpréter les messages humains retournés par le serveur.
+Le client utilisera le `type` canonique ou son raccourci `code` pour les comportements et les traductions, sans interpréter les messages humains retournés par le serveur. La vérification détaillée des autres contrats consommés constitue désormais le dernier prérequis de la phase API.

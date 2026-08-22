@@ -199,7 +199,7 @@ La conception met en évidence les évolutions suivantes avant l'intégration :
 - permettre de résoudre les libellés des comptes et catégories archivés encore référencés par l'historique ;
 - stabiliser la sémantique de saisie des montants nominaux et inverses pour la création et la modification ;
 - définir une métadonnée d'icône stable pour les catégories ou garantir un pictogramme neutre côté client ;
-- migrer les erreurs vers les Problem Details RFC 9457 avant de relier les erreurs aux formulaires.
+- relier les Problem Details RFC 9457 désormais exposés par l'API aux formulaires.
 
 Le nombre total de transactions n'est pas requis par la V1. Les filtres actuels, le tri stable, les routes de détail et le cycle atomique des transferts constituent déjà une base adaptée.
 

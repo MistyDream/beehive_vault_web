@@ -108,7 +108,7 @@ Sur mobile, les mêmes fonctions sont accessibles depuis l'entrée « Plus » de
 | Échec du changement        | Conserver le foyer courant et signaler l'échec sans afficher de données mélangées.                              |
 | Création réussie           | Activer le nouveau foyer une seule fois puis poursuivre vers le premier compte.                                 |
 
-Les réponses RFC 9457 fourniront les codes métier nécessaires aux messages et aux comportements spécifiques. Un message humain renvoyé par l'API ne sera pas utilisé comme identifiant de traduction.
+Les réponses RFC 9457 fournissent les types et codes métier nécessaires aux messages et aux comportements spécifiques. Un message humain renvoyé par l'API ne sera pas utilisé comme identifiant de traduction.
 
 ## Accessibilité et responsive
 

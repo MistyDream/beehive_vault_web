@@ -10,8 +10,8 @@ Le [catalogue des fonctionnalités](features.md) distingue séparément ce qui e
 
 - **Branche :** `reboot/web-foundation` ;
 - **Phase active :** phase 1 — Prérequis API ;
-- **Étape active :** 1.2 — Erreurs RFC 9457 ;
-- **Dernière étape terminée :** 1.1 — Liste des foyers ;
+- **Étape active :** 1.3 — Contrats consommés par le client ;
+- **Dernière étape terminée :** 1.2 — Erreurs RFC 9457 ;
 
 Légende :
 
@@ -96,14 +96,14 @@ Les décisions détaillées sont consignées dans l'[audit des composants géné
 
 **Résultat attendu :** le client dispose d'une architecture de l'information, d'une direction visuelle et de parcours suffisamment définis pour commencer la reconstruction sans dépendre du domaine historique.
 
-## Phase 1 — Prérequis API ⬜
+## Phase 1 — Prérequis API 🚧
 
 ### 1.1 — Liste des foyers ✅
 
 - ajouter la route permettant de retrouver les foyers existants ;
 - définir le contrat nécessaire au premier lancement et à la sélection du foyer.
 
-### 1.2 — Erreurs RFC 9457 ⬜
+### 1.2 — Erreurs RFC 9457 ✅
 
 - migrer les erreurs consommées par le client vers les Problem Details ;
 - stabiliser les types, codes et champs exploitables par l'interface.

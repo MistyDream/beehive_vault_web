@@ -48,7 +48,7 @@ Les décisions détaillées sont consignées dans la [vue d'ensemble](overview.m
 | Domaine | Fonctionnalité | Objectif |
 | --- | --- | --- |
 | API côté serveur | Proxy Nuxt de même origine | Masquer l'origine et la version de l'API au navigateur |
-| Erreurs | Problem Details RFC 9457 | Relier les erreurs métier et de validation aux parcours Web |
+| Erreurs | Intégration des Problem Details RFC 9457 | Contrat API disponible, à relier aux parcours Web |
 | Référentiels | Gestion des catégories et consultation des établissements pris en charge | Alimenter les comptes et transactions sans création libre d'établissement |
 | Validation | Données représentatives et tests navigateur | Vérifier le parcours complet en usage régulier |
 
