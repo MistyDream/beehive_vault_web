@@ -108,13 +108,17 @@ Les décisions détaillées sont consignées dans l'[audit des composants géné
 - migrer les erreurs consommées par le client vers les Problem Details ;
 - stabiliser les types, codes et champs exploitables par l'interface.
 
-### 1.3 — Contrats consommés par le client ⬜
+### 1.3 — Contrats consommés par le client 🚧
 
 - confirmer les routes et représentations nécessaires aux premiers parcours ;
 - documenter les éventuels écarts entre les besoins web et l'API existante.
+- implémenter le catalogue global d'établissements ;
+- compléter le cycle de vie des comptes et soldes ;
+- consolider les opérations, leurs montants et leur pagination avec `total`.
 
-**Résultat attendu :** le client peut retrouver un foyer et traiter les erreurs
-de l'API à partir de contrats stables.
+**Résultat attendu :** le client peut retrouver un foyer, traiter les erreurs
+et construire les premiers parcours Comptes et Transactions à partir de
+contrats stables.
 
 ## Phase 2 — Fondation technique ⬜
 

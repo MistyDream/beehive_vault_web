@@ -202,18 +202,22 @@ Les erreurs de validation sont reliées aux champs à partir des Problem Details
 - placer le focus sur le titre après navigation et dans le dialogue après son ouverture ;
 - restituer le focus à l'action d'origine après fermeture d'un dialogue.
 
-## Prérequis API
+## Contrat API cible
 
-La conception met en évidence les évolutions suivantes :
+Les évolutions nécessaires sont stabilisées mais restent à implémenter :
 
-- remplacer les établissements propres au foyer par un catalogue global ;
-- fournir les sous-totaux des trois groupes sans calcul décimal dans le navigateur ;
-- exposer les informations de l'établissement référencé avec le compte ou dans une collection stable ;
-- refuser les dates de solde futures ;
-- permettre de corriger un solde existant ;
-- lister et consulter les comptes archivés ;
-- restaurer un compte archivé ;
-- garantir qu'un compte au solde calculé non nul ne peut pas être archivé.
+- `GET /v1/institutions` fournit le catalogue global non paginé `{ id, name }` ;
+- chaque compte conserve `institutionId`, résolu depuis cette collection stable ;
+- la liste des comptes retourne `items` et les sous-totaux décimaux `daily`, `savings` et `liabilities` ;
+- `status=active` ou `status=archived` distingue les deux collections, avec `active` par défaut ;
+- la consultation individuelle retrouve également un compte archivé ;
+- `POST .../accounts/{accountId}/restore` restaure un compte de manière idempotente ;
+- l'archivage est refusé lorsque `calculatedBalance` n'est pas nul ;
+- un solde initial ou ajouté ne peut pas être futur dans le fuseau du foyer ;
+- un nouveau rapprochement doit être strictement postérieur au dernier ;
+- `PATCH .../balances/{balanceId}` corrige le montant, la date ou les deux en conservant la source.
+
+Tous les montants restent des chaînes décimales avec au maximum quatre chiffres après le séparateur. Le navigateur classe les comptes selon `kind`, mais ne calcule aucun sous-total.
 
 La liste filtrée des transactions par `accountId` existe déjà et peut alimenter les mouvements récents ainsi que le lien vers la collection complète.
 

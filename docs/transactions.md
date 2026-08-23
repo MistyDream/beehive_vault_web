@@ -189,19 +189,24 @@ L'import n'appartient pas encore au parcours Web de la V1. Lorsqu'il sera introd
 - placer le focus sur le titre après navigation et dans le dialogue après son ouverture ;
 - restituer le focus à l'action d'origine après la fermeture d'un dialogue.
 
-## Prérequis API
+## Contrat API cible
 
-La conception met en évidence les évolutions suivantes avant l'intégration :
+La collection utilise une enveloppe `items`, `page`, `limit` et `total`. Le Web détermine si une page suivante existe avec ces valeurs ; aucun `hasMore` redondant n'est nécessaire. Le total compte les opérations logiques après application des filtres, un transfert ne comptant qu'une fois.
 
-- retourner une information `hasMore` ou équivalente avec les collections paginées ;
-- exposer un effet économique affichable sans calcul décimal ni règle actif-dette dans le navigateur ;
-- fournir le compte opposé et les informations nécessaires pour résumer un transfert dans la collection des transactions ;
-- permettre de résoudre les libellés des comptes et catégories archivés encore référencés par l'historique ;
-- stabiliser la sémantique de saisie des montants nominaux et inverses pour la création et la modification ;
-- définir une métadonnée d'icône stable pour les catégories ou garantir un pictogramme neutre côté client ;
-- relier les Problem Details RFC 9457 désormais exposés par l'API aux formulaires.
+Chaque élément possède `operationType` égal à `transaction` ou `transfer`. Une transaction ordinaire incorpore des résumés compacts de son compte et de sa catégorie actuelle, même lorsqu'ils sont archivés. Un transfert incorpore ses deux mouvements et leurs comptes ; la date source constitue sa date canonique de classement.
 
-Le nombre total de transactions n'est pas requis par la V1. Les filtres actuels, le tri stable, les routes de détail et le cycle atomique des transferts constituent déjà une base adaptée.
+Les réponses distinguent :
+
+- `amount`, montant nominal strictement positif ;
+- `effect`, égal à `standard` ou `reversal` ;
+- `economicAmount`, effet signé sur le patrimoine ;
+- `accountAmount`, montant signé appliqué au compte.
+
+La création et la modification transmettent seulement le montant nominal et l'effet. L'API dérive les signes propres au type de compte. Un transfert conserve un montant nominal positif et reste économiquement neutre.
+
+Les montants utilisent des chaînes décimales avec au maximum quatre chiffres après le séparateur. Le contrat ne reçoit pas de métadonnée d'icône pendant le MVP : chaque catégorie possède un pictogramme neutre de repli côté client.
+
+Les Problem Details RFC 9457 déjà disponibles relient les erreurs aux formulaires. Les filtres actuels, les routes de détail et le cycle atomique des transferts restent conservés.
 
 ## Suite
 

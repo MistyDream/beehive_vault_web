@@ -22,4 +22,16 @@ La liste nécessaire à la résolution du foyer actif est désormais exposée pa
 
 Les réponses métier de l'API utilisent désormais les Problem Details de la RFC 9457. Leurs URN `type`, leurs extensions `code` et leurs erreurs de champ structurées fournissent le contrat transversal nécessaire au nouveau client.
 
-Le client utilisera le `type` canonique ou son raccourci `code` pour les comportements et les traductions, sans interpréter les messages humains retournés par le serveur. La vérification détaillée des autres contrats consommés constitue désormais le dernier prérequis de la phase API.
+Le client utilisera le `type` canonique ou son raccourci `code` pour les comportements et les traductions, sans interpréter les messages humains retournés par le serveur.
+
+Les autres contrats consommés sont désormais stabilisés comme cibles :
+
+- pagination `page` et `limit` avec un `total` exact ;
+- transferts représentés une seule fois dans la chronologie ;
+- résumés compacts des comptes et catégories incorporés aux opérations ;
+- montant nominal et effets signés calculés par l'API ;
+- sous-totaux des groupes de comptes sans calcul décimal dans le navigateur ;
+- cycle de vie des comptes archivés et des soldes corrigés ;
+- catalogue global d'établissements.
+
+Leur implémentation par lots constitue le dernier prérequis de la phase API.
