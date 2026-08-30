@@ -134,7 +134,7 @@ Le formulaire contient :
 
 La devise du foyer est affichée en lecture seule. Une création ouverte depuis un compte le présélectionne. Le montant nominal est saisi sans demander à l'utilisateur de connaître le signe brut stocké pour la famille du compte.
 
-Le contrat exact entre montant nominal, effet inverse et montant signé doit être stabilisé avant l'implémentation. Il doit notamment préserver les remboursements et corrections sans reproduire dans le navigateur les règles propres aux actifs et aux dettes.
+Le contrat stabilisé transmet un `amount` nominal strictement positif et un `effect` égal à `standard` ou `reversal`. L'API en dérive `economicAmount`, puis `accountAmount` selon la famille actif ou dette du compte. Un remboursement ou une correction utilise `reversal` sans changer artificiellement la nature de l'opération et sans demander au navigateur de reconstruire les signes comptables.
 
 ### Transfert
 
@@ -166,16 +166,16 @@ L'import n'appartient pas encore au parcours Web de la V1. Lorsqu'il sera introd
 
 ## États
 
-| Situation | Comportement attendu |
-| --- | --- |
-| Chargement initial | Conserver la forme de la barre de filtres et de plusieurs groupes datés avec des squelettes. |
-| Chargement suivant | Conserver la liste visible et placer l'attente près de « Afficher plus ». |
-| Aucun mouvement | Expliquer le premier mouvement et proposer uniquement « Ajouter une transaction ». |
-| Aucun résultat filtré | Conserver les filtres, expliquer l'absence de résultat et proposer de les effacer. |
-| Échec de la liste | Afficher l'erreur et « Réessayer » sans perdre les filtres. |
-| Mutation réussie | Actualiser les données concernées et afficher une notification discrète. |
-| Mutation échouée | Conserver le formulaire ou le dialogue et relier les Problem Details aux champs concernés. |
-| Changement de foyer | Ne jamais conserver ni révéler les transactions du foyer précédent. |
+| Situation             | Comportement attendu                                                                         |
+| --------------------- | -------------------------------------------------------------------------------------------- |
+| Chargement initial    | Conserver la forme de la barre de filtres et de plusieurs groupes datés avec des squelettes. |
+| Chargement suivant    | Conserver la liste visible et placer l'attente près de « Afficher plus ».                    |
+| Aucun mouvement       | Expliquer le premier mouvement et proposer uniquement « Ajouter une transaction ».           |
+| Aucun résultat filtré | Conserver les filtres, expliquer l'absence de résultat et proposer de les effacer.           |
+| Échec de la liste     | Afficher l'erreur et « Réessayer » sans perdre les filtres.                                  |
+| Mutation réussie      | Actualiser les données concernées et afficher une notification discrète.                     |
+| Mutation échouée      | Conserver le formulaire ou le dialogue et relier les Problem Details aux champs concernés.   |
+| Changement de foyer   | Ne jamais conserver ni révéler les transactions du foyer précédent.                          |
 
 ## Responsive et accessibilité
 
