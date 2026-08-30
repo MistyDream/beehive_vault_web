@@ -202,19 +202,16 @@ Les erreurs de validation sont reliées aux champs à partir des Problem Details
 - placer le focus sur le titre après navigation et dans le dialogue après son ouverture ;
 - restituer le focus à l'action d'origine après fermeture d'un dialogue.
 
-## Contrat API cible
+## Contrat API disponible
 
-Le catalogue global et le cycle de vie des soldes sont disponibles :
+Le catalogue global, le cycle de vie des soldes et celui des comptes sont disponibles :
 
 - `GET /v1/institutions` fournit déjà le catalogue global non paginé `{ id, name }` ;
 - ce catalogue est maintenu côté serveur et reste entièrement en lecture seule pour le client Web ;
 - chaque compte conserve `institutionId`, résolu depuis cette collection stable ;
 - un solde initial ou ajouté ne peut pas être futur dans le fuseau du foyer ;
 - un nouveau rapprochement doit être strictement postérieur au dernier ;
-- `PATCH .../balances/{balanceId}` corrige le montant, la date ou les deux en conservant la source.
-
-Les autres évolutions sont stabilisées mais restent à implémenter :
-
+- `PATCH .../balances/{balanceId}` corrige le montant, la date ou les deux en conservant la source ;
 - la liste des comptes retourne `items` et les sous-totaux décimaux `daily`, `savings` et `liabilities` ;
 - `status=active` ou `status=archived` distingue les deux collections, avec `active` par défaut ;
 - la consultation individuelle retrouve également un compte archivé ;

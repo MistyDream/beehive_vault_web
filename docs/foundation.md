@@ -30,8 +30,8 @@ Les autres contrats consommés sont désormais stabilisés comme cibles :
 - transferts représentés une seule fois dans la chronologie ;
 - résumés compacts des comptes et catégories incorporés aux opérations ;
 - montant nominal et effets signés calculés par l'API ;
-- sous-totaux des groupes de comptes sans calcul décimal dans le navigateur ;
-- cycle de vie des comptes archivés ;
+- sous-totaux des groupes de comptes sans calcul décimal dans le navigateur, désormais disponibles ;
+- cycle de vie des comptes archivés, désormais disponible ;
 - validation et correction des soldes, désormais disponibles ;
 - catalogue global d'établissements, désormais disponible.
 
