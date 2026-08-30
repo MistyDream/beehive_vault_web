@@ -204,9 +204,11 @@ Les erreurs de validation sont reliées aux champs à partir des Problem Details
 
 ## Contrat API cible
 
-Les évolutions nécessaires sont stabilisées mais restent à implémenter :
+Le catalogue global est disponible. Les autres évolutions sont stabilisées mais
+restent à implémenter :
 
-- `GET /v1/institutions` fournit le catalogue global non paginé `{ id, name }` ;
+- `GET /v1/institutions` fournit déjà le catalogue global non paginé `{ id, name }` ;
+- ce catalogue est maintenu côté serveur et reste entièrement en lecture seule pour le client Web ;
 - chaque compte conserve `institutionId`, résolu depuis cette collection stable ;
 - la liste des comptes retourne `items` et les sous-totaux décimaux `daily`, `savings` et `liabilities` ;
 - `status=active` ou `status=archived` distingue les deux collections, avec `active` par défaut ;

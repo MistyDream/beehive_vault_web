@@ -32,6 +32,6 @@ Les autres contrats consommés sont désormais stabilisés comme cibles :
 - montant nominal et effets signés calculés par l'API ;
 - sous-totaux des groupes de comptes sans calcul décimal dans le navigateur ;
 - cycle de vie des comptes archivés et des soldes corrigés ;
-- catalogue global d'établissements.
+- catalogue global d'établissements, désormais disponible.
 
 Leur implémentation par lots constitue le dernier prérequis de la phase API.

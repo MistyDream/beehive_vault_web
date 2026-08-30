@@ -112,7 +112,7 @@ Les décisions détaillées sont consignées dans l'[audit des composants géné
 
 - confirmer les routes et représentations nécessaires aux premiers parcours ;
 - documenter les éventuels écarts entre les besoins web et l'API existante.
-- implémenter le catalogue global d'établissements ;
+- catalogue global d'établissements : ✅ implémenté ;
 - compléter le cycle de vie des comptes et soldes ;
 - consolider les opérations, leurs montants et leur pagination avec `total`.
 

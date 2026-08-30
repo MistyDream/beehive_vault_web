@@ -87,7 +87,7 @@ Il affiche son nom et un monogramme décoratif, puis ouvre un menu donnant accè
 
 - changer de foyer ;
 - créer un foyer ;
-- gérer les établissements ;
+- consulter les établissements pris en charge ;
 - gérer les catégories ;
 - régler l'apparence.
 
