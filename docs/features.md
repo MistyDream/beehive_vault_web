@@ -31,9 +31,9 @@ Aucune fonctionnalité métier n'est actuellement en cours d'implémentation.
 | Comptes         | Liste par rôle financier et résumé du patrimoine                  | Non implémentée                                                        |
 | Comptes         | Détail, création, modification, archivage et restauration         | Contrats API disponibles, client non implémenté                        |
 | Comptes         | Mise à jour et correction des soldes                              | Contrats API disponibles, client non implémenté                        |
-| Transactions    | Liste chronologique, recherche, filtres et pagination progressive | Contrats de lecture API à enrichir                                     |
+| Transactions    | Liste chronologique, recherche, filtres et pagination progressive | Contrat API consolidé disponible, client non implémenté                |
 | Transactions    | Détail des revenus, dépenses et transferts                        | Page dédiée uniquement dans la V1                                      |
-| Transactions    | Création et modification manuelles                                | Sémantique des montants inverses à stabiliser                          |
+| Transactions    | Création et modification manuelles                                | Montant nominal et effet explicite disponibles côté API                |
 | Transactions    | Suppression individuelle et atomique des transferts               | Aucune restauration dans la V1                                         |
 | Rapport mensuel | Sélection du mois, revenus, dépenses et flux net                  | Aucun mois futur ni comparaison temporelle dans le MVP                 |
 | Rapport mensuel | Sankey sur ordinateur et listes à barres sur mobile               | Liste de repli lorsque les montants ne permettent pas un Sankey fiable |

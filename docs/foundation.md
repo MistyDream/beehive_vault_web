@@ -24,15 +24,15 @@ Les réponses métier de l'API utilisent désormais les Problem Details de la RF
 
 Le client utilisera le `type` canonique ou son raccourci `code` pour les comportements et les traductions, sans interpréter les messages humains retournés par le serveur.
 
-Les autres contrats consommés sont désormais stabilisés comme cibles :
+Les autres contrats consommés sont désormais stabilisés et disponibles :
 
 - pagination `page` et `limit` avec un `total` exact ;
 - transferts représentés une seule fois dans la chronologie ;
 - résumés compacts des comptes et catégories incorporés aux opérations ;
 - montant nominal et effets signés calculés par l'API ;
-- sous-totaux des groupes de comptes sans calcul décimal dans le navigateur, désormais disponibles ;
-- cycle de vie des comptes archivés, désormais disponible ;
-- validation et correction des soldes, désormais disponibles ;
-- catalogue global d'établissements, désormais disponible.
+- sous-totaux des groupes de comptes sans calcul décimal dans le navigateur ;
+- cycle de vie des comptes archivés ;
+- validation et correction des soldes ;
+- catalogue global d'établissements.
 
-Leur implémentation par lots constitue le dernier prérequis de la phase API.
+La phase des prérequis API est terminée. Le client peut maintenant construire ses premiers parcours sans réimplémenter les règles métier ou les signes monétaires dans le navigateur.

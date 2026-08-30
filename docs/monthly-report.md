@@ -124,7 +124,7 @@ Les montants utilisent des chiffres tabulaires et conservent leur signe. Le form
 
 La route `GET /v1/households/{household_id}/monthly-flows/{month}` couvre déjà le cœur du rapport : bornes du mois, devise, revenus, dépenses, flux net, nombres de transactions et ventilations par catégorie.
 
-La navigation vers les sources repose sur les filtres existants de la collection Transactions. Son contrat cible retourne une pagination avec `total`, l'effet économique affichable et des résumés compacts des catégories archivées. Un transfert y apparaît une seule fois mais reste exclu des totaux du rapport.
+La navigation vers les sources repose sur les filtres existants de la collection Transactions. Son contrat disponible retourne une pagination avec `total`, l'effet économique affichable et des résumés compacts des catégories archivées. Un transfert y apparaît une seule fois mais reste exclu des totaux du rapport.
 
 Le client peut déterminer le mois courant à partir du fuseau horaire déjà exposé par le foyer. Aucun nouveau calcul métier ne doit être réimplémenté pour reconstruire les totaux du rapport.
 

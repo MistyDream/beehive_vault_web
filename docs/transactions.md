@@ -189,7 +189,7 @@ L'import n'appartient pas encore au parcours Web de la V1. Lorsqu'il sera introd
 - placer le focus sur le titre après navigation et dans le dialogue après son ouverture ;
 - restituer le focus à l'action d'origine après la fermeture d'un dialogue.
 
-## Contrat API cible
+## Contrat API disponible
 
 La collection utilise une enveloppe `items`, `page`, `limit` et `total`. Le Web détermine si une page suivante existe avec ces valeurs ; aucun `hasMore` redondant n'est nécessaire. Le total compte les opérations logiques après application des filtres, un transfert ne comptant qu'une fois.
 
@@ -210,6 +210,4 @@ Les Problem Details RFC 9457 déjà disponibles relient les erreurs aux formulai
 
 ## Suite
 
-La conception fonctionnelle de 0.6.3 est suffisamment définie pour préparer les contrats API puis l'implémentation. Les règles et wireframes restent provisoires jusqu'à leur validation en usage réel.
-
-La prochaine étape de conception est 0.6.4 — Rapport mensuel.
+Le contrat API nécessaire à ce parcours est disponible. L'implémentation Web interviendra après la fondation technique et les premiers parcours définis par la feuille de route. Les règles et wireframes restent provisoires jusqu'à leur validation en usage réel.

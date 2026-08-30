@@ -9,9 +9,9 @@ Le [catalogue des fonctionnalités](features.md) distingue séparément ce qui e
 ## État actuel
 
 - **Branche :** `reboot/web-foundation` ;
-- **Phase active :** phase 1 — Prérequis API ;
-- **Étape active :** 1.3 — Contrats consommés par le client ;
-- **Dernière étape terminée :** 1.2 — Erreurs RFC 9457 ;
+- **Phase active :** phase 2 — Fondation technique ;
+- **Étape active :** 2.1 — Nettoyage du domaine historique ;
+- **Dernière étape terminée :** 1.3 — Contrats consommés par le client ;
 
 Légende :
 
@@ -58,7 +58,7 @@ Légende :
 
 Les décisions détaillées sont consignées dans l'[audit des composants génériques](component-audit.md).
 
-### 0.6 — Parcours et états restants 🚧
+### 0.6 — Parcours et états restants ✅
 
 #### 0.6.1 — Foyer actif ✅
 
@@ -96,7 +96,7 @@ Les décisions détaillées sont consignées dans l'[audit des composants géné
 
 **Résultat attendu :** le client dispose d'une architecture de l'information, d'une direction visuelle et de parcours suffisamment définis pour commencer la reconstruction sans dépendre du domaine historique.
 
-## Phase 1 — Prérequis API 🚧
+## Phase 1 — Prérequis API ✅
 
 ### 1.1 — Liste des foyers ✅
 
@@ -108,22 +108,22 @@ Les décisions détaillées sont consignées dans l'[audit des composants géné
 - migrer les erreurs consommées par le client vers les Problem Details ;
 - stabiliser les types, codes et champs exploitables par l'interface.
 
-### 1.3 — Contrats consommés par le client 🚧
+### 1.3 — Contrats consommés par le client ✅
 
 - confirmer les routes et représentations nécessaires aux premiers parcours ;
-- documenter les éventuels écarts entre les besoins web et l'API existante.
+- documenter les éventuels écarts entre les besoins web et l'API existante ;
 - catalogue global d'établissements : ✅ implémenté ;
 - validation et correction des soldes : ✅ implémentées ;
 - cycle de vie et sous-totaux des comptes : ✅ implémentés ;
-- consolider les opérations, leurs montants et leur pagination avec `total`.
+- consolider les opérations, leurs montants et leur pagination avec `total` : ✅ implémenté.
 
 **Résultat attendu :** le client peut retrouver un foyer, traiter les erreurs
 et construire les premiers parcours Comptes et Transactions à partir de
 contrats stables.
 
-## Phase 2 — Fondation technique ⬜
+## Phase 2 — Fondation technique 🚧
 
-### 2.1 — Nettoyage du domaine historique ⬜
+### 2.1 — Nettoyage du domaine historique 🚧
 
 - retirer les pages et composants propres aux portefeuilles d'investissement ;
 - conserver uniquement les fondations génériques validées par l'audit.
