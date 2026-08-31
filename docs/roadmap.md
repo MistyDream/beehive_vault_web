@@ -10,8 +10,8 @@ Le [catalogue des fonctionnalités](features.md) distingue séparément ce qui e
 
 - **Branche :** `reboot/web-foundation` ;
 - **Phase active :** phase 2 — Fondation technique ;
-- **Étape active :** 2.1 — Nettoyage du domaine historique ;
-- **Dernière étape terminée :** 1.3 — Contrats consommés par le client ;
+- **Étape active :** 2.2 — Accès à l'API ;
+- **Dernière étape terminée :** 2.1 — Nettoyage du domaine historique ;
 
 Légende :
 
@@ -123,12 +123,12 @@ contrats stables.
 
 ## Phase 2 — Fondation technique 🚧
 
-### 2.1 — Nettoyage du domaine historique 🚧
+### 2.1 — Nettoyage du domaine historique ✅
 
 - retirer les pages et composants propres aux portefeuilles d'investissement ;
 - conserver uniquement les fondations génériques validées par l'audit.
 
-### 2.2 — Accès à l'API ⬜
+### 2.2 — Accès à l'API 🚧
 
 - configurer le proxy serveur Nuxt ;
 - masquer la version de l'API au navigateur ;
