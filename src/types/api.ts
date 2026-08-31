@@ -1,15 +1,3 @@
-export type FetchOptions = {
-  key?: string;
-  server?: boolean;
-  lazy?: boolean;
-  headers?: Record<string, string>;
-  query?: Record<string, unknown>;
-  transform?: (data: unknown) => unknown;
-  pick?: string[];
-  watch?: unknown[];
-  baseURL?: string;
-};
-
 /**
  * RFC 9457 Problem Details object returned by the Rust API.
  */
@@ -17,14 +5,19 @@ export interface ProblemDetail {
   type: string;
   title: string;
   status: number;
+  code: string;
   detail?: string;
   instance?: string;
   errors?: FieldError[];
 }
 
+export type FieldErrorLocation = 'body' | 'path' | 'query';
+
 export interface FieldError {
-  field: string;
-  message: string;
+  location: FieldErrorLocation;
+  pointer: string;
+  code: string;
+  detail: string;
 }
 
 /**
@@ -34,16 +27,19 @@ export interface FieldError {
 export class ApiError extends Error {
   readonly status: number;
   readonly type: string;
+  readonly code: string;
   readonly title: string;
   readonly detail?: string;
   readonly instance?: string;
   readonly errors?: FieldError[];
 
   constructor(problem: ProblemDetail) {
-    super(problem.detail || problem.title);
+    super(problem.detail ?? problem.title);
+
     this.name = 'ApiError';
     this.status = problem.status;
     this.type = problem.type;
+    this.code = problem.code;
     this.title = problem.title;
     this.detail = problem.detail;
     this.instance = problem.instance;

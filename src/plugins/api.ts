@@ -1,11 +1,9 @@
 import { REQUEST_TIMEOUT } from '~/constants/http';
 import { ApiError, type ProblemDetail } from '~/types/api';
 
-export default defineNuxtPlugin((): { provide: { $api: typeof $fetch } } => {
-  const { public: config } = useRuntimeConfig();
-
+export default defineNuxtPlugin(() => {
   const api = $fetch.create({
-    baseURL: config.apiBase,
+    baseURL: '/api',
     timeout: REQUEST_TIMEOUT.DEFAULT,
     headers: {
       Accept: 'application/json',
@@ -26,6 +24,7 @@ export default defineNuxtPlugin((): { provide: { $api: typeof $fetch } } => {
         type: 'about:blank',
         title: response.statusText || 'Request failed',
         status: response.status,
+        code: 'unexpected_error',
         detail: typeof body === 'string' ? body : undefined,
       });
     },
@@ -44,6 +43,7 @@ function isProblemDetail(value: unknown): value is ProblemDetail {
     value !== null &&
     typeof (value as ProblemDetail).type === 'string' &&
     typeof (value as ProblemDetail).title === 'string' &&
-    typeof (value as ProblemDetail).status === 'number'
+    typeof (value as ProblemDetail).status === 'number' &&
+    typeof (value as ProblemDetail).code === 'string'
   );
 }

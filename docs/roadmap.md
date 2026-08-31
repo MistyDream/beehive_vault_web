@@ -10,8 +10,8 @@ Le [catalogue des fonctionnalités](features.md) distingue séparément ce qui e
 
 - **Branche :** `reboot/web-foundation` ;
 - **Phase active :** phase 2 — Fondation technique ;
-- **Étape active :** 2.2 — Accès à l'API ;
-- **Dernière étape terminée :** 2.1 — Nettoyage du domaine historique ;
+- **Étape active :** 2.3 — Socle d'interface ;
+- **Dernière étape terminée :** 2.2 — Accès à l'API ;
 
 Légende :
 
@@ -128,14 +128,14 @@ contrats stables.
 - retirer les pages et composants propres aux portefeuilles d'investissement ;
 - conserver uniquement les fondations génériques validées par l'audit.
 
-### 2.2 — Accès à l'API 🚧
+### 2.2 — Accès à l'API ✅
 
 - configurer le proxy serveur Nuxt ;
 - masquer la version de l'API au navigateur ;
 - introduire les types du socle financier ;
 - préserver les montants décimaux de bout en bout.
 
-### 2.3 — Socle d'interface ⬜
+### 2.3 — Socle d'interface 🚧
 
 - adapter les tokens aux thèmes validés ;
 - mettre en place la nouvelle structure de navigation ;
