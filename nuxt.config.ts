@@ -27,6 +27,7 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
     '@nuxt/fonts',
     '@nuxt/image',
+    '@nuxt/test-utils/module',
     '@nuxtjs/i18n',
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
@@ -46,19 +47,9 @@ export default defineNuxtConfig({
   fonts: {
     families: [
       {
-        name: 'Poppins',
+        name: 'Manrope',
         provider: 'google',
-        weights: [300, 400, 500, 600, 700],
-      },
-      {
-        name: 'Nunito',
-        provider: 'google',
-        weights: [300, 400, 600, 700],
-      },
-      {
-        name: 'Space Mono',
-        provider: 'google',
-        weights: [400, 700],
+        weights: [400, 500],
       },
     ],
   },

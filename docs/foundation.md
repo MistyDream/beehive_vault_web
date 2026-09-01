@@ -15,6 +15,7 @@ Les pages, types, stores, composables et composants propres aux anciens portefeu
 - [ADR-0001](adr/0001-nuxt-server-api-proxy.md) : le navigateur accède à l'API par un proxy serveur Nuxt de même origine ;
 - [ADR-0002](adr/0002-preserve-decimal-strings.md) : les montants restent des chaînes décimales exactes à la frontière HTTP ;
 - [ADR-0003](adr/0003-active-household-context.md) : le client résout et mémorise le foyer actif sans l'ajouter à toutes les URL de page.
+- [ADR-0004](adr/0004-organize-components-by-responsibility.md) : les composants migrés sont organisés par responsabilité technique ou domaine métier plutôt que selon Atomic Design.
 
 ## Stabiliser les prérequis API
 

@@ -36,7 +36,7 @@ const props = withDefaults(defineProps<Props>(), {
   href: '',
   disabled: false,
   loading: false,
-  variant: undefined,
+  variant: 'primary',
   size: 'md',
   type: 'button',
   activeClass: 'link-active',
@@ -54,15 +54,31 @@ const componentType = computed(() => {
   return 'button';
 });
 
+const disabledLinkAttrs = computed(() => {
+  if (isDisabled.value && (props.to || props.href))
+    return {
+      'aria-disabled': 'true',
+      tabindex: -1,
+    };
+
+  return {};
+});
+
 const componentAttrs = computed(() => {
   if (props.to)
     return {
       to: props.to,
       activeClass: props.activeClass,
       exactActiveClass: props.exactActiveClass,
+      ...disabledLinkAttrs.value,
     };
   if (props.href)
-    return { href: props.href, target: '_blank', rel: 'noopener noreferrer' };
+    return {
+      href: props.href,
+      target: '_blank',
+      rel: 'noopener noreferrer',
+      ...disabledLinkAttrs.value,
+    };
 
   return { type: props.type, disabled: isDisabled.value };
 });
@@ -76,6 +92,7 @@ const buttonClasses = computed(() => ({
   'size-md': props.size === 'md',
   'size-lg': props.size === 'lg',
   'is-loading': props.loading,
+  'is-disabled': isDisabled.value,
 }));
 
 function handleClick(event: MouseEvent) {
@@ -89,64 +106,75 @@ function handleClick(event: MouseEvent) {
 
 <style lang="css" scoped>
 .bh-button {
-  @apply flex gap-3 items-center;
-  @apply rounded-lg;
-  @apply hover:bg-theme-bg-elevated;
-  @apply text-theme-text-primary;
+  @apply inline-flex gap-2 items-center justify-center;
+  @apply rounded-control;
+  @apply font-medium whitespace-nowrap no-underline text-theme-text-primary;
   @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary focus-visible:ring-offset-2 focus-visible:ring-offset-theme-bg-primary;
   @apply disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:bg-transparent;
-  filter: brightness(1);
   transition:
     background-color 200ms ease-out,
     border-color 200ms ease-out,
     color 200ms ease-out,
-    filter 200ms ease-out,
     box-shadow 200ms ease-out,
     opacity 200ms ease-out;
 }
 
 .primary,
-.secondary,
 .danger {
   box-shadow: 0 1px 2px rgb(var(--color-text-primary) / 0.08);
 }
 
-.primary:hover,
-.secondary:hover,
-.danger:hover {
+.primary:not(.is-disabled):hover,
+.danger:not(.is-disabled):hover {
   box-shadow: 0 2px 6px rgb(var(--color-text-primary) / 0.12);
 }
 
 .size-sm {
-  @apply text-xs px-3 py-1.5 min-h-[32px];
+  @apply text-xs px-3 py-1.5 min-h-9;
 }
 
 .size-md {
-  @apply text-sm px-4 py-2.5 min-h-[40px];
+  @apply text-sm px-4 py-2.5 min-h-11;
 }
 
 .size-lg {
-  @apply text-base px-5 py-3 min-h-[44px];
+  @apply text-base px-5 py-3 min-h-12;
 }
 
 .primary {
   @apply border bg-theme-accent-primary border-theme-accent-primary text-theme-text-on-accent-primary;
-  @apply hover:bg-theme-accent-primary hover:brightness-125;
+}
+
+.primary:not(.is-disabled):hover {
+  @apply bg-theme-accent-primary/90 border-theme-accent-primary-strong;
 }
 
 .secondary {
-  @apply border bg-theme-accent-secondary border-theme-accent-secondary text-theme-text-on-accent-secondary;
-  @apply hover:bg-theme-accent-secondary hover:brightness-125;
+  @apply border bg-theme-bg-card border-theme-border-primary text-theme-text-primary;
+}
+
+.secondary:not(.is-disabled):hover {
+  @apply bg-theme-bg-elevated border-theme-border-secondary;
 }
 
 .ghost {
-  @apply px-0 py-0 border-none bg-transparent;
-  @apply hover:bg-transparent;
+  @apply border border-transparent bg-transparent;
+}
+
+.ghost:not(.is-disabled):hover {
+  @apply bg-theme-bg-elevated;
 }
 
 .danger {
   @apply border bg-theme-status-error border-theme-status-error text-theme-text-on-danger;
-  @apply hover:bg-theme-status-error hover:brightness-125;
+}
+
+.danger:not(.is-disabled):hover {
+  @apply bg-theme-status-error/90;
+}
+
+.is-disabled {
+  @apply opacity-60 cursor-not-allowed;
 }
 
 .is-loading {

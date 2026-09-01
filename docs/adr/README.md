@@ -18,3 +18,4 @@ Un ADR accepté n'est pas réécrit pour refléter une nouvelle décision. Un no
 - [ADR-0001 — Accéder à l'API par un proxy serveur Nuxt](0001-nuxt-server-api-proxy.md)
 - [ADR-0002 — Préserver les montants sous forme de chaînes décimales](0002-preserve-decimal-strings.md)
 - [ADR-0003 — Résoudre et persister le foyer actif côté client](0003-active-household-context.md)
+- [ADR-0004 — Organiser les composants par responsabilité et domaine](0004-organize-components-by-responsibility.md)
