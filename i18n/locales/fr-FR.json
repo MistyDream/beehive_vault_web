@@ -30,7 +30,12 @@
   "nav": {
     "main": "Navigation principale",
     "open_menu": "Ouvrir le menu",
-    "close_menu": "Fermer le menu"
+    "close_menu": "Fermer le menu",
+    "overview": "Vue d’ensemble",
+    "home": "Accueil",
+    "accounts": "Comptes",
+    "transactions": "Transactions",
+    "more": "Plus"
   },
   "theme": {
     "light_mode": "Mode clair",

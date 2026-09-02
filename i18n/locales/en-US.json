@@ -30,7 +30,12 @@
   "nav": {
     "main": "Main navigation",
     "open_menu": "Open menu",
-    "close_menu": "Close menu"
+    "close_menu": "Close menu",
+    "overview": "Overview",
+    "home": "Home",
+    "accounts": "Accounts",
+    "transactions": "Transactions",
+    "more": "More"
   },
   "theme": {
     "light_mode": "Light mode",
