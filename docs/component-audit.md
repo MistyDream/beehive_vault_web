@@ -27,44 +27,44 @@ Le socle historique contient de bons acquis, mais pas encore un design system r�
 
 ### Atomes
 
-| Composant | Décision | Motif principal |
-| --- | --- | --- |
-| `BHBadge` | Adapter | Conserver le rôle d'indicateur non interactif, puis le distinguer clairement d'un filtre amovible. |
-| `BHButton` | Adapter | Bonne base sémantique, mais variantes par défaut, liens, états désactivés et tailles tactiles doivent être clarifiés. |
-| `BHCardBase` | Remplacer | La mise en page `flex` et les espacements sont imposés à toutes les surfaces. Une primitive `Surface` plus neutre est nécessaire. |
-| `BHCurrencyDisplay` | Remplacer | Le montant est un `number`, le placement de la devise est forcé et la couleur porte implicitement le sens positif ou négatif. |
-| `BHImage` | Supprimer | Le composant n'ajoute pas de politique d'image utile par rapport à `NuxtImg`. |
-| `BHPercentDisplay` | Supprimer | Il est lié aux performances d'investissement. Un format de mesure sera conçu lorsqu'un nouveau besoin apparaîtra. |
-| `BHSeparator` | Adapter | La primitive doit utiliser un séparateur sémantique et gérer explicitement son orientation. |
-| `BHStockAvatar` | Supprimer | Il appartient au domaine des valeurs mobilières. |
-| `BHTag` | Remplacer | Ses responsabilités se confondent avec `BHBadge` et son action de suppression est trop petite. Il devient un `FilterChip` distinct. |
-| `BHToaster` | Adapter | `vue-sonner` et le mécanisme de thème sont utiles ; les styles et les couleurs doivent suivre les nouveaux tokens. |
+| Composant           | Décision  | Motif principal                                                                                                                     |
+| ------------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `BHBadge`           | Adapter   | Conserver le rôle d'indicateur non interactif, puis le distinguer clairement d'un filtre amovible.                                  |
+| `BHButton`          | Adapter   | Bonne base sémantique, mais variantes par défaut, liens, états désactivés et tailles tactiles doivent être clarifiés.               |
+| `BHCardBase`        | Remplacer | La mise en page `flex` et les espacements sont imposés à toutes les surfaces. Une primitive `Surface` plus neutre est nécessaire.   |
+| `BHCurrencyDisplay` | Remplacer | Le montant est un `number`, le placement de la devise est forcé et la couleur porte implicitement le sens positif ou négatif.       |
+| `BHImage`           | Supprimer | Le composant n'ajoute pas de politique d'image utile par rapport à `NuxtImg`.                                                       |
+| `BHPercentDisplay`  | Supprimer | Il est lié aux performances d'investissement. Un format de mesure sera conçu lorsqu'un nouveau besoin apparaîtra.                   |
+| `BHSeparator`       | Adapter   | La primitive doit utiliser un séparateur sémantique et gérer explicitement son orientation.                                         |
+| `BHStockAvatar`     | Supprimer | Il appartient au domaine des valeurs mobilières.                                                                                    |
+| `BHTag`             | Remplacer | Ses responsabilités se confondent avec `BHBadge` et son action de suppression est trop petite. Il devient un `FilterChip` distinct. |
+| `BHToaster`         | Adapter   | `vue-sonner` et le mécanisme de thème sont utiles ; les styles et les couleurs doivent suivre les nouveaux tokens.                  |
 
 ### Champs et interactions
 
-| Composant | Décision | Motif principal |
-| --- | --- | --- |
-| `BHBaseInput` | Adapter | Association label-erreur correcte ; ajouter aide, `name`, autocomplétion et conventions communes aux champs. |
-| `BHDateInput` | Adapter | L'entrée native est une bonne base ; supprimer l'API inutilisée et l'intégrer au socle commun des champs. |
-| `BHTextarea` | Adapter | Base accessible utile ; relier aussi l'aide et le compteur à la zone de texte. |
-| `BHNumberInput` | Remplacer | `parseFloat`, le bornage pendant la saisie et le modèle `number` détruisent la représentation décimale attendue pour l'argent. |
-| `BHBaseSelect` | Remplacer | Le combobox artisanal est volumineux, sans tests, et l'attribut `required` appliqué à son bouton n'a pas la sémantique attendue. |
+| Composant            | Décision  | Motif principal                                                                                                                             |
+| -------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `BHBaseInput`        | Adapter   | Association label-erreur correcte ; ajouter aide, `name`, autocomplétion et conventions communes aux champs.                                |
+| `BHDateInput`        | Adapter   | L'entrée native est une bonne base ; supprimer l'API inutilisée et l'intégrer au socle commun des champs.                                   |
+| `BHTextarea`         | Adapter   | Base accessible utile ; relier aussi l'aide et le compteur à la zone de texte.                                                              |
+| `BHNumberInput`      | Remplacer | `parseFloat`, le bornage pendant la saisie et le modèle `number` détruisent la représentation décimale attendue pour l'argent.              |
+| `BHBaseSelect`       | Remplacer | Le combobox artisanal est volumineux, sans tests, et l'attribut `required` appliqué à son bouton n'a pas la sémantique attendue.            |
 | `BHSearchableSelect` | Remplacer | Il contient un bouton d'effacement imbriqué dans le bouton combobox, structure HTML invalide et fragile pour les technologies d'assistance. |
-| `BHDropdown` | Adapter | Floating UI, le clavier et le mouvement réduit sont déjà traités ; l'API, le focus et le rendu visuel restent à normaliser et tester. |
-| `BHTabs` | Adapter | Le clavier est pris en charge, mais les onglets de navigation et les onglets interactifs doivent être séparés et reliés à leurs panneaux. |
+| `BHDropdown`         | Adapter   | Floating UI, le clavier et le mouvement réduit sont déjà traités ; l'API, le focus et le rendu visuel restent à normaliser et tester.       |
+| `BHTabs`             | Adapter   | Le clavier est pris en charge, mais les onglets de navigation et les onglets interactifs doivent être séparés et reliés à leurs panneaux.   |
 
 ### Structure et affichage de données
 
-| Composant | Décision | Motif principal |
-| --- | --- | --- |
-| `BHModal` | Adapter | Le dialogue, le piège de focus, Échap et le blocage du défilement sont de bonnes bases. La fermeture extérieure doit être configurable selon le risque. |
-| `BHDrawer` | Remplacer | Le comportement de dialogue est utile, mais son contenu est piloté par un store global et effacé avant la fin de la fermeture. Une API contrôlée localement sera plus prévisible. |
-| `BHTable` | Remplacer | Données en `any`, clé de ligne incorrecte en l'absence d'identifiant, absence de légende et de stratégie responsive, pagination et tri trop couplés. |
-| `BHHeader` | Remplacer | Il ne contient qu'un déclencheur mobile et dépend de l'ancienne barre latérale. |
-| `BHSidebar` | Remplacer | Sa navigation et son pied ne correspondent plus au menu de foyer et à la navigation mobile validés. |
-| `BHVerticalNavigation` | Remplacer | Son API est liée à l'ancienne navigation extensible. |
-| `BHNavigationExpandable` | Supprimer | Les référentiels du foyer ne doivent pas devenir des onglets extensibles de la navigation principale. |
-| `BHKpiTile` | Supprimer | Le motif de grille de KPI vient du portefeuille historique et ne correspond pas à la hiérarchie de la vue d'ensemble. |
+| Composant                | Décision  | Motif principal                                                                                                                                                                   |
+| ------------------------ | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `BHModal`                | Adapter   | Le dialogue, le piège de focus, Échap et le blocage du défilement sont de bonnes bases. La fermeture extérieure doit être configurable selon le risque.                           |
+| `BHDrawer`               | Remplacer | Le comportement de dialogue est utile, mais son contenu est piloté par un store global et effacé avant la fin de la fermeture. Une API contrôlée localement sera plus prévisible. |
+| `BHTable`                | Remplacer | Données en `any`, clé de ligne incorrecte en l'absence d'identifiant, absence de légende et de stratégie responsive, pagination et tri trop couplés.                              |
+| `BHHeader`               | Remplacer | Il ne contient qu'un déclencheur mobile et dépend de l'ancienne barre latérale.                                                                                                   |
+| `BHSidebar`              | Remplacer | Sa navigation et son pied ne correspondent plus au menu de foyer et à la navigation mobile validés.                                                                               |
+| `BHVerticalNavigation`   | Remplacer | Son API est liée à l'ancienne navigation extensible.                                                                                                                              |
+| `BHNavigationExpandable` | Supprimer | Les référentiels du foyer ne doivent pas devenir des onglets extensibles de la navigation principale.                                                                             |
+| `BHKpiTile`              | Supprimer | Le motif de grille de KPI vient du portefeuille historique et ne correspond pas à la hiérarchie de la vue d'ensemble.                                                             |
 
 ### Domaine historique
 
@@ -79,18 +79,18 @@ référence :
 
 ## Composables et infrastructure
 
-| Élément | Décision | Motif principal |
-| --- | --- | --- |
-| `useFieldIds` | Adapter | Conserver les identifiants stables et ajouter les relations vers l'aide et les contraintes. |
-| `useModalFocusTrap` | Adapter | Conserver le retour du focus ; sécuriser le rendu serveur, les dialogues imbriqués et les tests clavier. |
-| `useTheme` | Adapter | Conserver la persistance et la transition courte ; appliquer les nouveaux thèmes et la stratégie de préférence initiale qui sera retenue. |
-| `useToast` | Conserver | API simple et indépendante du domaine. |
-| `useLocaleFormatters` | Remplacer partiellement | Séparer dates, montants et quantités. Les dates doivent expliciter leur fuseau et l'argent doit préserver les chaînes décimales. |
-| `useSidebar` | Remplacer | Le nouvel app shell aura des comportements distincts sur ordinateur et mobile. |
-| `useDrawer` et le store associé | Supprimer | Leur injection globale de composants crée un couplage inutile. |
-| `useChartTheme` | Différer | Aucun graphique n'est requis avant la définition des données historiques à afficher. |
-| Plugin API | Remplacer | Le navigateur appelle aujourd'hui directement une URL publique. Le nouveau client passera par le proxy Nuxt et conservera la normalisation RFC 9457. |
-| Composables, stores, types et utilitaires `portfolio`/`transaction` historiques | Supprimer | Les contrats et calculs correspondent au domaine d'investissement abandonné. |
+| Élément                                                                         | Décision                | Motif principal                                                                                                                                      |
+| ------------------------------------------------------------------------------- | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `useFieldIds`                                                                   | Adapter                 | Conserver les identifiants stables et ajouter les relations vers l'aide et les contraintes.                                                          |
+| `useModalFocusTrap`                                                             | Adapter                 | Conserver le retour du focus ; sécuriser le rendu serveur, les dialogues imbriqués et les tests clavier.                                             |
+| `useTheme`                                                                      | Adapter                 | Conserver la persistance et la transition courte ; appliquer les nouveaux thèmes et la stratégie de préférence initiale qui sera retenue.            |
+| `useToast`                                                                      | Conserver               | API simple et indépendante du domaine.                                                                                                               |
+| `useLocaleFormatters`                                                           | Remplacer partiellement | Séparer dates, montants et quantités. Les dates doivent expliciter leur fuseau et l'argent doit préserver les chaînes décimales.                     |
+| `useSidebar`                                                                    | Remplacer               | Le nouvel app shell aura des comportements distincts sur ordinateur et mobile.                                                                       |
+| `useDrawer` et le store associé                                                 | Supprimer               | Leur injection globale de composants crée un couplage inutile.                                                                                       |
+| `useChartTheme`                                                                 | Différer                | Aucun graphique n'est requis avant la définition des données historiques à afficher.                                                                 |
+| Plugin API                                                                      | Remplacer               | Le navigateur appelle aujourd'hui directement une URL publique. Le nouveau client passera par le proxy Nuxt et conservera la normalisation RFC 9457. |
+| Composables, stores, types et utilitaires `portfolio`/`transaction` historiques | Supprimer               | Les contrats et calculs correspondent au domaine d'investissement abandonné.                                                                         |
 
 Le lien d'évitement vers le contenu principal, les états de focus visibles, la prise en charge de `prefers-reduced-motion`, les squelettes et le changement de thème sans flash sont des comportements à préserver, indépendamment des fichiers qui les portent actuellement.
 

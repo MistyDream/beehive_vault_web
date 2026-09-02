@@ -48,7 +48,9 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 if (import.meta.dev && !props.label && !props.ariaLabel) {
-  console.warn('[BHDateInput] provide either `label` or `ariaLabel` for accessibility.');
+  console.warn(
+    '[BHDateInput] provide either `label` or `ariaLabel` for accessibility.',
+  );
 }
 
 const emit = defineEmits<{

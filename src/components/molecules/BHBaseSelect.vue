@@ -72,7 +72,11 @@
             @mouseenter="activeIndex = index"
           >
             <span>{{ option.label }}</span>
-            <LucideCheck v-if="isSelected(option.value)" :size="16" aria-hidden="true" />
+            <LucideCheck
+              v-if="isSelected(option.value)"
+              :size="16"
+              aria-hidden="true"
+            />
           </li>
         </ul>
       </Transition>
@@ -127,7 +131,9 @@ const selectRef = ref<HTMLElement | null>(null);
 const isOpen = ref(false);
 const activeIndex = ref(-1);
 
-const { triggerId, listboxId, errorId, optionId } = useSelectIds(() => props.id);
+const { triggerId, listboxId, errorId, optionId } = useSelectIds(
+  () => props.id,
+);
 
 function firstEnabledIndex(from: number, direction: 1 | -1): number {
   const len = props.options.length;
@@ -146,9 +152,7 @@ function syncActiveIndexToSelection() {
   const selectedIdx = props.options.findIndex((opt) =>
     normalizedValues.value.includes(opt.value),
   );
-  activeIndex.value = selectedIdx >= 0
-    ? selectedIdx
-    : firstEnabledIndex(0, 1);
+  activeIndex.value = selectedIdx >= 0 ? selectedIdx : firstEnabledIndex(0, 1);
 }
 
 function onTriggerEnter() {

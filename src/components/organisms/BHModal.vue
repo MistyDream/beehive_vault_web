@@ -95,8 +95,8 @@ function onOverlayClick() {
   if (props.closeOnOverlayClick) close();
 }
 
-const isScrollLocked = useScrollLock(
-  () => (import.meta.client ? document.body : null),
+const isScrollLocked = useScrollLock(() =>
+  import.meta.client ? document.body : null,
 );
 const isOpen = computed(() => props.modelValue);
 watch(isOpen, (open) => {

@@ -91,7 +91,9 @@
               :key="option.value"
               class="bh-searchable-select__option"
               :class="{
-                'bh-searchable-select__option--selected': isSelected(option.value),
+                'bh-searchable-select__option--selected': isSelected(
+                  option.value,
+                ),
                 'bh-searchable-select__option--active': index === activeIndex,
               }"
               role="option"
@@ -100,8 +102,14 @@
               @mouseenter="activeIndex = index"
             >
               <span class="bh-searchable-select__option-body">
-                <slot name="option" :option="option" :selected="isSelected(option.value)">
-                  <span class="bh-searchable-select__option-label">{{ option.label }}</span>
+                <slot
+                  name="option"
+                  :option="option"
+                  :selected="isSelected(option.value)"
+                >
+                  <span class="bh-searchable-select__option-label">{{
+                    option.label
+                  }}</span>
                   <span
                     v-if="option.description"
                     class="bh-searchable-select__option-description"
@@ -128,14 +136,24 @@
         </div>
       </Transition>
     </div>
-    <p v-if="error" :id="errorId" role="alert" class="bh-searchable-select__error">
+    <p
+      v-if="error"
+      :id="errorId"
+      role="alert"
+      class="bh-searchable-select__error"
+    >
       {{ error }}
     </p>
   </div>
 </template>
 
 <script setup lang="ts">
-import { LucideCheck, LucideChevronDown, LucideSearch, LucideX } from '#components';
+import {
+  LucideCheck,
+  LucideChevronDown,
+  LucideSearch,
+  LucideX,
+} from '#components';
 
 type PrimitiveValue = string | number;
 type SelectValue = PrimitiveValue | null | undefined;
@@ -177,8 +195,12 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const { t } = useI18n();
-const resolvedEmptyText = computed(() => props.emptyText || t('common.no_results'));
-const resolvedClearLabel = computed(() => props.clearLabel || t('common.clear_selection'));
+const resolvedEmptyText = computed(
+  () => props.emptyText || t('common.no_results'),
+);
+const resolvedClearLabel = computed(
+  () => props.clearLabel || t('common.clear_selection'),
+);
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: SelectValue | PrimitiveValue[]): void;
@@ -191,16 +213,21 @@ const searchQuery = ref('');
 const debouncedQuery = refDebounced(searchQuery, 150);
 const activeIndex = ref(-1);
 
-const { triggerId, listboxId, errorId, optionId } = useSelectIds(() => props.id);
+const { triggerId, listboxId, errorId, optionId } = useSelectIds(
+  () => props.id,
+);
 
 const normalizedValues = computed<PrimitiveValue[]>(() => {
   if (props.modelValue === null || props.modelValue === undefined) return [];
-  if (Array.isArray(props.modelValue)) return props.modelValue as PrimitiveValue[];
+  if (Array.isArray(props.modelValue))
+    return props.modelValue as PrimitiveValue[];
   return [props.modelValue as PrimitiveValue];
 });
 
 const selectedOptions = computed(() =>
-  props.options.filter((option) => normalizedValues.value.includes(option.value)),
+  props.options.filter((option) =>
+    normalizedValues.value.includes(option.value),
+  ),
 );
 
 const hasValue = computed(() => selectedOptions.value.length > 0);
@@ -274,7 +301,8 @@ function syncActiveIndexToSelection() {
   const idx = filteredOptions.value.findIndex((opt) =>
     normalizedValues.value.includes(opt.value),
   );
-  activeIndex.value = idx >= 0 ? idx : filteredOptions.value.length > 0 ? 0 : -1;
+  activeIndex.value =
+    idx >= 0 ? idx : filteredOptions.value.length > 0 ? 0 : -1;
 }
 
 function onArrowDown() {

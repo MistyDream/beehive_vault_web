@@ -41,7 +41,10 @@ export function useLocaleFormatters() {
     const diffSeconds = Math.round((new Date(iso).getTime() - fromMs) / 1000);
     for (const [unit, seconds] of relativeUnits) {
       if (Math.abs(diffSeconds) >= seconds || unit === 'second') {
-        return relativeFmt.value.format(Math.round(diffSeconds / seconds), unit);
+        return relativeFmt.value.format(
+          Math.round(diffSeconds / seconds),
+          unit,
+        );
       }
     }
     return relativeFmt.value.format(0, 'second');
@@ -57,10 +60,11 @@ export function useLocaleFormatters() {
 
   const parseLocalizedNumber = (value: string): number => {
     const { decimal, group } = numberSeparators.value;
+    // Matches characters other than digits, decimal points, or minus signs; it has no capture groups.
     const normalized = value
       .replaceAll(group, '')
       .replace(decimal, '.')
-      .replace(/[^\d.\-]/g, '');
+      .replace(/[^\d.-]/g, '');
     return parseFloat(normalized);
   };
 

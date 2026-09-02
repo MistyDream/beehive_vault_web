@@ -22,7 +22,9 @@
                 <span
                   v-if="currentSortBy === column.key"
                   class="sort-indicator"
-                  :class="{ 'sort-indicator--desc': currentSortDirection === 'desc' }"
+                  :class="{
+                    'sort-indicator--desc': currentSortDirection === 'desc',
+                  }"
                   aria-hidden="true"
                 >
                   <LucideChevronUp :size="16" />
@@ -55,7 +57,13 @@
 
     <div class="pagination">
       <span class="pagination-info">
-        {{ t('table.pagination_info', { from: startIndex + 1, to: endIndex, total }) }}
+        {{
+          t('table.pagination_info', {
+            from: startIndex + 1,
+            to: endIndex,
+            total,
+          })
+        }}
       </span>
       <div class="pagination-controls">
         <BHButton
@@ -68,15 +76,15 @@
         </BHButton>
 
         <BHButton
-          v-for="page in visiblePages"
-          :key="page"
+          v-for="pageNumber in visiblePages"
+          :key="pageNumber"
           class="pagination-button"
-          :class="{ 'pagination-button--active': page === current }"
-          :aria-label="t('table.go_to_page', { n: page })"
-          :aria-current="page === current ? 'page' : undefined"
-          @click="setCurrent(page)"
+          :class="{ 'pagination-button--active': pageNumber === current }"
+          :aria-label="t('table.go_to_page', { n: pageNumber })"
+          :aria-current="pageNumber === current ? 'page' : undefined"
+          @click="setCurrent(pageNumber)"
         >
-          {{ page }}
+          {{ pageNumber }}
         </BHButton>
 
         <BHButton
@@ -161,7 +169,9 @@ const {
 });
 
 const current = currentPage;
-const startIndex = computed(() => (currentPage.value - 1) * currentPageSize.value);
+const startIndex = computed(
+  () => (currentPage.value - 1) * currentPageSize.value,
+);
 const endIndex = computed(() =>
   Math.min(startIndex.value + currentPageSize.value, props.total),
 );
@@ -201,7 +211,9 @@ const toggleSort = (columnKey: string) => {
   emit('sort-change', currentSortBy.value, currentSortDirection.value);
 };
 
-const ariaSortFor = (column: Column): 'ascending' | 'descending' | 'none' | undefined => {
+const ariaSortFor = (
+  column: Column,
+): 'ascending' | 'descending' | 'none' | undefined => {
   if (!column.sortable) return undefined;
   if (currentSortBy.value !== column.key) return 'none';
   return currentSortDirection.value === 'asc' ? 'ascending' : 'descending';

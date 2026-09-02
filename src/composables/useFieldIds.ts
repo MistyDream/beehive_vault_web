@@ -5,7 +5,9 @@ export function useFieldIds(explicitId?: MaybeRefOrGetter<string | undefined>) {
   return { inputId, errorId };
 }
 
-export function useSelectIds(explicitId?: MaybeRefOrGetter<string | undefined>) {
+export function useSelectIds(
+  explicitId?: MaybeRefOrGetter<string | undefined>,
+) {
   const { inputId: triggerId, errorId } = useFieldIds(explicitId);
   const listboxId = computed(() => `${triggerId.value}-listbox`);
   const optionId = (index: number) => `${triggerId.value}-option-${index}`;

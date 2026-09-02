@@ -60,7 +60,10 @@
           <div class="bh-dropdown__items">
             <BHButton
               v-for="(item, index) in items"
-              :ref="(el: Element | ComponentPublicInstance | null) => setItemRef(el, index)"
+              :ref="
+                (el: Element | ComponentPublicInstance | null) =>
+                  setItemRef(el, index)
+              "
               :key="index"
               :to="item.to"
               :href="item.href"
@@ -145,7 +148,7 @@ const reducedMotion = usePreferredReducedMotion();
 const enterMs = computed(() => (reducedMotion.value === 'reduce' ? 0 : 200));
 const leaveMs = computed(() => (reducedMotion.value === 'reduce' ? 0 : 160));
 
-const [isOpen, toggle] = useToggle(props.modelValue);
+const [isOpen] = useToggle(props.modelValue);
 const showMenu = ref(false);
 const isAnimating = ref(false);
 const items = computed(() => props.items);
@@ -173,14 +176,22 @@ const focusableItems = () =>
       !!el && !el.hasAttribute('disabled') && el.tabIndex !== -1,
   );
 
-const { start: scheduleOpenEnd } = useTimeoutFn(() => {
-  isAnimating.value = false;
-}, enterMs, { immediate: false });
+const { start: scheduleOpenEnd } = useTimeoutFn(
+  () => {
+    isAnimating.value = false;
+  },
+  enterMs,
+  { immediate: false },
+);
 
-const { start: scheduleCloseEnd } = useTimeoutFn(() => {
-  showMenu.value = false;
-  isAnimating.value = false;
-}, leaveMs, { immediate: false });
+const { start: scheduleCloseEnd } = useTimeoutFn(
+  () => {
+    showMenu.value = false;
+    isAnimating.value = false;
+  },
+  leaveMs,
+  { immediate: false },
+);
 
 const open = () => {
   if (props.disabled || isAnimating.value) return;
@@ -228,17 +239,13 @@ const handleMenuKeydown = (e: KeyboardEvent) => {
   switch (e.key) {
     case 'ArrowDown': {
       e.preventDefault();
-      const next =
-        currentIndex < 0 ? 0 : (currentIndex + 1) % focusable.length;
+      const next = currentIndex < 0 ? 0 : (currentIndex + 1) % focusable.length;
       focusable[next]?.focus();
       break;
     }
     case 'ArrowUp': {
       e.preventDefault();
-      const prev =
-        currentIndex <= 0
-          ? focusable.length - 1
-          : currentIndex - 1;
+      const prev = currentIndex <= 0 ? focusable.length - 1 : currentIndex - 1;
       focusable[prev]?.focus();
       break;
     }
@@ -268,18 +275,21 @@ const getTriggerButton = (): HTMLElement | undefined => {
   return btn ?? undefined;
 };
 
-const { floatingStyles, isPositioned, placement: resolvedPlacement } =
-  useFloating(triggerRef, floatingRef, {
-    placement: computed(() => props.placement),
-    middleware: [
-      offsetMiddleware(() => props.offset),
-      flip(),
-      shift({ padding: 16 }),
-    ],
-    strategy: 'fixed',
-    transform: false,
-    whileElementsMounted: autoUpdate,
-  });
+const {
+  floatingStyles,
+  isPositioned,
+  placement: resolvedPlacement,
+} = useFloating(triggerRef, floatingRef, {
+  placement: computed(() => props.placement),
+  middleware: [
+    offsetMiddleware(() => props.offset),
+    flip(),
+    shift({ padding: 16 }),
+  ],
+  strategy: 'fixed',
+  transform: false,
+  whileElementsMounted: autoUpdate,
+});
 
 const transformOrigin = computed(() => {
   const [side, align] = resolvedPlacement.value.split('-');

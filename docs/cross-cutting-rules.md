@@ -101,14 +101,14 @@ Les montants reçus, manipulés et transmis restent des chaînes décimales. Le 
 
 L'affichage français utilise une espace pour les groupes de milliers et une virgule décimale. Les montants ne sont pas abrégés en milliers ou millions dans le MVP.
 
-| Contexte | Exemple |
-| --- | ---: |
-| Résumé sans fraction significative | `12 450 €` |
-| Résumé avec fraction | `12 450,50 €` |
-| Transaction détaillée | `42,00 €` |
-| Précision significative retournée par l'API | `42,3456 €` |
-| Correction | `− 18,50 €` |
-| Flux explicitement positif | `+ 320,00 €` |
+| Contexte                                    |       Exemple |
+| ------------------------------------------- | ------------: |
+| Résumé sans fraction significative          |    `12 450 €` |
+| Résumé avec fraction                        | `12 450,50 €` |
+| Transaction détaillée                       |     `42,00 €` |
+| Précision significative retournée par l'API |   `42,3456 €` |
+| Correction                                  |   `− 18,50 €` |
+| Flux explicitement positif                  |  `+ 320,00 €` |
 
 Les résumés peuvent retirer les zéros fractionnaires inutiles. Les vues détaillées affichent au minimum les décimales usuelles de la devise et ne masquent jamais une précision supplémentaire significative retournée par l'API.
 

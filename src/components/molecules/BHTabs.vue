@@ -18,11 +18,7 @@
         >
           {{ tab.count }}
         </BHBadge>
-        <span
-          v-if="tab.tooltip"
-          :id="`tab-${tab.id}-desc`"
-          class="sr-only"
-        >
+        <span v-if="tab.tooltip" :id="`tab-${tab.id}-desc`" class="sr-only">
           {{ tab.tooltip }}
         </span>
       </button>
@@ -44,23 +40,14 @@
         >
           {{ tab.count }}
         </BHBadge>
-        <span
-          v-if="tab.tooltip"
-          :id="`tab-${tab.id}-desc`"
-          class="sr-only"
-        >
+        <span v-if="tab.tooltip" :id="`tab-${tab.id}-desc`" class="sr-only">
           {{ tab.tooltip }}
         </span>
       </NuxtLink>
     </template>
   </nav>
 
-  <div
-    v-else
-    class="bh-tabs"
-    role="tablist"
-    :aria-label="ariaLabel"
-  >
+  <div v-else class="bh-tabs" role="tablist" :aria-label="ariaLabel">
     <button
       v-for="(tab, index) in tabs"
       :key="tab.id"
@@ -85,11 +72,7 @@
       @keydown.end.prevent="move('end')"
     >
       <span>{{ tab.label }}</span>
-      <BHBadge
-        v-if="typeof tab.count === 'number'"
-        variant="neutral"
-        size="sm"
-      >
+      <BHBadge v-if="typeof tab.count === 'number'" variant="neutral" size="sm">
         {{ tab.count }}
       </BHBadge>
     </button>
@@ -122,7 +105,9 @@ const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void;
 }>();
 
-const isNavMode = computed(() => props.tabs.some((t) => typeof t.to === 'string'));
+const isNavMode = computed(() =>
+  props.tabs.some((t) => typeof t.to === 'string'),
+);
 
 const route = useRoute();
 function isTabActive(tab: TabItem): boolean {
