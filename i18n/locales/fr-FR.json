@@ -43,6 +43,12 @@
     "loading": "Chargement des foyers",
     "load_error_title": "Impossible de charger les foyers",
     "load_error_description": "Vérifiez votre connexion, puis réessayez.",
+    "selection": {
+      "title": "Choisir un foyer",
+      "description": "Chaque foyer conserve ses comptes et ses transactions séparément.",
+      "last_used": "Dernier utilisé",
+      "create": "Créer un autre foyer"
+    },
     "creation": {
       "title": "Créons votre foyer",
       "description": "Il regroupera les comptes et les transactions que vous souhaitez suivre ensemble.",

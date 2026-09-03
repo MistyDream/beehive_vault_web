@@ -43,6 +43,12 @@
     "loading": "Loading households",
     "load_error_title": "Unable to load households",
     "load_error_description": "Check your connection and try again.",
+    "selection": {
+      "title": "Choose a household",
+      "description": "Each household keeps its accounts and transactions separate.",
+      "last_used": "Last used",
+      "create": "Create another household"
+    },
     "creation": {
       "title": "Create your household",
       "description": "It will group the accounts and transactions you want to track together.",
