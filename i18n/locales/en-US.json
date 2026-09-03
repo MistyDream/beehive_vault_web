@@ -2,6 +2,7 @@
   "dashboard": "Dashboard",
   "bank-account": "Bank account",
   "common": {
+    "cancel": "Cancel",
     "close": "Close",
     "remove": "Remove",
     "remove_value": "Remove {value}",

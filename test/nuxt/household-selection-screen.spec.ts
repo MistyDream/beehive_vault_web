@@ -98,6 +98,27 @@ describe('HouseholdSelectionScreen', () => {
     expect(wrapper.emitted('create')).toHaveLength(1);
   });
 
+  it('offers cancellation only when requested', async () => {
+    const initialWrapper = await mountSuspended(HouseholdSelectionScreen, {
+      props: { households },
+    });
+    expect(
+      initialWrapper
+        .find('.household-selection-screen__actions .ghost')
+        .exists(),
+    ).toBe(false);
+
+    const wrapper = await mountSuspended(HouseholdSelectionScreen, {
+      props: { households, cancelable: true },
+    });
+
+    await wrapper
+      .get('.household-selection-screen__actions .ghost')
+      .trigger('click');
+
+    expect(wrapper.emitted('cancel')).toHaveLength(1);
+  });
+
   it('moves focus to the title when it opens', async () => {
     const focus = vi
       .spyOn(HTMLElement.prototype, 'focus')

@@ -111,6 +111,53 @@ describe('useActiveHousehold', () => {
       personalHousehold.id,
     );
   });
+
+  it('opens and cancels explicit household selection without losing context', async () => {
+    localStorage.setItem(ACTIVE_HOUSEHOLD_STORAGE_KEY, personalHousehold.id);
+    listHouseholds.mockResolvedValue([personalHousehold, sharedHousehold]);
+    const context = await mountContext();
+    await context.initialize();
+
+    context.startSelection();
+
+    expect(context.status.value).toBe(ACTIVE_HOUSEHOLD_STATUS.NEEDS_SELECTION);
+    expect(context.activeHousehold.value).toEqual(personalHousehold);
+    expect(localStorage.getItem(ACTIVE_HOUSEHOLD_STORAGE_KEY)).toBe(
+      personalHousehold.id,
+    );
+
+    context.cancelSelection();
+
+    expect(context.status.value).toBe(ACTIVE_HOUSEHOLD_STATUS.READY);
+    expect(context.activeHousehold.value).toEqual(personalHousehold);
+  });
+
+  it('opens and cancels additional household creation without losing context', async () => {
+    listHouseholds.mockResolvedValue([personalHousehold]);
+    const context = await mountContext();
+    await context.initialize();
+
+    context.startCreation();
+
+    expect(context.status.value).toBe(ACTIVE_HOUSEHOLD_STATUS.NEEDS_CREATION);
+    expect(context.activeHousehold.value).toEqual(personalHousehold);
+
+    context.cancelCreation();
+
+    expect(context.status.value).toBe(ACTIVE_HOUSEHOLD_STATUS.READY);
+    expect(context.activeHousehold.value).toEqual(personalHousehold);
+  });
+
+  it('does not cancel initial selection without an active household', async () => {
+    listHouseholds.mockResolvedValue([personalHousehold, sharedHousehold]);
+    const context = await mountContext();
+    await context.initialize();
+
+    context.cancelSelection();
+
+    expect(context.status.value).toBe(ACTIVE_HOUSEHOLD_STATUS.NEEDS_SELECTION);
+    expect(context.activeHousehold.value).toBeNull();
+  });
 });
 
 async function mountContext() {

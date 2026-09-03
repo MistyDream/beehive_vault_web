@@ -7,8 +7,22 @@ import App from '~/app.vue';
 import { ACTIVE_HOUSEHOLD_STATUS } from '~/constants/household';
 import type { Household } from '~/types/household';
 
-const { activate, create, initialize, status } = vi.hoisted(() => ({
+const {
+  activate,
+  activeHousehold,
+  cancelCreation,
+  cancelSelection,
+  create,
+  initialize,
+  status,
+} = vi.hoisted(() => ({
   activate: vi.fn(),
+  activeHousehold: {
+    __v_isRef: true,
+    value: null as Household | null,
+  },
+  cancelCreation: vi.fn(),
+  cancelSelection: vi.fn(),
   create: vi.fn(),
   initialize: vi.fn(),
   status: {
@@ -45,10 +59,12 @@ mockNuxtImport('useHouseholdApi', () => () => ({ create }));
 mockNuxtImport('useActiveHousehold', () => () => ({
   status,
   households: ref(households),
-  activeHousehold: ref(null),
+  activeHousehold,
   error: ref(null),
   initialize,
   activate,
+  cancelCreation,
+  cancelSelection,
 }));
 
 enableAutoUnmount(afterEach);
@@ -56,7 +72,10 @@ enableAutoUnmount(afterEach);
 describe('active household app flow', () => {
   beforeEach(() => {
     status.value = ACTIVE_HOUSEHOLD_STATUS.IDLE;
+    activeHousehold.value = null;
     activate.mockReset();
+    cancelCreation.mockReset();
+    cancelSelection.mockReset();
     create.mockReset();
     initialize.mockReset();
   });
@@ -99,5 +118,29 @@ describe('active household app flow', () => {
 
     expect(wrapper.find('.household-selection-screen').exists()).toBe(true);
     expect(wrapper.find('.household-creation-screen').exists()).toBe(false);
+  });
+
+  it('identifies the active household and cancels explicit selection', async () => {
+    status.value = ACTIVE_HOUSEHOLD_STATUS.NEEDS_SELECTION;
+    activeHousehold.value = households[0] ?? null;
+    const wrapper = await mountSuspended(App);
+
+    expect(wrapper.text()).toContain('household.selection.last_used');
+
+    await wrapper
+      .get('.household-selection-screen__actions .ghost')
+      .trigger('click');
+
+    expect(cancelSelection).toHaveBeenCalledOnce();
+  });
+
+  it('cancels creation opened with an active household', async () => {
+    status.value = ACTIVE_HOUSEHOLD_STATUS.NEEDS_CREATION;
+    activeHousehold.value = households[0] ?? null;
+    const wrapper = await mountSuspended(App);
+
+    await wrapper.get('button[type="button"]').trigger('click');
+
+    expect(cancelCreation).toHaveBeenCalledOnce();
   });
 });

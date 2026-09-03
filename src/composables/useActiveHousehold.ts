@@ -60,6 +60,36 @@ export function useActiveHousehold() {
     writeStoredHouseholdId(household.id);
   }
 
+  function startSelection(): void {
+    if (activeHousehold.value) {
+      status.value = ACTIVE_HOUSEHOLD_STATUS.NEEDS_SELECTION;
+    }
+  }
+
+  function cancelSelection(): void {
+    if (
+      activeHousehold.value &&
+      status.value === ACTIVE_HOUSEHOLD_STATUS.NEEDS_SELECTION
+    ) {
+      status.value = ACTIVE_HOUSEHOLD_STATUS.READY;
+    }
+  }
+
+  function startCreation(): void {
+    if (activeHousehold.value) {
+      status.value = ACTIVE_HOUSEHOLD_STATUS.NEEDS_CREATION;
+    }
+  }
+
+  function cancelCreation(): void {
+    if (
+      activeHousehold.value &&
+      status.value === ACTIVE_HOUSEHOLD_STATUS.NEEDS_CREATION
+    ) {
+      status.value = ACTIVE_HOUSEHOLD_STATUS.READY;
+    }
+  }
+
   return {
     status: readonly(status),
     households: readonly(households),
@@ -67,6 +97,10 @@ export function useActiveHousehold() {
     error: readonly(error),
     initialize,
     activate,
+    startSelection,
+    cancelSelection,
+    startCreation,
+    cancelCreation,
   };
 }
 

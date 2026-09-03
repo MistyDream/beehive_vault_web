@@ -52,13 +52,18 @@
           </li>
         </ul>
 
-        <BHButton
-          class="household-selection-screen__create"
-          variant="secondary"
-          @click="emit('create')"
-        >
-          {{ t('household.selection.create') }}
-        </BHButton>
+        <div class="household-selection-screen__actions">
+          <BHButton v-if="cancelable" variant="ghost" @click="emit('cancel')">
+            {{ t('common.cancel') }}
+          </BHButton>
+          <BHButton
+            class="household-selection-screen__create"
+            variant="secondary"
+            @click="emit('create')"
+          >
+            {{ t('household.selection.create') }}
+          </BHButton>
+        </div>
       </section>
     </div>
   </main>
@@ -68,16 +73,19 @@
 import type { Household, HouseholdId } from '~/types/household';
 
 interface Props {
+  cancelable?: boolean;
   households: readonly Household[];
   lastUsedHouseholdId?: HouseholdId;
 }
 
 interface Emits {
+  cancel: [];
   create: [];
   selected: [household: Household];
 }
 
 withDefaults(defineProps<Props>(), {
+  cancelable: false,
   lastUsedHouseholdId: undefined,
 });
 const emit = defineEmits<Emits>();
@@ -194,7 +202,15 @@ function getMonogram(name: string): string {
   @apply text-theme-text-muted;
 }
 
-.household-selection-screen__create {
-  @apply mt-5 w-full;
+.household-selection-screen__actions {
+  @apply mt-5 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end;
+}
+
+.household-selection-screen__actions :deep(.bh-button) {
+  @apply w-full sm:w-auto;
+}
+
+.household-selection-screen__actions :deep(.bh-button:only-child) {
+  @apply sm:w-full;
 }
 </style>

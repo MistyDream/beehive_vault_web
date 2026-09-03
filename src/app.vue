@@ -1,7 +1,10 @@
 <template>
   <ActiveHouseholdGate>
     <template #creation>
-      <HouseholdCreationScreen />
+      <HouseholdCreationScreen
+        :cancelable="!!activeHousehold"
+        @cancel="cancelCreation"
+      />
     </template>
     <template #selection="{ households }">
       <HouseholdCreationScreen
@@ -12,7 +15,10 @@
       />
       <HouseholdSelectionScreen
         v-else
+        :cancelable="!!activeHousehold"
         :households="households"
+        :last-used-household-id="activeHousehold?.id"
+        @cancel="cancelSelection"
         @create="openHouseholdCreation"
       />
     </template>
@@ -25,6 +31,9 @@
 
 <script setup lang="ts">
 const { locale } = useI18n();
+
+const { activeHousehold, cancelCreation, cancelSelection } =
+  useActiveHousehold();
 
 useHead({
   htmlAttrs: computed(() => ({ lang: locale.value })),
