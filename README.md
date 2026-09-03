@@ -26,8 +26,11 @@ Le projet entre dans une reconstruction du MVP sur la branche `reboot/web-founda
 - [Rapport mensuel](docs/monthly-report.md)
 - [Règles transversales](docs/cross-cutting-rules.md)
 - [Vue d'ensemble](docs/overview.md)
+- [Environnement de développement](docs/development.md)
 
 ## Développement
 
-L'environnement historique utilise Node.js 20 ou plus récent et Yarn 4.
-Les commandes et dépendances seront revérifiées pendant la phase de fondation avant de servir de référence au nouveau développement.
+L'environnement local utilise Node.js 20 ou plus récent, Corepack avec Yarn 4, Rust,
+PostgreSQL 18 et Process Compose. Consulter le guide de
+[développement local](docs/development.md) pour préparer, démarrer et arrêter
+l'ensemble de l'application.

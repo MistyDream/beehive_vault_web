@@ -1,0 +1,60 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/F1bonacc1/process-compose/main/schemas/process-compose-schema.json
+
+version: '0.5'
+
+processes:
+  postgres:
+    description: Local PostgreSQL server
+    command: ./scripts/dev-postgres.sh
+    working_dir: .
+    readiness_probe:
+      exec:
+        command: pg_isready --host 127.0.0.1 --port 5432
+      initial_delay_seconds: 1
+      period_seconds: 1
+      timeout_seconds: 2
+      failure_threshold: 10
+
+  api:
+    description: Beehive Vault Rust API
+    command: cargo run
+    working_dir: ../beehive_vault_api
+    availability:
+      restart: on_failure
+      backoff_seconds: 2
+      max_restarts: 3
+    depends_on:
+      postgres:
+        condition: process_healthy
+    readiness_probe:
+      http_get:
+        host: 127.0.0.1
+        scheme: http
+        path: /readyz
+        port: 8080
+      initial_delay_seconds: 1
+      period_seconds: 1
+      timeout_seconds: 2
+      failure_threshold: 60
+
+  web:
+    description: Beehive Vault Nuxt application
+    command: corepack yarn dev --host 127.0.0.1
+    working_dir: .
+    availability:
+      restart: on_failure
+      backoff_seconds: 2
+      max_restarts: 3
+    depends_on:
+      api:
+        condition: process_healthy
+    readiness_probe:
+      http_get:
+        host: 127.0.0.1
+        scheme: http
+        path: /
+        port: 3000
+      initial_delay_seconds: 1
+      period_seconds: 1
+      timeout_seconds: 2
+      failure_threshold: 60
