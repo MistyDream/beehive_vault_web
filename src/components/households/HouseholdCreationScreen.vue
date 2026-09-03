@@ -10,13 +10,36 @@
         <span>Beehive Vault</span>
       </div>
 
-      <HouseholdCreationForm @created="handleCreated" />
+      <HouseholdCreationForm
+        :cancelable="cancelable"
+        @cancel="emit('cancel')"
+        @created="handleCreated"
+      />
     </div>
   </main>
 </template>
 
 <script setup lang="ts">
-function handleCreated(): void {}
+import type { Household } from '~/types/household';
+
+interface Props {
+  cancelable?: boolean;
+}
+
+interface Emits {
+  cancel: [];
+  created: [household: Household];
+}
+
+withDefaults(defineProps<Props>(), {
+  cancelable: false,
+});
+
+const emit = defineEmits<Emits>();
+
+function handleCreated(household: Household): void {
+  emit('created', household);
+}
 </script>
 
 <style lang="css" scoped>
