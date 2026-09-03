@@ -26,7 +26,8 @@
     "go_to_page": "Aller à la page {n}"
   },
   "a11y": {
-    "skip_to_main": "Aller au contenu principal"
+    "skip_to_main": "Aller au contenu principal",
+    "logo_label": "Logo Beehive Vault"
   },
   "nav": {
     "main": "Navigation principale",
