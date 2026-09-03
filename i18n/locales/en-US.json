@@ -41,7 +41,25 @@
   "household": {
     "loading": "Loading households",
     "load_error_title": "Unable to load households",
-    "load_error_description": "Check your connection and try again."
+    "load_error_description": "Check your connection and try again.",
+    "creation": {
+      "title": "Create your household",
+      "description": "It will group the accounts and transactions you want to track together.",
+      "name": "Household name",
+      "currency": "Base currency",
+      "currency_help": "Used by every account in this household.",
+      "timezone": "Time zone",
+      "timezone_help": "Detected from this device and used for calendar dates.",
+      "submit": "Create and add an account",
+      "cancel": "Cancel",
+      "error": {
+        "generic": "The household could not be created. Check your connection and try again.",
+        "name_required": "Enter a household name.",
+        "name_invalid": "The household name must contain between 1 and 100 characters.",
+        "currency_invalid": "Select a valid base currency.",
+        "timezone_invalid": "Select a valid time zone."
+      }
+    }
   },
   "theme": {
     "light_mode": "Light mode",

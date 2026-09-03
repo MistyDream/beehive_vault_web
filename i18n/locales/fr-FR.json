@@ -41,7 +41,25 @@
   "household": {
     "loading": "Chargement des foyers",
     "load_error_title": "Impossible de charger les foyers",
-    "load_error_description": "Vérifiez votre connexion, puis réessayez."
+    "load_error_description": "Vérifiez votre connexion, puis réessayez.",
+    "creation": {
+      "title": "Créons votre foyer",
+      "description": "Il regroupera les comptes et les transactions que vous souhaitez suivre ensemble.",
+      "name": "Nom du foyer",
+      "currency": "Devise principale",
+      "currency_help": "Utilisée pour tous les comptes de ce foyer.",
+      "timezone": "Fuseau horaire",
+      "timezone_help": "Détecté depuis cet appareil et utilisé pour les dates calendaires.",
+      "submit": "Créer et ajouter un compte",
+      "cancel": "Annuler",
+      "error": {
+        "generic": "Le foyer n’a pas pu être créé. Vérifiez votre connexion, puis réessayez.",
+        "name_required": "Saisissez un nom pour le foyer.",
+        "name_invalid": "Le nom du foyer doit contenir entre 1 et 100 caractères.",
+        "currency_invalid": "Sélectionnez une devise principale valide.",
+        "timezone_invalid": "Sélectionnez un fuseau horaire valide."
+      }
+    }
   },
   "theme": {
     "light_mode": "Mode clair",
