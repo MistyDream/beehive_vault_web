@@ -5,6 +5,7 @@
     "close": "Close",
     "remove": "Remove",
     "remove_value": "Remove {value}",
+    "retry": "Retry",
     "select_placeholder": "Select",
     "select_n_selected": "{count} selected | {count} selected",
     "no_results": "No results",
@@ -36,6 +37,11 @@
     "accounts": "Accounts",
     "transactions": "Transactions",
     "more": "More"
+  },
+  "household": {
+    "loading": "Loading households",
+    "load_error_title": "Unable to load households",
+    "load_error_description": "Check your connection and try again."
   },
   "theme": {
     "light_mode": "Light mode",
