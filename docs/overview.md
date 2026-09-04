@@ -43,14 +43,15 @@ patrimoine.
 Les comptes sont regroupés en premier lieu par rôle financier plutôt que par
 établissement :
 
-- liquidités ;
-- épargne ;
-- investissements ;
+- comptes du quotidien, qui regroupent les liquidités ;
+- épargne et investissements ;
 - dettes.
 
 Chaque groupe affiche son montant et les comptes qui le composent. Un groupe
 permet d'accéder aux comptes sources. Les établissements restent une information
-secondaire présentée dans les détails.
+secondaire présentée dans les détails. Les montants des trois groupes utilisent
+directement les sous-totaux `daily`, `savings` et `liabilities` fournis par
+l'API ; le client ne recalcule aucun sous-total monétaire.
 
 ### Mois en cours
 

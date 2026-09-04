@@ -5,8 +5,10 @@
 </template>
 
 <script setup lang="ts">
+import type { DecimalString } from '~/types/http';
+
 interface Props {
-  amount: number;
+  amount: DecimalString;
   currency?: string;
   locale?: string;
   showSign?: boolean;
@@ -24,8 +26,11 @@ const props = withDefaults(defineProps<Props>(), {
 
 const { locale: currentLocale } = useI18n();
 
-// Zero is coerced to +0 so Intl never emits "-0,00 €" for a negative-signed zero.
-const amount = computed(() => props.amount || 0);
+// Zero is normalized without changing non-zero decimals so Intl never emits
+// "-0,00 €" and large values retain their exact base-10 representation.
+const amount = computed<DecimalString>(() =>
+  Number(props.amount) === 0 ? '0' : props.amount,
+);
 
 // Compose manually: locale-aware number + space + currency symbol (always
 // suffix). Using style:'currency' directly places the symbol per locale which
@@ -37,12 +42,16 @@ const formattedAmount = computed(() => {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
     notation: props.compact ? 'compact' : 'standard',
-  }).format(amount.value);
+  }).format(amount.value as Intl.StringNumericLiteral);
 
   const symbol = getCurrencySymbol(props.currency, activeLocale);
-  const signed = props.showSign && amount.value > 0 ? `+${number}` : number;
+  const signed = props.showSign && isPositive.value ? `+${number}` : number;
   return `${signed} ${symbol}`;
 });
+
+const isPositive = computed(
+  () => !amount.value.startsWith('-') && Number(amount.value) !== 0,
+);
 
 function getCurrencySymbol(currency: string, locale: string): string {
   const parts = new Intl.NumberFormat(locale, {
@@ -57,8 +66,8 @@ function getCurrencySymbol(currency: string, locale: string): string {
 const sizeClass = computed(() => `bh-currency-display--${props.size}`);
 
 const colorClass = computed(() => {
-  if (!props.showSign || amount.value === 0) return '';
-  return amount.value > 0
+  if (!props.showSign || Number(amount.value) === 0) return '';
+  return isPositive.value
     ? 'bh-currency-display--positive'
     : 'bh-currency-display--negative';
 });

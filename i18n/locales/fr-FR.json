@@ -76,6 +76,28 @@
       }
     }
   },
+  "overview": {
+    "title": "Vue d’ensemble",
+    "today": "Aujourd’hui",
+    "loading": "Chargement du patrimoine",
+    "load_error_title": "Impossible de charger le patrimoine",
+    "load_error_description": "Vérifiez votre connexion, puis réessayez.",
+    "composition": {
+      "overline": "Répartition actuelle",
+      "title": "Composition du patrimoine",
+      "view_all": "Voir les comptes",
+      "empty": "Aucun compte n’est encore associé à ce foyer.",
+      "daily": "Comptes du quotidien",
+      "savings": "Épargne et investissements",
+      "liabilities": "Dettes"
+    },
+    "net_worth": {
+      "title": "Patrimoine actuel",
+      "net": "Patrimoine net",
+      "assets": "Actifs",
+      "liabilities": "Dettes"
+    }
+  },
   "theme": {
     "light_mode": "Mode clair",
     "dark_mode": "Mode sombre",

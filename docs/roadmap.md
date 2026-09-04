@@ -10,8 +10,8 @@ Le [catalogue des fonctionnalités](features.md) distingue séparément ce qui e
 
 - **Branche :** `reboot/web-foundation` ;
 - **Phase active :** phase 4 — Vue d'ensemble et patrimoine ;
-- **Étape active :** 4.1 — Patrimoine actuel ;
-- **Dernière étape terminée :** 3.2 — Sélection du foyer ;
+- **Étape active :** 4.2 — Mois en cours ;
+- **Dernière étape terminée :** 4.1 — Patrimoine actuel ;
 
 Légende :
 
@@ -163,14 +163,14 @@ chaque ouverture de l'application.
 
 ## Phase 4 — Vue d'ensemble et patrimoine ⬜
 
-### 4.1 — Patrimoine actuel ⬜
+### 4.1 — Patrimoine actuel ✅
 
 - afficher le patrimoine net ;
 - distinguer les actifs et les dettes ;
 - regrouper les comptes par rôle financier ;
 - fournir les accès vers les comptes sources.
 
-### 4.2 — Mois en cours ⬜
+### 4.2 — Mois en cours 🚧
 
 - afficher les revenus, dépenses et flux net du mois courant ;
 - présenter les principales catégories de dépenses ;

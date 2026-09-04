@@ -76,6 +76,28 @@
       }
     }
   },
+  "overview": {
+    "title": "Overview",
+    "today": "Today",
+    "loading": "Loading net worth",
+    "load_error_title": "Unable to load net worth",
+    "load_error_description": "Check your connection and try again.",
+    "composition": {
+      "overline": "Current breakdown",
+      "title": "Net worth composition",
+      "view_all": "View accounts",
+      "empty": "No account is associated with this household yet.",
+      "daily": "Everyday accounts",
+      "savings": "Savings and investments",
+      "liabilities": "Liabilities"
+    },
+    "net_worth": {
+      "title": "Current net worth",
+      "net": "Net worth",
+      "assets": "Assets",
+      "liabilities": "Liabilities"
+    }
+  },
   "theme": {
     "light_mode": "Light mode",
     "dark_mode": "Dark mode",
