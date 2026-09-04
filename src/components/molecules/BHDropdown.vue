@@ -68,6 +68,7 @@
               :to="item.to"
               :href="item.href"
               :disabled="item.disabled"
+              variant="ghost"
               :class="{ 'bh-dropdown__item--danger': item.danger }"
               role="menuitem"
               :tabindex="item.disabled ? -1 : 0"
@@ -409,7 +410,12 @@ onMounted(() => {
 }
 
 .bh-dropdown__items {
-  @apply flex flex-col;
+  @apply flex flex-col gap-1 px-2;
+}
+
+.bh-dropdown__items :deep(.bh-button) {
+  @apply w-full justify-start rounded-lg px-3;
+  @apply focus-visible:ring-offset-0;
 }
 
 .bh-dropdown__items :deep(.bh-dropdown__item--danger) {

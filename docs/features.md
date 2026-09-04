@@ -14,19 +14,22 @@ La présence de code historique dans la branche ne rend pas une fonctionnalité 
 
 ## Disponibles
 
-Aucune fonctionnalité métier du nouveau MVP n'est encore disponible. La reconstruction reste dans sa phase de conception.
+| Domaine     | Fonctionnalité                                                   | Limites actuelles                                            |
+| ----------- | ---------------------------------------------------------------- | ------------------------------------------------------------ |
+| Navigation  | Structure principale sur ordinateur et mobile                    | Les destinations métier seront ajoutées avec leurs pages     |
+| Apparence   | Direction visuelle et thèmes clair et sombre                     | Le choix est mémorisé localement                             |
+| Foyer actif | Premier lancement, sélection, persistance et changement de foyer | Sans authentification ni gestion des membres dans le MVP Web |
 
 ## En développement
 
-Aucune fonctionnalité métier n'est actuellement en cours d'implémentation.
+| Domaine        | Fonctionnalité                            | Limites actuelles                         |
+| -------------- | ----------------------------------------- | ----------------------------------------- |
+| Vue d'ensemble | Patrimoine actuel et flux du mois courant | Première page métier en cours de création |
 
 ## Conçues
 
 | Domaine         | Fonctionnalité                                                    | Limites actuelles                                                      |
 | --------------- | ----------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| Navigation      | Structure principale sur ordinateur et mobile                     | Non implémentée                                                        |
-| Apparence       | Direction visuelle, thèmes clair et sombre                        | Tokens et composants à reconstruire                                    |
-| Foyer actif     | Premier lancement, sélection, persistance et changement de foyer  | Liste API disponible, client non implémenté                            |
 | Vue d'ensemble  | Patrimoine actuel et flux du mois courant                         | Aucun changement de mois sur cette page                                |
 | Comptes         | Liste par rôle financier et résumé du patrimoine                  | Non implémentée                                                        |
 | Comptes         | Détail, création, modification, archivage et restauration         | Contrats API disponibles, client non implémenté                        |

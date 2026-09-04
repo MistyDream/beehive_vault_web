@@ -44,6 +44,13 @@
     "loading": "Chargement des foyers",
     "load_error_title": "Impossible de charger les foyers",
     "load_error_description": "Vérifiez votre connexion, puis réessayez.",
+    "menu": {
+      "active": "Foyer actif",
+      "change": "Changer de foyer",
+      "create": "Créer un foyer",
+      "switch_to_light": "Passer en mode clair",
+      "switch_to_dark": "Passer en mode sombre"
+    },
     "selection": {
       "title": "Choisir un foyer",
       "description": "Chaque foyer conserve ses comptes et ses transactions séparément.",

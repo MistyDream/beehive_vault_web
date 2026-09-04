@@ -9,7 +9,18 @@
       :items="desktopNavigationItems"
       :home-to="localePath('/')"
       :navigation-label="t('nav.main')"
-    />
+    >
+      <template #footer>
+        <HouseholdMenu
+          v-if="!!activeHousehold"
+          :household="activeHousehold"
+          :is-dark="isDark"
+          @change="startSelection"
+          @create="startCreation"
+          @toggle-theme="toggleTheme"
+        />
+      </template>
+    </BHDesktopSidebar>
     <main id="main-content" class="app-shell__main" tabindex="-1">
       <slot />
     </main>
@@ -18,6 +29,17 @@
       :navigation-label="t('nav.main')"
       :more-label="t('nav.more')"
       :more-icon="LucideMenu"
+      :more-expanded="isMobileMoreOpen"
+      @more="isMobileMoreOpen = true"
+    />
+    <MobileMoreMenu
+      v-if="activeHousehold"
+      v-model="isMobileMoreOpen"
+      :household="activeHousehold"
+      :is-dark="isDark"
+      @change="startSelection"
+      @create="startCreation"
+      @toggle-theme="toggleTheme"
     />
     <BHToaster />
   </div>
@@ -34,6 +56,11 @@ import type { NavigationItem } from '~/types/navigation-item';
 
 const { t } = useI18n();
 const localePath = useLocalePath();
+
+const { activeHousehold, startCreation, startSelection } = useActiveHousehold();
+const { isDark, toggle: toggleTheme } = useTheme();
+
+const isMobileMoreOpen = ref(false);
 
 const desktopNavigationItems = computed<NavigationItem[]>(() => [
   {

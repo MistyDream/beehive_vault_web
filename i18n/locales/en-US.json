@@ -44,6 +44,13 @@
     "loading": "Loading households",
     "load_error_title": "Unable to load households",
     "load_error_description": "Check your connection and try again.",
+    "menu": {
+      "active": "Active household",
+      "change": "Change household",
+      "create": "Create a household",
+      "switch_to_light": "Switch to light mode",
+      "switch_to_dark": "Switch to dark mode"
+    },
     "selection": {
       "title": "Choose a household",
       "description": "Each household keeps its accounts and transactions separate.",

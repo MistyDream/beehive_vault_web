@@ -8,6 +8,8 @@
         <button
           type="button"
           class="bh-mobile-navigation__more"
+          aria-haspopup="dialog"
+          :aria-expanded="moreExpanded"
           @click="emit('more')"
         >
           <span class="bh-mobile-navigation__icon" aria-hidden="true">
@@ -29,13 +31,16 @@ interface Props {
   items: NavigationItem[];
   moreLabel: string;
   moreIcon: Component;
+  moreExpanded?: boolean;
 }
 
 interface Emits {
   more: [];
 }
 
-defineProps<Props>();
+withDefaults(defineProps<Props>(), {
+  moreExpanded: false,
+});
 
 const emit = defineEmits<Emits>();
 </script>

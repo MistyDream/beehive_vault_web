@@ -9,9 +9,9 @@ Le [catalogue des fonctionnalités](features.md) distingue séparément ce qui e
 ## État actuel
 
 - **Branche :** `reboot/web-foundation` ;
-- **Phase active :** phase 3 — Foyer actif ;
-- **Étape active :** 3.1 — Premier lancement ;
-- **Dernière étape terminée :** 2.3 — Socle d'interface ;
+- **Phase active :** phase 4 — Vue d'ensemble et patrimoine ;
+- **Étape active :** 4.1 — Patrimoine actuel ;
+- **Dernière étape terminée :** 3.2 — Sélection du foyer ;
 
 Légende :
 
@@ -145,14 +145,14 @@ contrats stables.
 **Résultat attendu :** le client dispose d'un socle exécutable aligné avec la
 nouvelle API et la direction visuelle.
 
-## Phase 3 — Foyer actif 🚧
+## Phase 3 — Foyer actif ✅
 
-### 3.1 — Premier lancement 🚧
+### 3.1 — Premier lancement ✅
 
 - créer un foyer lorsqu'il n'en existe aucun ;
 - présenter les états de chargement, d'erreur et de reprise du parcours.
 
-### 3.2 — Sélection du foyer ⬜
+### 3.2 — Sélection du foyer ✅
 
 - retrouver et sélectionner un foyer existant ;
 - conserver le contexte actif ;

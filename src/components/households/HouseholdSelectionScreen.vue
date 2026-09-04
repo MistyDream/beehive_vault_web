@@ -29,7 +29,7 @@
                 class="household-selection-screen__monogram"
                 aria-hidden="true"
               >
-                {{ getMonogram(household.name) }}
+                {{ getHouseholdMonogram(household.name, locale) }}
               </span>
               <span class="household-selection-screen__details">
                 <strong>{{ household.name }}</strong>
@@ -102,16 +102,6 @@ async function selectHousehold(household: Household): Promise<void> {
   activate(household);
   emit('selected', household);
   await navigateTo(localePath('/'));
-}
-
-function getMonogram(name: string): string {
-  const words = name.trim().split(' ').filter(Boolean);
-  const characters =
-    words.length > 1
-      ? [words[0]?.[0], words[1]?.[0]]
-      : [...(words[0] ?? '')].slice(0, 2);
-
-  return characters.filter(Boolean).join('').toLocaleUpperCase(locale.value);
 }
 </script>
 
