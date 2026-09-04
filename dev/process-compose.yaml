@@ -20,7 +20,7 @@ processes:
     command: cargo run
     working_dir: ../beehive_vault_api
     availability:
-      restart: on_failure
+      restart: always
       backoff_seconds: 2
       max_restarts: 3
     depends_on:
@@ -42,7 +42,7 @@ processes:
     command: corepack yarn dev --host 127.0.0.1
     working_dir: .
     availability:
-      restart: on_failure
+      restart: always
       backoff_seconds: 2
       max_restarts: 3
     depends_on:
