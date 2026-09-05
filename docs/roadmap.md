@@ -9,9 +9,9 @@ Le [catalogue des fonctionnalités](features.md) distingue séparément ce qui e
 ## État actuel
 
 - **Branche :** `reboot/web-foundation` ;
-- **Phase active :** phase 4 — Vue d'ensemble et patrimoine ;
-- **Étape active :** 4.2 — Mois en cours ;
-- **Dernière étape terminée :** 4.1 — Patrimoine actuel ;
+- **Phase active :** phase 5 — Comptes et référentiels ;
+- **Étape active :** 5.1 — Comptes et rapprochements ;
+- **Dernière étape terminée :** 4.2 — Mois en cours ;
 
 Légende :
 
@@ -161,7 +161,7 @@ nouvelle API et la direction visuelle.
 **Résultat attendu :** l'utilisateur rejoint un foyer actif de façon fiable à
 chaque ouverture de l'application.
 
-## Phase 4 — Vue d'ensemble et patrimoine ⬜
+## Phase 4 — Vue d'ensemble et patrimoine ✅
 
 ### 4.1 — Patrimoine actuel ✅
 
@@ -170,12 +170,13 @@ chaque ouverture de l'application.
 - regrouper les comptes par rôle financier ;
 - fournir les accès vers les comptes sources.
 
-### 4.2 — Mois en cours 🚧
+### 4.2 — Mois en cours ✅
 
 - afficher les revenus, dépenses et flux net du mois courant ;
 - présenter les principales catégories de dépenses ;
 - fournir l'accès vers l'analyse mensuelle détaillée ;
-- afficher les actions contextuelles lorsqu'une intervention est nécessaire.
+- ne pas afficher d'action contextuelle tant qu'aucune règle métier ne permet
+  d'identifier une intervention nécessaire.
 
 **Résultat attendu :** la vue d'ensemble répond à la question « où en suis-je
 aujourd'hui ? » à partir des données réelles du foyer.
