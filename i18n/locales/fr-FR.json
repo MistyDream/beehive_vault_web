@@ -82,6 +82,17 @@
     "loading": "Chargement du patrimoine",
     "load_error_title": "Impossible de charger le patrimoine",
     "load_error_description": "Vérifiez votre connexion, puis réessayez.",
+    "current_month": {
+      "title": "Ce mois-ci",
+      "view_report": "Analyse mensuelle",
+      "income": "Revenus",
+      "expenses": "Dépenses",
+      "net_flow": "Flux net",
+      "top_expenses": "Principales dépenses",
+      "uncategorized": "Non catégorisé",
+      "empty": "Aucun flux enregistré ce mois-ci.",
+      "no_expenses": "Aucune dépense enregistrée ce mois-ci."
+    },
     "composition": {
       "overline": "Répartition actuelle",
       "title": "Composition du patrimoine",

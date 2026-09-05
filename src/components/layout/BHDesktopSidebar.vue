@@ -1,11 +1,7 @@
 <template>
   <aside class="bh-desktop-sidebar">
     <NuxtLink :to="homeTo" class="bh-desktop-sidebar__brand">
-      <LucideHexagon
-        :size="22"
-        class="bh-desktop-sidebar__brand-mark"
-        aria-hidden="true"
-      />
+      <BHLogo class="bh-desktop-sidebar__brand-logo" />
       <span>Beehive Vault</span>
     </NuxtLink>
     <nav :aria-label="navigationLabel" class="bh-desktop-sidebar__navigation">
@@ -46,8 +42,8 @@ defineProps<Props>();
   @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-theme-accent-primary;
 }
 
-.bh-desktop-sidebar__brand-mark {
-  @apply shrink-0 text-theme-accent-primary;
+.bh-desktop-sidebar__brand-logo {
+  @apply h-10 w-auto shrink-0 text-theme-sidebar-text;
 }
 
 .bh-desktop-sidebar__navigation {

@@ -29,8 +29,20 @@
     </section>
 
     <div v-else-if="overviewData" class="overview-page__content">
-      <NetWorthSummary :summary="overviewData.summary" />
+      <NetWorthSummary
+        class="overview-page__net-worth"
+        :summary="overviewData.summary"
+      />
+      <CurrentMonthSummary
+        class="overview-page__current-month"
+        :report="overviewData.monthlyReport"
+        :report-to="
+          localePath(`/monthly-report/${overviewData.monthlyReport.month}`)
+        "
+        :transactions-to="localePath('/transactions')"
+      />
       <AccountComposition
+        class="overview-page__accounts"
         :collection="overviewData.accounts"
         :currency="overviewData.summary.currency"
         :accounts-to="localePath('/accounts')"
@@ -57,19 +69,25 @@ if (!household) {
   });
 }
 
+const currentMonth = getMonthInTimeZone(household.timezone);
+
 const {
   data: overviewData,
   status,
   error,
   refresh,
-} = await useLazyAsyncData(`overview:${household.id}`, async () => {
-  const [summary, accounts] = await Promise.all([
-    reportApi.getNetWorthSummary(household.id),
-    accountApi.list(household.id),
-  ]);
+} = await useLazyAsyncData(
+  `overview:${household.id}:${currentMonth}`,
+  async () => {
+    const [summary, accounts, monthlyReport] = await Promise.all([
+      reportApi.getNetWorthSummary(household.id),
+      accountApi.list(household.id),
+      reportApi.getMonthlyFlowReport(household.id, currentMonth),
+    ]);
 
-  return { summary, accounts };
-});
+    return { summary, accounts, monthlyReport };
+  },
+);
 </script>
 
 <style lang="css" scoped>
@@ -120,6 +138,24 @@ const {
 
 .overview-page__content {
   @apply grid gap-6;
+}
+
+@media (min-width: 1024px) {
+  .overview-page__content {
+    @apply grid-cols-3;
+  }
+
+  .overview-page__net-worth {
+    @apply col-span-3;
+  }
+
+  .overview-page__accounts {
+    @apply col-span-2 col-start-1 row-start-2;
+  }
+
+  .overview-page__current-month {
+    @apply col-start-3 row-start-2;
+  }
 }
 
 @keyframes overview-loading {

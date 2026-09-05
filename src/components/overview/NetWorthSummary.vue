@@ -41,7 +41,6 @@
 
 <script setup lang="ts">
 import type { NetWorthSummary } from '~/types/report';
-import { BHCurrencyDisplay, BHSurface } from '#components';
 
 interface Props {
   summary: NetWorthSummary;

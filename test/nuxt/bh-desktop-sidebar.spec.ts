@@ -2,7 +2,7 @@ import { defineComponent, h } from 'vue';
 import { describe, expect, it } from 'vitest';
 import { mountSuspended } from '@nuxt/test-utils/runtime';
 
-import { BHDesktopSidebar } from '#components';
+import { BHDesktopSidebar, BHLogo } from '#components';
 
 const TestIcon = defineComponent({
   name: 'TestIcon',
@@ -29,6 +29,7 @@ describe('BHDesktopSidebar', () => {
 
     expect(brand.attributes('href')).toBe('/');
     expect(brand.text()).toContain('Beehive Vault');
+    expect(brand.getComponent(BHLogo).exists()).toBe(true);
   });
 
   it('renders an accessible link for every navigation item', async () => {

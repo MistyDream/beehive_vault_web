@@ -82,6 +82,17 @@
     "loading": "Loading net worth",
     "load_error_title": "Unable to load net worth",
     "load_error_description": "Check your connection and try again.",
+    "current_month": {
+      "title": "This month",
+      "view_report": "Monthly analysis",
+      "income": "Income",
+      "expenses": "Expenses",
+      "net_flow": "Net flow",
+      "top_expenses": "Top expenses",
+      "uncategorized": "Uncategorized",
+      "empty": "No flows recorded this month.",
+      "no_expenses": "No expenses recorded this month."
+    },
     "composition": {
       "overline": "Current breakdown",
       "title": "Net worth composition",

@@ -9,9 +9,13 @@ import { enableAutoUnmount } from '@vue/test-utils';
 
 import NetWorthSummary from '~/components/overview/NetWorthSummary.vue';
 import AccountComposition from '~/components/overview/AccountComposition.vue';
+import CurrentMonthSummary from '~/components/overview/CurrentMonthSummary.vue';
 import OverviewPage from '~/pages/index.vue';
 import type { AccountCollection } from '~/types/account';
-import type { NetWorthSummary as NetWorthSummaryData } from '~/types/report';
+import type {
+  MonthlyFlowReport,
+  NetWorthSummary as NetWorthSummaryData,
+} from '~/types/report';
 
 const activeHousehold = {
   __v_isRef: true,
@@ -35,6 +39,24 @@ const summary: NetWorthSummaryData = {
 const accounts: AccountCollection = {
   items: [],
   totals: { daily: '0', savings: '0', liabilities: '0' },
+};
+
+const monthlyReport: MonthlyFlowReport = {
+  month: '2026-09',
+  dateFrom: '2026-09-01',
+  dateTo: '2026-09-30',
+  currency: 'EUR',
+  income: {
+    total: '4250.00',
+    transactionCount: 2,
+    categories: [],
+  },
+  expenses: {
+    total: '2840.00',
+    transactionCount: 8,
+    categories: [],
+  },
+  netFlow: '1410.00',
 };
 
 let responseStatus = 200;
@@ -66,10 +88,24 @@ registerEndpoint('/api/households/household-personal/accounts', {
   },
 });
 
+registerEndpoint('/api/households/household-personal/monthly-flows/2026-09', {
+  method: 'GET',
+  handler: async () => {
+    await requestBarrier;
+
+    if (responseStatus === 500) {
+      throw createError({ statusCode: 500, statusMessage: 'Request failed' });
+    }
+
+    return monthlyReport;
+  },
+});
+
 mockNuxtImport('useI18n', () => () => ({
   locale: ref('en'),
   t: (key: string) => key,
 }));
+mockNuxtImport('getMonthInTimeZone', () => () => '2026-09');
 mockNuxtImport('useActiveHousehold', () => () => ({ activeHousehold }));
 
 enableAutoUnmount(afterEach);
@@ -111,6 +147,11 @@ describe('OverviewPage', () => {
     expect(
       wrapper.getComponent(AccountComposition).props('collection'),
     ).toEqual(accounts);
+    expect(wrapper.getComponent(CurrentMonthSummary).props()).toMatchObject({
+      report: monthlyReport,
+      reportTo: '/monthly-report/2026-09',
+      transactionsTo: '/transactions',
+    });
     expect(wrapper.find('[role="alert"]').exists()).toBe(false);
   });
 

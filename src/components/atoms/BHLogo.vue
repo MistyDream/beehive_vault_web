@@ -38,7 +38,7 @@ const { t } = useI18n();
 
 <style lang="css" scoped>
 .bh-logo {
-  @apply block text-theme-text-primary;
+  @apply block;
 }
 
 .bh-logo__shape {
