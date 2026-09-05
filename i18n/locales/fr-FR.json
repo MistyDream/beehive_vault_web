@@ -89,6 +89,37 @@
       "title": "Ajoutez votre premier compte",
       "description": "Les comptes relient vos soldes et vos transactions au patrimoine de votre foyer."
     },
+    "creation": {
+      "title": "Ajouter un compte",
+      "description": "Ajoutez une source de solde à votre foyer. Vous pourrez actualiser son solde par la suite.",
+      "kind": "Type de compte",
+      "name": "Nom du compte",
+      "institution": "Établissement",
+      "no_institution": "Aucun établissement",
+      "current_balance": "Solde actuel",
+      "current_value": "Valeur actuelle",
+      "amount_due": "Montant dû",
+      "balance_help": "Saisissez le solde à la date sélectionnée.",
+      "balance_date": "Date du solde",
+      "currency": "Devise",
+      "currency_help": "Héritée du foyer actif.",
+      "submit": "Créer le compte",
+      "loading": "Chargement du formulaire de compte",
+      "load_error_title": "Impossible de préparer la création du compte",
+      "load_error_description": "Vérifiez votre connexion, puis réessayez.",
+      "error": {
+        "generic": "Le compte n’a pas pu être créé. Vérifiez les valeurs, puis réessayez.",
+        "name_required": "Saisissez un nom pour le compte.",
+        "name_invalid": "Le nom du compte doit contenir entre 1 et 100 caractères.",
+        "kind_invalid": "Sélectionnez un type de compte valide.",
+        "institution_invalid": "Sélectionnez un établissement valide ou aucun établissement.",
+        "balance_required": "Saisissez le solde actuel.",
+        "balance_invalid": "Saisissez un montant valide comportant au maximum quatre décimales.",
+        "date_required": "Sélectionnez une date de solde.",
+        "date_invalid": "Sélectionnez une date de solde valide.",
+        "date_future": "La date du solde ne peut pas être future."
+      }
+    },
     "groups": {
       "daily": "Comptes du quotidien",
       "savings": "Épargne et investissements",

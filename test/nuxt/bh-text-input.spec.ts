@@ -37,6 +37,26 @@ describe('BHTextInput', () => {
     expect(wrapper.props('modelValue')).toBe('Personal household');
   });
 
+  it('displays a visual suffix without including it in the model', async () => {
+    const wrapper = await mountSuspended(BHTextInput, {
+      props: {
+        label: 'Current balance',
+        modelValue: '',
+        suffix: '€',
+        'onUpdate:modelValue': (value: string) =>
+          wrapper.setProps({ modelValue: value }),
+      },
+    });
+
+    await wrapper.get('input').setValue('1200.50');
+
+    expect(wrapper.get('.bh-text-input__suffix').text()).toBe('€');
+    expect(
+      wrapper.get('.bh-text-input__suffix').attributes('aria-hidden'),
+    ).toBe('true');
+    expect(wrapper.props('modelValue')).toBe('1200.50');
+  });
+
   it('exposes required, disabled, and readonly native states', async () => {
     const wrapper = await mountSuspended(BHTextInput, {
       props: {

@@ -89,6 +89,37 @@
       "title": "Add your first account",
       "description": "Accounts connect your balances and transactions to your household’s net worth."
     },
+    "creation": {
+      "title": "Add an account",
+      "description": "Add a balance source to your household. You can update its balance later.",
+      "kind": "Account type",
+      "name": "Account name",
+      "institution": "Institution",
+      "no_institution": "No institution",
+      "current_balance": "Current balance",
+      "current_value": "Current value",
+      "amount_due": "Amount due",
+      "balance_help": "Enter the balance as of the selected date.",
+      "balance_date": "Balance date",
+      "currency": "Currency",
+      "currency_help": "Inherited from the active household.",
+      "submit": "Create account",
+      "loading": "Loading account form",
+      "load_error_title": "Unable to prepare account creation",
+      "load_error_description": "Check your connection and try again.",
+      "error": {
+        "generic": "The account could not be created. Check the values and try again.",
+        "name_required": "Enter an account name.",
+        "name_invalid": "The account name must contain between 1 and 100 characters.",
+        "kind_invalid": "Select a valid account type.",
+        "institution_invalid": "Select a valid institution or no institution.",
+        "balance_required": "Enter the current balance.",
+        "balance_invalid": "Enter a valid amount with up to four decimal places.",
+        "date_required": "Select a balance date.",
+        "date_invalid": "Select a valid balance date.",
+        "date_future": "The balance date cannot be in the future."
+      }
+    },
     "groups": {
       "daily": "Everyday accounts",
       "savings": "Savings and investments",

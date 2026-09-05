@@ -7,23 +7,31 @@
     :error="error"
     :required="required"
   >
-    <input
-      v-bind="$attrs"
-      :id="inputId"
-      v-model="model"
-      class="bh-text-input"
-      :class="{ 'is-invalid': invalid }"
-      :type="type"
-      :name="name || undefined"
-      :autocomplete="autocomplete || undefined"
-      :placeholder="placeholder || undefined"
-      :disabled="disabled"
-      :readonly="readonly"
-      :required="required"
-      :aria-required="required || undefined"
-      :aria-invalid="invalid || undefined"
-      :aria-describedby="describedBy"
-    />
+    <div class="bh-text-input__control">
+      <input
+        v-bind="$attrs"
+        :id="inputId"
+        v-model="model"
+        class="bh-text-input"
+        :class="{
+          'is-invalid': invalid,
+          'bh-text-input--with-suffix': suffix,
+        }"
+        :type="type"
+        :name="name || undefined"
+        :autocomplete="autocomplete || undefined"
+        :placeholder="placeholder || undefined"
+        :disabled="disabled"
+        :readonly="readonly"
+        :required="required"
+        :aria-required="required || undefined"
+        :aria-invalid="invalid || undefined"
+        :aria-describedby="describedBy"
+      />
+      <span v-if="suffix" class="bh-text-input__suffix" aria-hidden="true">
+        {{ suffix }}
+      </span>
+    </div>
   </BHFormField>
 </template>
 
@@ -37,6 +45,7 @@ interface Props {
   type?: 'text' | 'email' | 'password' | 'search' | 'tel' | 'url';
   autocomplete?: string;
   placeholder?: string;
+  suffix?: string;
   help?: string;
   error?: string;
   disabled?: boolean;
@@ -50,6 +59,7 @@ withDefaults(defineProps<Props>(), {
   type: 'text',
   autocomplete: '',
   placeholder: '',
+  suffix: '',
   help: '',
   error: '',
   disabled: false,
@@ -73,6 +83,19 @@ const model = defineModel<string>({ default: '' });
     border-color 150ms ease-out,
     box-shadow 150ms ease-out,
     opacity 150ms ease-out;
+}
+
+.bh-text-input__control {
+  @apply relative;
+}
+
+.bh-text-input--with-suffix {
+  @apply pr-10;
+}
+
+.bh-text-input__suffix {
+  @apply pointer-events-none absolute right-3 top-1/2 -translate-y-1/2;
+  @apply text-sm font-medium text-theme-text-secondary;
 }
 
 .bh-text-input.is-invalid {
