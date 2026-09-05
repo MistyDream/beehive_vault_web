@@ -1,7 +1,7 @@
 # Comptes
 
 - Statut : conception fonctionnelle validée provisoirement
-- Date : 2026-08-20
+- Date : 2026-09-05
 - Liste, détail et formulaires : structure validée provisoirement
 
 ## Wireframes de référence
@@ -14,27 +14,24 @@
 Ces wireframes couvrent les formats ordinateur et mobile. Ils fixent la hiérarchie des parcours principaux sans constituer une spécification au pixel près.
 Les espacements, la densité et les détails visuels seront ajustés pendant l'implémentation réelle.
 
+La page implémentée ne reprend pas le résumé patrimonial visible dans le
+wireframe : les sous-totaux des groupes suffisent à expliquer les comptes sans
+répéter la vue d'ensemble. Cette décision prévaut sur le wireframe pour ce point.
+
 ## Rôle
 
 La page Comptes explique la composition actuelle du patrimoine et donne accès à la gestion de ses sources. Elle approfondit la vue d'ensemble sans devenir une seconde page d'accueil.
 
-Elle répond dans cet ordre à trois questions :
+Elle répond dans cet ordre à deux questions :
 
-1. quelle est la valeur nette représentée par les comptes ?
-2. où se trouvent les actifs et les dettes ?
-3. quel compte faut-il consulter ou mettre à jour ?
+1. où se trouvent les actifs et les dettes ?
+2. quel compte faut-il consulter ou mettre à jour ?
 
 ## Liste des comptes
 
-### Résumé
-
-Le haut de page présente un résumé compact :
-
-- patrimoine net ;
-- total des actifs ;
-- total des dettes.
-
-Le patrimoine net reste plus visible sur la vue d'ensemble. Sa répétition sur la page Comptes sert ici de clé de lecture et permet de vérifier que la composition détaillée explique bien le total.
+La page ne répète pas le patrimoine net, le total des actifs et le total des
+dettes déjà visibles dans la vue d'ensemble. Les sous-totaux des groupes
+fournissent directement la clé de lecture utile à la consultation des comptes.
 
 ### Groupes
 

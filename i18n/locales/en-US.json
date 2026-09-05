@@ -77,6 +77,18 @@
     }
   },
   "accounts": {
+    "overline": "Wealth sources",
+    "title": "Accounts",
+    "description": "Review account balances and how they are grouped.",
+    "add": "Add an account",
+    "archived": "View archived accounts",
+    "loading": "Loading accounts",
+    "load_error_title": "Unable to load accounts",
+    "load_error_description": "Check your connection and try again.",
+    "empty": {
+      "title": "Add your first account",
+      "description": "Accounts connect your balances and transactions to your household’s net worth."
+    },
     "groups": {
       "daily": "Everyday accounts",
       "savings": "Savings and investments",

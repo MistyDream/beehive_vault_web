@@ -77,6 +77,18 @@
     }
   },
   "accounts": {
+    "overline": "Sources du patrimoine",
+    "title": "Comptes",
+    "description": "Consultez les soldes de vos comptes et leur répartition.",
+    "add": "Ajouter un compte",
+    "archived": "Voir les comptes archivés",
+    "loading": "Chargement des comptes",
+    "load_error_title": "Impossible de charger les comptes",
+    "load_error_description": "Vérifiez votre connexion, puis réessayez.",
+    "empty": {
+      "title": "Ajoutez votre premier compte",
+      "description": "Les comptes relient vos soldes et vos transactions au patrimoine de votre foyer."
+    },
     "groups": {
       "daily": "Comptes du quotidien",
       "savings": "Épargne et investissements",
