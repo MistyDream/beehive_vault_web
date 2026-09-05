@@ -76,6 +76,23 @@
       }
     }
   },
+  "accounts": {
+    "groups": {
+      "daily": "Everyday accounts",
+      "savings": "Savings and investments",
+      "liabilities": "Liabilities"
+    },
+    "kinds": {
+      "checking": "Checking account",
+      "savings": "Savings account",
+      "cash": "Cash",
+      "investment": "Investment",
+      "credit_card": "Credit card",
+      "loan": "Loan",
+      "other_asset": "Other asset",
+      "other_liability": "Other liability"
+    }
+  },
   "overview": {
     "title": "Overview",
     "today": "Today",

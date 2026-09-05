@@ -76,6 +76,23 @@
       }
     }
   },
+  "accounts": {
+    "groups": {
+      "daily": "Comptes du quotidien",
+      "savings": "Épargne et investissements",
+      "liabilities": "Dettes"
+    },
+    "kinds": {
+      "checking": "Compte courant",
+      "savings": "Compte d’épargne",
+      "cash": "Espèces",
+      "investment": "Investissement",
+      "credit_card": "Carte de crédit",
+      "loan": "Prêt",
+      "other_asset": "Autre actif",
+      "other_liability": "Autre dette"
+    }
+  },
   "overview": {
     "title": "Vue d’ensemble",
     "today": "Aujourd’hui",
