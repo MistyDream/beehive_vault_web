@@ -6,6 +6,7 @@ import { useAccountApi } from '~/composables/useAccountApi';
 import type {
   Account,
   AccountCollection,
+  Balance,
   CreateAccountRequest,
 } from '~/types/account';
 
@@ -57,6 +58,27 @@ registerEndpoint('/api/households/household-personal/accounts', {
   },
 });
 
+registerEndpoint(
+  '/api/households/household-personal/accounts/account-checking',
+  () => createdAccount,
+);
+
+const balances: Balance[] = [
+  {
+    id: 'balance-initial',
+    accountId: createdAccount.id,
+    amount: '1200.0000',
+    balanceDate: '2026-09-05',
+    source: 'manual',
+    createdAt: '2026-09-05T08:00:00Z',
+  },
+];
+
+registerEndpoint(
+  '/api/households/household-personal/accounts/account-checking/balances',
+  () => balances,
+);
+
 describe('useAccountApi', () => {
   it('loads the active accounts for a household', async () => {
     const result = await useAccountApi().list('household-personal');
@@ -72,5 +94,16 @@ describe('useAccountApi', () => {
 
     expect(receivedCreateRequest).toEqual(createRequest);
     expect(result).toEqual(createdAccount);
+  });
+
+  it('loads one account and its balance history', async () => {
+    const api = useAccountApi();
+
+    await expect(
+      api.get('household-personal', 'account-checking'),
+    ).resolves.toEqual(createdAccount);
+    await expect(
+      api.listBalances('household-personal', 'account-checking'),
+    ).resolves.toEqual(balances);
   });
 });

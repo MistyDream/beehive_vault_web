@@ -120,6 +120,34 @@
         "date_future": "The balance date cannot be in the future."
       }
     },
+    "detail": {
+      "back": "Back to accounts",
+      "archived": "Archived",
+      "balance_summary": "Account balance",
+      "current_balance": "Current balance",
+      "current_value": "Current value",
+      "amount_due": "Amount due",
+      "balance_explanation": "This amount includes transactions recorded after the latest declared balance.",
+      "latest_balance": "Latest declared balance",
+      "as_of": "as of {date}",
+      "no_declared_balance": "No balance has been declared yet.",
+      "recent_transactions": "Recent transactions",
+      "view_all_transactions": "View all",
+      "uncategorized": "Uncategorized",
+      "transfer": "Transfer",
+      "no_transactions": "No transaction has been recorded for this account.",
+      "balance_history": "Balance history",
+      "no_balance_history": "No balance history is available.",
+      "loading": "Loading account",
+      "load_error_title": "Unable to load this account",
+      "load_error_description": "Check your connection and try again.",
+      "sources": {
+        "manual": "Initial balance",
+        "import": "Import",
+        "synchronization": "Synchronization",
+        "reconciliation": "Reconciliation"
+      }
+    },
     "groups": {
       "daily": "Everyday accounts",
       "savings": "Savings and investments",

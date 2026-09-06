@@ -120,6 +120,34 @@
         "date_future": "La date du solde ne peut pas être future."
       }
     },
+    "detail": {
+      "back": "Retour aux comptes",
+      "archived": "Archivé",
+      "balance_summary": "Solde du compte",
+      "current_balance": "Solde actuel",
+      "current_value": "Valeur actuelle",
+      "amount_due": "Montant dû",
+      "balance_explanation": "Ce montant inclut les transactions enregistrées après le dernier solde renseigné.",
+      "latest_balance": "Dernier solde renseigné",
+      "as_of": "au {date}",
+      "no_declared_balance": "Aucun solde n’a encore été renseigné.",
+      "recent_transactions": "Transactions récentes",
+      "view_all_transactions": "Voir toutes",
+      "uncategorized": "Non catégorisé",
+      "transfer": "Transfert",
+      "no_transactions": "Aucune transaction enregistrée sur ce compte.",
+      "balance_history": "Historique des soldes",
+      "no_balance_history": "Aucun historique de solde disponible.",
+      "loading": "Chargement du compte",
+      "load_error_title": "Impossible de charger ce compte",
+      "load_error_description": "Vérifiez votre connexion, puis réessayez.",
+      "sources": {
+        "manual": "Solde initial",
+        "import": "Import",
+        "synchronization": "Synchronisation",
+        "reconciliation": "Rapprochement"
+      }
+    },
     "groups": {
       "daily": "Comptes du quotidien",
       "savings": "Épargne et investissements",
