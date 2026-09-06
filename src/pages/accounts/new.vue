@@ -40,6 +40,7 @@ const localePath = useLocalePath();
 const errorTitleId = useId();
 const { activeHousehold } = useActiveHousehold();
 const institutionApi = useInstitutionApi();
+const toast = useToast();
 
 const household = activeHousehold.value;
 
@@ -61,8 +62,10 @@ const {
 );
 
 const returnToAccounts = () => navigateTo(localePath('/accounts'));
-const openAccount = (account: Account) =>
-  navigateTo(localePath(`/accounts/${account.id}`));
+const openAccount = (account: Account) => {
+  toast.success(t('accounts.creation.success'));
+  return navigateTo(localePath(`/accounts/${account.id}`));
+};
 </script>
 
 <style lang="css" scoped>

@@ -8,11 +8,14 @@ import {
 import { enableAutoUnmount } from '@vue/test-utils';
 import { getQuery } from 'h3';
 
+import AccountBalanceForm from '~/components/accounts/AccountBalanceForm.vue';
 import AccountDetail from '~/components/accounts/AccountDetail.vue';
 import AccountDetailPage from '~/pages/accounts/[accountId].vue';
 import type { Account, Balance } from '~/types/account';
 import type { OperationPage } from '~/types/operation';
 import type { Institution } from '~/types/institution';
+
+const { toastSuccess } = vi.hoisted(() => ({ toastSuccess: vi.fn() }));
 
 const activeHousehold = {
   __v_isRef: true,
@@ -66,6 +69,7 @@ const institutions: Institution[] = [
 let responseStatus = 200;
 let requestBarrier: Promise<void> | undefined;
 let receivedTransactionQuery: ReturnType<typeof getQuery>;
+let accountRequestCount = 0;
 
 registerEndpoint(
   '/api/households/household-personal/accounts/account-investment',
@@ -74,6 +78,7 @@ registerEndpoint(
     handler: async () => {
       await requestBarrier;
       ensureSuccessfulResponse();
+      accountRequestCount += 1;
       return account;
     },
   },
@@ -115,6 +120,8 @@ mockNuxtImport('useI18n', () => () => ({
   t: (key: string) => key,
 }));
 mockNuxtImport('useActiveHousehold', () => () => ({ activeHousehold }));
+mockNuxtImport('getDateInTimeZone', () => () => '2026-09-06');
+mockNuxtImport('useToast', () => () => ({ success: toastSuccess }));
 mockNuxtImport('useRoute', () => () => ({
   params: { accountId: 'account-investment' },
 }));
@@ -133,6 +140,8 @@ describe('AccountDetailPage', () => {
     responseStatus = 200;
     requestBarrier = undefined;
     receivedTransactionQuery = {};
+    accountRequestCount = 0;
+    toastSuccess.mockReset();
     clearNuxtData();
   });
 
@@ -189,6 +198,35 @@ describe('AccountDetailPage', () => {
 
     await vi.waitFor(() => {
       expect(wrapper.findComponent(AccountDetail).exists()).toBe(true);
+    });
+  });
+
+  it('updates the balance in a modal and refreshes the account detail', async () => {
+    const wrapper = await mountSuspended(AccountDetailPage, {
+      attachTo: document.body,
+    });
+
+    await vi.waitFor(() => {
+      expect(wrapper.findComponent(AccountDetail).exists()).toBe(true);
+    });
+    const updateButton = wrapper
+      .getComponent(AccountDetail)
+      .get<HTMLButtonElement>('.account-detail__update-balance');
+    updateButton.element.focus();
+    await updateButton.trigger('click');
+
+    expect(wrapper.getComponent(AccountBalanceForm).props()).toMatchObject({
+      account,
+      currentDate: '2026-09-06',
+    });
+
+    wrapper.getComponent(AccountBalanceForm).vm.$emit('saved', balances[0]);
+
+    await vi.waitFor(() => {
+      expect(accountRequestCount).toBe(2);
+      expect(toastSuccess).toHaveBeenCalledWith('accounts.balance.success');
+      expect(wrapper.findComponent(AccountBalanceForm).exists()).toBe(false);
+      expect(document.activeElement).toBe(updateButton.element);
     });
   });
 });

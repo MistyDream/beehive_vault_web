@@ -12,7 +12,10 @@ import AccountCreationPage from '~/pages/accounts/new.vue';
 import type { Account } from '~/types/account';
 import type { Institution } from '~/types/institution';
 
-const { navigateTo } = vi.hoisted(() => ({ navigateTo: vi.fn() }));
+const { navigateTo, toastSuccess } = vi.hoisted(() => ({
+  navigateTo: vi.fn(),
+  toastSuccess: vi.fn(),
+}));
 
 const activeHousehold = {
   __v_isRef: true,
@@ -66,6 +69,7 @@ mockNuxtImport('useActiveHousehold', () => () => ({ activeHousehold }));
 mockNuxtImport('getDateInTimeZone', () => () => '2026-09-05');
 mockNuxtImport('useLocalePath', () => () => (path: string) => path);
 mockNuxtImport('navigateTo', () => navigateTo);
+mockNuxtImport('useToast', () => () => ({ success: toastSuccess }));
 
 enableAutoUnmount(afterEach);
 
@@ -73,6 +77,7 @@ describe('AccountCreationPage', () => {
   beforeEach(() => {
     responseStatus = 200;
     navigateTo.mockReset();
+    toastSuccess.mockReset();
     clearNuxtData();
   });
 
@@ -109,6 +114,7 @@ describe('AccountCreationPage', () => {
     });
     wrapper.getComponent(AccountForm).vm.$emit('created', createdAccount);
 
+    expect(toastSuccess).toHaveBeenCalledWith('accounts.creation.success');
     expect(navigateTo).toHaveBeenCalledWith('/accounts/account-checking');
   });
 

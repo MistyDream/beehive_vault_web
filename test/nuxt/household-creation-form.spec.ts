@@ -7,8 +7,11 @@ import { HouseholdCreationForm } from '#components';
 import { ApiError } from '~/types/api';
 import type { Household } from '~/types/household';
 
-const create = vi.fn();
-const activate = vi.fn();
+const { create, activate, toastSuccess } = vi.hoisted(() => ({
+  create: vi.fn(),
+  activate: vi.fn(),
+  toastSuccess: vi.fn(),
+}));
 
 mockNuxtImport('useI18n', () => () => ({
   locale: ref('en'),
@@ -17,6 +20,7 @@ mockNuxtImport('useI18n', () => () => ({
 
 mockNuxtImport('useHouseholdApi', () => () => ({ create }));
 mockNuxtImport('useActiveHousehold', () => () => ({ activate }));
+mockNuxtImport('useToast', () => () => ({ success: toastSuccess }));
 
 enableAutoUnmount(afterEach);
 
@@ -33,6 +37,7 @@ describe('HouseholdCreationForm', () => {
   beforeEach(() => {
     create.mockReset();
     activate.mockReset();
+    toastSuccess.mockReset();
   });
 
   it('prefills the base currency and detected time zone', async () => {
@@ -77,6 +82,7 @@ describe('HouseholdCreationForm', () => {
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC',
     });
     expect(activate).toHaveBeenCalledWith(createdHousehold);
+    expect(toastSuccess).toHaveBeenCalledWith('household.creation.success');
     expect(wrapper.emitted('created')).toEqual([[createdHousehold]]);
   });
 

@@ -51,6 +51,14 @@
           </small>
         </template>
         <p v-else>{{ t('accounts.detail.no_declared_balance') }}</p>
+        <BHButton
+          v-if="!account.archivedAt"
+          class="account-detail__update-balance"
+          variant="secondary"
+          @click="emit('updateBalance')"
+        >
+          {{ t('accounts.detail.update_balance') }}
+        </BHButton>
       </div>
     </BHSurface>
 
@@ -160,6 +168,9 @@ interface OperationRow {
 }
 
 const props = defineProps<Props>();
+const emit = defineEmits<{
+  updateBalance: [];
+}>();
 const { locale, t } = useI18n();
 const titleElement = ref<HTMLHeadingElement | null>(null);
 const transactionsTitleId = useId();
@@ -281,6 +292,10 @@ onMounted(() => {
 .account-detail__latest-balance p,
 .account-detail__latest-balance small {
   @apply mt-2 text-sm leading-6 text-theme-text-muted;
+}
+
+.account-detail__update-balance {
+  @apply mt-5 w-full;
 }
 
 .account-detail__content-grid {

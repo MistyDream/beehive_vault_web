@@ -181,13 +181,16 @@ chaque ouverture de l'application.
 **Résultat attendu :** la vue d'ensemble répond à la question « où en suis-je
 aujourd'hui ? » à partir des données réelles du foyer.
 
-## Phase 5 — Comptes et référentiels ⬜
+## Phase 5 — Comptes et référentiels 🚧
 
-### 5.1 — Comptes et rapprochements ⬜
+### 5.1 — Comptes et rapprochements 🚧
 
-- lister et consulter les comptes ;
-- gérer les comptes et leurs soldes de rapprochement ;
-- représenter clairement les actifs, dettes et comptes archivés.
+- lister, créer et consulter les comptes : ✅ terminé ;
+- consulter le solde actuel, le dernier solde renseigné, les opérations récentes et l’historique des soldes d’un compte : ✅ terminé ;
+- modifier, archiver et restaurer les comptes : ⬜ à faire ;
+- ajouter les soldes de rapprochement : ✅ terminé ;
+- corriger les soldes de rapprochement : ⬜ à faire ;
+- représenter séparément les comptes archivés : ⬜ à faire.
 
 ### 5.2 — Établissements et catégories ⬜
 

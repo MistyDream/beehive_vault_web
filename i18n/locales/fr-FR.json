@@ -67,6 +67,7 @@
       "timezone_help": "Détecté depuis cet appareil et utilisé pour les dates calendaires.",
       "submit": "Créer et ajouter un compte",
       "cancel": "Annuler",
+      "success": "Le foyer a été créé.",
       "error": {
         "generic": "Le foyer n’a pas pu être créé. Vérifiez votre connexion, puis réessayez.",
         "name_required": "Saisissez un nom pour le foyer.",
@@ -104,6 +105,7 @@
       "currency": "Devise",
       "currency_help": "Héritée du foyer actif.",
       "submit": "Créer le compte",
+      "success": "Le compte a été créé.",
       "loading": "Chargement du formulaire de compte",
       "load_error_title": "Impossible de préparer la création du compte",
       "load_error_description": "Vérifiez votre connexion, puis réessayez.",
@@ -129,6 +131,7 @@
       "amount_due": "Montant dû",
       "balance_explanation": "Ce montant inclut les transactions enregistrées après le dernier solde renseigné.",
       "latest_balance": "Dernier solde renseigné",
+      "update_balance": "Mettre à jour le solde",
       "as_of": "au {date}",
       "no_declared_balance": "Aucun solde n’a encore été renseigné.",
       "recent_transactions": "Transactions récentes",
@@ -146,6 +149,30 @@
         "import": "Import",
         "synchronization": "Synchronisation",
         "reconciliation": "Rapprochement"
+      }
+    },
+    "balance": {
+      "title": "Mettre à jour le solde",
+      "description": "Renseignez le solde observé aujourd’hui pour ajouter un nouveau point de rapprochement.",
+      "new_balance": "Nouveau solde",
+      "new_value": "Nouvelle valeur",
+      "new_amount_due": "Nouveau montant dû",
+      "amount_help": "Saisissez le montant observé à la date sélectionnée.",
+      "date": "Date du solde",
+      "date_help": "Cette date doit être postérieure au dernier solde du {date}.",
+      "currency": "Devise",
+      "currency_help": "Héritée du compte et non modifiable.",
+      "explanation": "Un nouveau repère sera ajouté à l’historique. Les transactions enregistrées après cette date seront incluses dans le solde actuel.",
+      "submit": "Enregistrer le solde",
+      "success": "Le solde a été mis à jour.",
+      "error": {
+        "generic": "Le solde n’a pas pu être enregistré. Vérifiez les valeurs, puis réessayez.",
+        "amount_required": "Saisissez le nouveau solde.",
+        "amount_invalid": "Saisissez un montant valide comportant au maximum quatre décimales.",
+        "date_required": "Sélectionnez une date de solde.",
+        "date_invalid": "Sélectionnez une date de solde valide.",
+        "date_future": "La date du solde ne peut pas être future.",
+        "date_not_after_latest": "La date doit être postérieure au dernier solde renseigné."
       }
     },
     "groups": {

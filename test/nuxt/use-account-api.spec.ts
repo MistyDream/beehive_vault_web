@@ -8,6 +8,7 @@ import type {
   AccountCollection,
   Balance,
   CreateAccountRequest,
+  CreateBalanceRequest,
 } from '~/types/account';
 
 const collection: AccountCollection = {
@@ -74,9 +75,37 @@ const balances: Balance[] = [
   },
 ];
 
+const createBalanceRequest: CreateBalanceRequest = {
+  amount: '1350.5000',
+  balanceDate: '2026-09-06',
+  source: 'reconciliation',
+};
+
+const createdBalance: Balance = {
+  id: 'balance-reconciliation',
+  accountId: createdAccount.id,
+  amount: createBalanceRequest.amount,
+  balanceDate: createBalanceRequest.balanceDate,
+  source: 'reconciliation',
+  createdAt: '2026-09-06T08:00:00Z',
+};
+
+let receivedCreateBalanceRequest: unknown;
+
 registerEndpoint(
   '/api/households/household-personal/accounts/account-checking/balances',
   () => balances,
+);
+
+registerEndpoint(
+  '/api/households/household-personal/accounts/account-checking/balances',
+  {
+    method: 'POST',
+    handler: async (event) => {
+      receivedCreateBalanceRequest = await readBody(event);
+      return createdBalance;
+    },
+  },
 );
 
 describe('useAccountApi', () => {
@@ -105,5 +134,16 @@ describe('useAccountApi', () => {
     await expect(
       api.listBalances('household-personal', 'account-checking'),
     ).resolves.toEqual(balances);
+  });
+
+  it('adds a reconciliation balance without converting its amount', async () => {
+    const result = await useAccountApi().createBalance(
+      'household-personal',
+      'account-checking',
+      createBalanceRequest,
+    );
+
+    expect(receivedCreateBalanceRequest).toEqual(createBalanceRequest);
+    expect(result).toEqual(createdBalance);
   });
 });

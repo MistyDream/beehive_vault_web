@@ -14,24 +14,26 @@ La présence de code historique dans la branche ne rend pas une fonctionnalité 
 
 ## Disponibles
 
-| Domaine        | Fonctionnalité                                                   | Limites actuelles                                                        |
-| -------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| Navigation     | Structure principale sur ordinateur et mobile                    | Les destinations métier seront ajoutées avec leurs pages                 |
-| Apparence      | Direction visuelle et thèmes clair et sombre                     | Le choix est mémorisé localement                                         |
-| Foyer actif    | Premier lancement, sélection, persistance et changement de foyer | Sans authentification ni gestion des membres dans le MVP Web             |
-| Vue d'ensemble | Patrimoine actuel et flux du mois courant                        | Les pages Comptes, Transactions et Rapport mensuel restent à implémenter |
+| Domaine        | Fonctionnalité                                                   | Limites actuelles                                               |
+| -------------- | ---------------------------------------------------------------- | --------------------------------------------------------------- |
+| Navigation     | Structure principale sur ordinateur et mobile                    | Les destinations métier seront ajoutées avec leurs pages        |
+| Apparence      | Direction visuelle et thèmes clair et sombre                     | Le choix est mémorisé localement                                |
+| Foyer actif    | Premier lancement, sélection, persistance et changement de foyer | Sans authentification ni gestion des membres dans le MVP Web    |
+| Vue d'ensemble | Patrimoine actuel et flux du mois courant                        | Les pages Transactions et Rapport mensuel restent à implémenter |
+| Comptes        | Liste groupée, création et détail d’un compte                    | Gestion et comptes archivés encore en développement             |
 
 ## En développement
 
-Aucune fonctionnalité pour le moment.
+| Domaine | Fonctionnalité                                  | État actuel                                                       |
+| ------- | ----------------------------------------------- | ----------------------------------------------------------------- |
+| Comptes | Modification, archivage et restauration         | Liste, création et détail disponibles                             |
+| Comptes | Ajout et correction des soldes de rapprochement | Ajout disponible depuis le détail ; correction encore à faire     |
+| Comptes | Consultation séparée des comptes archivés       | Les comptes actifs et les dettes sont déjà représentés clairement |
 
 ## Conçues
 
 | Domaine         | Fonctionnalité                                                    | Limites actuelles                                                      |
 | --------------- | ----------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| Comptes         | Liste par rôle financier et résumé du patrimoine                  | Non implémentée                                                        |
-| Comptes         | Détail, création, modification, archivage et restauration         | Contrats API disponibles, client non implémenté                        |
-| Comptes         | Mise à jour et correction des soldes                              | Contrats API disponibles, client non implémenté                        |
 | Transactions    | Liste chronologique, recherche, filtres et pagination progressive | Contrat API consolidé disponible, client non implémenté                |
 | Transactions    | Détail des revenus, dépenses et transferts                        | Page dédiée uniquement dans la V1                                      |
 | Transactions    | Création et modification manuelles                                | Montant nominal et effet explicite disponibles côté API                |

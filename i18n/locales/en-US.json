@@ -67,6 +67,7 @@
       "timezone_help": "Detected from this device and used for calendar dates.",
       "submit": "Create and add an account",
       "cancel": "Cancel",
+      "success": "The household was created.",
       "error": {
         "generic": "The household could not be created. Check your connection and try again.",
         "name_required": "Enter a household name.",
@@ -104,6 +105,7 @@
       "currency": "Currency",
       "currency_help": "Inherited from the active household.",
       "submit": "Create account",
+      "success": "The account was created.",
       "loading": "Loading account form",
       "load_error_title": "Unable to prepare account creation",
       "load_error_description": "Check your connection and try again.",
@@ -129,6 +131,7 @@
       "amount_due": "Amount due",
       "balance_explanation": "This amount includes transactions recorded after the latest declared balance.",
       "latest_balance": "Latest declared balance",
+      "update_balance": "Update balance",
       "as_of": "as of {date}",
       "no_declared_balance": "No balance has been declared yet.",
       "recent_transactions": "Recent transactions",
@@ -146,6 +149,30 @@
         "import": "Import",
         "synchronization": "Synchronization",
         "reconciliation": "Reconciliation"
+      }
+    },
+    "balance": {
+      "title": "Update balance",
+      "description": "Enter the balance observed today to add a new reconciliation point.",
+      "new_balance": "New balance",
+      "new_value": "New value",
+      "new_amount_due": "New amount due",
+      "amount_help": "Enter the amount observed on the selected date.",
+      "date": "Balance date",
+      "date_help": "This date must be after the latest balance on {date}.",
+      "currency": "Currency",
+      "currency_help": "Inherited from the account and cannot be changed.",
+      "explanation": "A new reconciliation point will be added to the history. Transactions recorded after this date will be included in the current balance.",
+      "submit": "Save balance",
+      "success": "The balance was updated.",
+      "error": {
+        "generic": "The balance could not be saved. Check the values and try again.",
+        "amount_required": "Enter the new balance.",
+        "amount_invalid": "Enter a valid amount with up to four decimal places.",
+        "date_required": "Select a balance date.",
+        "date_invalid": "Select a valid balance date.",
+        "date_future": "The balance date cannot be in the future.",
+        "date_not_after_latest": "The date must be after the latest declared balance."
       }
     },
     "groups": {

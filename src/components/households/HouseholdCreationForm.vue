@@ -96,6 +96,7 @@ const emit = defineEmits<Emits>();
 const { t, locale } = useI18n();
 const { create } = useHouseholdApi();
 const { activate } = useActiveHousehold();
+const toast = useToast();
 
 const formElement = ref<HTMLFormElement | null>(null);
 const titleElement = ref<HTMLHeadingElement | null>(null);
@@ -174,6 +175,7 @@ async function submit(): Promise<void> {
       timezone: timezone.value,
     });
     activate(household);
+    toast.success(t('household.creation.success'));
     emit('created', household);
   } catch (cause) {
     if (!applyApiFieldErrors(cause)) {

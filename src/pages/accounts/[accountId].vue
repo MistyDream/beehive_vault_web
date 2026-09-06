@@ -1,7 +1,7 @@
 <template>
   <div class="account-detail-page">
     <div
-      v-if="status === 'idle' || status === 'pending'"
+      v-if="(status === 'idle' || status === 'pending') && !accountData"
       class="account-detail-page__loading"
       role="status"
     >
@@ -29,7 +29,21 @@
       :operations="accountData.operations"
       :accounts-to="accountsTo"
       :transactions-to="transactionsTo"
+      @update-balance="openBalanceModal"
     />
+
+    <BHModal
+      v-if="accountData"
+      v-model="balanceModalOpen"
+      :title="t('accounts.balance.title')"
+    >
+      <AccountBalanceForm
+        :account="accountData.account"
+        :current-date="currentDate"
+        @saved="handleBalanceSaved"
+        @cancel="closeBalanceModal"
+      />
+    </BHModal>
   </div>
 </template>
 
@@ -42,6 +56,8 @@ const { activeHousehold } = useActiveHousehold();
 const accountApi = useAccountApi();
 const institutionApi = useInstitutionApi();
 const transactionApi = useTransactionApi();
+const toast = useToast();
+const balanceModalOpen = ref(false);
 
 const household = activeHousehold.value;
 
@@ -53,6 +69,7 @@ if (!household) {
 }
 
 const accountId = String(route.params.accountId);
+const currentDate = getDateInTimeZone(household.timezone);
 const accountsTo = localePath('/accounts');
 const transactionsTo = localePath({
   path: '/transactions',
@@ -88,6 +105,21 @@ const {
     };
   },
 );
+
+function openBalanceModal(): void {
+  balanceModalOpen.value = true;
+}
+
+function closeBalanceModal(): void {
+  balanceModalOpen.value = false;
+}
+
+async function handleBalanceSaved(): Promise<void> {
+  closeBalanceModal();
+  await nextTick();
+  toast.success(t('accounts.balance.success'));
+  await refresh();
+}
 </script>
 
 <style lang="css" scoped>

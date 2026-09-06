@@ -115,6 +115,14 @@ describe('AccountDetail', () => {
     ).toMatchObject({ amount: '225.5000', showSign: true });
   });
 
+  it('requests a balance update from an active account', async () => {
+    const wrapper = await mountDetail();
+
+    await wrapper.get('.account-detail__update-balance').trigger('click');
+
+    expect(wrapper.emitted('updateBalance')).toHaveLength(1);
+  });
+
   it('uses the matching transfer movement for its label, date, and amount', async () => {
     const transfer: Operation = {
       operationType: 'transfer',
@@ -179,6 +187,16 @@ describe('AccountDetail', () => {
     expect(wrapper.text()).toContain('accounts.detail.no_transactions');
     expect(wrapper.text()).toContain('accounts.detail.no_balance_history');
     expect(wrapper.text()).not.toContain('Beehive Bank');
+  });
+
+  it('does not offer a balance update for an archived account', async () => {
+    const wrapper = await mountDetail({
+      account: { ...account, archivedAt: '2026-09-06T08:00:00Z' },
+    });
+
+    expect(wrapper.find('.account-detail__update-balance').exists()).toBe(
+      false,
+    );
   });
 });
 
