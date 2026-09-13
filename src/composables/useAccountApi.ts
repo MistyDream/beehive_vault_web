@@ -5,6 +5,7 @@ import type {
   Balance,
   CreateAccountRequest,
   CreateBalanceRequest,
+  UpdateAccountRequest,
 } from '~/types/account';
 import type { HouseholdId } from '~/types/household';
 
@@ -23,6 +24,15 @@ export function useAccountApi() {
     create: (householdId: HouseholdId, request: CreateAccountRequest) =>
       $api<Account>(`/households/${householdId}/accounts`, {
         method: 'POST',
+        body: request,
+      }),
+    update: (
+      householdId: HouseholdId,
+      accountId: AccountId,
+      request: UpdateAccountRequest,
+    ) =>
+      $api<Account>(`/households/${householdId}/accounts/${accountId}`, {
+        method: 'PATCH',
         body: request,
       }),
     createBalance: (

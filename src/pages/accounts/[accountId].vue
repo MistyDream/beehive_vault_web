@@ -29,8 +29,23 @@
       :operations="accountData.operations"
       :accounts-to="accountsTo"
       :transactions-to="transactionsTo"
+      @edit="openEditModal"
       @update-balance="openBalanceModal"
     />
+
+    <BHModal
+      v-if="accountData"
+      v-model="editModalOpen"
+      :title="t('accounts.edit.title')"
+    >
+      <AccountEditForm
+        v-if="editModalOpen"
+        :account="accountData.account"
+        :institutions="accountData.institutions"
+        @saved="handleAccountSaved"
+        @cancel="closeEditModal"
+      />
+    </BHModal>
 
     <BHModal
       v-if="accountData"
@@ -57,6 +72,7 @@ const accountApi = useAccountApi();
 const institutionApi = useInstitutionApi();
 const transactionApi = useTransactionApi();
 const toast = useToast();
+const editModalOpen = ref(false);
 const balanceModalOpen = ref(false);
 
 const household = activeHousehold.value;
@@ -99,12 +115,28 @@ const {
       account,
       balances,
       operations: operationPage.items,
+      institutions,
       institutionName: account.institutionId
         ? institutions.find(({ id }) => id === account.institutionId)?.name
         : undefined,
     };
   },
 );
+
+function openEditModal(): void {
+  editModalOpen.value = true;
+}
+
+function closeEditModal(): void {
+  editModalOpen.value = false;
+}
+
+async function handleAccountSaved(): Promise<void> {
+  closeEditModal();
+  await nextTick();
+  await refresh();
+  toast.success(t('accounts.edit.success'));
+}
 
 function openBalanceModal(): void {
   balanceModalOpen.value = true;

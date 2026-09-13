@@ -123,6 +123,14 @@ describe('AccountDetail', () => {
     expect(wrapper.emitted('updateBalance')).toHaveLength(1);
   });
 
+  it('requests account editing from an active account', async () => {
+    const wrapper = await mountDetail();
+
+    await wrapper.get('.account-detail__edit').trigger('click');
+
+    expect(wrapper.emitted('edit')).toHaveLength(1);
+  });
+
   it('uses the matching transfer movement for its label, date, and amount', async () => {
     const transfer: Operation = {
       operationType: 'transfer',
@@ -197,6 +205,7 @@ describe('AccountDetail', () => {
     expect(wrapper.find('.account-detail__update-balance').exists()).toBe(
       false,
     );
+    expect(wrapper.find('.account-detail__edit').exists()).toBe(false);
   });
 });
 

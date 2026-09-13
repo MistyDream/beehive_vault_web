@@ -75,7 +75,7 @@
 </template>
 
 <script setup lang="ts">
-import { ApiError } from '~/types/api';
+import type { ApiFieldErrorMapping } from '~/composables/useApiFormErrors';
 import type { SelectOption } from '~/types/form';
 import type { Household } from '~/types/household';
 
@@ -110,7 +110,9 @@ const fieldErrors = reactive({
   baseCurrency: '',
   timezone: '',
 });
-const fieldErrorMappings = [
+type FieldName = keyof typeof fieldErrors;
+
+const fieldErrorMappings: ReadonlyArray<ApiFieldErrorMapping<FieldName>> = [
   {
     pointer: '#/name',
     codes: ['invalid_length'],
@@ -129,7 +131,9 @@ const fieldErrorMappings = [
     field: 'timezone',
     translationKey: 'household.creation.error.timezone_invalid',
   },
-] as const;
+];
+const { applyApiFieldErrors, clearFieldErrors, focusFirstInvalidField } =
+  useApiFormErrors(fieldErrors, fieldErrorMappings, formElement);
 
 const currencyOptions = computed<SelectOption[]>(() => {
   const displayNames = new Intl.DisplayNames([locale.value], {
@@ -207,45 +211,8 @@ function validate(): boolean {
 }
 
 function clearErrors(): void {
-  fieldErrors.name = '';
-  fieldErrors.baseCurrency = '';
-  fieldErrors.timezone = '';
+  clearFieldErrors();
   submissionError.value = '';
-}
-
-function applyApiFieldErrors(cause: unknown): boolean {
-  if (!(cause instanceof ApiError) || cause.code !== 'validation_error') {
-    return false;
-  }
-
-  let applied = false;
-
-  for (const error of cause.errors ?? []) {
-    if (error.location !== 'body') {
-      continue;
-    }
-
-    const mapping = fieldErrorMappings.find(
-      ({ pointer, codes }) =>
-        pointer === error.pointer && codes.some((code) => code === error.code),
-    );
-
-    if (!mapping) {
-      continue;
-    }
-
-    fieldErrors[mapping.field] = t(mapping.translationKey);
-    applied = true;
-  }
-
-  return applied;
-}
-
-async function focusFirstInvalidField(): Promise<void> {
-  await nextTick();
-  formElement.value
-    ?.querySelector<HTMLElement>('[aria-invalid="true"]')
-    ?.focus();
 }
 
 function detectTimeZone(): string {

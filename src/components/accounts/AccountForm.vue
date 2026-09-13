@@ -100,7 +100,8 @@
 </template>
 
 <script setup lang="ts">
-import { ApiError } from '~/types/api';
+import type { ApiFieldErrorMapping } from '~/composables/useApiFormErrors';
+import { ACCOUNT_KINDS, isLiabilityAccountKind } from '~/constants/account';
 import type { Account, AccountKind } from '~/types/account';
 import type { SelectOption } from '~/types/form';
 import type { Household } from '~/types/household';
@@ -142,27 +143,11 @@ const fieldErrors = reactive({
 
 type FieldName = keyof typeof fieldErrors;
 
-const accountKinds: AccountKind[] = [
-  'checking',
-  'savings',
-  'cash',
-  'investment',
-  'credit_card',
-  'loan',
-  'other_asset',
-  'other_liability',
-];
-
 // Matches an optional minus sign, integer digits, and an optional dot or comma
 // followed by one to four decimal digits. It contains no capture groups.
 const decimalPattern = /^-?\d+(?:[.,]\d{1,4})?$/;
 
-const fieldErrorMappings: ReadonlyArray<{
-  pointer: string;
-  codes: readonly string[];
-  field: FieldName;
-  translationKey: string;
-}> = [
+const fieldErrorMappings: ReadonlyArray<ApiFieldErrorMapping<FieldName>> = [
   {
     pointer: '#/name',
     codes: ['invalid_length'],
@@ -200,9 +185,11 @@ const fieldErrorMappings: ReadonlyArray<{
     translationKey: 'accounts.creation.error.date_invalid',
   },
 ];
+const { applyApiFieldErrors, clearFieldErrors, focusFirstInvalidField } =
+  useApiFormErrors(fieldErrors, fieldErrorMappings, formElement);
 
 const kindOptions = computed<SelectOption[]>(() =>
-  accountKinds.map((value) => ({
+  ACCOUNT_KINDS.map((value) => ({
     value,
     label: t(`accounts.kinds.${value}`),
   })),
@@ -220,7 +207,7 @@ const balanceLabel = computed(() => {
     return t('accounts.creation.current_value');
   }
 
-  if (['credit_card', 'loan', 'other_liability'].includes(kind.value)) {
+  if (isLiabilityAccountKind(kind.value)) {
     return t('accounts.creation.amount_due');
   }
 
@@ -286,7 +273,7 @@ function validate(): boolean {
     fieldErrors.name = t('accounts.creation.error.name_invalid');
   }
 
-  if (!accountKinds.includes(kind.value)) {
+  if (!ACCOUNT_KINDS.includes(kind.value)) {
     fieldErrors.kind = t('accounts.creation.error.kind_invalid');
   }
 
@@ -306,45 +293,8 @@ function validate(): boolean {
 }
 
 function clearErrors(): void {
-  for (const field of Object.keys(fieldErrors) as FieldName[]) {
-    fieldErrors[field] = '';
-  }
+  clearFieldErrors();
   submissionError.value = '';
-}
-
-function applyApiFieldErrors(cause: unknown): boolean {
-  if (!(cause instanceof ApiError) || cause.code !== 'validation_error') {
-    return false;
-  }
-
-  let applied = false;
-
-  for (const error of cause.errors ?? []) {
-    if (error.location !== 'body') {
-      continue;
-    }
-
-    const mapping = fieldErrorMappings.find(
-      ({ pointer, codes }) =>
-        pointer === error.pointer && codes.includes(error.code),
-    );
-
-    if (!mapping) {
-      continue;
-    }
-
-    fieldErrors[mapping.field] = t(mapping.translationKey);
-    applied = true;
-  }
-
-  return applied;
-}
-
-async function focusFirstInvalidField(): Promise<void> {
-  await nextTick();
-  formElement.value
-    ?.querySelector<HTMLElement>('[aria-invalid="true"]')
-    ?.focus();
 }
 
 function normalizeDecimal(value: string): DecimalString {

@@ -125,6 +125,7 @@
     "detail": {
       "back": "Retour aux comptes",
       "archived": "Archivé",
+      "edit": "Modifier le compte",
       "balance_summary": "Solde du compte",
       "current_balance": "Solde actuel",
       "current_value": "Valeur actuelle",
@@ -149,6 +150,24 @@
         "import": "Import",
         "synchronization": "Synchronisation",
         "reconciliation": "Rapprochement"
+      }
+    },
+    "edit": {
+      "title": "Modifier le compte",
+      "description": "Modifiez les informations utilisées pour identifier et classer ce compte.",
+      "name": "Nom du compte",
+      "kind": "Type de compte",
+      "kind_help": "Le type reste dans la même famille d’actif ou de dette.",
+      "institution": "Établissement",
+      "no_institution": "Aucun établissement",
+      "submit": "Enregistrer les modifications",
+      "success": "Le compte a été modifié.",
+      "error": {
+        "generic": "Le compte n’a pas pu être modifié. Vérifiez les valeurs, puis réessayez.",
+        "name_required": "Saisissez un nom pour le compte.",
+        "name_invalid": "Le nom du compte doit contenir entre 1 et 100 caractères.",
+        "kind_invalid": "Sélectionnez un type de compte valide.",
+        "institution_invalid": "Sélectionnez un établissement valide ou aucun établissement."
       }
     },
     "balance": {

@@ -10,6 +10,7 @@ import { getQuery } from 'h3';
 
 import AccountBalanceForm from '~/components/accounts/AccountBalanceForm.vue';
 import AccountDetail from '~/components/accounts/AccountDetail.vue';
+import AccountEditForm from '~/components/accounts/AccountEditForm.vue';
 import AccountDetailPage from '~/pages/accounts/[accountId].vue';
 import type { Account, Balance } from '~/types/account';
 import type { OperationPage } from '~/types/operation';
@@ -70,6 +71,7 @@ let responseStatus = 200;
 let requestBarrier: Promise<void> | undefined;
 let receivedTransactionQuery: ReturnType<typeof getQuery>;
 let accountRequestCount = 0;
+let accountResponse: Account = account;
 
 registerEndpoint(
   '/api/households/household-personal/accounts/account-investment',
@@ -79,7 +81,7 @@ registerEndpoint(
       await requestBarrier;
       ensureSuccessfulResponse();
       accountRequestCount += 1;
-      return account;
+      return accountResponse;
     },
   },
 );
@@ -141,6 +143,7 @@ describe('AccountDetailPage', () => {
     requestBarrier = undefined;
     receivedTransactionQuery = {};
     accountRequestCount = 0;
+    accountResponse = account;
     toastSuccess.mockReset();
     clearNuxtData();
   });
@@ -227,6 +230,43 @@ describe('AccountDetailPage', () => {
       expect(toastSuccess).toHaveBeenCalledWith('accounts.balance.success');
       expect(wrapper.findComponent(AccountBalanceForm).exists()).toBe(false);
       expect(document.activeElement).toBe(updateButton.element);
+    });
+  });
+
+  it('edits the account in a modal and refreshes the account detail', async () => {
+    const wrapper = await mountSuspended(AccountDetailPage, {
+      attachTo: document.body,
+    });
+
+    await vi.waitFor(() => {
+      expect(wrapper.findComponent(AccountDetail).exists()).toBe(true);
+    });
+    const editButton = wrapper
+      .getComponent(AccountDetail)
+      .get<HTMLButtonElement>('.account-detail__edit');
+    editButton.element.focus();
+    await editButton.trigger('click');
+
+    expect(wrapper.getComponent(AccountEditForm).props()).toMatchObject({
+      account,
+      institutions,
+    });
+
+    const updatedAccount = { ...account, name: 'Updated account' };
+    accountResponse = updatedAccount;
+    wrapper.getComponent(AccountEditForm).vm.$emit('saved', updatedAccount);
+
+    await vi.waitFor(() => {
+      expect(accountRequestCount).toBe(2);
+      expect(wrapper.getComponent(AccountDetail).props('account')).toEqual(
+        updatedAccount,
+      );
+      expect(wrapper.getComponent(AccountDetail).get('h1').text()).toBe(
+        'Updated account',
+      );
+      expect(toastSuccess).toHaveBeenCalledWith('accounts.edit.success');
+      expect(wrapper.findComponent(AccountEditForm).exists()).toBe(false);
+      expect(document.activeElement).toBe(editButton.element);
     });
   });
 });

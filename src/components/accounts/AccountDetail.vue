@@ -17,6 +17,15 @@
           </BHBadge>
         </div>
       </div>
+      <BHButton
+        v-if="!account.archivedAt"
+        class="account-detail__edit"
+        variant="secondary"
+        @click="emit('edit')"
+      >
+        <LucidePencil :size="16" aria-hidden="true" />
+        {{ t('accounts.detail.edit') }}
+      </BHButton>
     </header>
 
     <BHSurface
@@ -146,6 +155,7 @@
 </template>
 
 <script setup lang="ts">
+import { isLiabilityAccountKind } from '~/constants/account';
 import type { Account, Balance } from '~/types/account';
 import type { DateString, DecimalString } from '~/types/http';
 import type { Operation } from '~/types/operation';
@@ -169,6 +179,7 @@ interface OperationRow {
 
 const props = defineProps<Props>();
 const emit = defineEmits<{
+  edit: [];
   updateBalance: [];
 }>();
 const { locale, t } = useI18n();
@@ -176,14 +187,12 @@ const titleElement = ref<HTMLHeadingElement | null>(null);
 const transactionsTitleId = useId();
 const balancesTitleId = useId();
 
-const liabilityKinds = ['credit_card', 'loan', 'other_liability'];
-
 const currentBalanceLabel = computed(() => {
   if (props.account.kind === 'investment') {
     return t('accounts.detail.current_value');
   }
 
-  if (liabilityKinds.includes(props.account.kind)) {
+  if (isLiabilityAccountKind(props.account.kind)) {
     return t('accounts.detail.amount_due');
   }
 
@@ -259,6 +268,10 @@ onMounted(() => {
 .account-detail__header h1 {
   @apply font-poppins text-2xl font-semibold text-theme-text-primary md:text-3xl;
   @apply focus:outline-none;
+}
+
+.account-detail__edit {
+  @apply shrink-0;
 }
 
 .account-detail__metadata {

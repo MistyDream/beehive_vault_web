@@ -20,13 +20,13 @@ La présence de code historique dans la branche ne rend pas une fonctionnalité 
 | Apparence      | Direction visuelle et thèmes clair et sombre                     | Le choix est mémorisé localement                                |
 | Foyer actif    | Premier lancement, sélection, persistance et changement de foyer | Sans authentification ni gestion des membres dans le MVP Web    |
 | Vue d'ensemble | Patrimoine actuel et flux du mois courant                        | Les pages Transactions et Rapport mensuel restent à implémenter |
-| Comptes        | Liste groupée, création et détail d’un compte                    | Gestion et comptes archivés encore en développement             |
+| Comptes        | Liste groupée, création, détail et modification d’un compte      | Archivage et comptes archivés encore en développement           |
 
 ## En développement
 
 | Domaine | Fonctionnalité                                  | État actuel                                                       |
 | ------- | ----------------------------------------------- | ----------------------------------------------------------------- |
-| Comptes | Modification, archivage et restauration         | Liste, création et détail disponibles                             |
+| Comptes | Archivage et restauration                       | Liste, création, détail et modification disponibles               |
 | Comptes | Ajout et correction des soldes de rapprochement | Ajout disponible depuis le détail ; correction encore à faire     |
 | Comptes | Consultation séparée des comptes archivés       | Les comptes actifs et les dettes sont déjà représentés clairement |
 

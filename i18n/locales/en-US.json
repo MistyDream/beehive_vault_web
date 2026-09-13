@@ -125,6 +125,7 @@
     "detail": {
       "back": "Back to accounts",
       "archived": "Archived",
+      "edit": "Edit account",
       "balance_summary": "Account balance",
       "current_balance": "Current balance",
       "current_value": "Current value",
@@ -149,6 +150,24 @@
         "import": "Import",
         "synchronization": "Synchronization",
         "reconciliation": "Reconciliation"
+      }
+    },
+    "edit": {
+      "title": "Edit account",
+      "description": "Update the information used to identify and classify this account.",
+      "name": "Account name",
+      "kind": "Account type",
+      "kind_help": "The type remains in the same asset or liability family.",
+      "institution": "Institution",
+      "no_institution": "No institution",
+      "submit": "Save changes",
+      "success": "The account was updated.",
+      "error": {
+        "generic": "The account could not be updated. Check the values and try again.",
+        "name_required": "Enter an account name.",
+        "name_invalid": "The account name must contain between 1 and 100 characters.",
+        "kind_invalid": "Select a valid account type.",
+        "institution_invalid": "Select a valid institution or no institution."
       }
     },
     "balance": {

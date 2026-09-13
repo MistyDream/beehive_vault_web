@@ -187,7 +187,8 @@ aujourd'hui ? » à partir des données réelles du foyer.
 
 - lister, créer et consulter les comptes : ✅ terminé ;
 - consulter le solde actuel, le dernier solde renseigné, les opérations récentes et l’historique des soldes d’un compte : ✅ terminé ;
-- modifier, archiver et restaurer les comptes : ⬜ à faire ;
+- modifier les comptes : ✅ terminé ;
+- archiver et restaurer les comptes : ⬜ à faire ;
 - ajouter les soldes de rapprochement : ✅ terminé ;
 - corriger les soldes de rapprochement : ⬜ à faire ;
 - représenter séparément les comptes archivés : ⬜ à faire.

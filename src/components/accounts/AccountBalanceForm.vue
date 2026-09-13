@@ -80,7 +80,8 @@
 </template>
 
 <script setup lang="ts">
-import { ApiError } from '~/types/api';
+import type { ApiFieldErrorMapping } from '~/composables/useApiFormErrors';
+import { isLiabilityAccountKind } from '~/constants/account';
 import type { Account, Balance } from '~/types/account';
 import type { DateString, DecimalString } from '~/types/http';
 
@@ -115,12 +116,7 @@ type FieldName = keyof typeof fieldErrors;
 // followed by one to four decimal digits. It contains no capture groups.
 const decimalPattern = /^-?\d+(?:[.,]\d{1,4})?$/;
 
-const fieldErrorMappings: ReadonlyArray<{
-  pointer: string;
-  codes: readonly string[];
-  field: FieldName;
-  translationKey: string;
-}> = [
+const fieldErrorMappings: ReadonlyArray<ApiFieldErrorMapping<FieldName>> = [
   {
     pointer: '#/amount',
     codes: ['invalid_value'],
@@ -146,15 +142,15 @@ const fieldErrorMappings: ReadonlyArray<{
     translationKey: 'accounts.balance.error.date_invalid',
   },
 ];
-
-const liabilityKinds = ['credit_card', 'loan', 'other_liability'];
+const { applyApiFieldErrors, clearFieldErrors, focusFirstInvalidField } =
+  useApiFormErrors(fieldErrors, fieldErrorMappings, formElement);
 
 const amountLabel = computed(() => {
   if (props.account.kind === 'investment') {
     return t('accounts.balance.new_value');
   }
 
-  if (liabilityKinds.includes(props.account.kind)) {
+  if (isLiabilityAccountKind(props.account.kind)) {
     return t('accounts.balance.new_amount_due');
   }
 
@@ -241,45 +237,8 @@ function validate(): boolean {
 }
 
 function clearErrors(): void {
-  for (const field of Object.keys(fieldErrors) as FieldName[]) {
-    fieldErrors[field] = '';
-  }
+  clearFieldErrors();
   submissionError.value = '';
-}
-
-function applyApiFieldErrors(cause: unknown): boolean {
-  if (!(cause instanceof ApiError) || cause.code !== 'validation_error') {
-    return false;
-  }
-
-  let applied = false;
-
-  for (const error of cause.errors ?? []) {
-    if (error.location !== 'body') {
-      continue;
-    }
-
-    const mapping = fieldErrorMappings.find(
-      ({ pointer, codes }) =>
-        pointer === error.pointer && codes.includes(error.code),
-    );
-
-    if (!mapping) {
-      continue;
-    }
-
-    fieldErrors[mapping.field] = t(mapping.translationKey);
-    applied = true;
-  }
-
-  return applied;
-}
-
-async function focusFirstInvalidField(): Promise<void> {
-  await nextTick();
-  formElement.value
-    ?.querySelector<HTMLElement>('[aria-invalid="true"]')
-    ?.focus();
 }
 
 function normalizeDecimal(value: string): DecimalString {

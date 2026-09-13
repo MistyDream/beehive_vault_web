@@ -9,6 +9,7 @@ import type {
   Balance,
   CreateAccountRequest,
   CreateBalanceRequest,
+  UpdateAccountRequest,
 } from '~/types/account';
 
 const collection: AccountCollection = {
@@ -50,6 +51,7 @@ const createdAccount: Account = {
 };
 
 let receivedCreateRequest: unknown;
+let receivedUpdateRequest: unknown;
 
 registerEndpoint('/api/households/household-personal/accounts', {
   method: 'POST',
@@ -62,6 +64,28 @@ registerEndpoint('/api/households/household-personal/accounts', {
 registerEndpoint(
   '/api/households/household-personal/accounts/account-checking',
   () => createdAccount,
+);
+
+const updateRequest: UpdateAccountRequest = {
+  name: 'Everyday account',
+  kind: 'checking',
+  removeInstitution: true,
+};
+const updatedAccount: Account = {
+  ...createdAccount,
+  institutionId: null,
+  name: 'Everyday account',
+};
+
+registerEndpoint(
+  '/api/households/household-personal/accounts/account-checking',
+  {
+    method: 'PATCH',
+    handler: async (event) => {
+      receivedUpdateRequest = await readBody(event);
+      return updatedAccount;
+    },
+  },
 );
 
 const balances: Balance[] = [
@@ -134,6 +158,17 @@ describe('useAccountApi', () => {
     await expect(
       api.listBalances('household-personal', 'account-checking'),
     ).resolves.toEqual(balances);
+  });
+
+  it('updates an account with the PATCH contract', async () => {
+    const result = await useAccountApi().update(
+      'household-personal',
+      'account-checking',
+      updateRequest,
+    );
+
+    expect(receivedUpdateRequest).toEqual(updateRequest);
+    expect(result).toEqual(updatedAccount);
   });
 
   it('adds a reconciliation balance without converting its amount', async () => {
