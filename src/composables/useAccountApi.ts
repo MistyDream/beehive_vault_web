@@ -2,6 +2,7 @@ import type {
   Account,
   AccountCollection,
   AccountId,
+  AccountListFilters,
   Balance,
   CreateAccountRequest,
   CreateBalanceRequest,
@@ -13,8 +14,10 @@ export function useAccountApi() {
   const { $api } = useNuxtApp();
 
   return {
-    list: (householdId: HouseholdId) =>
-      $api<AccountCollection>(`/households/${householdId}/accounts`),
+    list: (householdId: HouseholdId, filters: AccountListFilters = {}) =>
+      $api<AccountCollection>(`/households/${householdId}/accounts`, {
+        query: filters,
+      }),
     get: (householdId: HouseholdId, accountId: AccountId) =>
       $api<Account>(`/households/${householdId}/accounts/${accountId}`),
     listBalances: (householdId: HouseholdId, accountId: AccountId) =>
@@ -35,6 +38,17 @@ export function useAccountApi() {
         method: 'PATCH',
         body: request,
       }),
+    archive: (householdId: HouseholdId, accountId: AccountId) =>
+      $api<undefined>(`/households/${householdId}/accounts/${accountId}`, {
+        method: 'DELETE',
+      }),
+    restore: (householdId: HouseholdId, accountId: AccountId) =>
+      $api<Account>(
+        `/households/${householdId}/accounts/${accountId}/restore`,
+        {
+          method: 'POST',
+        },
+      ),
     createBalance: (
       householdId: HouseholdId,
       accountId: AccountId,

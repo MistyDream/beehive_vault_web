@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { registerEndpoint } from '@nuxt/test-utils/runtime';
-import { readBody } from 'h3';
+import { getQuery, readBody, setResponseStatus } from 'h3';
 
 import { useAccountApi } from '~/composables/useAccountApi';
 import type {
@@ -21,10 +21,14 @@ const collection: AccountCollection = {
   },
 };
 
-registerEndpoint(
-  '/api/households/household-personal/accounts',
-  () => collection,
-);
+let receivedFilters: ReturnType<typeof getQuery>;
+registerEndpoint('/api/households/household-personal/accounts', {
+  method: 'GET',
+  handler: (event) => {
+    receivedFilters = getQuery(event);
+    return collection;
+  },
+});
 
 const createRequest: CreateAccountRequest = {
   institutionId: 'institution-beehive-bank',
@@ -52,6 +56,31 @@ const createdAccount: Account = {
 
 let receivedCreateRequest: unknown;
 let receivedUpdateRequest: unknown;
+let archiveRequestCount = 0;
+let restoreRequestCount = 0;
+
+registerEndpoint(
+  '/api/households/household-personal/accounts/account-checking',
+  {
+    method: 'DELETE',
+    handler: (event) => {
+      archiveRequestCount += 1;
+      setResponseStatus(event, 204);
+      return null;
+    },
+  },
+);
+
+registerEndpoint(
+  '/api/households/household-personal/accounts/account-checking/restore',
+  {
+    method: 'POST',
+    handler: () => {
+      restoreRequestCount += 1;
+      return createdAccount;
+    },
+  },
+);
 
 registerEndpoint('/api/households/household-personal/accounts', {
   method: 'POST',
@@ -63,7 +92,7 @@ registerEndpoint('/api/households/household-personal/accounts', {
 
 registerEndpoint(
   '/api/households/household-personal/accounts/account-checking',
-  () => createdAccount,
+  { method: 'GET', handler: () => createdAccount },
 );
 
 const updateRequest: UpdateAccountRequest = {
@@ -137,6 +166,28 @@ describe('useAccountApi', () => {
     const result = await useAccountApi().list('household-personal');
 
     expect(result).toEqual(collection);
+    expect(receivedFilters).toEqual({});
+  });
+
+  it('selects the archived collection explicitly', async () => {
+    await expect(
+      useAccountApi().list('household-personal', { status: 'archived' }),
+    ).resolves.toEqual(collection);
+    expect(receivedFilters).toEqual({ status: 'archived' });
+  });
+
+  it('archives an account with DELETE and accepts an empty response', async () => {
+    await expect(
+      useAccountApi().archive('household-personal', 'account-checking'),
+    ).resolves.toBeUndefined();
+    expect(archiveRequestCount).toBe(1);
+  });
+
+  it('restores an account with POST and returns the active account', async () => {
+    await expect(
+      useAccountApi().restore('household-personal', 'account-checking'),
+    ).resolves.toEqual(createdAccount);
+    expect(restoreRequestCount).toBe(1);
   });
 
   it('creates an account with its initial balance', async () => {

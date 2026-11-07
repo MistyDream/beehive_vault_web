@@ -29,12 +29,17 @@
       :operations="accountData.operations"
       :accounts-to="accountsTo"
       :transactions-to="transactionsTo"
+      :restoring="isRestoring"
+      :restore-error="restoreError"
+      :restored="restored"
       @edit="openEditModal"
       @update-balance="openBalanceModal"
+      @archive="openArchiveModal"
+      @restore="restoreAccount"
     />
 
     <BHModal
-      v-if="accountData"
+      v-if="accountData && !accountData.account.archivedAt"
       v-model="editModalOpen"
       :title="t('accounts.edit.title')"
     >
@@ -48,7 +53,7 @@
     </BHModal>
 
     <BHModal
-      v-if="accountData"
+      v-if="accountData && !accountData.account.archivedAt"
       v-model="balanceModalOpen"
       :title="t('accounts.balance.title')"
     >
@@ -59,10 +64,55 @@
         @cancel="closeBalanceModal"
       />
     </BHModal>
+
+    <BHModal
+      v-if="accountData && !accountData.account.archivedAt"
+      :model-value="archiveModalOpen"
+      :title="t('accounts.archive.title')"
+      :described-by="archiveDescriptionId"
+      :close-on-overlay-click="!isArchiving"
+      :close-on-escape="!isArchiving"
+      @update:model-value="closeArchiveModal"
+    >
+      <form
+        class="account-detail-page__archive-form"
+        @submit.prevent="archiveAccount"
+      >
+        <p :id="archiveDescriptionId">
+          {{
+            t('accounts.archive.confirmation', {
+              name: accountData.account.name,
+            })
+          }}
+        </p>
+        <p>{{ t('accounts.archive.conservation') }}</p>
+        <p
+          v-if="archiveError"
+          role="alert"
+          class="account-detail-page__archive-error"
+        >
+          {{ archiveError }}
+        </p>
+        <div class="account-detail-page__archive-actions">
+          <BHButton
+            variant="secondary"
+            :disabled="isArchiving"
+            @click="closeArchiveModal"
+          >
+            {{ t('common.cancel') }}
+          </BHButton>
+          <BHButton type="submit" :loading="isArchiving">
+            {{ t('accounts.archive.submit') }}
+          </BHButton>
+        </div>
+      </form>
+    </BHModal>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ApiError } from '~/types/api';
+
 const { t } = useI18n();
 const route = useRoute();
 const localePath = useLocalePath();
@@ -74,6 +124,18 @@ const transactionApi = useTransactionApi();
 const toast = useToast();
 const editModalOpen = ref(false);
 const balanceModalOpen = ref(false);
+const archiveModalOpen = ref(false);
+const archiveDescriptionId = useId();
+const isArchiving = ref(false);
+const archiveError = ref('');
+const isRestoring = ref(false);
+const restoreError = ref('');
+const restored = ref(false);
+let isPageActive = true;
+
+onScopeDispose(() => {
+  isPageActive = false;
+});
 
 const household = activeHousehold.value;
 
@@ -86,7 +148,6 @@ if (!household) {
 
 const accountId = String(route.params.accountId);
 const currentDate = getDateInTimeZone(household.timezone);
-const accountsTo = localePath('/accounts');
 const transactionsTo = localePath({
   path: '/transactions',
   query: { accountId },
@@ -123,6 +184,12 @@ const {
   },
 );
 
+const accountsTo = computed(() =>
+  localePath(
+    accountData.value?.account.archivedAt ? '/accounts/archived' : '/accounts',
+  ),
+);
+
 function openEditModal(): void {
   editModalOpen.value = true;
 }
@@ -151,6 +218,80 @@ async function handleBalanceSaved(): Promise<void> {
   await nextTick();
   toast.success(t('accounts.balance.success'));
   await refresh();
+  restored.value = false;
+}
+
+function openArchiveModal(): void {
+  archiveError.value = '';
+  archiveModalOpen.value = true;
+}
+
+function closeArchiveModal(): void {
+  if (!isArchiving.value) {
+    archiveModalOpen.value = false;
+  }
+}
+
+function invalidateAccountCollections(): void {
+  clearNuxtData(
+    (key) =>
+      key.startsWith(`accounts:${household.id}:`) ||
+      key.startsWith(`overview:${household.id}:`),
+  );
+}
+
+async function archiveAccount(): Promise<void> {
+  if (
+    isArchiving.value ||
+    !archiveModalOpen.value ||
+    accountData.value?.account.archivedAt
+  )
+    return;
+
+  isArchiving.value = true;
+  archiveError.value = '';
+
+  try {
+    await accountApi.archive(household.id, accountId);
+  } catch (cause) {
+    archiveError.value = t(
+      cause instanceof ApiError && cause.code === 'account_balance_not_zero'
+        ? 'accounts.archive.error.balance_not_zero'
+        : 'accounts.archive.error.generic',
+    );
+    return;
+  } finally {
+    isArchiving.value = false;
+  }
+
+  invalidateAccountCollections();
+  if (!isPageActive || activeHousehold.value?.id !== household.id) return;
+
+  closeArchiveModal();
+  await nextTick();
+  toast.success(t('accounts.archive.success'));
+  await navigateTo(localePath('/accounts'));
+}
+
+async function restoreAccount(): Promise<void> {
+  if (isRestoring.value || !accountData.value?.account.archivedAt) return;
+
+  isRestoring.value = true;
+  restoreError.value = '';
+
+  try {
+    const account = await accountApi.restore(household.id, accountId);
+    invalidateAccountCollections();
+    if (!isPageActive || activeHousehold.value?.id !== household.id) return;
+
+    accountData.value = { ...accountData.value, account };
+    restored.value = true;
+    toast.success(t('accounts.restore.success'));
+  } catch {
+    restoreError.value = t('accounts.restore.error');
+  } finally {
+    isRestoring.value = false;
+  }
 }
 </script>
 
@@ -196,6 +337,18 @@ async function handleBalanceSaved(): Promise<void> {
 
 .account-detail-page__error button {
   @apply mt-5;
+}
+
+.account-detail-page__archive-form {
+  @apply grid gap-4 text-sm leading-6 text-theme-text-secondary;
+}
+
+.account-detail-page__archive-error {
+  @apply rounded-control border border-theme-status-error/40 bg-theme-status-error/10 p-3 text-theme-status-error-strong;
+}
+
+.account-detail-page__archive-actions {
+  @apply mt-2 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -208,6 +208,36 @@
       "loan": "Loan",
       "other_asset": "Other asset",
       "other_liability": "Other liability"
+    },
+    "archive_list": {
+      "title": "Archived accounts",
+      "description": "These accounts are excluded from current net worth. View their history or restore them to use them again.",
+      "back": "Back to archived accounts",
+      "loading": "Loading archived accounts",
+      "load_error_title": "Unable to load archived accounts",
+      "empty": {
+        "title": "No archived accounts",
+        "description": "Accounts you archive will remain available here with their transactions and balance history."
+      }
+    },
+    "archive": {
+      "title": "Archive account",
+      "requirement": "The current balance must be zero to archive this account. Its history will be kept.",
+      "confirmation": "Archive “{name}”?",
+      "conservation": "The account will be removed from current net worth and from account choices for new transactions. Its transactions and balances will be kept. You can restore it at any time.",
+      "submit": "Archive account",
+      "success": "The account was archived.",
+      "error": {
+        "balance_not_zero": "This account’s current balance is no longer zero. Close this dialog and refresh the account before trying again.",
+        "generic": "The account could not be archived. Check your connection and try again."
+      }
+    },
+    "restore": {
+      "description": "This account is archived. Its history is still available. Restore it to edit its information or use it again.",
+      "submit": "Restore account",
+      "success": "The account was restored.",
+      "check_balance": "The account is active again. Check its current balance and update it if necessary before using it again.",
+      "error": "The account could not be restored. Check your connection and try again."
     }
   },
   "overview": {

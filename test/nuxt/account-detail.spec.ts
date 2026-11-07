@@ -131,6 +131,43 @@ describe('AccountDetail', () => {
     expect(wrapper.emitted('edit')).toHaveLength(1);
   });
 
+  it.each(['0', '0.00', '0.0000', '-0.0000'])(
+    'offers archiving for the exact zero balance %s',
+    async (calculatedBalance) => {
+      const wrapper = await mountDetail({
+        account: { ...account, calculatedBalance },
+      });
+
+      await wrapper.get('.account-detail__archive').trigger('click');
+
+      expect(wrapper.emitted('archive')).toHaveLength(1);
+    },
+  );
+
+  it.each([
+    '15025.5000',
+    '-1.0000',
+    '0.0001',
+    '-0.0001',
+    '9007199254740993.0000',
+  ])(
+    'explains why archiving is unavailable for the balance %s',
+    async (calculatedBalance) => {
+      const wrapper = await mountDetail({
+        account: { ...account, calculatedBalance },
+      });
+      const button = wrapper.get('.account-detail__archive');
+
+      expect(button.attributes()).toHaveProperty('disabled');
+      const descriptionId = button.attributes('aria-describedby');
+      expect(wrapper.get(`#${descriptionId}`).text()).toBe(
+        'accounts.archive.requirement',
+      );
+      await button.trigger('click');
+      expect(wrapper.emitted('archive')).toBeUndefined();
+    },
+  );
+
   it('uses the matching transfer movement for its label, date, and amount', async () => {
     const transfer: Operation = {
       operationType: 'transfer',
@@ -206,6 +243,12 @@ describe('AccountDetail', () => {
       false,
     );
     expect(wrapper.find('.account-detail__edit').exists()).toBe(false);
+    expect(wrapper.find('.account-detail__archive').exists()).toBe(false);
+    expect(wrapper.text()).toContain('Interest payment');
+    expect(wrapper.text()).toContain('accounts.detail.sources.reconciliation');
+
+    await wrapper.get('.account-detail__restore').trigger('click');
+    expect(wrapper.emitted('restore')).toHaveLength(1);
   });
 });
 

@@ -208,6 +208,36 @@
       "loan": "Prêt",
       "other_asset": "Autre actif",
       "other_liability": "Autre dette"
+    },
+    "archive_list": {
+      "title": "Comptes archivés",
+      "description": "Ces comptes sont exclus du patrimoine actuel. Consultez leur historique ou restaurez-les pour les utiliser à nouveau.",
+      "back": "Retour aux comptes archivés",
+      "loading": "Chargement des comptes archivés",
+      "load_error_title": "Impossible de charger les comptes archivés",
+      "empty": {
+        "title": "Aucun compte archivé",
+        "description": "Les comptes que vous archiverez resteront consultables ici avec leurs transactions et leurs soldes."
+      }
+    },
+    "archive": {
+      "title": "Archiver le compte",
+      "requirement": "Le solde actuel doit être nul pour archiver ce compte. Son historique sera conservé.",
+      "confirmation": "Archiver « {name} » ?",
+      "conservation": "Le compte sera retiré du patrimoine actuel et des choix de compte pour une nouvelle transaction. Ses transactions et ses soldes seront conservés. Vous pourrez le restaurer à tout moment.",
+      "submit": "Archiver le compte",
+      "success": "Le compte a été archivé.",
+      "error": {
+        "balance_not_zero": "Le solde actuel de ce compte n’est plus nul. Fermez ce dialogue et actualisez la fiche avant de réessayer.",
+        "generic": "Le compte n’a pas pu être archivé. Vérifiez votre connexion, puis réessayez."
+      }
+    },
+    "restore": {
+      "description": "Ce compte est archivé. Son historique reste consultable. Restaurez-le pour modifier ses informations ou reprendre son utilisation.",
+      "submit": "Restaurer le compte",
+      "success": "Le compte a été restauré.",
+      "check_balance": "Le compte est de nouveau actif. Vérifiez son solde actuel et mettez-le à jour si nécessaire avant de reprendre son utilisation.",
+      "error": "Le compte n’a pas pu être restauré. Vérifiez votre connexion, puis réessayez."
     }
   },
   "overview": {

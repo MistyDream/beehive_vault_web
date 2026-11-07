@@ -166,11 +166,26 @@ L'archivage conserve le compte, ses transactions et ses soldes dans l'historique
 Le MVP autorise l'archivage uniquement lorsque `calculatedBalance` vaut zéro.
 Cette règle évite qu'un actif ou une dette disparaisse du patrimoine sans mouvement ni rapprochement expliquant la variation. Elle pourra être réévaluée après usage réel.
 
+Dans la fiche, l'action d'archivage reste désactivée avec une explication tant
+que le solde n'est pas exactement nul, y compris pour un montant inférieur au
+centime. Le client vérifie cette condition sur la chaîne décimale sans conversion
+numérique ; l'API valide à nouveau le solde lors de l'archivage. Un changement
+concurrent du solde produit une erreur traduite dans le dialogue.
+
 La confirmation d'archivage rappelle que les données passées sont conservées.
 Après succès, l'utilisateur revient à la liste des comptes.
 
 La vue des comptes archivés reste séparée et principalement en lecture seule.
 Elle permet de consulter puis de restaurer un compte. Après restauration, l'interface demande de vérifier son solde actuel avant de reprendre son usage normal.
+
+La route `/accounts/archived` réutilise les groupes et lignes de la liste active,
+sans afficher de sous-totaux patrimoniaux ni d'action de création. Depuis cette
+liste, la fiche conserve les opérations récentes et l'historique des soldes ;
+elle masque la modification et le rapprochement jusqu'à la restauration.
+Son lien de retour rejoint les comptes archivés. La restauration met la fiche à
+jour avec le compte renvoyé par l'API, rend les actions disponibles et affiche
+le rappel de vérification du solde. Les collections de comptes et la vue
+d'ensemble du foyer sont invalidées après archivage ou restauration.
 
 ## États
 

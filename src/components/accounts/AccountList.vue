@@ -12,7 +12,7 @@
           {{ t(`accounts.groups.${group.key}`) }}
         </h2>
 
-        <div class="account-list__group-total">
+        <div v-if="showTotals" class="account-list__group-total">
           <BHCurrencyDisplay
             :amount="group.total"
             :currency="currencyForGroup(group)"
@@ -64,9 +64,10 @@ interface Props {
   collection: AccountCollection;
   institutions: Institution[];
   accountTo: (accountId: AccountId) => string;
+  showTotals?: boolean;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), { showTotals: true });
 const { t } = useI18n();
 
 const groups = computed(() => getAccountComposition(props.collection));

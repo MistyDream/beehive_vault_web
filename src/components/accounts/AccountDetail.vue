@@ -2,7 +2,13 @@
   <article class="account-detail">
     <NuxtLink :to="accountsTo" class="account-detail__back">
       <LucideArrowLeft :size="18" aria-hidden="true" />
-      {{ t('accounts.detail.back') }}
+      {{
+        t(
+          account.archivedAt
+            ? 'accounts.archive_list.back'
+            : 'accounts.detail.back',
+        )
+      }}
     </NuxtLink>
 
     <header class="account-detail__header">
@@ -27,6 +33,24 @@
         {{ t('accounts.detail.edit') }}
       </BHButton>
     </header>
+
+    <section v-if="account.archivedAt" class="account-detail__notice">
+      <p>{{ t('accounts.restore.description') }}</p>
+      <p v-if="restoreError" role="alert" class="account-detail__restore-error">
+        {{ restoreError }}
+      </p>
+      <BHButton
+        class="account-detail__restore"
+        :loading="restoring"
+        @click="emit('restore')"
+      >
+        <LucideArchiveRestore :size="18" aria-hidden="true" />
+        {{ t('accounts.restore.submit') }}
+      </BHButton>
+    </section>
+    <p v-else-if="restored" class="account-detail__notice" role="status">
+      {{ t('accounts.restore.check_balance') }}
+    </p>
 
     <BHSurface
       as="section"
@@ -151,6 +175,28 @@
         </p>
       </BHSurface>
     </div>
+    <section
+      v-if="!account.archivedAt"
+      class="account-detail__archive-section"
+      :aria-labelledby="archiveTitleId"
+    >
+      <div>
+        <h2 :id="archiveTitleId">{{ t('accounts.archive.title') }}</h2>
+        <p :id="archiveDescriptionId">
+          {{ t('accounts.archive.requirement') }}
+        </p>
+      </div>
+      <BHButton
+        class="account-detail__archive"
+        variant="secondary"
+        :disabled="!canArchive"
+        :aria-describedby="archiveDescriptionId"
+        @click="emit('archive')"
+      >
+        <LucideArchive :size="18" aria-hidden="true" />
+        {{ t('accounts.archive.submit') }}
+      </BHButton>
+    </section>
   </article>
 </template>
 
@@ -167,6 +213,9 @@ interface Props {
   operations: Operation[];
   accountsTo: string;
   transactionsTo: string;
+  restoring?: boolean;
+  restoreError?: string;
+  restored?: boolean;
 }
 
 interface OperationRow {
@@ -181,11 +230,21 @@ const props = defineProps<Props>();
 const emit = defineEmits<{
   edit: [];
   updateBalance: [];
+  archive: [];
+  restore: [];
 }>();
 const { locale, t } = useI18n();
 const titleElement = ref<HTMLHeadingElement | null>(null);
 const transactionsTitleId = useId();
 const balancesTitleId = useId();
+const archiveTitleId = useId();
+const archiveDescriptionId = useId();
+
+// Match an optional minus sign followed by an all-zero integer and optional
+// all-zero decimal fraction. There are no capture groups or numeric conversions.
+const canArchive = computed(() =>
+  /^-?0+(?:\.0+)?$/.test(props.account.calculatedBalance),
+);
 
 const currentBalanceLabel = computed(() => {
   if (props.account.kind === 'investment') {
@@ -242,6 +301,16 @@ const formatDate = (date: DateString) =>
 onMounted(() => {
   titleElement.value?.focus();
 });
+
+watch(
+  () => props.account.archivedAt,
+  async (archivedAt, previousArchivedAt) => {
+    if (previousArchivedAt && !archivedAt) {
+      await nextTick();
+      titleElement.value?.focus();
+    }
+  },
+);
 </script>
 
 <style lang="css" scoped>
@@ -371,6 +440,35 @@ onMounted(() => {
 
 .account-detail__empty {
   @apply px-5 py-8 text-center text-sm text-theme-text-muted sm:px-6;
+}
+
+.account-detail__notice {
+  @apply mb-6 rounded-surface border border-theme-border-primary bg-theme-bg-elevated p-5;
+  @apply text-sm leading-6 text-theme-text-secondary;
+}
+
+.account-detail__restore {
+  @apply mt-4;
+}
+
+.account-detail__restore-error {
+  @apply mt-3 text-theme-status-error-strong;
+}
+
+.account-detail__archive-section {
+  @apply mt-8 flex flex-col items-start justify-between gap-4 border-t border-theme-border-secondary pt-6 sm:flex-row sm:items-center;
+}
+
+.account-detail__archive-section h2 {
+  @apply text-sm font-semibold text-theme-text-primary;
+}
+
+.account-detail__archive-section p {
+  @apply mt-1 max-w-xl text-sm leading-6 text-theme-text-secondary;
+}
+
+.account-detail__archive {
+  @apply shrink-0;
 }
 
 @media (max-width: 479px) {
