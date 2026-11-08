@@ -141,6 +141,7 @@
       "transfer": "Transfert",
       "no_transactions": "Aucune transaction enregistrée sur ce compte.",
       "balance_history": "Historique des soldes",
+      "correct_balance": "Corriger le solde du {date}",
       "no_balance_history": "Aucun historique de solde disponible.",
       "loading": "Chargement du compte",
       "load_error_title": "Impossible de charger ce compte",
@@ -184,6 +185,12 @@
       "explanation": "Un nouveau repère sera ajouté à l’historique. Les transactions enregistrées après cette date seront incluses dans le solde actuel.",
       "submit": "Enregistrer le solde",
       "success": "Le solde a été mis à jour.",
+      "correction": {
+        "title": "Corriger le solde",
+        "description": "Corrigez le montant ou la date de ce solde dans l’historique.",
+        "explanation": "La correction conserve l’origine du solde. Si la date du dernier rapprochement change, le solde actuel peut évoluer.",
+        "success": "Le solde a été corrigé."
+      },
       "error": {
         "generic": "Le solde n’a pas pu être enregistré. Vérifiez les valeurs, puis réessayez.",
         "amount_required": "Saisissez le nouveau solde.",
@@ -191,7 +198,9 @@
         "date_required": "Sélectionnez une date de solde.",
         "date_invalid": "Sélectionnez une date de solde valide.",
         "date_future": "La date du solde ne peut pas être future.",
-        "date_not_after_latest": "La date doit être postérieure au dernier solde renseigné."
+        "date_not_after_latest": "La date doit être postérieure au dernier solde renseigné.",
+        "duplicate_date": "Un solde existe déjà pour ce compte à cette date.",
+        "not_found": "Ce solde est introuvable. Actualisez la fiche du compte avant de réessayer."
       }
     },
     "groups": {

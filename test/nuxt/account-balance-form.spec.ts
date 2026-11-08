@@ -8,12 +8,13 @@ import { ApiError } from '~/types/api';
 import type { Account, Balance } from '~/types/account';
 
 const createBalance = vi.fn();
+const updateBalance = vi.fn();
 
 mockNuxtImport('useI18n', () => () => ({
   locale: ref('en'),
   t: (key: string) => key,
 }));
-mockNuxtImport('useAccountApi', () => () => ({ createBalance }));
+mockNuxtImport('useAccountApi', () => () => ({ createBalance, updateBalance }));
 
 enableAutoUnmount(afterEach);
 
@@ -41,9 +42,18 @@ const createdBalance: Balance = {
   createdAt: '2026-09-06T08:00:00Z',
 };
 
+const historicalBalance: Balance = {
+  ...createdBalance,
+  id: 'balance-initial',
+  amount: '1000.0000',
+  balanceDate: '2026-08-01',
+  source: 'manual',
+};
+
 describe('AccountBalanceForm', () => {
   beforeEach(() => {
     createBalance.mockReset();
+    updateBalance.mockReset();
   });
 
   it('prefills the household date and displays the account currency', async () => {
@@ -164,13 +174,111 @@ describe('AccountBalanceForm', () => {
     expect(createBalance).not.toHaveBeenCalled();
     expect(wrapper.emitted('cancel')).toHaveLength(1);
   });
+
+  it('patches only the date of an older balance and ignores equivalent decimal formatting', async () => {
+    const wrapper = await mountForm(historicalBalance);
+    const corrected = { ...historicalBalance, balanceDate: '2026-08-02' };
+    updateBalance.mockResolvedValue(corrected);
+    expect(wrapper.get('#account-balance-amount').element).toHaveProperty(
+      'value',
+      '1000.0000',
+    );
+    expect(wrapper.get('#account-balance-date').element).toHaveProperty(
+      'value',
+      '2026-08-01',
+    );
+    expect(wrapper.get('[type="submit"]').attributes('disabled')).toBeDefined();
+
+    await wrapper.get('#account-balance-amount').setValue('01000,0');
+    await wrapper.get('form').trigger('submit');
+    expect(updateBalance).not.toHaveBeenCalled();
+
+    await wrapper.get('#account-balance-date').setValue('2026-08-02');
+    await wrapper.get('form').trigger('submit');
+    await flushPromises();
+
+    expect(updateBalance).toHaveBeenCalledWith(
+      account.householdId,
+      account.id,
+      historicalBalance.id,
+      {
+        balanceDate: '2026-08-02',
+      },
+    );
+    expect(createBalance).not.toHaveBeenCalled();
+    expect(wrapper.emitted('saved')).toEqual([[corrected]]);
+  });
+
+  it('patches only an edited amount without losing precision or replacing its source', async () => {
+    const wrapper = await mountForm(historicalBalance);
+    const corrected = { ...historicalBalance, amount: '9007199254740991.1234' };
+    updateBalance.mockResolvedValue(corrected);
+
+    await wrapper
+      .get('#account-balance-amount')
+      .setValue('9007199254740991,1234');
+    await wrapper.get('form').trigger('submit');
+    await flushPromises();
+
+    expect(updateBalance).toHaveBeenCalledWith(
+      account.householdId,
+      account.id,
+      historicalBalance.id,
+      {
+        amount: '9007199254740991.1234',
+      },
+    );
+    expect(wrapper.emitted('saved')).toEqual([[corrected]]);
+  });
+
+  it('rejects a future correction date and retains the edited values on a date conflict', async () => {
+    const wrapper = await mountForm(historicalBalance);
+    updateBalance.mockRejectedValue(
+      new ApiError({
+        type: 'urn:beehive-vault:problem:duplicate-balance-date',
+        title: 'Untranslated API title',
+        status: 409,
+        code: 'duplicate_balance_date',
+      }),
+    );
+
+    await wrapper.get('#account-balance-amount').setValue('1250,25');
+    await wrapper.get('#account-balance-date').setValue('2026-09-07');
+    await wrapper.get('form').trigger('submit');
+    expect(wrapper.get('#account-balance-date-error').text()).toBe(
+      'accounts.balance.error.date_future',
+    );
+    expect(updateBalance).not.toHaveBeenCalled();
+
+    await wrapper.get('#account-balance-date').setValue('2026-09-01');
+    await wrapper.get('form').trigger('submit');
+    await flushPromises();
+
+    expect(wrapper.get('#account-balance-date-error').text()).toBe(
+      'accounts.balance.error.duplicate_date',
+    );
+    expect(wrapper.get('#account-balance-amount').element).toHaveProperty(
+      'value',
+      '1250,25',
+    );
+    expect(wrapper.get('#account-balance-date').element).toHaveProperty(
+      'value',
+      '2026-09-01',
+    );
+    expect(
+      wrapper.get('[type="submit"]').attributes('disabled'),
+    ).toBeUndefined();
+    expect(wrapper.text()).not.toContain('Untranslated');
+    expect(wrapper.emitted('saved')).toBeUndefined();
+  });
 });
 
-function mountForm() {
+function mountForm(balanceToCorrect?: Balance) {
   return mountSuspended(AccountBalanceForm, {
     props: {
       account,
       currentDate: '2026-09-06',
+      balanceToCorrect,
     },
   });
 }

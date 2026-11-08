@@ -141,6 +141,7 @@
       "transfer": "Transfer",
       "no_transactions": "No transaction has been recorded for this account.",
       "balance_history": "Balance history",
+      "correct_balance": "Correct the balance from {date}",
       "no_balance_history": "No balance history is available.",
       "loading": "Loading account",
       "load_error_title": "Unable to load this account",
@@ -184,6 +185,12 @@
       "explanation": "A new reconciliation point will be added to the history. Transactions recorded after this date will be included in the current balance.",
       "submit": "Save balance",
       "success": "The balance was updated.",
+      "correction": {
+        "title": "Correct balance",
+        "description": "Correct the amount or date of this balance in the history.",
+        "explanation": "The correction keeps the balance’s original source. If the date of the latest reconciliation changes, the current balance may change.",
+        "success": "The balance was corrected."
+      },
       "error": {
         "generic": "The balance could not be saved. Check the values and try again.",
         "amount_required": "Enter the new balance.",
@@ -191,7 +198,9 @@
         "date_required": "Select a balance date.",
         "date_invalid": "Select a valid balance date.",
         "date_future": "The balance date cannot be in the future.",
-        "date_not_after_latest": "The date must be after the latest declared balance."
+        "date_not_after_latest": "The date must be after the latest declared balance.",
+        "duplicate_date": "A balance already exists for this account on that date.",
+        "not_found": "This balance could not be found. Refresh the account page before trying again."
       }
     },
     "groups": {

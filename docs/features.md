@@ -20,14 +20,14 @@ La présence de code historique dans la branche ne rend pas une fonctionnalité 
 | Apparence      | Direction visuelle et thèmes clair et sombre                     | Le choix est mémorisé localement                                        |
 | Foyer actif    | Premier lancement, sélection, persistance et changement de foyer | Sans authentification ni gestion des membres dans le MVP Web            |
 | Vue d'ensemble | Patrimoine actuel et flux du mois courant                        | Les pages Transactions et Rapport mensuel restent à implémenter         |
-| Comptes        | Liste groupée, création, détail et modification d’un compte      | Correction des soldes de rapprochement encore à faire                   |
+| Comptes        | Liste groupée, création, détail et modification d’un compte      | Correction des soldes de rapprochement à valider en usage réel          |
 | Comptes        | Archivage à solde nul, consultation séparée et restauration      | Historique conservé ; vérification du solde demandée après restauration |
 
 ## En développement
 
-| Domaine | Fonctionnalité                                  | État actuel                                                   |
-| ------- | ----------------------------------------------- | ------------------------------------------------------------- |
-| Comptes | Ajout et correction des soldes de rapprochement | Ajout disponible depuis le détail ; correction encore à faire |
+| Domaine | Fonctionnalité                                  | État actuel                                                                                    |
+| ------- | ----------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| Comptes | Ajout et correction des soldes de rapprochement | Ajout disponible depuis le détail. Correction depuis l’historique à valider avec l’API réelle. |
 
 ## Conçues
 

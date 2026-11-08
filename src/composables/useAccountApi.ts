@@ -4,9 +4,11 @@ import type {
   AccountId,
   AccountListFilters,
   Balance,
+  BalanceId,
   CreateAccountRequest,
   CreateBalanceRequest,
   UpdateAccountRequest,
+  UpdateBalanceRequest,
 } from '~/types/account';
 import type { HouseholdId } from '~/types/household';
 
@@ -60,6 +62,16 @@ export function useAccountApi() {
           method: 'POST',
           body: request,
         },
+      ),
+    updateBalance: (
+      householdId: HouseholdId,
+      accountId: AccountId,
+      balanceId: BalanceId,
+      request: UpdateBalanceRequest,
+    ) =>
+      $api<Balance>(
+        `/households/${householdId}/accounts/${accountId}/balances/${balanceId}`,
+        { method: 'PATCH', body: request },
       ),
   };
 }

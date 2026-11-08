@@ -34,6 +34,7 @@
       :restored="restored"
       @edit="openEditModal"
       @update-balance="openBalanceModal"
+      @correct-balance="openBalanceModal"
       @archive="openArchiveModal"
       @restore="restoreAccount"
     />
@@ -54,12 +55,23 @@
 
     <BHModal
       v-if="accountData && !accountData.account.archivedAt"
-      v-model="balanceModalOpen"
-      :title="t('accounts.balance.title')"
+      :model-value="balanceModalOpen"
+      :title="
+        t(
+          balanceToCorrect
+            ? 'accounts.balance.correction.title'
+            : 'accounts.balance.title',
+        )
+      "
+      :close-on-overlay-click="!isSavingBalance"
+      :close-on-escape="!isSavingBalance"
+      @update:model-value="closeBalanceModal"
     >
       <AccountBalanceForm
+        v-model:submitting="isSavingBalance"
         :account="accountData.account"
         :current-date="currentDate"
+        :balance-to-correct="balanceToCorrect"
         @saved="handleBalanceSaved"
         @cancel="closeBalanceModal"
       />
@@ -111,6 +123,7 @@
 </template>
 
 <script setup lang="ts">
+import type { Balance } from '~/types/account';
 import { ApiError } from '~/types/api';
 
 const { t } = useI18n();
@@ -124,6 +137,8 @@ const transactionApi = useTransactionApi();
 const toast = useToast();
 const editModalOpen = ref(false);
 const balanceModalOpen = ref(false);
+const balanceToCorrect = ref<Balance>();
+const isSavingBalance = ref(false);
 const archiveModalOpen = ref(false);
 const archiveDescriptionId = useId();
 const isArchiving = ref(false);
@@ -205,20 +220,42 @@ async function handleAccountSaved(): Promise<void> {
   toast.success(t('accounts.edit.success'));
 }
 
-function openBalanceModal(): void {
+function openBalanceModal(balance?: Balance): void {
+  balanceToCorrect.value = balance;
   balanceModalOpen.value = true;
 }
 
 function closeBalanceModal(): void {
-  balanceModalOpen.value = false;
+  if (!isSavingBalance.value) balanceModalOpen.value = false;
 }
 
 async function handleBalanceSaved(): Promise<void> {
-  closeBalanceModal();
+  invalidateAccountCollections();
+  if (!isPageActive || activeHousehold.value?.id !== household.id) return;
+
+  const corrected = Boolean(balanceToCorrect.value);
+  balanceModalOpen.value = false;
   await nextTick();
-  toast.success(t('accounts.balance.success'));
+  const trigger = document.activeElement;
+  toast.success(
+    t(
+      corrected
+        ? 'accounts.balance.correction.success'
+        : 'accounts.balance.success',
+    ),
+  );
   await refresh();
   restored.value = false;
+
+  // Reordering a corrected history entry can blur its action after the dialog restores focus.
+  if (
+    corrected &&
+    trigger instanceof HTMLElement &&
+    trigger.isConnected &&
+    document.activeElement === document.body
+  ) {
+    trigger.focus({ preventScroll: true });
+  }
 }
 
 function openArchiveModal(): void {

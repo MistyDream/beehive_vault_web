@@ -7,13 +7,13 @@ import {
 } from '@nuxt/test-utils/runtime';
 import { DOMWrapper, enableAutoUnmount, flushPromises } from '@vue/test-utils';
 import { useNuxtData } from '#app';
-import { getQuery, setResponseStatus } from 'h3';
+import { getQuery, readBody, setResponseStatus } from 'h3';
 
 import AccountBalanceForm from '~/components/accounts/AccountBalanceForm.vue';
 import AccountDetail from '~/components/accounts/AccountDetail.vue';
 import AccountEditForm from '~/components/accounts/AccountEditForm.vue';
 import AccountDetailPage from '~/pages/accounts/[accountId].vue';
-import type { Account, Balance } from '~/types/account';
+import type { Account, Balance, UpdateBalanceRequest } from '~/types/account';
 import type { OperationPage } from '~/types/operation';
 import type { Institution } from '~/types/institution';
 
@@ -60,6 +60,15 @@ const balances: Balance[] = [
   },
 ];
 
+const historicalBalance: Balance = {
+  id: 'balance-initial',
+  accountId: account.id,
+  amount: '14000.0000',
+  balanceDate: '2026-08-01',
+  source: 'manual',
+  createdAt: '2026-08-01T08:00:00Z',
+};
+
 const operations: OperationPage = {
   items: [],
   page: 1,
@@ -76,6 +85,8 @@ let requestBarrier: Promise<void> | undefined;
 let receivedTransactionQuery: ReturnType<typeof getQuery>;
 let accountRequestCount = 0;
 let accountResponse: Account = account;
+let balancesResponse = balances;
+let receivedBalanceCorrection: UpdateBalanceRequest | undefined;
 let mutationStatus = 200;
 let mutationBarrier: Promise<void> | undefined;
 let archiveRequestCount = 0;
@@ -148,7 +159,26 @@ registerEndpoint(
     handler: async () => {
       await requestBarrier;
       ensureSuccessfulResponse();
-      return balances;
+      return balancesResponse;
+    },
+  },
+);
+
+registerEndpoint(
+  '/api/households/household-personal/accounts/account-investment/balances/balance-initial',
+  {
+    method: 'PATCH',
+    handler: async (event) => {
+      receivedBalanceCorrection = await readBody<UpdateBalanceRequest>(event);
+      const corrected = { ...historicalBalance, ...receivedBalanceCorrection };
+      balancesResponse = [corrected, ...balances];
+      accountResponse = {
+        ...account,
+        latestBalance: corrected.amount,
+        balanceDate: corrected.balanceDate,
+        calculatedBalance: corrected.amount,
+      };
+      return corrected;
     },
   },
 );
@@ -200,6 +230,8 @@ describe('AccountDetailPage', () => {
     receivedTransactionQuery = {};
     accountRequestCount = 0;
     accountResponse = account;
+    balancesResponse = balances;
+    receivedBalanceCorrection = undefined;
     mutationStatus = 200;
     mutationBarrier = undefined;
     archiveRequestCount = 0;
@@ -293,6 +325,50 @@ describe('AccountDetailPage', () => {
       expect(toastSuccess).toHaveBeenCalledWith('accounts.balance.success');
       expect(wrapper.findComponent(AccountBalanceForm).exists()).toBe(false);
       expect(document.activeElement).toBe(updateButton.element);
+    });
+  });
+
+  it('corrects an older history entry and refreshes its new reconciliation anchor', async () => {
+    balancesResponse = [...balances, historicalBalance];
+    const wrapper = await mountSuspended(AccountDetailPage, {
+      attachTo: document.body,
+    });
+    await vi.waitFor(() =>
+      expect(wrapper.findComponent(AccountDetail).exists()).toBe(true),
+    );
+    const summaryData = useNuxtData('overview:household-personal:2026-09').data;
+    summaryData.value = { marker: 'Cached data' };
+    const trigger = wrapper.findAll<HTMLButtonElement>(
+      '.account-detail__correct-balance',
+    )[1]!;
+    trigger.element.focus();
+    await trigger.trigger('click');
+
+    const form = wrapper.getComponent(AccountBalanceForm);
+    expect(form.props('balanceToCorrect')).toEqual(historicalBalance);
+    await form.get('#account-balance-date').setValue('2026-09-05');
+    await form.trigger('submit');
+
+    await vi.waitFor(() => {
+      const detail = wrapper.getComponent(AccountDetail);
+      expect(receivedBalanceCorrection).toEqual({ balanceDate: '2026-09-05' });
+      expect(accountRequestCount).toBe(2);
+      expect(detail.props('balances')[0]).toMatchObject({
+        id: historicalBalance.id,
+        balanceDate: '2026-09-05',
+        source: 'manual',
+      });
+      expect(detail.props('account')).toMatchObject({
+        latestBalance: '14000.0000',
+        balanceDate: '2026-09-05',
+        calculatedBalance: '14000.0000',
+      });
+      expect(summaryData.value).toBeUndefined();
+      expect(wrapper.findComponent(AccountBalanceForm).exists()).toBe(false);
+      expect(document.activeElement).toBe(trigger.element);
+      expect(toastSuccess).toHaveBeenCalledWith(
+        'accounts.balance.correction.success',
+      );
     });
   });
 
@@ -443,6 +519,9 @@ describe('AccountDetailPage', () => {
     );
     expect(wrapper.findComponent(AccountEditForm).exists()).toBe(false);
     expect(wrapper.findComponent(AccountBalanceForm).exists()).toBe(false);
+    expect(wrapper.find('.account-detail__correct-balance').exists()).toBe(
+      false,
+    );
     restoreResponse = { ...account, calculatedBalance: '42.1250' };
     await wrapper.get('.account-detail__restore').trigger('click');
 

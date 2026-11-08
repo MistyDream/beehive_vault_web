@@ -6,7 +6,13 @@
     @submit.prevent="submit"
   >
     <p class="account-balance-form__description">
-      {{ t('accounts.balance.description') }}
+      {{
+        t(
+          balanceToCorrect
+            ? 'accounts.balance.correction.description'
+            : 'accounts.balance.description',
+        )
+      }}
     </p>
 
     <div
@@ -42,7 +48,10 @@
       />
     </div>
 
-    <p v-if="account.balanceDate" class="account-balance-form__date-help">
+    <p
+      v-if="!balanceToCorrect && account.balanceDate"
+      class="account-balance-form__date-help"
+    >
       {{
         t('accounts.balance.date_help', {
           date: formatDate(account.balanceDate),
@@ -60,7 +69,15 @@
 
     <div class="account-balance-form__explanation">
       <LucideInfo :size="18" aria-hidden="true" />
-      <p>{{ t('accounts.balance.explanation') }}</p>
+      <p>
+        {{
+          t(
+            balanceToCorrect
+              ? 'accounts.balance.correction.explanation'
+              : 'accounts.balance.explanation',
+          )
+        }}
+      </p>
     </div>
 
     <div class="account-balance-form__actions">
@@ -72,7 +89,11 @@
       >
         {{ t('common.cancel') }}
       </BHButton>
-      <BHButton type="submit" :loading="isSubmitting">
+      <BHButton
+        type="submit"
+        :loading="isSubmitting"
+        :disabled="balanceToCorrect && !hasCorrection"
+      >
         {{ t('accounts.balance.submit') }}
       </BHButton>
     </div>
@@ -82,12 +103,14 @@
 <script setup lang="ts">
 import type { ApiFieldErrorMapping } from '~/composables/useApiFormErrors';
 import { isLiabilityAccountKind } from '~/constants/account';
-import type { Account, Balance } from '~/types/account';
+import type { Account, Balance, UpdateBalanceRequest } from '~/types/account';
+import { ApiError } from '~/types/api';
 import type { DateString, DecimalString } from '~/types/http';
 
 interface Props {
   account: Account;
   currentDate: DateString;
+  balanceToCorrect?: Balance;
 }
 
 interface Emits {
@@ -98,12 +121,14 @@ interface Emits {
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 const { locale, t } = useI18n();
-const { createBalance } = useAccountApi();
+const { createBalance, updateBalance } = useAccountApi();
 
 const formElement = ref<HTMLFormElement | null>(null);
-const amount = ref('');
-const balanceDate = ref<DateString>(props.currentDate);
-const isSubmitting = ref(false);
+const amount = ref(props.balanceToCorrect?.amount ?? '');
+const balanceDate = ref<DateString>(
+  props.balanceToCorrect?.balanceDate ?? props.currentDate,
+);
+const isSubmitting = defineModel<boolean>('submitting', { default: false });
 const submissionError = ref('');
 const fieldErrors = reactive({
   amount: '',
@@ -145,6 +170,25 @@ const fieldErrorMappings: ReadonlyArray<ApiFieldErrorMapping<FieldName>> = [
 const { applyApiFieldErrors, clearFieldErrors, focusFirstInvalidField } =
   useApiFormErrors(fieldErrors, fieldErrorMappings, formElement);
 
+const correction = computed<UpdateBalanceRequest>(() => {
+  const original = props.balanceToCorrect;
+  const changes: UpdateBalanceRequest = {};
+  if (!original) return changes;
+
+  const normalizedAmount = normalizeDecimal(amount.value);
+  if (
+    decimalComparisonKey(normalizedAmount) !==
+    decimalComparisonKey(original.amount)
+  ) {
+    changes.amount = normalizedAmount;
+  }
+  if (balanceDate.value !== original.balanceDate) {
+    changes.balanceDate = balanceDate.value;
+  }
+  return changes;
+});
+const hasCorrection = computed(() => Object.keys(correction.value).length > 0);
+
 const amountLabel = computed(() => {
   if (props.account.kind === 'investment') {
     return t('accounts.balance.new_value');
@@ -182,6 +226,9 @@ const dateFormatter = computed(
 );
 
 async function submit(): Promise<void> {
+  if (isSubmitting.value || (props.balanceToCorrect && !hasCorrection.value)) {
+    return;
+  }
   clearErrors();
 
   if (!validate()) {
@@ -192,24 +239,37 @@ async function submit(): Promise<void> {
   isSubmitting.value = true;
 
   try {
-    const balance = await createBalance(
-      props.account.householdId,
-      props.account.id,
-      {
-        amount: normalizeDecimal(amount.value),
-        balanceDate: balanceDate.value,
-        source: 'reconciliation',
-      },
-    );
+    const { householdId, id: accountId } = props.account;
+    const balance = props.balanceToCorrect
+      ? await updateBalance(
+          householdId,
+          accountId,
+          props.balanceToCorrect.id,
+          correction.value,
+        )
+      : await createBalance(householdId, accountId, {
+          amount: normalizeDecimal(amount.value),
+          balanceDate: balanceDate.value,
+          source: 'reconciliation',
+        });
     emit('saved', balance);
   } catch (cause) {
-    if (!applyApiFieldErrors(cause)) {
+    if (cause instanceof ApiError && cause.code === 'duplicate_balance_date') {
+      fieldErrors.balanceDate = t('accounts.balance.error.duplicate_date');
+    } else if (
+      cause instanceof ApiError &&
+      cause.code === 'balance_not_found'
+    ) {
+      submissionError.value = t('accounts.balance.error.not_found');
+    } else if (!applyApiFieldErrors(cause)) {
       submissionError.value = t('accounts.balance.error.generic');
-    } else {
-      await focusFirstInvalidField();
     }
   } finally {
     isSubmitting.value = false;
+  }
+
+  if (Object.values(fieldErrors).some(Boolean)) {
+    await focusFirstInvalidField();
   }
 }
 
@@ -224,9 +284,13 @@ function validate(): boolean {
 
   if (!balanceDate.value) {
     fieldErrors.balanceDate = t('accounts.balance.error.date_required');
-  } else if (balanceDate.value > props.currentDate) {
+  } else if (
+    balanceDate.value > props.currentDate &&
+    (!props.balanceToCorrect || correction.value.balanceDate !== undefined)
+  ) {
     fieldErrors.balanceDate = t('accounts.balance.error.date_future');
   } else if (
+    !props.balanceToCorrect &&
     props.account.balanceDate &&
     balanceDate.value <= props.account.balanceDate
   ) {
@@ -243,6 +307,21 @@ function clearErrors(): void {
 
 function normalizeDecimal(value: string): DecimalString {
   return value.trim().replace(',', '.');
+}
+
+function decimalComparisonKey(value: DecimalString): string {
+  if (!decimalPattern.test(value)) return value;
+
+  const negative = value.startsWith('-');
+  const [integer = '0', fraction = ''] = (
+    negative ? value.slice(1) : value
+  ).split('.');
+  // Matches leading zeroes in the integer and trailing zeroes in the fraction,
+  // respectively. Neither pattern contains capture groups.
+  const whole = integer.replace(/^0+/, '') || '0';
+  const decimals = fraction.replace(/0+$/, '');
+  const magnitude = decimals ? `${whole}.${decimals}` : whole;
+  return negative && magnitude !== '0' ? `-${magnitude}` : magnitude;
 }
 
 function formatDate(date: DateString): string {
