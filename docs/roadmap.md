@@ -190,7 +190,7 @@ aujourd'hui ? » à partir des données réelles du foyer.
 - modifier les comptes : ✅ terminé ;
 - archiver et restaurer les comptes : ✅ terminé ;
 - ajouter les soldes de rapprochement : ✅ terminé ;
-- corriger les soldes de rapprochement : ⬜ à faire ;
+- corriger les soldes de rapprochement : 🚧 implémenté, à vérifier en usage réel ;
 - représenter séparément les comptes archivés : ✅ terminé.
 
 ### 5.2 — Établissements et catégories ⬜

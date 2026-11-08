@@ -164,10 +164,24 @@
                 {{ t(`accounts.detail.sources.${balance.source}`) }}
               </small>
             </span>
-            <BHCurrencyDisplay
-              :amount="balance.amount"
-              :currency="account.currency"
-            />
+            <div class="account-detail__history-actions">
+              <BHCurrencyDisplay
+                :amount="balance.amount"
+                :currency="account.currency"
+              />
+              <BHIconButton
+                v-if="!account.archivedAt"
+                class="account-detail__correct-balance"
+                :label="
+                  t('accounts.detail.correct_balance', {
+                    date: formatDate(balance.balanceDate),
+                  })
+                "
+                @click="emit('correctBalance', balance)"
+              >
+                <LucidePencil :size="16" aria-hidden="true" />
+              </BHIconButton>
+            </div>
           </li>
         </ul>
         <p v-else class="account-detail__empty">
@@ -230,6 +244,7 @@ const props = defineProps<Props>();
 const emit = defineEmits<{
   edit: [];
   updateBalance: [];
+  correctBalance: [balance: Balance];
   archive: [];
   restore: [];
 }>();
@@ -434,8 +449,12 @@ watch(
 }
 
 .account-detail__operation-amount,
-.account-detail__history-entry > :deep(.bh-currency-display) {
+.account-detail__history-actions {
   @apply shrink-0 font-medium;
+}
+
+.account-detail__history-actions {
+  @apply flex items-center gap-1 sm:gap-2;
 }
 
 .account-detail__empty {

@@ -157,7 +157,9 @@ La source `reconciliation` est transmise automatiquement. Elle n'est pas un choi
 
 Une mise à jour ajoute un nouveau point d'ancrage et conserve les précédents. Sa date doit être postérieure au dernier solde et ne peut pas être future dans le fuseau horaire du foyer.
 
-Chaque entrée de l'historique peut être corrigée. La correction modifie son montant ou sa date sans créer un doublon pour le même jour. La suppression d'un solde est exclue du MVP : la correction permet de réparer une erreur tout en conservant un point d'ancrage pour le compte.
+Sur un compte actif, chaque entrée de l’historique propose une action « Corriger le solde » qui ouvre un dialogue prérempli avec le montant et la date. Une date antérieure au dernier rapprochement est autorisée. La date ne peut être ni future ni déjà utilisée pour un autre solde de ce compte.
+
+Après enregistrement, la fiche recharge l’historique, le dernier rapprochement et le solde actuel calculé par l’API. Si la correction échoue, la saisie reste dans le dialogue. La suppression d’un solde est exclue du MVP afin de conserver un point d’ancrage pour le compte.
 
 ## Archivage et restauration
 
