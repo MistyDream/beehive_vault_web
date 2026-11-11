@@ -19,6 +19,7 @@ La présence de code historique dans la branche ne rend pas une fonctionnalité 
 | Navigation     | Structure principale sur ordinateur et mobile                    | Les destinations métier seront ajoutées avec leurs pages                |
 | Apparence      | Direction visuelle et thèmes clair et sombre                     | Le choix est mémorisé localement                                        |
 | Foyer actif    | Premier lancement, sélection, persistance et changement de foyer | Sans authentification ni gestion des membres dans le MVP Web            |
+| Référentiels   | Création, renommage et archivage des catégories du foyer         | Nature immuable ; catégories archivées préservées dans l’historique     |
 | Vue d'ensemble | Patrimoine actuel et flux du mois courant                        | Les pages Transactions et Rapport mensuel restent à implémenter         |
 | Comptes        | Liste groupée, création, détail et modification d’un compte      | Correction des soldes de rapprochement à valider en usage réel          |
 | Comptes        | Archivage à solde nul, consultation séparée et restauration      | Historique conservé ; vérification du solde demandée après restauration |
@@ -47,12 +48,12 @@ Les décisions détaillées sont consignées dans la [vue d'ensemble](overview.m
 
 ## Prévues pour le MVP
 
-| Domaine          | Fonctionnalité                                                           | Objectif                                                                  |
-| ---------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------- |
-| API côté serveur | Proxy Nuxt de même origine                                               | Masquer l'origine et la version de l'API au navigateur                    |
-| Erreurs          | Intégration des Problem Details RFC 9457                                 | Contrat API disponible, à relier aux parcours Web                         |
-| Référentiels     | Gestion des catégories et consultation des établissements pris en charge | Alimenter les comptes et transactions sans création libre d'établissement |
-| Validation       | Données représentatives et tests navigateur                              | Vérifier le parcours complet en usage régulier                            |
+| Domaine          | Fonctionnalité                                 | Objectif                                                  |
+| ---------------- | ---------------------------------------------- | --------------------------------------------------------- |
+| API côté serveur | Proxy Nuxt de même origine                     | Masquer l'origine et la version de l'API au navigateur    |
+| Erreurs          | Intégration des Problem Details RFC 9457       | Contrat API disponible, à relier aux parcours Web         |
+| Référentiels     | Consultation des établissements pris en charge | Alimenter les comptes sans création libre d’établissement |
+| Validation       | Données représentatives et tests navigateur    | Vérifier le parcours complet en usage régulier            |
 
 ## Différées après le MVP
 

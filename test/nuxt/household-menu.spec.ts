@@ -58,6 +58,17 @@ const household: Household = {
 };
 
 describe('HouseholdMenu', () => {
+  it('links the category reference from the household menu', async () => {
+    const wrapper = await mountMenu();
+    const items = wrapper.getComponent(DropdownStub).props('items');
+    expect(items).toContainEqual(
+      expect.objectContaining({
+        text: 'household.menu.categories',
+        to: '/categories',
+      }),
+    );
+  });
+
   it('identifies the active household in its trigger', async () => {
     const wrapper = await mountMenu();
 
@@ -91,7 +102,7 @@ describe('HouseholdMenu', () => {
 
     await items[0]?.trigger('click');
     await items[1]?.trigger('click');
-    await items[2]?.trigger('click');
+    await items[3]?.trigger('click');
 
     expect(wrapper.emitted('change')).toHaveLength(1);
     expect(wrapper.emitted('create')).toHaveLength(1);
@@ -101,13 +112,13 @@ describe('HouseholdMenu', () => {
   it('describes the theme that will be activated', async () => {
     const wrapper = await mountMenu(true);
 
-    expect(wrapper.findAll('.dropdown-stub__item')[2]?.text()).toBe(
+    expect(wrapper.findAll('.dropdown-stub__item')[3]?.text()).toBe(
       'household.menu.switch_to_light',
     );
 
     await wrapper.setProps({ isDark: false });
 
-    expect(wrapper.findAll('.dropdown-stub__item')[2]?.text()).toBe(
+    expect(wrapper.findAll('.dropdown-stub__item')[3]?.text()).toBe(
       'household.menu.switch_to_dark',
     );
   });

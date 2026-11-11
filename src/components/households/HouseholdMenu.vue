@@ -33,6 +33,7 @@
 
 <script setup lang="ts">
 import {
+  LucideTags,
   LucideChevronsUpDown,
   LucidePlus,
   LucideSun,
@@ -42,6 +43,7 @@ import type { Household } from '~/types/household';
 import type { NavigationLink } from '~/types/navigation-link';
 
 const { t, locale } = useI18n();
+const localePath = useLocalePath();
 
 interface Props {
   household: Household;
@@ -67,6 +69,11 @@ const menuItems = computed<NavigationLink[]>(() => [
     text: t('household.menu.create'),
     icon: LucidePlus,
     onClick: () => emit('create'),
+  },
+  {
+    text: t('household.menu.categories'),
+    icon: LucideTags,
+    to: localePath('/categories'),
   },
   {
     text: isDark

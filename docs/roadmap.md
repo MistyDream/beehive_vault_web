@@ -196,7 +196,7 @@ aujourd'hui ? » à partir des données réelles du foyer.
 ### 5.2 — Établissements et catégories ⬜
 
 - gérer les établissements ;
-- gérer les catégories ;
+- gérer les catégories : ✅ création, renommage et archivage disponibles ;
 - préserver l'accès aux référentiels depuis le menu du foyer.
 
 **Résultat attendu :** l'utilisateur peut comprendre et maintenir les sources de
