@@ -327,5 +327,14 @@
     "dark_mode": "Mode sombre",
     "switch_to_light": "Passer en mode clair",
     "switch_to_dark": "Passer en mode sombre"
+  },
+  "institutions": {
+    "title": "Établissements",
+    "description": "Consultez les établissements disponibles pour vos comptes. Ce catalogue est commun à tous les foyers.",
+    "loading": "Chargement des établissements",
+    "load_error_title": "Impossible de charger les établissements",
+    "load_error_description": "Vérifiez votre connexion, puis réessayez.",
+    "empty_title": "Aucun établissement référencé",
+    "empty_description": "Vous pouvez ajouter vos comptes en choisissant « Aucun établissement »."
   }
 }

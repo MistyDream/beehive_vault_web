@@ -327,5 +327,14 @@
     "dark_mode": "Dark mode",
     "switch_to_light": "Switch to light mode",
     "switch_to_dark": "Switch to dark mode"
+  },
+  "institutions": {
+    "title": "Institutions",
+    "description": "Browse the institutions available for your accounts. This catalog is shared across all households.",
+    "loading": "Loading institutions",
+    "load_error_title": "Unable to load institutions",
+    "load_error_description": "Check your connection, then try again.",
+    "empty_title": "No listed institutions",
+    "empty_description": "You can add your accounts by choosing “No institution”."
   }
 }

@@ -57,6 +57,15 @@
           }}
         </span>
       </BHButton>
+      <BHButton
+        :to="localePath('/institutions')"
+        variant="ghost"
+        class="mobile-more-menu__action"
+        @click="close"
+      >
+        <LucideLandmark :size="20" aria-hidden="true" />
+        <span>{{ t('institutions.title') }}</span>
+      </BHButton>
     </div>
   </BHModal>
 </template>

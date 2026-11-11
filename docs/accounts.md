@@ -117,6 +117,8 @@ Après la création initiale d'un foyer, « Plus tard » ouvre une vue d'ensembl
 
 ## Établissements référencés
 
+Le catalogue est consultable sur `/institutions`, depuis le menu du foyer sur ordinateur et depuis « Plus » sur mobile. La liste conserve l’ordre fourni par l’API et propose une reprise après erreur. Un catalogue vide rappelle que les comptes peuvent être créés sans établissement.
+
 Le formulaire ne permet pas de créer un établissement. Il propose un catalogue global configuré côté serveur et une option « Aucun établissement ».
 
 Le catalogue distingue :
