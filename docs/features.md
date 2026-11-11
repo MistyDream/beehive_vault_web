@@ -33,17 +33,18 @@ La présence de code historique dans la branche ne rend pas une fonctionnalité 
 
 ## Conçues
 
-| Domaine         | Fonctionnalité                                                    | Limites actuelles                                                      |
-| --------------- | ----------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| Transactions    | Liste chronologique, recherche, filtres et pagination progressive | Contrat API consolidé disponible, client non implémenté                |
-| Transactions    | Détail des revenus, dépenses et transferts                        | Page dédiée uniquement dans la V1                                      |
-| Transactions    | Création et modification manuelles                                | Montant nominal et effet explicite disponibles côté API                |
-| Transactions    | Suppression individuelle et atomique des transferts               | Aucune restauration dans la V1                                         |
-| Rapport mensuel | Sélection du mois, revenus, dépenses et flux net                  | Aucun mois futur ni comparaison temporelle dans le MVP                 |
-| Rapport mensuel | Sankey sur ordinateur et listes à barres sur mobile               | Liste de repli lorsque les montants ne permettent pas un Sankey fiable |
-| Rapport mensuel | Ventilation par catégorie et transactions sources                 | Réutilise les filtres de la page Transactions                          |
-| Qualité         | États de chargement, vide, erreur et succès                       | Règles communes à implémenter dans chaque parcours                     |
-| Accessibilité   | Responsive, clavier et cible WCAG 2.2 AA                          | Conformité à vérifier après implémentation                             |
+| Domaine         | Fonctionnalité                                                             | Limites actuelles                                                                              |
+| --------------- | -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| Transactions    | Liste chronologique, recherche, filtres et pagination progressive          | Contrat API consolidé disponible, client non implémenté                                        |
+| Transactions    | Détail des revenus, dépenses et transferts                                 | Page dédiée uniquement dans la V1                                                              |
+| Transactions    | Création et modification manuelles                                         | Montant nominal et effet explicite disponibles côté API                                        |
+| Transactions    | Suppression individuelle et atomique des transferts                        | Aucune restauration dans la V1                                                                 |
+| Import CSV      | [Compte, fichier, configuration, sélection et confirmation](csv-import.md) | Parcours validé le 11 novembre 2026 ; vocabulaire clarifié à la demande, client non implémenté |
+| Rapport mensuel | Sélection du mois, revenus, dépenses et flux net                           | Aucun mois futur ni comparaison temporelle dans le MVP                                         |
+| Rapport mensuel | Sankey sur ordinateur et listes à barres sur mobile                        | Liste de repli lorsque les montants ne permettent pas un Sankey fiable                         |
+| Rapport mensuel | Ventilation par catégorie et transactions sources                          | Réutilise les filtres de la page Transactions                                                  |
+| Qualité         | États de chargement, vide, erreur et succès                                | Règles communes à implémenter dans chaque parcours                                             |
+| Accessibilité   | Responsive, clavier et cible WCAG 2.2 AA                                   | Conformité à vérifier après implémentation                                                     |
 
 Les décisions détaillées sont consignées dans la [vue d'ensemble](overview.md), le [foyer actif](active-household.md), les [comptes](accounts.md), les [transactions](transactions.md), le [rapport mensuel](monthly-report.md) et les [règles transversales](cross-cutting-rules.md).
 
