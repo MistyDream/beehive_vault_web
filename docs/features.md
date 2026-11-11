@@ -22,6 +22,7 @@ La présence de code historique dans la branche ne rend pas une fonctionnalité 
 | Vue d'ensemble | Patrimoine actuel et flux du mois courant                        | Les pages Transactions et Rapport mensuel restent à implémenter         |
 | Comptes        | Liste groupée, création, détail et modification d’un compte      | Correction des soldes de rapprochement à valider en usage réel          |
 | Comptes        | Archivage à solde nul, consultation séparée et restauration      | Historique conservé ; vérification du solde demandée après restauration |
+| Référentiels   | Consultation du catalogue global des établissements              | Accessible depuis le menu du foyer et « Plus », en lecture seule        |
 
 ## En développement
 

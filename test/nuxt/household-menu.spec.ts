@@ -12,6 +12,8 @@ mockNuxtImport('useI18n', () => () => ({
   t: (key: string) => key,
 }));
 
+mockNuxtImport('useLocalePath', () => () => (path: string) => `/en${path}`);
+
 enableAutoUnmount(afterEach);
 
 const DropdownStub = defineComponent({
@@ -96,6 +98,15 @@ describe('HouseholdMenu', () => {
     expect(wrapper.emitted('change')).toHaveLength(1);
     expect(wrapper.emitted('create')).toHaveLength(1);
     expect(wrapper.emitted('toggle-theme')).toHaveLength(1);
+  });
+
+  it('links to the global institution catalog with a localized route', async () => {
+    const wrapper = await mountMenu();
+    const items = wrapper.getComponent(DropdownStub).props('items');
+    expect(
+      items.find((item: NavigationLink) => item.text === 'institutions.title')
+        ?.to,
+    ).toBe('/en/institutions');
   });
 
   it('describes the theme that will be activated', async () => {

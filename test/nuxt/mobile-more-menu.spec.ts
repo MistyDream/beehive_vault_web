@@ -11,6 +11,8 @@ mockNuxtImport('useI18n', () => () => ({
   t: (key: string) => key,
 }));
 
+mockNuxtImport('useLocalePath', () => () => (path: string) => `/en${path}`);
+
 enableAutoUnmount(afterEach);
 
 const ModalStub = defineComponent({
@@ -68,6 +70,14 @@ describe('MobileMoreMenu', () => {
     expect(wrapper.emitted('change')).toHaveLength(1);
     expect(wrapper.emitted('create')).toHaveLength(1);
     expect(wrapper.emitted('toggle-theme')).toHaveLength(1);
+  });
+
+  it('links to the catalog and closes the More panel on selection', async () => {
+    const wrapper = await mountMenu();
+    const link = wrapper.get('a[href="/en/institutions"]');
+    expect(link.text()).toContain('institutions.title');
+    await link.trigger('click');
+    expect(wrapper.emitted('update:modelValue')).toEqual([[false]]);
   });
 
   it('describes the theme that will be activated', async () => {

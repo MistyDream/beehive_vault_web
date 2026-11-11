@@ -37,11 +37,13 @@ import {
   LucidePlus,
   LucideSun,
   LucideMoon,
+  LucideLandmark,
 } from '#components';
 import type { Household } from '~/types/household';
 import type { NavigationLink } from '~/types/navigation-link';
 
 const { t, locale } = useI18n();
+const localePath = useLocalePath();
 
 interface Props {
   household: Household;
@@ -74,6 +76,11 @@ const menuItems = computed<NavigationLink[]>(() => [
       : t('household.menu.switch_to_dark'),
     icon: isDark ? LucideSun : LucideMoon,
     onClick: () => emit('toggle-theme'),
+  },
+  {
+    text: t('institutions.title'),
+    icon: LucideLandmark,
+    to: localePath('/institutions'),
   },
 ]);
 </script>

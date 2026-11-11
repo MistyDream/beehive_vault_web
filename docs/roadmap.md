@@ -195,7 +195,7 @@ aujourd'hui ? » à partir des données réelles du foyer.
 
 ### 5.2 — Établissements et catégories ⬜
 
-- gérer les établissements ;
+- consulter le catalogue global des établissements : ✅ terminé ;
 - gérer les catégories ;
 - préserver l'accès aux référentiels depuis le menu du foyer.
 
