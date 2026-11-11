@@ -36,7 +36,8 @@
       "archive": "Unable to archive the category. Try again.",
       "name_invalid": "Enter a name with 1 to 100 characters.",
       "duplicate_name": "A category of this kind already has this name.",
-      "not_found": "This category is no longer available. Refresh the list."
+      "not_found": "This category is no longer available. Refresh the list.",
+      "refresh_description": "The last loaded list is still shown and may be out of date. Try again to refresh it."
     }
   },
   "common": {

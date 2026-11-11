@@ -36,7 +36,8 @@
       "archive": "Impossible d’archiver la catégorie. Réessayez.",
       "name_invalid": "Saisissez un nom de 1 à 100 caractères.",
       "duplicate_name": "Une catégorie de cette nature porte déjà ce nom.",
-      "not_found": "Cette catégorie n’est plus disponible. Actualisez la liste."
+      "not_found": "Cette catégorie n’est plus disponible. Actualisez la liste.",
+      "refresh_description": "La dernière liste chargée reste affichée et peut ne plus être à jour. Réessayez pour l’actualiser."
     }
   },
   "common": {

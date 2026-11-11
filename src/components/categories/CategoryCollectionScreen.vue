@@ -21,7 +21,15 @@
     </div>
     <section v-if="error" class="categories-page__error" role="alert">
       <h2>{{ t('categories.error.load') }}</h2>
-      <p>{{ t('categories.error.load_description') }}</p>
+      <p>
+        {{
+          t(
+            categories
+              ? 'categories.error.refresh_description'
+              : 'categories.error.load_description',
+          )
+        }}
+      </p>
       <BHButton @click="refresh">{{ t('common.retry') }}</BHButton>
     </section>
     <p v-if="categories && status === 'pending'" role="status">
@@ -91,7 +99,7 @@
       :model-value="!!archivedCategory"
       :title="t('categories.archive_title')"
       :described-by="archiveDescriptionId"
-      @update:model-value="!$event && (archivedCategory = undefined)"
+      @update:model-value="!$event && (archiveDialog = undefined)"
     >
       <p :id="archiveDescriptionId">
         {{
@@ -109,7 +117,7 @@
         <BHButton
           variant="secondary"
           :disabled="isArchiving"
-          @click="archivedCategory = undefined"
+          @click="archiveDialog = undefined"
           >{{ t('common.cancel') }}</BHButton
         >
         <BHButton
@@ -136,12 +144,20 @@ const titleElement = ref<HTMLHeadingElement | null>(null);
 const groupId = useId();
 const archiveDescriptionId = useId();
 const {
-  data: categories,
+  data: loadedCategories,
   status,
   error,
   refresh,
 } = await useLazyAsyncData(`categories:${props.householdId}`, () =>
   api.list(props.householdId),
+);
+const categories = shallowRef<Category[]>();
+watch(
+  loadedCategories,
+  (loaded) => {
+    if (loaded) categories.value = loaded;
+  },
+  { immediate: true },
 );
 const groups = computed(() =>
   (['expense', 'income'] as CategoryKind[]).map((kind) => ({
@@ -154,9 +170,14 @@ const groups = computed(() =>
 );
 const isFormOpen = ref(false);
 const editedCategory = ref<Category>();
-const archivedCategory = ref<Category>();
-const isArchiving = ref(false);
-const archiveError = ref('');
+const archiveDialog = ref<{
+  category: Category;
+  pending: boolean;
+  error: string;
+}>();
+const archivedCategory = computed(() => archiveDialog.value?.category);
+const isArchiving = computed(() => archiveDialog.value?.pending ?? false);
+const archiveError = computed(() => archiveDialog.value?.error ?? '');
 let isActive = true;
 onBeforeUnmount(() => {
   isActive = false;
@@ -178,31 +199,34 @@ async function handleSaved(): Promise<void> {
 }
 
 function openArchive(category: Category): void {
-  archivedCategory.value = category;
-  archiveError.value = '';
+  archiveDialog.value = { category, pending: false, error: '' };
 }
 
 async function archiveCategory(): Promise<void> {
-  if (!archivedCategory.value || isArchiving.value) return;
-  isArchiving.value = true;
-  archiveError.value = '';
+  const dialog = archiveDialog.value;
+  if (!dialog || dialog.pending) return;
+  dialog.pending = true;
+  dialog.error = '';
   try {
-    await api.archive(props.householdId, archivedCategory.value.id);
+    await api.archive(props.householdId, dialog.category.id);
     if (!isActive) return;
-    archivedCategory.value = undefined;
+    const wasCurrentDialog = archiveDialog.value === dialog;
+    if (wasCurrentDialog) archiveDialog.value = undefined;
     toast.success(t('categories.archived'));
     await refresh();
-    await nextTick();
-    titleElement.value?.focus();
+    if (wasCurrentDialog && !archiveDialog.value && !isFormOpen.value) {
+      await nextTick();
+      titleElement.value?.focus();
+    }
   } catch (cause) {
     if (!isActive) return;
-    archiveError.value = t(
+    dialog.error = t(
       cause instanceof ApiError && cause.code === 'category_not_found'
         ? 'categories.error.not_found'
         : 'categories.error.archive',
     );
   } finally {
-    isArchiving.value = false;
+    dialog.pending = false;
   }
 }
 </script>

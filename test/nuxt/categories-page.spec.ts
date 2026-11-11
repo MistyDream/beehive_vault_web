@@ -13,7 +13,10 @@ const activeHousehold = ref(household);
 const list = vi.fn();
 const archive = vi.fn();
 const success = vi.fn();
-mockNuxtImport('useI18n', () => () => ({ t: (key: string) => key }));
+mockNuxtImport('useI18n', () => () => ({
+  t: (key: string, values?: { name?: string }) =>
+    key === 'categories.archive_description' ? `${key} ${values?.name}` : key,
+}));
 mockNuxtImport('useCategoryApi', () => () => ({ list, archive }));
 mockNuxtImport('useActiveHousehold', () => () => ({ activeHousehold }));
 mockNuxtImport('useToast', () => () => ({ success }));
@@ -134,6 +137,83 @@ describe('CategoriesPage', () => {
     expect(list).toHaveBeenCalledTimes(2);
     expect(success).toHaveBeenCalledWith('categories.archived');
   });
+
+  it('keeps the last successful collection when a post-save refresh fails and retries it', async () => {
+    const wrapper = await mountPage();
+    list.mockRejectedValueOnce(new Error('Refresh failed'));
+    await wrapper.get('.categories-page__header button').trigger('click');
+    wrapper.getComponent(CategoryForm).vm.$emit('saved');
+    await flushPromises();
+
+    expect(wrapper.text()).toContain('Food');
+    expect(wrapper.text()).toContain('Salary');
+    expect(wrapper.get('[role="alert"]').text()).toContain(
+      'categories.error.refresh_description',
+    );
+    expect(wrapper.findComponent(CategoryForm).exists()).toBe(false);
+
+    list.mockResolvedValueOnce([]);
+    await wrapper.get('[role="alert"] button').trigger('click');
+    await flushPromises();
+    expect(wrapper.text()).not.toContain('Food');
+    expect(wrapper.text()).not.toContain('Salary');
+    expect(wrapper.text()).toContain('categories.empty');
+    expect(wrapper.find('[role="alert"]').exists()).toBe(false);
+  });
+
+  it.each(['success', 'failure'] as const)(
+    'keeps a replacement archive dialog intact after an old request returns %s',
+    async (outcome) => {
+      let resolveArchive!: () => void;
+      let rejectArchive!: (cause: unknown) => void;
+      archive.mockReturnValueOnce(
+        new Promise<void>((resolve, reject) => {
+          resolveArchive = resolve;
+          rejectArchive = reject;
+        }),
+      );
+      const wrapper = await mountPage();
+      const archiveActions = wrapper.findAll(
+        '[aria-label="categories.archive_named"]',
+      );
+      await archiveActions[0]!.trigger('click');
+      await wrapper.get('button.danger').trigger('click');
+      expect(archive).toHaveBeenCalledWith(household.id, 'category-food');
+
+      wrapper
+        .findAllComponents(ModalStub)[1]!
+        .vm.$emit('update:modelValue', false);
+      await flushPromises();
+      await archiveActions[1]!.trigger('click');
+      const newDialog = wrapper.findAllComponents(ModalStub)[1]!;
+      expect(newDialog.text()).toContain('Salary');
+      expect(newDialog.text()).not.toContain('Food');
+      if (outcome === 'success') {
+        list.mockResolvedValueOnce([categories[1]]);
+        resolveArchive();
+      } else {
+        rejectArchive(
+          new ApiError({
+            type: 'urn:beehive-vault:problem:category-not-found',
+            status: 404,
+            title: 'Not found',
+            code: 'category_not_found',
+          }),
+        );
+      }
+      await flushPromises();
+      expect(newDialog.props('modelValue')).toBe(true);
+      expect(newDialog.text()).toContain('Salary');
+      expect(newDialog.find('[role="alert"]').exists()).toBe(false);
+      expect(
+        newDialog.get('button.danger').attributes('disabled'),
+      ).toBeUndefined();
+
+      await newDialog.get('button.danger').trigger('click');
+      await flushPromises();
+      expect(archive).toHaveBeenLastCalledWith(household.id, 'category-salary');
+    },
+  );
 
   it('removes the previous household data and closes its form on household change', async () => {
     const wrapper = await mountPage();
