@@ -55,6 +55,8 @@ Les décisions détaillées sont consignées dans la [vue d'ensemble](overview.m
 | Référentiels     | Gestion des catégories et consultation des établissements pris en charge | Alimenter les comptes et transactions sans création libre d'établissement |
 | Validation       | Données représentatives et tests navigateur                              | Vérifier le parcours complet en usage régulier                            |
 
+Le [parcours d’import CSV](csv-import.md) dispose d’une proposition et d’une maquette interactive à valider. Il reste prévu ; la conception n’est pas approuvée et le client n’est pas implémenté.
+
 ## Différées après le MVP
 
 - synchronisation bancaire ;

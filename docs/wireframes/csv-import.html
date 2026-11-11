@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="referrer" content="no-referrer" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <title>Importer un relevé — maquette Beehive Vault</title>
+    <link rel="stylesheet" href="csv-import.css" />
+    <script src="csv-import.js" defer></script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Aller au contenu</a>
+    <div class="lab" aria-label="Commandes de la maquette">
+      <span
+        ><strong>Maquette proposée</strong> · Données fictives · Aucun
+        envoi</span
+      >
+      <div class="lab-controls">
+        <label for="scenario">Essayer un état</label>
+        <select id="scenario">
+          <option value="normal">Parcours normal</option>
+          <option value="network">Aperçu indisponible</option>
+          <option value="syntax">Structure CSV illisible</option>
+          <option value="limit">Limite de taille dépassée</option>
+          <option value="row-limit">Plus de 5 000 lignes</option>
+          <option value="empty">En-tête sans données</option>
+          <option value="rejected">Toutes les lignes rejetées</option>
+          <option value="no-account">Aucun compte actif</option>
+          <option value="archived">Compte archivé entre les étapes</option>
+          <option value="selection">Sélection refusée à la confirmation</option>
+          <option value="confirm-network">Confirmation sans réponse</option>
+        </select>
+        <button id="apply-scenario">Appliquer</button>
+        <button id="theme" aria-pressed="false">Thème sombre</button>
+        <button id="reset">Recommencer</button>
+        <a href="../csv-import.md">Lire les choix proposés</a>
+      </div>
+    </div>
+    <div class="shell">
+      <aside class="sidebar" aria-label="Contexte de navigation">
+        <div class="brand"><span aria-hidden="true">⬡</span> Beehive Vault</div>
+        <p>Vue d’ensemble</p>
+        <p>Comptes</p>
+        <p class="active">Transactions</p>
+        <p>Rapport mensuel</p>
+        <div class="household">
+          <strong>Foyer Démo</strong><small>EUR · Europe/Paris</small>
+        </div>
+      </aside>
+      <main id="main">
+        <div class="breadcrumb">
+          Transactions <span aria-hidden="true">/</span> Import CSV
+        </div>
+        <header class="page-heading">
+          <div>
+            <p class="eyebrow">VOS TRANSACTIONS, AU MÊME ENDROIT</p>
+            <h1>Importer un relevé</h1>
+            <p>Vérifiez vos lignes avant de les ajouter à un compte.</p>
+          </div>
+          <span class="tag">Conception à valider</span>
+        </header>
+        <ol class="steps" aria-label="Étapes de l’import">
+          <li data-step="1">1 <span>Compte et fichier</span></li>
+          <li data-step="2">2 <span>Configuration</span></li>
+          <li data-step="3">3 <span>Aperçu et choix</span></li>
+          <li data-step="4">4 <span>Confirmation</span></li>
+        </ol>
+        <div
+          id="error"
+          class="notice error"
+          role="alert"
+          tabindex="-1"
+          hidden
+        ></div>
+        <p
+          id="announcement"
+          class="sr-only"
+          role="status"
+          aria-live="polite"
+        ></p>
+        <section id="step-1" class="panel">
+          <h2 tabindex="-1">1. Choisir le compte et le fichier</h2>
+          <div class="two-columns">
+            <div>
+              <label for="account">Compte destinataire</label>
+              <select id="account">
+                <option value="checking">Compte courant · Actif · EUR</option>
+                <option value="credit">Carte de crédit · Dette · EUR</option>
+              </select>
+              <p class="help">
+                Seuls les comptes actifs du foyer sont proposés. Un import
+                concerne un seul compte.
+              </p>
+              <div id="no-account" class="notice" hidden>
+                <strong>Aucun compte actif</strong>
+                <p>
+                  Créez un compte ou réactivez-en un avant d’importer un relevé.
+                </p>
+                <p class="help">
+                  La création de compte est hors de cette maquette. Choisissez «
+                  Parcours normal » pour poursuivre.
+                </p>
+              </div>
+              <label for="file">Relevé CSV en UTF-8</label>
+              <input
+                id="file"
+                type="file"
+                accept=".csv,text/csv"
+                aria-describedby="file-help file-status"
+              />
+              <p id="file-help" class="help">
+                1 Mio maximum · 5 000 enregistrements maximum. Le premier
+                enregistrement contient les noms des colonnes.
+              </p>
+              <p id="file-status" class="file-status">Aucun fichier choisi</p>
+              <button id="use-example">Utiliser le relevé fictif</button>
+              <a id="download-example" download="sample-statement.csv"
+                >Télécharger le CSV fictif</a
+              >
+            </div>
+            <aside class="guide">
+              <h3>Avant de commencer</h3>
+              <p>
+                Vous pourrez choisir les lignes à importer et préciser leur
+                nature : revenu ou dépense.
+              </p>
+              <p>
+                Le fichier ne crée aucune transaction tant que vous n’avez pas
+                confirmé.
+              </p>
+              <p>
+                <strong>Pour essayer la maquette</strong><br />Utilisez
+                l’exemple intégré ou choisissez le CSV fictif téléchargé. Les
+                autres fichiers ne sont pas analysés dans cette démonstration.
+              </p>
+            </aside>
+          </div>
+          <div class="actions">
+            <button id="to-config" class="primary">
+              Configurer le fichier →
+            </button>
+          </div>
+        </section>
+        <section id="step-2" class="panel" hidden>
+          <h2 tabindex="-1">2. Associer les colonnes</h2>
+          <p class="context"></p>
+          <p>
+            Indiquez comment lire le fichier. Les colonnes supplémentaires
+            seront ignorées.
+          </p>
+          <div class="fields">
+            <div>
+              <label for="delimiter">Séparateur de colonnes</label
+              ><select id="delimiter">
+                <option value="semicolon">Point-virgule ;</option>
+                <option value="comma">Virgule ,</option>
+                <option value="tab">Tabulation</option>
+              </select>
+            </div>
+            <div>
+              <label for="date-format">Format des dates</label
+              ><select id="date-format">
+                <option value="day_month_year">JJ/MM/AAAA</option>
+                <option value="year_month_day">AAAA-MM-JJ</option>
+                <option value="month_day_year">MM/JJ/AAAA</option>
+              </select>
+            </div>
+            <div>
+              <label for="decimal">Séparateur décimal</label
+              ><select id="decimal">
+                <option value="comma">Virgule · 42,50</option>
+                <option value="dot">Point · 42.50</option>
+              </select>
+            </div>
+          </div>
+          <div class="sample">
+            <strong>Extrait du fichier fictif</strong>
+            <pre>
+Booking;Description;Amount
+10/08/2026;Groceries;-12,3456
+11/08/2026;Salary;2400,00
+12/08/2026;Refund;18,50
+31/02/2026;Invalid booking;-9,00
+13/08/2026;Zero amount;0</pre
+            >
+          </div>
+          <div class="fields">
+            <div>
+              <label for="booking-column">Date bancaire</label
+              ><select id="booking-column">
+                <option>Booking</option>
+                <option>Description</option>
+                <option>Amount</option>
+              </select>
+              <p class="help">Exemple : 10/08/2026</p>
+            </div>
+            <div>
+              <label for="label-column">Libellé</label
+              ><select id="label-column">
+                <option>Description</option>
+                <option>Booking</option>
+                <option>Amount</option>
+              </select>
+              <p class="help">Exemple : Groceries</p>
+            </div>
+            <div>
+              <label for="amount-column">Montant signé du fichier</label
+              ><select id="amount-column">
+                <option>Amount</option>
+                <option>Booking</option>
+                <option>Description</option>
+              </select>
+              <p class="help">Exemple : −12,3456</p>
+            </div>
+          </div>
+          <p class="help">
+            Trois colonnes distinctes. Noms sensibles à la casse ; espaces aux
+            extrémités ignorés. Montants sans séparateurs de milliers, jusqu’à
+            quatre décimales. Dates avec zéros initiaux.
+          </p>
+          <div class="actions">
+            <button data-back="1">← Compte et fichier</button
+            ><button id="preview" class="primary">Afficher l’aperçu →</button>
+          </div>
+        </section>
+        <section id="step-3" class="panel" hidden>
+          <h2 tabindex="-1">3. Vérifier et choisir les lignes</h2>
+          <p class="context"></p>
+          <p id="preview-count" class="summary"></p>
+          <div class="notice">
+            <strong
+              >Le signe du fichier ne suffit pas à classer une ligne.</strong
+            >
+            <p>
+              Choisissez une nature et un effet pour chaque ligne sélectionnée.
+              Une affectation groupée reste modifiable ligne par ligne.
+            </p>
+          </div>
+          <div class="selection-bar">
+            <button id="select-all">Sélectionner les lignes valides</button
+            ><button id="select-none">Tout désélectionner</button
+            ><label for="row-filter">Afficher</label
+            ><select id="row-filter">
+              <option value="all">Toutes les lignes</option>
+              <option value="valid">Lignes valides</option>
+              <option value="rejected">Lignes rejetées</option>
+              <option value="selected">Sélectionnées</option>
+            </select>
+          </div>
+          <fieldset class="bulk">
+            <legend>Affecter aux lignes sélectionnées · proposition</legend>
+            <div class="fields">
+              <div>
+                <label for="bulk-nature">Nature</label
+                ><select id="bulk-nature">
+                  <option value="">Choisir</option>
+                  <option value="expense">Dépense</option>
+                  <option value="income">Revenu</option>
+                </select>
+              </div>
+              <div>
+                <label for="bulk-effect">Effet</label
+                ><select id="bulk-effect">
+                  <option value="">Choisir</option>
+                  <option value="standard">Habituel</option>
+                  <option value="reversal">Inverse</option>
+                </select>
+              </div>
+              <button id="apply-bulk">Appliquer à la sélection</button>
+            </div>
+            <p class="help">
+              Habituel : dépense engagée ou revenu reçu. Inverse : remboursement
+              d’une dépense ou reprise d’un revenu. Aucun transfert n’est créé
+              par cet import.
+            </p>
+          </fieldset>
+          <div id="rows" class="rows"></div>
+          <p id="selection-status" role="status" class="summary"></p>
+          <p class="help">
+            Corrigez les lignes rejetées dans le fichier, puis recommencez
+            l’aperçu, ou laissez-les de côté. Les montants ci-dessus sont ceux
+            du fichier, pas l’effet calculé sur le solde du compte.
+          </p>
+          <div class="actions">
+            <button data-back="2">← Configuration</button
+            ><button id="to-confirm" class="primary">
+              Vérifier la sélection →
+            </button>
+          </div>
+        </section>
+        <section id="step-4" class="panel" hidden>
+          <h2 tabindex="-1">4. Confirmer l’import</h2>
+          <p class="context"></p>
+          <p id="confirm-count" class="summary"></p>
+          <div id="confirmation-rows"></div>
+          <div class="notice">
+            <strong>Ces lignes seront ajoutées sans catégorie.</strong>
+            <p>
+              Le compte, la date bancaire, le libellé et le montant sur le
+              compte seront conservés. Vous pourrez ensuite modifier la nature,
+              la catégorie et la note depuis les transactions.
+            </p>
+            <p>
+              Le même relevé exact sur le même compte ne sera pas ajouté deux
+              fois. Un autre fichier, même très proche, peut contenir des
+              opérations déjà présentes.
+            </p>
+          </div>
+          <p>
+            Aucune transaction ne sera ajoutée si la confirmation est refusée.
+            Le solde est mis à jour uniquement après l’import réussi.
+          </p>
+          <div class="actions">
+            <button data-back="3">← Modifier la sélection</button
+            ><button id="confirm" class="primary">
+              Importer les lignes sélectionnées
+            </button>
+          </div>
+        </section>
+        <section id="step-5" class="panel" hidden>
+          <h2 tabindex="-1">Import terminé</h2>
+          <p class="context"></p>
+          <div id="result-summary" class="notice success"></div>
+          <div id="result-rows"></div>
+          <p>
+            Les lignes déjà importées n’ont pas été modifiées. Les lignes
+            rejetées ou non sélectionnées n’ont pas été ajoutées.
+          </p>
+          <div class="actions">
+            <button id="reimport">Réessayer le même relevé</button
+            ><button id="new-import" class="primary">
+              Importer un autre relevé
+            </button>
+          </div>
+          <p class="help">
+            Dans le produit, « Voir les transactions » ouvrira la liste filtrée
+            sur ce compte. Cette destination n’est pas implémentée dans la
+            maquette.
+          </p>
+        </section>
+        <footer>
+          Prototype local · Aucune connexion à l’API · Aucun stockage après
+          fermeture ou rechargement
+        </footer>
+      </main>
+    </div>
+  </body>
+</html>

@@ -36,3 +36,7 @@ La structure de la vue d'ensemble et la [direction visuelle](visual-direction.md
 La structure et le wireframe du [foyer actif](active-household.md) sont également validés.
 Les parcours des [comptes](accounts.md), des [transactions](transactions.md) et du [rapport mensuel](monthly-report.md) disposent également de wireframes validés provisoirement.
 Les [règles transversales](cross-cutting-rules.md) harmonisent les états, le contenu financier, le responsive et l'accessibilité. La phase de conception fournit désormais un socle suffisant pour commencer la reconstruction ; les référentiels encore planifiés seront précisés avant leur tranche d'implémentation.
+
+## Import CSV — proposition en attente
+
+Le [parcours d’import CSV](csv-import.md) et sa [maquette interactive](wireframes/csv-import.html) couvrent le compte, le fichier, la configuration, la sélection, la confirmation et les reprises sur ordinateur et mobile. Les décisions produit restent proposées, à valider avant Web #10 et Web #11. Ce livrable n’implémente aucune fonctionnalité Web.

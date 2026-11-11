@@ -158,10 +158,10 @@ L'API réalise une suppression logique, mais aucune restauration n'est exposée 
 
 ## Transactions importées
 
-L'import n'appartient pas encore au parcours Web de la V1. Lorsqu'il sera introduit :
+Le [parcours d’import CSV](csv-import.md) dispose désormais d’une proposition à valider ; il n’est pas implémenté dans le client Web. Le contrat API prévoit :
 
 - le compte, la date, le libellé et le montant bancaires resteront en lecture seule ;
-- la catégorie et la note resteront modifiables ;
+- la nature, la catégorie et la note resteront modifiables ;
 - l'origine importée deviendra visible lorsqu'elle explique ces restrictions.
 
 ## États
