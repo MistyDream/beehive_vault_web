@@ -43,7 +43,7 @@ const household: Household = {
 describe('MobileMoreMenu', () => {
   it('opens categories through a localized link and closes the menu', async () => {
     const wrapper = await mountMenu();
-    const link = wrapper.get('a[href="/categories"]');
+    const link = wrapper.get('a[href="/en/categories"]');
     expect(link.text()).toBe('household.menu.categories');
     await link.trigger('click');
     expect(wrapper.emitted('update:modelValue')).toEqual([[false]]);

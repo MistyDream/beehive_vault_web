@@ -66,7 +66,7 @@ describe('HouseholdMenu', () => {
     expect(items).toContainEqual(
       expect.objectContaining({
         text: 'household.menu.categories',
-        to: '/categories',
+        to: '/en/categories',
       }),
     );
   });
