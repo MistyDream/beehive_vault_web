@@ -16,7 +16,7 @@
     <a class="skip" href="#main">Aller au contenu</a>
     <div class="lab" aria-label="Commandes de la maquette">
       <span
-        ><strong>Maquette proposée</strong> · Données fictives · Aucun
+        ><strong>Maquette de référence</strong> · Données fictives · Aucun
         envoi</span
       >
       <div class="lab-controls">
@@ -37,7 +37,7 @@
         <button id="apply-scenario">Appliquer</button>
         <button id="theme" aria-pressed="false">Thème sombre</button>
         <button id="reset">Recommencer</button>
-        <a href="../csv-import.md">Lire les choix proposés</a>
+        <a href="../csv-import.md">Lire le parcours validé</a>
       </div>
     </div>
     <div class="shell">
@@ -60,7 +60,7 @@
             <h1>Importer un relevé</h1>
             <p>Vérifiez vos lignes avant de les ajouter à un compte.</p>
           </div>
-          <span class="tag">Conception à valider</span>
+          <span class="tag">Parcours validé</span>
         </header>
         <ol class="steps" aria-label="Étapes de l’import">
           <li data-step="1">1 <span>Compte et fichier</span></li>
@@ -235,8 +235,9 @@ Booking;Description;Amount
               >Le signe du fichier ne suffit pas à classer une ligne.</strong
             >
             <p>
-              Choisissez une nature et un effet pour chaque ligne sélectionnée.
-              Une affectation groupée reste modifiable ligne par ligne.
+              Choisissez une nature puis un type de mouvement pour chaque ligne
+              sélectionnée. Une affectation groupée reste modifiable ligne par
+              ligne.
             </p>
           </div>
           <div class="selection-bar">
@@ -251,7 +252,7 @@ Booking;Description;Amount
             </select>
           </div>
           <fieldset class="bulk">
-            <legend>Affecter aux lignes sélectionnées · proposition</legend>
+            <legend>Affecter aux lignes sélectionnées</legend>
             <div class="fields">
               <div>
                 <label for="bulk-nature">Nature</label
@@ -262,19 +263,23 @@ Booking;Description;Amount
                 </select>
               </div>
               <div>
-                <label for="bulk-effect">Effet</label
-                ><select id="bulk-effect">
-                  <option value="">Choisir</option>
-                  <option value="standard">Habituel</option>
-                  <option value="reversal">Inverse</option>
+                <label for="bulk-effect">Type de mouvement</label
+                ><select
+                  id="bulk-effect"
+                  disabled
+                  aria-describedby="bulk-meaning"
+                >
+                  <option value="">Choisir la nature d’abord</option>
                 </select>
               </div>
               <button id="apply-bulk">Appliquer à la sélection</button>
             </div>
+            <p id="bulk-meaning" class="help">
+              Choisissez d’abord la nature pour afficher les types de mouvement.
+            </p>
             <p class="help">
-              Habituel : dépense engagée ou revenu reçu. Inverse : remboursement
-              d’une dépense ou reprise d’un revenu. Aucun transfert n’est créé
-              par cet import.
+              Changer la nature demande de choisir à nouveau le type de
+              mouvement. Aucun transfert n’est créé par cet import.
             </p>
           </fieldset>
           <div id="rows" class="rows"></div>

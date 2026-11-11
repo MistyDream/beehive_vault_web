@@ -37,6 +37,6 @@ La structure et le wireframe du [foyer actif](active-household.md) sont égaleme
 Les parcours des [comptes](accounts.md), des [transactions](transactions.md) et du [rapport mensuel](monthly-report.md) disposent également de wireframes validés provisoirement.
 Les [règles transversales](cross-cutting-rules.md) harmonisent les états, le contenu financier, le responsive et l'accessibilité. La phase de conception fournit désormais un socle suffisant pour commencer la reconstruction ; les référentiels encore planifiés seront précisés avant leur tranche d'implémentation.
 
-## Import CSV — proposition en attente
+## Import CSV — parcours validé
 
-Le [parcours d’import CSV](csv-import.md) et sa [maquette interactive](wireframes/csv-import.html) couvrent le compte, le fichier, la configuration, la sélection, la confirmation et les reprises sur ordinateur et mobile. Les décisions produit restent proposées, à valider avant Web #10 et Web #11. Ce livrable n’implémente aucune fonctionnalité Web.
+Le [parcours d’import CSV](csv-import.md) et sa [maquette interactive](wireframes/csv-import.html) couvrent le compte, le fichier, la configuration, la sélection, la confirmation et les reprises sur ordinateur et mobile. Le parcours et les autres choix ont été validés par l’utilisateur le 11 novembre 2026, avec une demande de clarification du vocabulaire du type de mouvement, désormais ajusté. Cette référence guide Web #10 et Web #11 ; les mots exacts de l’ajustement n’ont pas reçu d’approbation distincte avant présentation. Ce livrable n’implémente aucune fonctionnalité Web.

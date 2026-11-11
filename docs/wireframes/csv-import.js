@@ -47,14 +47,45 @@ const state = {
   format: '',
 };
 const natureName = (nature) => (nature === 'income' ? 'Revenu' : 'Dépense');
-const effectName = (nature, effect) =>
-  effect === 'standard'
-    ? nature === 'income'
-      ? 'Revenu reçu'
-      : 'Dépense engagée'
-    : nature === 'income'
-      ? 'Reprise d’un revenu'
-      : 'Remboursement d’une dépense';
+const movementLabels = {
+  expense: { standard: 'Paiement', reversal: 'Remboursement reçu' },
+  income: { standard: 'Revenu reçu', reversal: 'Remboursement versé' },
+};
+const effectName = (nature, effect) => movementLabels[nature][effect];
+function movementHelp(nature, effect) {
+  if (!nature)
+    return 'Choisissez d’abord la nature pour afficher les types de mouvement.';
+  if (!effect)
+    return `Choisissez « ${movementLabels[nature].standard} » ou « ${movementLabels[nature].reversal} ».`;
+  if (nature === 'income')
+    return effect === 'standard'
+      ? 'Vous recevez un revenu.'
+      : 'Vous rendez un revenu reçu en trop, par exemple un trop-perçu.';
+  return effect === 'standard'
+    ? 'Vous payez une dépense.'
+    : 'Vous recevez le remboursement d’une dépense.';
+}
+function updateMovementOptions(select, nature, effect = '') {
+  select.replaceChildren(
+    makeOption(
+      '',
+      nature ? 'Choisir un mouvement' : 'Choisir la nature d’abord',
+      !effect,
+    ),
+  );
+  if (nature)
+    Object.entries(movementLabels[nature]).forEach(([value, text]) =>
+      select.append(makeOption(value, text, value === effect)),
+    );
+  select.disabled = !nature;
+}
+function updateBulkMovement() {
+  updateMovementOptions(byId('bulk-effect'), byId('bulk-nature').value);
+  byId('bulk-meaning').textContent = movementHelp(
+    byId('bulk-nature').value,
+    '',
+  );
+}
 const countPhrase = (count, singular, plural) =>
   `${count} ${count === 1 ? singular : plural}`;
 const selectedRows = () =>
@@ -66,7 +97,10 @@ function clearError() {
   byId('error').hidden = true;
   document.querySelectorAll('[aria-invalid]').forEach((element) => {
     element.removeAttribute('aria-invalid');
-    element.removeAttribute('aria-describedby');
+    if (element.dataset.description)
+      element.setAttribute('aria-describedby', element.dataset.description);
+    else element.removeAttribute('aria-describedby');
+    delete element.dataset.description;
   });
   byId('file').setAttribute('aria-describedby', 'file-help file-status');
 }
@@ -90,6 +124,8 @@ function showError(title, message, field, retry) {
       target.focus();
     };
     container.append(link);
+    byId(field).dataset.description =
+      byId(field).getAttribute('aria-describedby') || '';
     byId(field).setAttribute('aria-invalid', 'true');
     byId(field).setAttribute('aria-describedby', 'error');
   }
@@ -145,34 +181,35 @@ function classificationSelect(row, field) {
   const label = document.createElement('label');
   const id = `row-${row.line}-${field}`;
   label.htmlFor = id;
-  label.textContent = field === 'nature' ? 'Nature' : 'Effet';
+  label.textContent = field === 'nature' ? 'Nature' : 'Type de mouvement';
   const select = document.createElement('select');
   select.id = id;
   select.setAttribute(
     'aria-label',
     `${label.textContent}, ligne ${row.line}, ${row.label}`,
   );
-  const options =
-    field === 'nature'
-      ? [
-          ['', 'Choisir une nature'],
-          ['expense', 'Dépense'],
-          ['income', 'Revenu'],
-        ]
-      : [
-          ['', 'Choisir un effet'],
-          ['standard', 'Habituel'],
-          ['reversal', 'Inverse'],
-        ];
-  options.forEach(([value, text]) =>
-    select.append(makeOption(value, text, row[field] === value)),
-  );
+  if (field === 'nature') {
+    [
+      ['', 'Choisir une nature'],
+      ['expense', 'Dépense'],
+      ['income', 'Revenu'],
+    ].forEach(([value, text]) =>
+      select.append(makeOption(value, text, row.nature === value)),
+    );
+  } else updateMovementOptions(select, row.nature, row.effect);
   select.onchange = () => {
     row[field] = select.value;
-    byId(`row-${row.line}-meaning`).textContent =
-      row.nature && row.effect
-        ? effectName(row.nature, row.effect)
-        : 'Choisissez une nature et un effet.';
+    if (field === 'nature') {
+      row.effect = '';
+      updateMovementOptions(byId(`row-${row.line}-effect`), row.nature);
+      announce(
+        `Nature modifiée pour la ligne ${row.line}. Choisissez à nouveau le type de mouvement.`,
+      );
+    }
+    byId(`row-${row.line}-meaning`).textContent = movementHelp(
+      row.nature,
+      row.effect,
+    );
     updateSelection();
   };
   select.setAttribute('aria-describedby', `row-${row.line}-meaning`);
@@ -181,10 +218,7 @@ function classificationSelect(row, field) {
     const meaning = document.createElement('p');
     meaning.id = `row-${row.line}-meaning`;
     meaning.className = 'help';
-    meaning.textContent =
-      row.nature && row.effect
-        ? effectName(row.nature, row.effect)
-        : 'Choisissez une nature et un effet.';
+    meaning.textContent = movementHelp(row.nature, row.effect);
     wrapper.append(meaning);
   }
   return wrapper;
@@ -265,19 +299,21 @@ function renderRows() {
 async function waitForAction(button, label) {
   state.busy = true;
   const oldLabel = button.textContent;
-  document
-    .querySelectorAll(
+  const controls = [
+    ...document.querySelectorAll(
       `#step-${state.step} button, #step-${state.step} input, #step-${state.step} select, .lab button, .lab select`,
-    )
-    .forEach((control) => {
-      control.disabled = true;
-    });
+    ),
+  ];
+  const previousDisabled = controls.map((control) => control.disabled);
+  controls.forEach((control) => {
+    control.disabled = true;
+  });
   byId(`step-${state.step}`).setAttribute('aria-busy', 'true');
   button.textContent = label;
   announce(label);
   await new Promise((resolve) => setTimeout(resolve, 650));
-  document.querySelectorAll('button, input, select').forEach((control) => {
-    control.disabled = false;
+  controls.forEach((control, index) => {
+    control.disabled = previousDisabled[index];
   });
   byId(`step-${state.step}`).removeAttribute('aria-busy');
   button.textContent = oldLabel;
@@ -419,7 +455,7 @@ function toConfirmation() {
     byId('row-filter').value = 'all';
     renderRows();
     showError(
-      'Précisez la nature et l’effet',
+      'Précisez la nature et le type de mouvement',
       `La ligne ${missing.line} est encore à classer. Utilisez l’affectation groupée ou les choix de la ligne.`,
       `row-${missing.line}-${!missing.nature ? 'nature' : 'effect'}`,
     );
@@ -565,6 +601,18 @@ byId('select-none').onclick = () => {
   announce('Sélection effacée.');
 };
 byId('row-filter').onchange = renderRows;
+byId('bulk-nature').onchange = () => {
+  updateBulkMovement();
+  announce(
+    'Nature modifiée pour l’affectation groupée. Choisissez à nouveau le type de mouvement.',
+  );
+};
+byId('bulk-effect').onchange = () => {
+  byId('bulk-meaning').textContent = movementHelp(
+    byId('bulk-nature').value,
+    byId('bulk-effect').value,
+  );
+};
 byId('apply-bulk').onclick = () => {
   clearError();
   if (!selectedRows().length) {
@@ -576,7 +624,7 @@ byId('apply-bulk').onclick = () => {
   }
   if (!byId('bulk-nature').value || !byId('bulk-effect').value) {
     showError(
-      'Choisissez une nature et un effet',
+      'Choisissez une nature et un type de mouvement',
       'Les deux choix sont nécessaires avant d’appliquer l’affectation.',
       !byId('bulk-nature').value ? 'bulk-nature' : 'bulk-effect',
     );
@@ -627,3 +675,4 @@ byId('apply-scenario').onclick = () => {
   announce('Scénario chargé. Parcourez les étapes pour essayer cet état.');
 };
 goTo(1);
+updateBulkMovement();
