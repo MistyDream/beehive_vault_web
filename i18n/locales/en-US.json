@@ -1,6 +1,45 @@
 {
   "dashboard": "Dashboard",
   "bank-account": "Bank account",
+  "categories": {
+    "title": "Categories",
+    "description": "Organize this household’s income and expenses.",
+    "add": "Add a category",
+    "loading": "Loading categories…",
+    "empty": "No categories",
+    "empty_description": "Add a category to organize your operations.",
+    "group_empty": "No categories of this kind.",
+    "rename": "Rename",
+    "archive": "Archive",
+    "rename_named": "Rename {name}",
+    "archive_named": "Archive {name}",
+    "edit_title": "Rename category",
+    "archive_title": "Archive category",
+    "archive_description": "Archive “{name}”? It will remain linked to historical operations and will no longer be offered for new operations.",
+    "saved": "Category renamed",
+    "created": "Category created",
+    "archived": "Category archived",
+    "kinds": {
+      "income": "Income",
+      "expense": "Expenses"
+    },
+    "form": {
+      "name": "Name",
+      "kind": "Kind",
+      "fixed_kind": "Kind preserved: {kind}",
+      "save": "Save"
+    },
+    "error": {
+      "load": "Unable to load categories",
+      "load_description": "Try again to retrieve this household’s categories.",
+      "save": "Unable to save the category. Try again.",
+      "archive": "Unable to archive the category. Try again.",
+      "name_invalid": "Enter a name with 1 to 100 characters.",
+      "duplicate_name": "A category of this kind already has this name.",
+      "not_found": "This category is no longer available. Refresh the list.",
+      "refresh_description": "The last loaded list is still shown and may be out of date. Try again to refresh it."
+    }
+  },
   "common": {
     "cancel": "Cancel",
     "close": "Close",
@@ -49,7 +88,8 @@
       "change": "Change household",
       "create": "Create a household",
       "switch_to_light": "Switch to light mode",
-      "switch_to_dark": "Switch to dark mode"
+      "switch_to_dark": "Switch to dark mode",
+      "categories": "Categories"
     },
     "selection": {
       "title": "Choose a household",

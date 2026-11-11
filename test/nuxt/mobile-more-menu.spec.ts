@@ -41,6 +41,14 @@ const household: Household = {
 };
 
 describe('MobileMoreMenu', () => {
+  it('opens categories through a localized link and closes the menu', async () => {
+    const wrapper = await mountMenu();
+    const link = wrapper.get('a[href="/en/categories"]');
+    expect(link.text()).toBe('household.menu.categories');
+    await link.trigger('click');
+    expect(wrapper.emitted('update:modelValue')).toEqual([[false]]);
+  });
+
   it('identifies the active household', async () => {
     const wrapper = await mountMenu();
 
@@ -60,7 +68,7 @@ describe('MobileMoreMenu', () => {
 
     await actions[0]?.trigger('click');
     await actions[1]?.trigger('click');
-    await actions[2]?.trigger('click');
+    await actions[3]?.trigger('click');
 
     expect(wrapper.emitted('update:modelValue')).toEqual([
       [false],
@@ -83,13 +91,13 @@ describe('MobileMoreMenu', () => {
   it('describes the theme that will be activated', async () => {
     const wrapper = await mountMenu(true);
 
-    expect(wrapper.findAll('.mobile-more-menu__action')[2]?.text()).toContain(
+    expect(wrapper.findAll('.mobile-more-menu__action')[3]?.text()).toContain(
       'household.menu.switch_to_light',
     );
 
     await wrapper.setProps({ isDark: false });
 
-    expect(wrapper.findAll('.mobile-more-menu__action')[2]?.text()).toContain(
+    expect(wrapper.findAll('.mobile-more-menu__action')[3]?.text()).toContain(
       'household.menu.switch_to_dark',
     );
   });

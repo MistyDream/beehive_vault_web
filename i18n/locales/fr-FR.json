@@ -1,6 +1,45 @@
 {
   "dashboard": "Tableau de bord",
   "bank-account": "Compte bancaire",
+  "categories": {
+    "title": "Catégories",
+    "description": "Organisez les revenus et les dépenses de ce foyer.",
+    "add": "Ajouter une catégorie",
+    "loading": "Chargement des catégories…",
+    "empty": "Aucune catégorie",
+    "empty_description": "Ajoutez une catégorie pour organiser vos opérations.",
+    "group_empty": "Aucune catégorie de cette nature.",
+    "rename": "Renommer",
+    "archive": "Archiver",
+    "rename_named": "Renommer {name}",
+    "archive_named": "Archiver {name}",
+    "edit_title": "Renommer la catégorie",
+    "archive_title": "Archiver la catégorie",
+    "archive_description": "Archiver « {name} » ? Elle restera associée aux opérations historiques et ne sera plus proposée pour les nouvelles opérations.",
+    "saved": "Catégorie renommée",
+    "created": "Catégorie créée",
+    "archived": "Catégorie archivée",
+    "kinds": {
+      "income": "Revenus",
+      "expense": "Dépenses"
+    },
+    "form": {
+      "name": "Nom",
+      "kind": "Nature",
+      "fixed_kind": "Nature conservée : {kind}",
+      "save": "Enregistrer"
+    },
+    "error": {
+      "load": "Impossible de charger les catégories",
+      "load_description": "Réessayez pour retrouver les catégories de ce foyer.",
+      "save": "Impossible d’enregistrer la catégorie. Réessayez.",
+      "archive": "Impossible d’archiver la catégorie. Réessayez.",
+      "name_invalid": "Saisissez un nom de 1 à 100 caractères.",
+      "duplicate_name": "Une catégorie de cette nature porte déjà ce nom.",
+      "not_found": "Cette catégorie n’est plus disponible. Actualisez la liste.",
+      "refresh_description": "La dernière liste chargée reste affichée et peut ne plus être à jour. Réessayez pour l’actualiser."
+    }
+  },
   "common": {
     "cancel": "Annuler",
     "close": "Fermer",
@@ -49,7 +88,8 @@
       "change": "Changer de foyer",
       "create": "Créer un foyer",
       "switch_to_light": "Passer en mode clair",
-      "switch_to_dark": "Passer en mode sombre"
+      "switch_to_dark": "Passer en mode sombre",
+      "categories": "Catégories"
     },
     "selection": {
       "title": "Choisir un foyer",

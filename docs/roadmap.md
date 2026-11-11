@@ -199,6 +199,8 @@ aujourd'hui ? » à partir des données réelles du foyer.
 - gérer les catégories ;
 - préserver l'accès aux référentiels depuis le menu du foyer.
 
+La création, le renommage et l’archivage des catégories sont disponibles depuis le menu du foyer et le panneau « Plus ».
+
 **Résultat attendu :** l'utilisateur peut comprendre et maintenir les sources de
 son patrimoine et de ses transactions.
 

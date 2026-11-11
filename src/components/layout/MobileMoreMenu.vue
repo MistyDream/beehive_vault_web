@@ -33,6 +33,16 @@
       </BHButton>
 
       <BHButton
+        :to="localePath('/categories')"
+        variant="ghost"
+        class="mobile-more-menu__action"
+        @click="close"
+      >
+        <LucideTags :size="20" aria-hidden="true" />
+        <span>{{ t('household.menu.categories') }}</span>
+      </BHButton>
+
+      <BHButton
         variant="ghost"
         class="mobile-more-menu__action"
         @click="handleToggleTheme"

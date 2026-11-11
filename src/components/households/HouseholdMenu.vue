@@ -33,6 +33,7 @@
 
 <script setup lang="ts">
 import {
+  LucideTags,
   LucideChevronsUpDown,
   LucidePlus,
   LucideSun,
@@ -69,6 +70,11 @@ const menuItems = computed<NavigationLink[]>(() => [
     text: t('household.menu.create'),
     icon: LucidePlus,
     onClick: () => emit('create'),
+  },
+  {
+    text: t('household.menu.categories'),
+    icon: LucideTags,
+    to: localePath('/categories'),
   },
   {
     text: isDark
